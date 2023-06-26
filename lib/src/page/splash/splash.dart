@@ -5,6 +5,7 @@ import 'package:whoru/main.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:whoru/src/page/home/page/post_page.dart';
+import 'package:whoru/src/page/navigation/navigation.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen>
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (_) => const PostPage(),
+          builder: (_) => const Navigation(),
         ),
       );
     });

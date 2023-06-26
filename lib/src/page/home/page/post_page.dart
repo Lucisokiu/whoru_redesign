@@ -37,7 +37,7 @@ class _PostPageState extends State<PostPage> {
                           TextSpan(
                               text: 'Whoru',
                               style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontFamily: 'Lobster',
                               fontSize: 10.sp,
                               ),
@@ -47,18 +47,18 @@ class _PostPageState extends State<PostPage> {
                 
               ]
             ),
-        flexibleSpace: Container(
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment(0.8, 1),
-                colors: <Color>[
-                Colors.purple,
-                Colors.orange,
-              ],        
-            )
-          )
-        ),
+        // flexibleSpace: Container(
+        //     decoration: const BoxDecoration(
+        //         gradient: LinearGradient(
+        //         begin: Alignment.topLeft,
+        //         end: Alignment(0.8, 1),
+        //         colors: <Color>[
+        //         Colors.purple,
+        //         Colors.orange,
+        //       ],
+        //     )
+        //   )
+        // ),
         // leading: <Widget>[
         //     IconButton(
         //     onPressed: () {},
