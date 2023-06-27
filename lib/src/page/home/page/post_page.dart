@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/page/splash/splash.dart';
@@ -14,6 +15,8 @@ class _PostPageState extends State<PostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+
       appBar: AppBar(
         title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -71,7 +74,7 @@ class _PostPageState extends State<PostPage> {
         //   ]
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.add_alert),
+            icon: const Icon(PhosphorIcons.chats_circle_fill),
             tooltip: 'Show Snackbar',
             onPressed: () {},
           ),

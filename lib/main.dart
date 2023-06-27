@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/page/home/page/post_page.dart';
-import 'package:whoru/src/page/navigation/navigation.dart';
 import 'package:whoru/src/page/splash/splash.dart';
 
 void main() {
