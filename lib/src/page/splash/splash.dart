@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:lottie/lottie.dart';
+import 'package:whoru/src/app.dart';
 import 'package:whoru/src/page/navigation/navigation.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen>
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (_) => const Navigation(),
+          builder: (_) => const App(),
         ),
       );
     });
@@ -80,7 +81,6 @@ class _SplashScreenState extends State<SplashScreen>
               )
 
             ),
-          // nextScreen: const MyHomePage(),
         );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 
 // import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:whoru/src/page/home/page/post_page.dart';
+import 'package:whoru/src/page/location/location_page.dart';
 import 'package:whoru/src/page/navigation/style_nav/helpers/enums.dart';
 
 import 'package:whoru/src/page/navigation/style_nav/model/options.dart';
@@ -11,6 +12,8 @@ import 'package:whoru/src/page/navigation/style_nav/model/options.dart';
 // import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:whoru/src/page/navigation/style_nav/bottom_bar.dart';
 import 'package:whoru/src/page/navigation/style_nav/model/bar_items.dart';
+import 'package:whoru/src/page/profile/profile_page.dart';
+import 'package:whoru/src/page/search/search_page.dart';
 
 // import 'package:whoru/src/page/navigation/style_nav/model/stylish_bottom_bar.dart';
 
@@ -26,10 +29,9 @@ class _NavigationState extends State<Navigation> {
 
   final _screens = [
     const PostPage(),
-    const PostPage(),
-    const PostPage(),
-    const PostPage(),
-    const PostPage(),
+    const SearchPage(),
+    const LocationPage(),
+    const ProfilePage(),
   ];
 
   @override
@@ -49,7 +51,7 @@ class _NavigationState extends State<Navigation> {
       onPressed: (){
           //code to execute on button press
       },
-      // shape: Cir:,
+      // shape
       child: const Icon(Icons.add),
   ),
 
@@ -105,14 +107,12 @@ class _NavigationState extends State<Navigation> {
         onTap: (index) {
           setState(() {
             currentPage = index;
-            // index.jumpToPage(index);
+            // index.jumpToPage(index);s
           });
         },
       ),
-      body: Container(
-        child: _screens[currentPage],
-      ),
-        // _screens[currentPage],
+      body: 
+        _screens[currentPage],
     );
   }
 }

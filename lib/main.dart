@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Whoru',
       // theme: ThemeData(
       //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
       //   useMaterial3: true,
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
       home: Sizer(
           builder: (context, orientation, deviceType) {
             return MaterialApp(
+              
               debugShowCheckedModeBanner: false,
               title: 'Sizer',
               theme: ThemeData(
@@ -30,12 +31,10 @@ class MyApp extends StatelessWidget {
                 useMaterial3: true,
               ),
               home: const SplashScreen() ,
-              // home: const MyHomePage() ,
 
             );
           }
       )
-      // const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
