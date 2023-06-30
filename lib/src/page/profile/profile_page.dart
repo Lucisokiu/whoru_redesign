@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:whoru/src/page/appbar/appbar.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

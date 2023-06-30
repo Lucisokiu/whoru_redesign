@@ -23,14 +23,13 @@ class MyApp extends StatelessWidget {
       home: Sizer(
           builder: (context, orientation, deviceType) {
             return MaterialApp(
-              
               debugShowCheckedModeBanner: false,
               title: 'Sizer',
               theme: ThemeData(
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
                 useMaterial3: true,
               ),
-              home: const SplashScreen() ,
+              home: const SplashScreen(),
 
             );
           }

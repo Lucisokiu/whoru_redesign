@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 
 // import 'package:stylish_bottom_bar/model/bar_items.dart';
-import 'package:whoru/src/page/home/page/post_page.dart';
+import 'package:whoru/src/page/home/page/feed_page.dart';
 import 'package:whoru/src/page/location/location_page.dart';
 import 'package:whoru/src/page/navigation/style_nav/helpers/enums.dart';
 
