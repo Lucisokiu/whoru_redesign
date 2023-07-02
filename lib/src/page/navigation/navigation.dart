@@ -28,7 +28,7 @@ class _NavigationState extends State<Navigation> {
   int currentPage = 0;
 
   final _screens = [
-    const PostPage(),
+    const FeedPage(),
     const SearchPage(),
     const LocationPage(),
     const ProfilePage(),
@@ -57,67 +57,64 @@ class _NavigationState extends State<Navigation> {
 
       ),
     floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      extendBody: true,
 
 
-      bottomNavigationBar: StylishBottomBar(
-        // backgroundColor: Colors.lightBlue,
-//  option: AnimatedBarOptions(
-//    iconSize: 32,
-//    barAnimation: BarAnimation.liquid,
-//    iconStyle: IconStyle.animated,
-//    opacity: 0.3,
-//  ),
-        option: AnimatedBarOptions(
-          
-          padding: const EdgeInsets.only(top: 15.0),
-          inkColor: Colors.grey,
-          barAnimation: BarAnimation.transform3D,
-          inkEffect: true,
-          iconStyle: IconStyle.animated,
-          opacity: 0.8,
-        ),
-        items: [
-          BottomBarItem(
-            icon: const Icon(PhosphorIcons.house_line_fill),
-            title: const Text('Home'),
-            // backgroundColor: Colors.blue,
-            // selectedIcon: const Icon(Icons.read_more),
-          ),
-          BottomBarItem(
-            icon: const Icon(PhosphorIcons.magnifying_glass_light),
-            title: const Text('Find'),
-            // backgroundColor: Colors.orange,
-          ),
-          BottomBarItem(
-            icon: const Icon(PhosphorIcons.globe_hemisphere_east_fill),
-            title: const Text('Location'),
-            // backgroundColor: Colors.purple,
-          ),
-          BottomBarItem(
-            icon: const Icon(PhosphorIcons.user_circle_fill),
-            title: const Text('User'),
-            // backgroundColor: Colors.purple,
-          ),
-        ],
-        // borderRadius : BorderRadius.circular(50) ,
-        // barStyle : BubbleBarStyle,
-        fabLocation: StylishBarFabLocation.center,
-        hasNotch: true,
-        currentIndex: currentPage,
-        onTap: (index) {
-          setState(() {
-            currentPage = index;
-            // index.jumpToPage(index);s
-          });
-        },
+      bottomNavigationBar:
+      ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topRight: Radius.circular(70),
+        topLeft: Radius.circular(70),
       ),
+        child: StylishBottomBar(
+          option: AnimatedBarOptions(
+            
+            padding: const EdgeInsets.only(top: 15.0),
+            inkColor: Colors.grey,
+            barAnimation: BarAnimation.transform3D,
+            inkEffect: true,
+            iconStyle: IconStyle.animated,
+            opacity: 0.8,
+          ),
+          items: [
+            BottomBarItem(
+              icon: const Icon(PhosphorIcons.house_line_fill),
+              title: const Text('Home'),
+              // backgroundColor: Colors.blue,
+              // selectedIcon: const Icon(Icons.read_more),
+            ),
+            BottomBarItem(
+              icon: const Icon(PhosphorIcons.magnifying_glass_light),
+              title: const Text('Find'),
+              // backgroundColor: Colors.orange,
+            ),
+            BottomBarItem(
+              icon: const Icon(PhosphorIcons.globe_hemisphere_east_fill),
+              title: const Text('Location'),
+              // backgroundColor: Colors.purple,
+            ),
+            BottomBarItem(
+              icon: const Icon(PhosphorIcons.user_circle_fill),
+              title: const Text('User'),
+              // backgroundColor: Colors.purple,
+            ),
+          ],
+          fabLocation: StylishBarFabLocation.center,
+          hasNotch: true,
+          currentIndex: currentPage,
+          onTap: (index) {
+            setState(() {
+              currentPage = index;
+            });
+          },
+        ),
+      ),
+      
       body: 
         _screens[currentPage],
     );
   }
 }
-
-
 
 
 

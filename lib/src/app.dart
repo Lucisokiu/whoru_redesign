@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whoru/src/page/home/page/feed_page.dart';
 import 'package:whoru/src/page/navigation/navigation.dart';
 
 class App extends StatefulWidget {
@@ -13,7 +14,10 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return const Center(
         child: Scaffold(
-      body: Navigation(),
+
+      body:SafeArea(
+        child: Center(child: Navigation())
+        ),
     ));
   }
 }

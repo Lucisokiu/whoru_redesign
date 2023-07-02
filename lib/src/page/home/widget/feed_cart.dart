@@ -11,6 +11,8 @@ class CardFeed extends StatelessWidget {
       children: [
         for (FeedModel feed in feedList)
           Card(
+        color: Colors.grey.shade100,
+
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(

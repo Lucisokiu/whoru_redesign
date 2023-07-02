@@ -3,42 +3,54 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/page/appbar/appbar.dart';
 import 'package:whoru/src/page/home/widget/feed_cart.dart';
 import 'package:whoru/src/page/home/widget/story_widget.dart';
+import 'package:whoru/src/page/navigation/navigation.dart';
 // import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 // import 'package:lottie/lottie.dart';
 // import 'package:sizer/sizer.dart';
 // import 'package:whoru/src/page/appbar/appbar.dart';
 // import 'package:whoru/src/page/splash/splash.dart';
 
-class PostPage extends StatefulWidget {
-  const PostPage({super.key});
+class FeedPage extends StatefulWidget {
+  const FeedPage({super.key});
 
   @override
-  State<PostPage> createState() => _PostPageState();
+  State<FeedPage> createState() => _FeedPageState();
 }
 
-class _PostPageState extends State<PostPage> {
+class _FeedPageState extends State<FeedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(),
-      body: Column(
-        children: [
-          Expanded(child: Builder(builder: (context) {
-            return ListView(
-              scrollDirection: Axis.vertical,
-              children: [
-                storywidget(context),
-                const Divider(
-                  height: 1,
-                  color: Colors.grey,
-                ),
-                const CardFeed(),
-              ],
-            );
-          })),
-        ],
+      backgroundColor:         Colors.grey.shade200,
+      // appBar: const MyAppBar(),
+      body: 
+      SafeArea(
+        child: Column(
+          children: [
+      
+            const MyAppBar(),
+            
+            Expanded(child: Builder(builder: (context) {
+              return ListView(
+                scrollDirection: Axis.vertical,
+                children: [
+                  storywidget(context),
+                  const Divider(
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+                  const CardFeed(),
+                ],
+              );
+            })),
+          
+
+          // Navigation(),
+          ],
+        ),
       ),
     );
+  
   }
 }
 

@@ -9,24 +9,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-      toolbarHeight: 0.0, // Đặt chiều cao mới của AppBar
-    bottom: PreferredSize(
-      preferredSize: const Size.fromHeight(100.0),  
-      child: AppBar(
+    return SafeArea(
+      child: Container(
+        height: 90, // Chiều cao của Row
+        color: Colors.grey.shade200,
 
-      toolbarHeight: 54.0, // Đặt chiều cao mới của AppBar
-        // elevation: .0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
 
-      // shadowColor: Colors.black,
-      // backgroundColor: const Color.fromARGB(31, 187, 187, 187),
-      // backgroundColor: Colors.grey.shade300,
-
-      title:
-      Row(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconButton(
                 onPressed: () {
@@ -60,19 +50,17 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
             ),
-          ]),
-
-      actions: [
-
-        Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-
-          children: [
-
+            SizedBox(
+              width: 25.w,
+            ),
             _buildActionHome(
               context,
               'Show Snackbar',
               PhosphorIcons.chats_circle_fill,
+            ),
+            SizedBox(
+              // height: 50.h,
+              width: 3.w,
             ),
             _buildActionHome(
               context,
@@ -81,10 +69,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
         ),
-      ],
-    ),
-    ),
-        ),
+      ),
     );
   }
 
@@ -94,41 +79,35 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 Widget _buildActionHome(context, title, icon) {
   return Container(
-    width: 65, // Kích thước chiều rộng của container
-    height: 70, // Kích thước chiều cao của container
-    margin: EdgeInsets.only(bottom: 2.sp),
-    padding: EdgeInsets.all(5.sp),
-    alignment: Alignment.center,
-
-    decoration: BoxDecoration(
-      boxShadow: const [
-        BoxShadow(
-          color: Colors.purple,
-          spreadRadius: 1,
-          blurRadius: 2,
-          offset: Offset(2.0, 2.0),
+      width: 65, // Kích thước chiều rộng của container
+      height: 70, // Kích thước chiều cao của container
+      margin: EdgeInsets.only(bottom: 2.sp),
+      padding: EdgeInsets.all(5.sp),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.purple,
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: Offset(2.0, 2.0),
+          ),
+          BoxShadow(
+            color: Colors.white,
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(-1.0, -1.0),
+          ),
+        ],
+        color: Colors.grey.shade200,
+        shape: BoxShape.circle,
+      ),
+      child: GestureDetector(
+        onTap: () {},
+        child: Icon(
+          icon,
+          size: 18.sp,
+          color: const Color.fromARGB(255, 0, 0, 0),
         ),
-        BoxShadow(
-          color: Colors.white,
-          spreadRadius: 1,
-          blurRadius: 5,
-          offset: Offset(-1.0, -1.0),
-        ),
-      ],
-      color: Colors.grey.shade200,
-      shape: BoxShape.circle,
-    ),
-
-    child: GestureDetector
-    (
-      onTap: (){
-        
-      },
-    child : Icon(
-      icon,
-      size: 18.sp,
-      color: const Color.fromARGB(255, 0, 0, 0),
-    ),
-    )
-  );
+      ));
 }
