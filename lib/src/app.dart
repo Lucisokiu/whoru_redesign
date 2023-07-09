@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:whoru/src/page/home/page/feed_page.dart';
 import 'package:whoru/src/page/navigation/navigation.dart';
 
 class App extends StatefulWidget {

@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:whoru/src/page/appbar/appbar.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class ChatPage extends StatefulWidget {
+  const ChatPage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ChatPage> createState() => _ChatPageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      // appBar: const MyAppBar(),
       body: SafeArea(
         child: Column(
           children: [
             MyAppBar(),
             Text(
-              "Profile Page",
+              "Chat Page",
             )
           ],
         ),

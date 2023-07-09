@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
+import 'package:whoru/src/page/camera/camera_page.dart';
+import 'package:whoru/src/page/chat/chat_page.dart';
+import 'package:whoru/src/page/search/search_page.dart';
 import 'package:whoru/src/page/splash/splash.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -16,15 +19,16 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
-
           children: [
             IconButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              const SplashScreen()));
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SplashScreen(),
+                    ),
+                    (route) => false, // Xóa toàn bộ màn hình khỏi stack
+                  );
                 },
                 icon: SizedBox(
                   height: 15.h,
@@ -33,11 +37,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 )),
             IconButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const SplashScreen()));
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SplashScreen(),
+                  ),
+                  (route) => false, // Xóa toàn bộ màn hình khỏi stack
+                );
               },
               icon: Text.rich(
                 TextSpan(
@@ -55,8 +61,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             _buildActionHome(
               context,
-              'Show Snackbar',
-              PhosphorIcons.chats_circle_fill,
+              'Camera',
+              PhosphorIcons.chatCircleFill,
+              // PhosphorIcons.fill.chatCircle,
             ),
             SizedBox(
               // height: 50.h,
@@ -64,8 +71,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             _buildActionHome(
               context,
-              'Show Snackbar',
-              PhosphorIcons.chats_circle_fill,
+              'Chat',
+              PhosphorIcons.chatCircleFill,
+
+              // PhosphorIcons.fill.chatCircle,
             ),
           ],
         ),
@@ -78,32 +87,53 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 Widget _buildActionHome(context, title, icon) {
-  return Container(
-      width: 65, // Kích thước chiều rộng của container
-      height: 70, // Kích thước chiều cao của container
-      margin: EdgeInsets.only(bottom: 2.sp),
-      padding: EdgeInsets.all(5.sp),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.purple,
-            spreadRadius: 1,
-            blurRadius: 2,
-            offset: Offset(2.0, 2.0),
-          ),
-          BoxShadow(
-            color: Colors.white,
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: Offset(-1.0, -1.0),
-          ),
-        ],
-        color: Colors.grey.shade200,
-        shape: BoxShape.circle,
-      ),
-      child: GestureDetector(
-        onTap: () {},
+  return InkWell(
+      onTap: () {
+        if (title == "Camera") {
+          print("Camera");
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CameraPage(),
+            ),
+          );
+        }
+
+        if (title == "Chat") {
+          print("Chat");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatPage(),
+            ),
+          );
+        }
+      },
+      child: Container(
+        width: 65, // Kích thước chiều rộng của container
+        height: 70, // Kích thước chiều cao của container
+        margin: EdgeInsets.only(bottom: 2.sp),
+        padding: EdgeInsets.all(5.sp),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.purple,
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: Offset(2.0, 2.0),
+            ),
+            BoxShadow(
+              color: Colors.white,
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(-1.0, -1.0),
+            ),
+          ],
+          color: Colors.grey.shade200,
+          shape: BoxShape.circle,
+        ),
         child: Icon(
           icon,
           size: 18.sp,

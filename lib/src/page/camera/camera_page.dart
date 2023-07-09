@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:whoru/main.dart';
 import 'package:whoru/src/page/appbar/appbar.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class CameraPage extends StatefulWidget {
+  const CameraPage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<CameraPage> createState() => _CameraPageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      // appBar: const MyAppBar(),
       body: SafeArea(
         child: Column(
           children: [
             MyAppBar(),
             Text(
-              "Profile Page",
+              "Camera Page",
             )
           ],
         ),

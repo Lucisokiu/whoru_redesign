@@ -1,21 +1,13 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
-
-// import 'package:stylish_bottom_bar/model/bar_items.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:whoru/src/page/home/page/feed_page.dart';
 import 'package:whoru/src/page/location/location_page.dart';
 import 'package:whoru/src/page/navigation/style_nav/helpers/enums.dart';
-
 import 'package:whoru/src/page/navigation/style_nav/model/options.dart';
-
-// import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:whoru/src/page/navigation/style_nav/bottom_bar.dart';
 import 'package:whoru/src/page/navigation/style_nav/model/bar_items.dart';
 import 'package:whoru/src/page/profile/profile_page.dart';
 import 'package:whoru/src/page/search/search_page.dart';
-
-// import 'package:whoru/src/page/navigation/style_nav/model/stylish_bottom_bar.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
@@ -42,33 +34,28 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
-    // bool 
+    // bool
     return Scaffold(
-      floatingActionButton:
-      Visibility(
-      visible: currentPage == 0,
-      child : FloatingActionButton( //Floating action button on Scaffold
-      onPressed: (){
-          //code to execute on button press
-      },
-      // shape
-      child: const Icon(Icons.add),
-  ),
-
+      floatingActionButton: Visibility(
+        visible: currentPage == 0,
+        child: FloatingActionButton(
+          //Floating action button on Scaffold
+          onPressed: () {
+            //code to execute on button press
+          },
+          // shape
+          child: const Icon(Icons.add),
+        ),
       ),
-    floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       extendBody: true,
-
-
-      bottomNavigationBar:
-      ClipRRect(
-      borderRadius: const BorderRadius.only(
-        topRight: Radius.circular(70),
-        topLeft: Radius.circular(70),
-      ),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(32),
+          topLeft: Radius.circular(32),
+        ),
         child: StylishBottomBar(
           option: AnimatedBarOptions(
-            
             padding: const EdgeInsets.only(top: 15.0),
             inkColor: Colors.grey,
             barAnimation: BarAnimation.transform3D,
@@ -78,23 +65,35 @@ class _NavigationState extends State<Navigation> {
           ),
           items: [
             BottomBarItem(
-              icon: const Icon(PhosphorIcons.house_line_fill),
+              icon: Icon(
+                // PhosphorIcons.fill.hourglassSimple,
+                PhosphorIcons.chatCircleFill,
+              ),
               title: const Text('Home'),
               // backgroundColor: Colors.blue,
               // selectedIcon: const Icon(Icons.read_more),
             ),
             BottomBarItem(
-              icon: const Icon(PhosphorIcons.magnifying_glass_light),
+              icon: Icon(
+                // PhosphorIcons.light.magnifyingGlass
+                PhosphorIcons.chatCircleFill,
+              ),
               title: const Text('Find'),
-              // backgroundColor: Colors.orange,
             ),
             BottomBarItem(
-              icon: const Icon(PhosphorIcons.globe_hemisphere_east_fill),
+              icon: Icon(
+                PhosphorIcons.chatCircleFill,
+
+                // PhosphorIcons.fill.globeHemisphereEast
+              ),
               title: const Text('Location'),
-              // backgroundColor: Colors.purple,
             ),
             BottomBarItem(
-              icon: const Icon(PhosphorIcons.user_circle_fill),
+              icon: Icon(
+                PhosphorIcons.chatCircleFill,
+
+                // PhosphorIcons.fill.userCircle
+              ),
               title: const Text('User'),
               // backgroundColor: Colors.purple,
             ),
@@ -109,16 +108,12 @@ class _NavigationState extends State<Navigation> {
           },
         ),
       ),
-      
-      body: 
-        _screens[currentPage],
+      body: _screens[currentPage],
     );
   }
 }
 
-
-
-// custom 
+// custom
 //       bottomNavigationBar: StylishBottomBar(
 //         // backgroundColor: Colors.lightBlue,
 // //  option: AnimatedBarOptions(
@@ -128,7 +123,7 @@ class _NavigationState extends State<Navigation> {
 // //    opacity: 0.3,
 // //  ),
 //         option: AnimatedBarOptions(
-          
+
 //           padding: const EdgeInsets.only(top: 15.0),
 //           inkColor: Colors.grey,
 //           barAnimation: BarAnimation.transform3D,

@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'package:whoru/src/model/feed.dart';
 import 'package:whoru/src/page/appbar/appbar.dart';
 import 'package:whoru/src/page/home/widget/feed_cart.dart';
 import 'package:whoru/src/page/home/widget/story_widget.dart';
-import 'package:whoru/src/page/navigation/navigation.dart';
-// import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
-// import 'package:lottie/lottie.dart';
-// import 'package:sizer/sizer.dart';
-// import 'package:whoru/src/page/appbar/appbar.dart';
-// import 'package:whoru/src/page/splash/splash.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key});
@@ -21,15 +15,12 @@ class _FeedPageState extends State<FeedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:         Colors.grey.shade200,
-      // appBar: const MyAppBar(),
-      body: 
-      SafeArea(
+      backgroundColor: Colors.grey.shade200,
+      body: SafeArea(
         child: Column(
           children: [
-      
             const MyAppBar(),
-            
+
             Expanded(child: Builder(builder: (context) {
               return ListView(
                 scrollDirection: Axis.vertical,
@@ -39,18 +30,15 @@ class _FeedPageState extends State<FeedPage> {
                     height: 1,
                     color: Colors.grey,
                   ),
-                  const CardFeed(),
+                  for (FeedModel feedModel in feedList)
+                    CardFeed(feedModel: feedModel),
                 ],
               );
             })),
-          
-
-          // Navigation(),
           ],
         ),
       ),
     );
-  
   }
 }
 
