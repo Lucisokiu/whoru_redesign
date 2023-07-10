@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/page/camera/camera_page.dart';
-import 'package:whoru/src/page/chat/chat_page.dart';
-import 'package:whoru/src/page/search/search_page.dart';
-import 'package:whoru/src/page/splash/splash.dart';
+import 'package:whoru/src/pages/camera/camera_page.dart';
+import 'package:whoru/src/pages/chat/chat_page.dart';
+import 'package:whoru/src/pages/search/search_page.dart';
+import 'package:whoru/src/pages/splash/splash.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:whoru/src/model/feed.dart';
-import 'package:whoru/src/page/appbar/appbar.dart';
-import 'package:whoru/src/page/home/widget/feed_cart.dart';
-import 'package:whoru/src/page/home/widget/story_widget.dart';
+import 'package:whoru/src/pages/appbar/appbar.dart';
+import 'package:whoru/src/pages/home/widget/feed_cart.dart';
+import 'package:whoru/src/pages/home/widget/story_widget.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key});
@@ -20,6 +20,7 @@ class _FeedPageState extends State<FeedPage> {
         child: Column(
           children: [
             const MyAppBar(),
+            
 
             Expanded(child: Builder(builder: (context) {
               return ListView(

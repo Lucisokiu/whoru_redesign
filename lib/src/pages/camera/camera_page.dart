@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:whoru/src/page/appbar/appbar.dart';
+import 'package:whoru/main.dart';
+import 'package:whoru/src/pages/appbar/appbar.dart';
 
-class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+class CameraPage extends StatefulWidget {
+  const CameraPage({super.key});
 
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  State<CameraPage> createState() => _CameraPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -17,7 +18,7 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             MyAppBar(),
             Text(
-              "Chat Page",
+              "Camera Page",
             )
           ],
         ),

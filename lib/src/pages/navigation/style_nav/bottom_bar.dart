@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:whoru/src/page/navigation/style_nav/helpers/bottom_bar.dart';
-import 'package:whoru/src/page/navigation/style_nav/helpers/enums.dart';
-import 'package:whoru/src/page/navigation/style_nav/model/bar_items.dart';
-import 'package:whoru/src/page/navigation/style_nav/model/options.dart';
+import 'package:whoru/src/pages/navigation/style_nav/helpers/bottom_bar.dart';
+import 'package:whoru/src/pages/navigation/style_nav/helpers/enums.dart';
+import 'package:whoru/src/pages/navigation/style_nav/model/bar_items.dart';
+import 'package:whoru/src/pages/navigation/style_nav/model/options.dart';
 import 'anim_nav/animated_nav_tiles.dart';
 // import 'bubble_nav_bar/bubble_navigation_tile.dart';
 import 'helpers/cliper.dart';

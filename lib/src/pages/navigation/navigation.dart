@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:whoru/src/page/home/page/feed_page.dart';
-import 'package:whoru/src/page/location/location_page.dart';
-import 'package:whoru/src/page/navigation/style_nav/helpers/enums.dart';
-import 'package:whoru/src/page/navigation/style_nav/model/options.dart';
-import 'package:whoru/src/page/navigation/style_nav/bottom_bar.dart';
-import 'package:whoru/src/page/navigation/style_nav/model/bar_items.dart';
-import 'package:whoru/src/page/profile/profile_page.dart';
-import 'package:whoru/src/page/search/search_page.dart';
+import 'package:whoru/src/pages/home/page/feed_page.dart';
+import 'package:whoru/src/pages/location/location_page.dart';
+import 'package:whoru/src/pages/navigation/style_nav/helpers/enums.dart';
+import 'package:whoru/src/pages/navigation/style_nav/model/options.dart';
+import 'package:whoru/src/pages/navigation/style_nav/bottom_bar.dart';
+import 'package:whoru/src/pages/navigation/style_nav/model/bar_items.dart';
+import 'package:whoru/src/pages/profile/profile_page.dart';
+import 'package:whoru/src/pages/search/search_page.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});

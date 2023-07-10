@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whoru/src/page/navigation/navigation.dart';
+import 'package:whoru/src/pages/navigation/navigation.dart';
 
 class App extends StatefulWidget {
   const App({super.key});

@@ -19,3 +19,28 @@ UserModel user = UserModel(
       'https://images.ctfassets.net/23aumh6u8s0i/4TsG2mTRrLFhlQ9G1m19sC/4c9f98d56165a0bdd71cbe7b9c2e2484/flutter',
   contact: "123",
 );
+
+
+List<UserModel> listUsers = [
+UserModel(
+  id: 1,
+  username: "Nhut",
+  avt:
+      'https://images.ctfassets.net/23aumh6u8s0i/4TsG2mTRrLFhlQ9G1m19sC/4c9f98d56165a0bdd71cbe7b9c2e2484/flutter',
+  contact: "123",
+),
+UserModel(
+  id: 2,
+  username: "Dat",
+  avt:
+      'https://images.ctfassets.net/23aumh6u8s0i/4TsG2mTRrLFhlQ9G1m19sC/4c9f98d56165a0bdd71cbe7b9c2e2484/flutter',
+  contact: "123",
+),
+UserModel(
+  id: 3,
+  username: "Giang",
+  avt:
+      'https://images.ctfassets.net/23aumh6u8s0i/4TsG2mTRrLFhlQ9G1m19sC/4c9f98d56165a0bdd71cbe7b9c2e2484/flutter',
+  contact: "123",
+),
+];

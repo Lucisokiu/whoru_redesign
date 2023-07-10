@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/page/splash/splash.dart';
+import 'package:whoru/src/pages/splash/splash.dart';
 
 void main() {
   runApp(const MyApp());
