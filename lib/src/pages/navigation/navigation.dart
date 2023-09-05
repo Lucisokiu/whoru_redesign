@@ -34,82 +34,92 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
-    // bool
     return Scaffold(
-      floatingActionButton: Visibility(
-        visible: currentPage == 0,
-        child: FloatingActionButton(
-          //Floating action button on Scaffold
-          onPressed: () {
-            //code to execute on button press
-          },
-          // shape
-          child: const Icon(Icons.add),
+        resizeToAvoidBottomInset: false,
+        extendBody: true,
+        body: Container(
+          child: _screens[currentPage],
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      extendBody: true,
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(32),
-          topLeft: Radius.circular(32),
-        ),
-        child: StylishBottomBar(
-          option: AnimatedBarOptions(
-            padding: const EdgeInsets.only(top: 15.0),
-            inkColor: Colors.grey,
-            barAnimation: BarAnimation.transform3D,
-            inkEffect: true,
-            iconStyle: IconStyle.animated,
-            opacity: 0.8,
+        bottomNavigationBar: Container(
+          // color : Colors.transparent,
+          padding: const EdgeInsets.all(12),
+          // margin: EdgeInsets.symmetric(horizontal: 24),
+          // margin: const EdgeInsets.all(16),
+          margin: EdgeInsets.fromLTRB(24, 16, 24, 16),
+          decoration: BoxDecoration(
+            // color: Colors.black87.withOpacity(0.8),
+            color: Colors.black87.withOpacity(0.8),
+
+            borderRadius: BorderRadius.all(Radius.circular(24)),
+            //       gradient: LinearGradient(
+            //   begin: Alignment.topCenter,
+            //   end: Alignment.bottomCenter,
+            //   colors: [Colors.black87, Colors.transparent],
+            // ),
           ),
-          items: [
-            BottomBarItem(
-              icon: Icon(
-                // PhosphorIcons.fill.hourglassSimple,
-                PhosphorIcons.chatCircleFill,
-              ),
-              title: const Text('Home'),
-              // backgroundColor: Colors.blue,
-              // selectedIcon: const Icon(Icons.read_more),
-            ),
-            BottomBarItem(
-              icon: Icon(
-                // PhosphorIcons.light.magnifyingGlass
-                PhosphorIcons.chatCircleFill,
-              ),
-              title: const Text('Find'),
-            ),
-            BottomBarItem(
-              icon: Icon(
-                PhosphorIcons.chatCircleFill,
 
-                // PhosphorIcons.fill.globeHemisphereEast
-              ),
-              title: const Text('Location'),
-            ),
-            BottomBarItem(
-              icon: Icon(
-                PhosphorIcons.chatCircleFill,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment
+                .spaceBetween, // Căn các widget con theo khoảng cách đều nhau
 
-                // PhosphorIcons.fill.userCircle
+            children: [
+              IconButton(
+                iconSize: 36,
+                icon: Icon(currentPage == 0
+                    ? PhosphorIcons.fill.house
+                    : PhosphorIcons.thin.house),
+                color: Colors.white,
+                onPressed: () {
+                  print("Home");
+
+                  // Switch to the Home page
+                  setState(() {
+                    currentPage = 0;
+                  });
+                },
               ),
-              title: const Text('User'),
-              // backgroundColor: Colors.purple,
-            ),
-          ],
-          fabLocation: StylishBarFabLocation.center,
-          hasNotch: true,
-          currentIndex: currentPage,
-          onTap: (index) {
-            setState(() {
-              currentPage = index;
-            });
-          },
-        ),
-      ),
-      body: _screens[currentPage],
-    );
+              IconButton(
+                iconSize: 36,
+                icon: Icon(currentPage == 1
+                    ? PhosphorIcons.fill.magnifyingGlass
+                    : PhosphorIcons.thin.magnifyingGlass),
+                color: Colors.white,
+                onPressed: () {
+                  print("Chat");
+                  setState(() {
+                    currentPage = 1;
+                  });
+                },
+              ),
+              IconButton(
+                iconSize: 36,
+                icon: Icon(currentPage == 2
+                    ? PhosphorIcons.fill.globeHemisphereWest
+                    : PhosphorIcons.thin.globeHemisphereWest),
+                color: Colors.white,
+                onPressed: () {
+                  print("Location");
+                  setState(() {
+                    currentPage = 2;
+                  });
+                },
+              ),
+              IconButton(
+                iconSize: 36,
+                icon: Icon(currentPage == 3
+                    ? PhosphorIcons.fill.userCircle
+                    : PhosphorIcons.thin.userCircle),
+                color: Colors.white,
+                onPressed: () {
+                  print("Profile");
+                  setState(() {
+                    currentPage = 3;
+                  });
+                },
+              ),
+            ],
+          ),
+        ));
   }
 }
 

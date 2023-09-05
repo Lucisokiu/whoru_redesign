@@ -17,6 +17,7 @@ class _FeedPageState extends State<FeedPage> {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       body: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             const MyAppBar(),

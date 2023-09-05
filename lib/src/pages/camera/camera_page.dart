@@ -18,7 +18,7 @@ class _CameraPageState extends State<CameraPage> {
           children: [
             MyAppBar(),
             Text(
-              "Camera Page",
+              "Game Page",
             )
           ],
         ),

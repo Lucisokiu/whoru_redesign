@@ -13,8 +13,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      bottom: false,
       child: Container(
-        height: 90, // Chiều cao của Row
+        height: 100, // Chiều cao của Row
         color: Colors.grey.shade200,
 
         child: Row(
@@ -58,21 +59,22 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             SizedBox(
               width: 25.w,
+              // height: 0.h,
             ),
             _buildActionHome(
               context,
               'Camera',
-              PhosphorIcons.chatCircleFill,
+              PhosphorIcons.fill.gameController,
               // PhosphorIcons.fill.chatCircle,
             ),
             SizedBox(
-              // height: 50.h,
+              // height: 0.h,
               width: 3.w,
             ),
             _buildActionHome(
               context,
               'Chat',
-              PhosphorIcons.chatCircleFill,
+              PhosphorIcons.fill.chatTeardrop,
 
               // PhosphorIcons.fill.chatCircle,
             ),

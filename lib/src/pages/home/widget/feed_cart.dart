@@ -72,8 +72,8 @@ class CardFeed extends StatelessWidget {
                           onPressed: () {},
                           icon: Icon(
                             color: Colors.black,
-                            // PhosphorIcons.fill.dotsThreeOutlineVertical,
-                            PhosphorIcons.chatCircleFill,
+                            PhosphorIcons.fill.dotsThreeOutlineVertical,
+                            // PhosphorIcons.chatCircleFill,
 
                             size: 20.0,
                           )),
@@ -112,18 +112,18 @@ class CardFeed extends StatelessWidget {
                     children: [
                       SizedBox(width: 5.0),
                       _buildButton(
-                          // PhosphorIcons.thin.heart,
-                          PhosphorIcons.chatCircleFill,
+                          PhosphorIcons.thin.heart,
+                          // PhosphorIcons.chatCircleFill,
                           feedModel.likeCount.toString()),
                       SizedBox(width: 5.0),
                       _buildButton(
-                          // PhosphorIcons.thin.chatTeardrop,
-                          PhosphorIcons.chatCircleFill,
+                          PhosphorIcons.thin.chatTeardrop,
+                          // PhosphorIcons.chatCircleFill,
                           feedModel.commentCount.toString()),
                       Spacer(),
                       _buildButton(
-                          // PhosphorIcons.thin.shareFat,
-                          PhosphorIcons.chatCircleFill,
+                          PhosphorIcons.thin.shareFat,
+                          // PhosphorIcons.chatCircleFill,
                           feedModel.shareCount.toString()),
                     ],
                   ),
@@ -318,7 +318,7 @@ class CardFeed extends StatelessWidget {
                           child: Text(
                             '${listImage.length - 3}+',
                             style: TextStyle(
-                              color: (Colors.blue[300]),
+                              color: (Colors.white),
                               fontWeight: FontWeight.w400,
                               fontSize: _size.width / 16.0,
                               fontFamily: 'Lato',

@@ -15,32 +15,37 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.cyan,
+        backgroundColor: Colors.grey.shade200,
         elevation: 0.0,
         title: Text("Search"),
         actions: [
           IconButton(
-            onPressed: () => {
-              showSearch(
-                context: context,
-                delegate: CustomSearch(),
-                )
-            },
-             icon: Icon(
-              Icons.search, 
-              size: 30.0,
-             )
-
-             )
+              onPressed: () => {
+                    showSearch(
+                      context: context,
+                      delegate: CustomSearch(),
+                    )
+                  },
+              icon: Icon(
+                Icons.search,
+                size: 30.0,
+              ))
         ],
       ),
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // MyAppBar(),
-            
-            Text(
-              "Search Page",
+
+            Center(
+              child: Text(
+                "enter information",
+                style: TextStyle(
+                  fontSize: 20, // Điều chỉnh kích thước chữ ở đây
+                  // fontWeight: FontWeight.bold, // Tô đậm văn bản
+                ),
+              ),
             )
           ],
         ),

@@ -283,7 +283,7 @@ class _StylishBottomBarState extends State<StylishBottomBar>
       child: widget.hasNotch
           ? PhysicalShape(
               elevation: widget.elevation,
-              color: widget.backgroundColor ?? Colors.white,
+              color: widget.backgroundColor ?? Colors.black,
               shadowColor: widget.backgroundColor ?? Colors.blueAccent,
               clipper: BarClipper(
                 shape: isUsingMaterial3
@@ -326,13 +326,13 @@ class _StylishBottomBarState extends State<StylishBottomBar>
           : Material(
               elevation: widget.elevation,
               // shadowColor: _backgroundColor,
-              // color: widget.backgroundColor ?? Colors.white,
+              color: widget.backgroundColor ?? Colors.black,
               borderRadius: widget.borderRadius,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: widget.borderRadius,
                   gradient: widget.gradient,
-                  color: widget.backgroundColor ?? Colors.white,
+                  color: widget.backgroundColor ?? Colors.black,
                 ),
                 child: innerWidget(
                     context,

@@ -43,8 +43,8 @@ dependencies:
 
   #Icon
   cupertino_icons: ^1.0.2
-  phosphor_flutter: ^1.4.0
-  # phosphor_flutter: ^2.0.0
+  # phosphor_flutter: ^1.4.0
+  phosphor_flutter: ^2.0.0
 
   lottie: ^2.4.0
 
@@ -58,8 +58,12 @@ dependencies:
   # blurhash: ^1.0.0
 
   # ý tưỡng dùng rive design lại navbar nhưng làm xong rồi design sau :3
-  # rive: ^0.11.4
+  rive: ^0.11.4
   # flutter_svg: ^1.1.6
+
+  #location
+  geolocator: ^10.0.0
+
 
 dev_dependencies:
   flutter_test:
