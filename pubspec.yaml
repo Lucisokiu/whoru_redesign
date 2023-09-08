@@ -60,10 +60,10 @@ dependencies:
   # ý tưỡng dùng rive design lại navbar nhưng làm xong rồi design sau :3
   rive: ^0.11.4
   # flutter_svg: ^1.1.6
+  provider: ^6.0.5
 
   #location
-  geolocator: ^10.0.0
-
+  location: ^5.0.3
 
 dev_dependencies:
   flutter_test:

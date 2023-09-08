@@ -44,7 +44,7 @@ class _TabBarProfileState extends State<TabBarProfile>
           ]),
           Expanded(
             child: Container(
-              color: Colors.amber,
+              color: Colors.transparent,
               child: TabBarView(
                 controller: _tabController,
                 children: [

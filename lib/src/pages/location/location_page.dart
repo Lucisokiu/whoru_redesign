@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
+import 'package:whoru/src/model/locationModels.dart';
 import 'package:whoru/src/pages/appbar/appbar.dart';
 
 class LocationPage extends StatefulWidget {
@@ -12,6 +13,8 @@ class LocationPage extends StatefulWidget {
 class _LocationPageState extends State<LocationPage> {
   @override
   Widget build(BuildContext context) {
+      var userLocation = Provider.of<UserLocation>(context);
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -33,11 +36,11 @@ class _LocationPageState extends State<LocationPage> {
                 ),
               ),
               child: Text(
-                "Find Current Location",
+                "Find Current Location: ${userLocation.latitude} and ${userLocation.longitude}" ,
                 style: TextStyle(color: Colors.black),
               ),
               onPressed: () {
-                _displayCurrentLocation();
+
               },
             )
           ],
@@ -47,8 +50,3 @@ class _LocationPageState extends State<LocationPage> {
   }
 }
 
-void _displayCurrentLocation() async {
-  // final _location = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-
-}
