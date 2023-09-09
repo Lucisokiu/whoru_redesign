@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whoru/src/model/locationModels.dart';
 import 'package:whoru/src/pages/appbar/appbar.dart';
+import 'package:whoru/src/pages/location/widget/map_widget.dart';
+import 'package:whoru/src/service/location_service.dart';
 
 class LocationPage extends StatefulWidget {
   const LocationPage({super.key});
@@ -13,8 +15,6 @@ class LocationPage extends StatefulWidget {
 class _LocationPageState extends State<LocationPage> {
   @override
   Widget build(BuildContext context) {
-      var userLocation = Provider.of<UserLocation>(context);
-
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -36,17 +36,17 @@ class _LocationPageState extends State<LocationPage> {
                 ),
               ),
               child: Text(
-                "Find Current Location: ${userLocation.latitude} and ${userLocation.longitude}" ,
+                "Find Current Location",
                 style: TextStyle(color: Colors.black),
               ),
               onPressed: () {
-
+                // MapStateWidgetState();
               },
-            )
+            ),
+            MapStateWidgetState(),
           ],
         ),
       ),
     );
   }
 }
-

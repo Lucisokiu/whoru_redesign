@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:ui';
 import 'package:location/location.dart';
 import 'package:whoru/src/model/locationModels.dart';
 
