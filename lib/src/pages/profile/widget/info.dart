@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:whoru/src/model/user.dart';
-import 'package:whoru/src/pages/profile/widget/tabbar_profile.dart';
 
 Widget info(BuildContext context) {
   final double screenHeight = MediaQuery.of(context).size.height;
@@ -12,7 +11,7 @@ Widget info(BuildContext context) {
         height: 150,
         width: 150,
         margin: EdgeInsets.only(top: screenHeight * 0.22),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             shape: BoxShape.circle,
             // color: Colors.grey.shade200,
             color: Colors.black),
@@ -27,7 +26,7 @@ Widget info(BuildContext context) {
     ),
     Text(
       user.username,
-      style: TextStyle(
+      style: const TextStyle(
         fontFamily: "Lato",
         fontWeight: FontWeight.bold,
         fontSize: 24,
@@ -40,7 +39,7 @@ Widget info(BuildContext context) {
       children: [
         Expanded(
           child: Container(
-            child: Column(
+            child: const Column(
               children: [
                 Text(
                   "99",
@@ -63,7 +62,7 @@ Widget info(BuildContext context) {
         ),
         Expanded(
           child: Container(
-            child: Column(
+            child: const Column(
               children: [
                 Text(
                   "19",
@@ -86,7 +85,7 @@ Widget info(BuildContext context) {
         ),
         Expanded(
           child: Container(
-            child: Column(
+            child: const Column(
               children: [
                 Text(
                   "999",

@@ -3,6 +3,7 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/splash/splash.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized;
   runApp(const MyApp());
 }
 
@@ -24,12 +25,14 @@ class MyApp extends StatelessWidget {
             builder: (context, orientation, deviceType) {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                title: 'Sizer',
+                title: 'Whoru',
                 theme: ThemeData(
                   colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
                   useMaterial3: true,
                 ),
-                home: const SplashScreen(),
+                home: 
+                // LoginScreen(),
+                const SplashScreen(),
                 // home: EntryPoint(),
     
               );

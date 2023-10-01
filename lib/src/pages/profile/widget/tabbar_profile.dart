@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:sizer/sizer.dart';
 import 'package:whoru/src/model/feed.dart';
+import 'package:whoru/src/model/user.dart';
 
 class TabBarProfile extends StatefulWidget {
   const TabBarProfile({super.key});
@@ -32,7 +32,7 @@ class _TabBarProfileState extends State<TabBarProfile>
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           TabBar(controller: _tabController, tabs: [
-            Tab(
+            const Tab(
               icon: Icon(Icons.view_headline_sharp),
             ),
             Tab(
@@ -44,13 +44,14 @@ class _TabBarProfileState extends State<TabBarProfile>
           ]),
           Expanded(
             child: Container(
-              color: Colors.transparent,
+              alignment: Alignment.center,
+              color: const Color.fromARGB(0, 196, 44, 44),
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  photo_profile(context),
-                  photo_profile(context),
-                  photo_profile(context),
+                  photoProfile(context),
+                  photoProfile(context),
+                  photoProfile(context),
                 ],
               ),
             ),
@@ -61,30 +62,28 @@ class _TabBarProfileState extends State<TabBarProfile>
   }
 }
 
-Widget photo_profile(BuildContext context) {
-  return ListView(
-    children: [
-      Wrap(
-        children: [
-          for (int i = 0; i < feedList.length + 50; i++)
-            Padding(
-              padding: const EdgeInsets.only(left: 1),
-              child: yourPicture(context, feedList[0].imageUrls[0]),
-            ),
-        ],
-      ),
-    ],
+Widget photoProfile(BuildContext context) {
+  return GridView.builder(
+    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 4,
+      crossAxisSpacing: 1.0,
+      mainAxisSpacing: 2.0,
+      // childAspectRatio: 1.1,
+    ),
+    itemBuilder: (BuildContext context, int index) {
+      return Padding(
+        padding: const EdgeInsets.only(left: 1),
+        child: yourPicture(context, user.avt),
+      );
+    },
+    itemCount: feedList.length,
   );
 }
 
-Column yourPicture(BuildContext context, urlImage) {
-  return Column(
-    children: [
-      Image.network(
-        urlImage,
-        fit: BoxFit.fill,
-        height: 10.5.h,
-      ),
-    ],
+Widget yourPicture(BuildContext context, urlImage) {
+  return Image.network(
+    urlImage,
+    fit: BoxFit.fill,
+    // height: 10.5.h,
   );
 }

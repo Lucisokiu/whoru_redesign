@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:whoru/main.dart';
 import 'package:whoru/src/pages/appbar/appbar.dart';
 
 class CameraPage extends StatefulWidget {

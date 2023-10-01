@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:whoru/src/model/feed.dart';
 import 'package:whoru/src/pages/appbar/appbar.dart';
 import 'package:whoru/src/pages/home/widget/feed_cart.dart';
@@ -21,17 +22,12 @@ class _FeedPageState extends State<FeedPage> {
         child: Column(
           children: [
             const MyAppBar(),
-            
-
             Expanded(child: Builder(builder: (context) {
               return ListView(
                 scrollDirection: Axis.vertical,
                 children: [
                   storywidget(context),
-                  const Divider(
-                    height: 1,
-                    color: Colors.grey,
-                  ),
+                  SizedBox(height: 2.h),
                   for (FeedModel feedModel in feedList)
                     CardFeed(feedModel: feedModel),
                 ],

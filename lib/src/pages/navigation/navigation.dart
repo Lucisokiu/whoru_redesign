@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:whoru/src/pages/home/page/feed_page.dart';
 import 'package:whoru/src/pages/location/location_page.dart';
-import 'package:whoru/src/pages/navigation/style_nav/helpers/enums.dart';
-import 'package:whoru/src/pages/navigation/style_nav/model/options.dart';
-import 'package:whoru/src/pages/navigation/style_nav/bottom_bar.dart';
-import 'package:whoru/src/pages/navigation/style_nav/model/bar_items.dart';
 import 'package:whoru/src/pages/profile/profile_page.dart';
 import 'package:whoru/src/pages/search/search_page.dart';
 
@@ -45,12 +41,12 @@ class _NavigationState extends State<Navigation> {
           padding: const EdgeInsets.all(12),
           // margin: EdgeInsets.symmetric(horizontal: 24),
           // margin: const EdgeInsets.all(16),
-          margin: EdgeInsets.fromLTRB(24, 16, 24, 16),
+          margin: const EdgeInsets.fromLTRB(24, 16, 24, 16),
           decoration: BoxDecoration(
             // color: Colors.black87.withOpacity(0.8),
             color: Colors.black87.withOpacity(0.8),
 
-            borderRadius: BorderRadius.all(Radius.circular(24)),
+            borderRadius: const BorderRadius.all(Radius.circular(24)),
             //       gradient: LinearGradient(
             //   begin: Alignment.topCenter,
             //   end: Alignment.bottomCenter,
@@ -94,8 +90,10 @@ class _NavigationState extends State<Navigation> {
               IconButton(
                 iconSize: 36,
                 icon: Icon(currentPage == 2
-                    ? PhosphorIcons.fill.globeHemisphereWest
-                    : PhosphorIcons.thin.globeHemisphereWest),
+                    // ? PhosphorIcons.fill.globeHemisphereWest
+                    // : PhosphorIcons.thin.globeHemisphereWest),
+                    ? PhosphorIcons.fill.mapPinLine
+                    : PhosphorIcons.light.mapPinLine),
                 color: Colors.white,
                 onPressed: () {
                   print("Location");

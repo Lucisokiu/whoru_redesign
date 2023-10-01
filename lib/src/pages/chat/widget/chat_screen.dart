@@ -10,7 +10,7 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey,
       body: Padding(
-        padding: EdgeInsets.only(left: 14.0, right: 14),
+        padding: const EdgeInsets.only(left: 14.0, right: 14),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +40,7 @@ class ChatScreen extends StatelessWidget {
                         fontFamily: ('Quicksand'),
                         color: Colors.white),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   const Icon(
                     Icons.search_rounded,
                     color: Colors.white70,
@@ -48,7 +48,7 @@ class ChatScreen extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               const Center(
@@ -57,7 +57,7 @@ class ChatScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.white70),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               Row(
@@ -76,7 +76,7 @@ class ChatScreen extends StatelessWidget {
 
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color(0xff373E4E)),
+                        color: const Color(0xff373E4E)),
                     child: const Padding(
                       padding: EdgeInsets.all(10.0),
                       child: Text(
@@ -89,7 +89,7 @@ class ChatScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -102,7 +102,7 @@ class ChatScreen extends StatelessWidget {
 
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color(0xff7A8194)),
+                        color: const Color(0xff7A8194)),
                     child: const Padding(
                       padding: EdgeInsets.all(10.0),
                       child: Text(
@@ -115,7 +115,7 @@ class ChatScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -130,7 +130,7 @@ class ChatScreen extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color(0xff373E4E)),
+                        color: const Color(0xff373E4E)),
                     child: const Padding(
                       padding: EdgeInsets.all(10.0),
                       child: Text(
@@ -143,10 +143,10 @@ class ChatScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               const Center(
@@ -155,7 +155,7 @@ class ChatScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.white70),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -168,7 +168,7 @@ class ChatScreen extends StatelessWidget {
 
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color(0xff7A8194)),
+                        color: const Color(0xff7A8194)),
                     child: const Padding(
                       padding: EdgeInsets.all(10.0),
                       child: Text(
@@ -181,7 +181,7 @@ class ChatScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -194,7 +194,7 @@ class ChatScreen extends StatelessWidget {
                     // width: 70.w,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color(0xff7A8194)),
+                        color: const Color(0xff7A8194)),
                     child: const Padding(
                       padding: EdgeInsets.all(10.0),
                       child: Text(
@@ -215,7 +215,7 @@ class ChatScreen extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Color(0xff3D4354)),
+                      color: const Color(0xff3D4354)),
                   child: Row(
                     children: [
                       Padding(
@@ -226,17 +226,17 @@ class ChatScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                               color: Colors.white30,
                               borderRadius: BorderRadius.circular(50)),
-                          child: Icon(Icons.camera_alt_outlined),
+                          child: const Icon(Icons.camera_alt_outlined),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       const Text(
                         'Message',
                         style: TextStyle(color: Colors.white54),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       const Padding(
                         padding: EdgeInsets.only(right: 8.0),
                         child: Icon(

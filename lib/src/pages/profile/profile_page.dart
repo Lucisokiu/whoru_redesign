@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:whoru/src/model/user.dart';
-import 'package:whoru/src/pages/appbar/appbar.dart';
 import 'package:whoru/src/pages/profile/widget/info.dart';
 import 'package:whoru/src/pages/profile/widget/tabbar_profile.dart';
 
@@ -46,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           //   topLeft: Radius.circular(40),
                           //   topRight: Radius.circular(40),
                           // ),
-                          borderRadius: BorderRadius.vertical(
+                          borderRadius: const BorderRadius.vertical(
                             top: Radius.circular(40), // Bán kính góc trên
                           ),
                         ),
@@ -55,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           info(context),
-                          TabBarProfile(),
+                          const TabBarProfile(),
                         ],
                       )
                       // info(context),

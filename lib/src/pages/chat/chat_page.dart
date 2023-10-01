@@ -54,7 +54,7 @@ class _ChatPageState extends State<ChatPage> {
             Container(
                 padding: EdgeInsets.fromLTRB(1.w, 0, 1.w, 0),
 
-            child: Text(
+            child: const Text(
               'R E C E N T',
               style: TextStyle(
                 color: Colors.black,
@@ -79,7 +79,7 @@ class _ChatPageState extends State<ChatPage> {
                           SizedBox(
                             height: 0.5.h,
                           ),
-                          Text(
+                          const Text(
                             'Barry',
                             style: TextStyle(color: Colors.black, fontSize: 18),
                           )
@@ -99,7 +99,7 @@ class _ChatPageState extends State<ChatPage> {
                           SizedBox(
                             height: 0.5.h,
                           ),
-                          Text(
+                          const Text(
                             'Perez',
                             style: TextStyle(color: Colors.black, fontSize: 18),
                           )
@@ -119,7 +119,7 @@ class _ChatPageState extends State<ChatPage> {
                           SizedBox(
                             height: 0.5.h,
                           ),
-                          Text(
+                          const Text(
                             'Alvin',
                             style: TextStyle(color: Colors.black, fontSize: 18),
                           )
@@ -139,7 +139,7 @@ class _ChatPageState extends State<ChatPage> {
                           SizedBox(
                             height: 0.5.h,
                           ),
-                          Text(
+                          const Text(
                             'Dan',
                             style: TextStyle(color: Colors.black, fontSize: 18),
                           )
@@ -159,7 +159,7 @@ class _ChatPageState extends State<ChatPage> {
                           SizedBox(
                             height: 0.5.h,
                           ),
-                          Text(
+                          const Text(
                             'Fresh',
                             style: TextStyle(color: Colors.black, fontSize: 18),
                           )
@@ -179,7 +179,7 @@ class _ChatPageState extends State<ChatPage> {
                           SizedBox(
                             height: 0.5.h,
                           ),
-                          Text(
+                          const Text(
                             'Dish',
                             style: TextStyle(color: Colors.black, fontSize: 18),
                           )
@@ -198,7 +198,7 @@ class _ChatPageState extends State<ChatPage> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50),
                   ),
@@ -218,14 +218,14 @@ class _ChatPageState extends State<ChatPage> {
                   ],
                 ),
                 child: ListView(
-                    padding: EdgeInsets.only(bottom: 16), // Đặt khoảng cách theo chiều ngang
+                    padding: const EdgeInsets.only(bottom: 16), // Đặt khoảng cách theo chiều ngang
                   children: [
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ChatScreen()));
+                                builder: (context) => const ChatScreen()));
                       },
                       child: Padding(
                         padding:

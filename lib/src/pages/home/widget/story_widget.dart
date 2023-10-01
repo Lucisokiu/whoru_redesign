@@ -1,12 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:sizer/sizer.dart';
 import 'package:whoru/src/model/story.dart';
 
 
 
 Widget storywidget(BuildContext context) {
     // List<Story> story_data = storyList;
-    return Padding(
+    return Container(
+      height: 15.h,
+              decoration: BoxDecoration(
+          color: Colors.white,  
+          borderRadius: const BorderRadius.vertical(bottom: Radius.circular(24)),
+        boxShadow: const [
+            BoxShadow(
+              color: Colors.black38,
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: Offset(2.0, 2.0),
+            ),
+            // BoxShadow(
+            //   color: Colors.black38,
+            //   spreadRadius: 1,
+            //   blurRadius: 5,
+            //   offset: Offset(-1.0, -1.0),
+            // ),
+        ]
+        ),
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,

@@ -4,7 +4,6 @@ import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/camera/camera_page.dart';
 import 'package:whoru/src/pages/chat/chat_page.dart';
-import 'package:whoru/src/pages/search/search_page.dart';
 import 'package:whoru/src/pages/splash/splash.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -15,8 +14,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return SafeArea(
       bottom: false,
       child: Container(
-        height: 100, // Chiều cao của Row
-        color: Colors.grey.shade200,
+        height: 12.h, // Chiều cao của Row
+          color: Colors.white,
 
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -26,7 +25,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SplashScreen(),
+                      builder: (context) => const SplashScreen(),
                     ),
                     (route) => false, // Xóa toàn bộ màn hình khỏi stack
                   );
@@ -41,7 +40,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SplashScreen(),
+                    builder: (context) => const SplashScreen(),
                   ),
                   (route) => false, // Xóa toàn bộ màn hình khỏi stack
                 );
@@ -97,7 +96,7 @@ Widget _buildActionHome(context, title, icon) {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CameraPage(),
+              builder: (context) => const CameraPage(),
             ),
           );
         }
@@ -107,7 +106,7 @@ Widget _buildActionHome(context, title, icon) {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ChatPage(),
+              builder: (context) => const ChatPage(),
             ),
           );
         }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:whoru/src/model/user.dart';
-import 'package:whoru/src/pages/home/widget/story_widget.dart';
-import 'package:whoru/src/pages/profile/profile_page.dart';
 
 class CustomSearch extends SearchDelegate {
   // List<UserModel> matchQuery = [];
@@ -13,7 +11,7 @@ class CustomSearch extends SearchDelegate {
           onPressed: () => {
                 query = '',
               },
-          icon: Icon(Icons.clear)),
+          icon: const Icon(Icons.clear)),
     ];
   }
 
@@ -23,7 +21,7 @@ class CustomSearch extends SearchDelegate {
         onPressed: () => {
               close(context, null),
             },
-        icon: Icon(Icons.arrow_back));
+        icon: const Icon(Icons.arrow_back));
   }
 
   @override
@@ -38,7 +36,7 @@ class CustomSearch extends SearchDelegate {
     }
 
     if (matchQuery.isEmpty) {
-      return Center(
+      return const Center(
         child: Text('No results found.'),
       );
     }
@@ -61,7 +59,7 @@ class CustomSearch extends SearchDelegate {
 // nhập username -> tìm người dùng : bài viết của người dùng đó 
   @override
   Widget buildResults(BuildContext context) {
-    print("$query");
+    print(query);
     List<UserModel> matchQuery = [];
     for (UserModel item in listUsers) {
       if (query.isNotEmpty &&
@@ -72,7 +70,7 @@ class CustomSearch extends SearchDelegate {
     }
 
     if (matchQuery.isEmpty) {
-      return Center(
+      return const Center(
         child: Text('No results found.'),
       );
     }
