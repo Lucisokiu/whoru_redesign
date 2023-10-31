@@ -3,22 +3,14 @@
 Hello, this is a first version, it will be updated in the future__
 
 # **DEMO**
-
 ![Alt text](image/regis.png)
-
 ![Alt text](image/login.png)
-
 ![Alt text](image/feed-1.png)
-
 ![Alt text](image/feed-2.png)
-
 ![Alt text](image/search-1.png)
-
 ![Alt text](image/search-2.png)
-
 ![Alt text](image/profile.png)
-
-<video src="video/location.mp4" controls title="Title"></video>__
+<video src="video/location.mp4" controls title="Title"></video>
 
 ### Setup__
 Dart SDK version: 3.0.5__
