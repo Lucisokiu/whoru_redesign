@@ -7,6 +7,8 @@ class FeedModel {
   int likeCount;
   int commentCount;
   int shareCount;
+  bool? active;
+  bool? account;
 
   FeedModel({
     required this.userModel,
@@ -15,6 +17,8 @@ class FeedModel {
     required this.likeCount,
     required this.commentCount,
     required this.shareCount,
+    this.active,
+    this.account,
   });
 }
 
@@ -28,6 +32,8 @@ List<FeedModel> feedList = [
     likeCount: 10,
     commentCount: 5,
     shareCount: 3,
+    active: false,
+    account: false,
   ),
   FeedModel(
     userModel: user,
@@ -39,6 +45,8 @@ List<FeedModel> feedList = [
     likeCount: 10,
     commentCount: 5,
     shareCount: 3,
+    active: true,
+    account: true,
   ),
   FeedModel(
     userModel: user,
@@ -51,6 +59,8 @@ List<FeedModel> feedList = [
     likeCount: 10,
     commentCount: 5,
     shareCount: 3,
+    active: true,
+    account: false,
   ),
   FeedModel(
     userModel: user,
@@ -64,8 +74,10 @@ List<FeedModel> feedList = [
     likeCount: 10,
     commentCount: 5,
     shareCount: 3,
+    active: false,
+    account: true,
   ),
-    FeedModel(
+  FeedModel(
     userModel: user,
     content: 'Lorem ipsum dolor sit amet',
     imageUrls: [
@@ -77,8 +89,10 @@ List<FeedModel> feedList = [
     likeCount: 10,
     commentCount: 5,
     shareCount: 3,
+    active: true,
+    account: false,
   ),
-    FeedModel(
+  FeedModel(
     userModel: user,
     content: 'Lorem ipsum dolor sit amet',
     imageUrls: [
@@ -90,8 +104,10 @@ List<FeedModel> feedList = [
     likeCount: 10,
     commentCount: 5,
     shareCount: 3,
+    active: false,
+    account: false,
   ),
-    FeedModel(
+  FeedModel(
     userModel: user,
     content: 'Lorem ipsum dolor sit amet',
     imageUrls: [
@@ -103,5 +119,7 @@ List<FeedModel> feedList = [
     likeCount: 10,
     commentCount: 5,
     shareCount: 3,
+    active: false,
+    account: false,
   ),
 ];

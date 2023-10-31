@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:whoru/src/pages/home/page/feed_page.dart';
-import 'package:whoru/src/pages/location/location_page.dart';
-import 'package:whoru/src/pages/profile/profile_page.dart';
-import 'package:whoru/src/pages/search/search_page.dart';
+import 'package:whoru/src/pages/feed/page/feed_screen.dart';
+import 'package:whoru/src/pages/location/location_screen.dart';
+import 'package:whoru/src/pages/profile/profile_screen.dart';
+import 'package:whoru/src/pages/search/page/search_page.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
@@ -17,6 +17,8 @@ class _NavigationState extends State<Navigation> {
 
   final _screens = [
     const FeedPage(),
+    // const SearchPage(),
+
     const SearchPage(),
     const LocationPage(),
     const ProfilePage(),

@@ -36,16 +36,17 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   sizer: ^2.0.15
+  shared_preferences: ^2.2.2
 
   #animation
   flutter_animate: ^4.2.0
   animated_splash_screen: ^1.3.0
+  shimmer: ^3.0.0
+  flutter_staggered_animations: ^1.1.1
 
   #Icon
   cupertino_icons: ^1.0.2
-  # phosphor_flutter: ^1.4.0
   phosphor_flutter: ^2.0.0
-
   lottie: ^2.4.0
 
   #borders
@@ -59,7 +60,10 @@ dependencies:
 
   # ý tưỡng dùng rive design lại navbar nhưng làm xong rồi design sau :3
   rive: ^0.11.4
+
   # flutter_svg: ^1.1.6
+  #state manager
+  get: ^4.6.5
   provider: ^6.0.5
 
   #location

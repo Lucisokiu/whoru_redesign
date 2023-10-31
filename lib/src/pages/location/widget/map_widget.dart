@@ -33,18 +33,25 @@ class _MapWidgetState extends State<MapWidget> {
         _userLocation = value;
       }
     });
-    locationService.location.onLocationChanged.listen((event) {
-      setState(() {
-        _userLocation = event;
+    if (mounted) {
+      locationService.location.onLocationChanged.listen((event) {
+        setState(() {
+          _userLocation = event;
+        });
       });
-    });
+    }
   }
 
   @override
   void initState() {
     CurrentLocation();
-    // TODO: implement initState
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override

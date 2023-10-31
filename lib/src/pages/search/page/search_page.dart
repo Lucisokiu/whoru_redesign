@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+import 'package:whoru/src/pages/search/controller/search_bar.dart';
+
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
+
+  @override
+  State<SearchPage> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.grey.shade200,
+        elevation: 0.0,
+        title: const Text("Search"),
+        actions: [
+          IconButton(
+              onPressed: () => {
+                    showSearch(
+                      context: context,
+                      delegate: CustomSearch(),
+                    )
+                  },
+              icon: const Icon(
+                Icons.search,
+                size: 30.0,
+              ))
+        ],
+      ),
+      body: Container(
+        color: Colors.grey.shade200,
+        child: const SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // MyAppBar(),
+      
+              Center(
+                child: Text(
+                  "enter information",
+                  style: TextStyle(
+                    fontSize: 20, // Điều chỉnh kích thước chữ ở đây
+                    // fontWeight: FontWeight.bold, // Tô đậm văn bản
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
