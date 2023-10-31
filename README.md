@@ -10,8 +10,7 @@ Hello, this is a first version, it will be updated in the future__
 ![Alt text](image/search-1.png)
 ![Alt text](image/search-2.png)
 ![Alt text](image/profile.png)
-<video src="video/location.mp4" controls title="Title"></video>
-
+![Project Demo](video/location.gif)
 ### Setup__
 Dart SDK version: 3.0.5__
 Flutter version: 3.10.5__
