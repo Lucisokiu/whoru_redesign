@@ -8,13 +8,13 @@ Hello, this is a first version, it will be updated in the future__
 
 ![Alt text](image/login.png)
 
-![Alt text](image/feed1.png)
+![Alt text](image/feed-1.png)
 
-![Alt text](image/feed2.png)
+![Alt text](image/feed-2.png)
 
-![Alt text](image/search1.png)
+![Alt text](image/search-1.png)
 
-![Alt text](image/search2.png)
+![Alt text](image/search-2.png)
 
 ![Alt text](image/profile.png)
 
