@@ -1,59 +1,34 @@
-// import 'package:flutter/material.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:whoru/src/pages/setting/setting_screen.dart';
-// import 'color.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
+class ThemeController extends GetxController {
+  late bool isDarkMode;
 
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  @override
+  void onInit() async {
+    super.onInit();
+    await _getDarkMode().then((value) => isDarkMode = value);
+  }
 
-// class MaterialTheme extends StatefulWidget {
-//   const MaterialTheme({Key? key}) : super(key: key);
+  _getDarkMode() async {
+    SharedPreferences pref = await _prefs;
+    isDarkMode = (pref.getBool('isDarkMode') ?? false);
+    Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);
+    return isDarkMode;
+  }
 
-//   @override
-//   State<MaterialTheme> createState() => _MaterialThemeState();
-// }
+  _saveDarkMode() async {
+    SharedPreferences pref = await _prefs;
+    pref.setBool('isDarkMode', isDarkMode);
+  }
 
-// class _MaterialThemeState extends State<MaterialTheme> {
-
-
-//   _saveTheme() async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     await prefs.setBool('saveTheme', saveTheme);
-//   }
-  
-//   loadTheme() async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     setState(() {
-//       saveTheme = prefs.getBool('saveTheme')!;
-//     });
-//   }
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     loadTheme();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: saveTheme ? backgroundColor : backgroundColorWhite,
-//       body: Center(
-//         child: Switch(
-//           value: saveTheme,
-//           onChanged: (val) {
-//             setState(() {
-//               saveTheme = val;
-//               _saveTheme();
-//             });
-//           },
-//           activeColor: Colors.deepPurpleAccent,
-//         ),
-//       ),
-//       // floatingActionButton: const MaterialFloating(
-//       //   push: true,
-//       //   page: MaterialHome(),
-//       // ),
-//     );
-//   }
-// }
+  void toggleDarkMode() {
+    print(isDarkMode);
+    isDarkMode = !isDarkMode;
+    Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);
+    _saveDarkMode();
+  }
+}

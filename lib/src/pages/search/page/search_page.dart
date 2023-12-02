@@ -13,7 +13,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade200,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0.0,
         title: const Text("Search"),
         actions: [
@@ -31,9 +31,8 @@ class _SearchPageState extends State<SearchPage> {
         ],
       ),
       body: Container(
-        color: Colors.grey.shade200,
-        child: const SafeArea(
-          child: Column(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child:  Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // MyAppBar(),
@@ -42,14 +41,13 @@ class _SearchPageState extends State<SearchPage> {
                 child: Text(
                   "enter information",
                   style: TextStyle(
-                    fontSize: 20, // Điều chỉnh kích thước chữ ở đây
+                    fontSize: 25, // Điều chỉnh kích thước chữ ở đây
                     // fontWeight: FontWeight.bold, // Tô đậm văn bản
                   ),
                 ),
               )
             ],
           ),
-        ),
       ),
     );
   }

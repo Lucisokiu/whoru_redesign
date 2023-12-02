@@ -17,8 +17,6 @@ class _NavigationState extends State<Navigation> {
 
   final _screens = [
     const FeedPage(),
-    // const SearchPage(),
-
     const SearchPage(),
     const LocationPage(),
     const ProfilePage(),
@@ -27,7 +25,7 @@ class _NavigationState extends State<Navigation> {
   @override
   void initState() {
     super.initState();
-    currentPage = 0;
+    // currentPage = 0;
   }
 
   @override
@@ -39,26 +37,17 @@ class _NavigationState extends State<Navigation> {
           child: _screens[currentPage],
         ),
         bottomNavigationBar: Container(
-          // color : Colors.transparent,
           padding: const EdgeInsets.all(12),
-          // margin: EdgeInsets.symmetric(horizontal: 24),
-          // margin: const EdgeInsets.all(16),
           margin: const EdgeInsets.fromLTRB(24, 16, 24, 16),
           decoration: BoxDecoration(
-            // color: Colors.black87.withOpacity(0.8),
             color: Colors.black87.withOpacity(0.8),
 
             borderRadius: const BorderRadius.all(Radius.circular(24)),
-            //       gradient: LinearGradient(
-            //   begin: Alignment.topCenter,
-            //   end: Alignment.bottomCenter,
-            //   colors: [Colors.black87, Colors.transparent],
-            // ),
           ),
 
           child: Row(
             mainAxisAlignment: MainAxisAlignment
-                .spaceBetween, // Căn các widget con theo khoảng cách đều nhau
+                .spaceBetween,
 
             children: [
               IconButton(
@@ -69,8 +58,6 @@ class _NavigationState extends State<Navigation> {
                 color: Colors.white,
                 onPressed: () {
                   print("Home");
-
-                  // Switch to the Home page
                   setState(() {
                     currentPage = 0;
                   });
@@ -92,8 +79,6 @@ class _NavigationState extends State<Navigation> {
               IconButton(
                 iconSize: 36,
                 icon: Icon(currentPage == 2
-                    // ? PhosphorIcons.fill.globeHemisphereWest
-                    // : PhosphorIcons.thin.globeHemisphereWest),
                     ? PhosphorIcons.fill.mapPinLine
                     : PhosphorIcons.light.mapPinLine),
                 color: Colors.white,

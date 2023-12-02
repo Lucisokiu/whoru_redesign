@@ -1,21 +1,15 @@
-// import 'package:flutter/material.dart';
-//
-// class Sizer extends StatelessWidget {
-//
-//   final Widget largeScreen;
-//   final Widget smallScreen;
-//   final Widget mediumScreen;
-//
-//
-//   // const Sizer({super.key,
-//   //   this.smallScreen,
-//   //   this.mediumScreen,
-//   //   @required this.largeScreen,
-//   // });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Placeholder();
-//   }
-// }
-//
+/*
+ * Created by Urmish patel on 2018/9/29.
+ * email: urmishpatel9@gmail.com
+*/
+library sizer;
+
+import 'package:flutter/widgets.dart';
+import 'package:universal_io/io.dart' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+part 'extension.dart';
+
+part 'util.dart';
+
+part 'widget.dart';

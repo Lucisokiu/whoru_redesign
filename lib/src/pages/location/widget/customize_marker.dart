@@ -5,7 +5,8 @@ import 'package:whoru/src/model/user.dart';
 
 class CustomizeMarker extends StatelessWidget {
   LatLng latLng;
-  CustomizeMarker({super.key, required this.latLng});
+  UserModel user;
+  CustomizeMarker({super.key, required this.latLng, required this.user});
 
   @override
   Widget build(BuildContext context) {

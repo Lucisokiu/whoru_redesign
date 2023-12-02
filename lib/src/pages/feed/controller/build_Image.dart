@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Widget buildSingleImage(context, urlImage) {
-  final size = MediaQuery.of(context).size;
+  // final size = MediaQuery.of(context).size;
 
   return Stack(
     // fit: StackFit.fill,

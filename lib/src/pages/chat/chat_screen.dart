@@ -52,143 +52,139 @@ class _ChatPageState extends State<ChatPage> {
               height: 0.5.h,
             ),
             Container(
-                padding: EdgeInsets.fromLTRB(1.w, 0, 1.w, 0),
-
-            child: const Text(
-              'R E C E N T',
-              style: TextStyle(
-                color: Colors.black,
+              padding: EdgeInsets.fromLTRB(1.w, 0, 1.w, 0),
+              child: const Text(
+                'R E C E N T',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
               ),
-            ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 2.w),
               child: SizedBox(
                 height: 12.h,
-                child: ListView(
-                    scrollDirection: Axis.horizontal,
+                child: ListView(scrollDirection: Axis.horizontal, children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
-                          ),
-                          SizedBox(
-                            height: 0.5.h,
-                          ),
-                          const Text(
-                            'Barry',
-                            style: TextStyle(color: Colors.black, fontSize: 18),
-                          )
-                        ],
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: Image.network(user1.avt).image,
                       ),
                       SizedBox(
-                        width: 4.w,
+                        height: 0.5.h,
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
-                          ),
-                          SizedBox(
-                            height: 0.5.h,
-                          ),
-                          const Text(
-                            'Perez',
-                            style: TextStyle(color: Colors.black, fontSize: 18),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        width: 4.w,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
-                          ),
-                          SizedBox(
-                            height: 0.5.h,
-                          ),
-                          const Text(
-                            'Alvin',
-                            style: TextStyle(color: Colors.black, fontSize: 18),
-                          )
-                        ],
+                      const Text(
+                        'Barry',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 4.w,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: Image.network(user2.avt).image,
                       ),
                       SizedBox(
-                        width: 4.w,
+                        height: 0.5.h,
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
-                          ),
-                          SizedBox(
-                            height: 0.5.h,
-                          ),
-                          const Text(
-                            'Dan',
-                            style: TextStyle(color: Colors.black, fontSize: 18),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        width: 4.w,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
-                          ),
-                          SizedBox(
-                            height: 0.5.h,
-                          ),
-                          const Text(
-                            'Fresh',
-                            style: TextStyle(color: Colors.black, fontSize: 18),
-                          )
-                        ],
+                      const Text(
+                        'Perez',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 4.w,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: Image.network(user3.avt).image,
                       ),
                       SizedBox(
-                        width: 4.w,
+                        height: 0.5.h,
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
-                          ),
-                          SizedBox(
-                            height: 0.5.h,
-                          ),
-                          const Text(
-                            'Dish',
-                            style: TextStyle(color: Colors.black, fontSize: 18),
-                          )
-                        ],
+                      const Text(
+                        'Alvin',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 4.w,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: Image.network(user4.avt).image,
                       ),
-                    ]),
+                      SizedBox(
+                        height: 0.5.h,
+                      ),
+                      const Text(
+                        'Dan',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 4.w,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: Image.network(user5.avt).image,
+                      ),
+                      SizedBox(
+                        height: 0.5.h,
+                      ),
+                      const Text(
+                        'Fresh',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 4.w,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: Image.network(user6.avt).image,
+                      ),
+                      SizedBox(
+                        height: 0.5.h,
+                      ),
+                      const Text(
+                        'Dish',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      )
+                    ],
+                  ),
+                ]),
               ),
             ),
-            
             SizedBox(
               height: 0.5.h,
             ),
@@ -218,7 +214,8 @@ class _ChatPageState extends State<ChatPage> {
                   ],
                 ),
                 child: ListView(
-                    padding: const EdgeInsets.only(bottom: 16), // Đặt khoảng cách theo chiều ngang
+                  padding: const EdgeInsets.only(
+                      bottom: 16), // Đặt khoảng cách theo chiều ngang
                   children: [
                     GestureDetector(
                       onTap: () {
@@ -234,7 +231,7 @@ class _ChatPageState extends State<ChatPage> {
                           children: [
                             CircleAvatar(
                               radius: 30,
-                              backgroundImage: Image.network(user.avt).image,
+                              backgroundImage: Image.network(user7.avt).image,
                             ),
                             SizedBox(
                               width: 1.h,
@@ -282,7 +279,7 @@ class _ChatPageState extends State<ChatPage> {
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
+                            backgroundImage: Image.network(user3.avt).image,
                           ),
                           SizedBox(
                             width: 1.h,
@@ -329,7 +326,7 @@ class _ChatPageState extends State<ChatPage> {
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
+                            backgroundImage: Image.network(user4.avt).image,
                           ),
                           SizedBox(
                             width: 1.h,
@@ -376,7 +373,7 @@ class _ChatPageState extends State<ChatPage> {
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
+                            backgroundImage: Image.network(user2.avt).image,
                           ),
                           SizedBox(
                             width: 1.h,
@@ -423,7 +420,7 @@ class _ChatPageState extends State<ChatPage> {
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
+                            backgroundImage: Image.network(user5.avt).image,
                           ),
                           SizedBox(
                             width: 1.h,
@@ -470,7 +467,7 @@ class _ChatPageState extends State<ChatPage> {
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
+                            backgroundImage: Image.network(user1.avt).image,
                           ),
                           SizedBox(
                             width: 1.h,
@@ -517,7 +514,7 @@ class _ChatPageState extends State<ChatPage> {
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
+                            backgroundImage: Image.network(user7.avt).image,
                           ),
                           SizedBox(
                             width: 1.h,
@@ -564,7 +561,7 @@ class _ChatPageState extends State<ChatPage> {
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
+                            backgroundImage: Image.network(user3.avt).image,
                           ),
                           SizedBox(
                             width: 1.h,
@@ -611,7 +608,7 @@ class _ChatPageState extends State<ChatPage> {
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundImage: Image.network(user.avt).image,
+                            backgroundImage: Image.network(user6.avt).image,
                           ),
                           SizedBox(
                             width: 1.h,

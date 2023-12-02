@@ -16,9 +16,7 @@ class LocationService {
           _locationController.add(UserLocation(
               latitude: locationData.longitude!,
               longitude: locationData.longitude!,
-              userId: 1));
-          print(
-              'The users location is: ${locationData.latitude}, ${locationData.longitude}');
+              userId: 1)); // truyền user người dùng vào userId
         });
       }
     });
@@ -27,7 +25,6 @@ class LocationService {
   Future<LocationData> getLocation() async {
     try {
       _userLocation = await location.getLocation();
-      print('Location is: $_userLocation');
     } catch (e) {
       print('Could not to get Location: $e');
     }

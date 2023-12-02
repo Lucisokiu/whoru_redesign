@@ -1,6 +1,6 @@
 **WHORU**__
 
-Hello, this is a first version, it will be updated in the future__
+Hello, this is a first version, it will be updated in the future.
 
 # **DEMO**
 ![Alt text](image/regis.png)
@@ -12,8 +12,10 @@ Hello, this is a first version, it will be updated in the future__
 ![Alt text](image/profile.png)
 ![Project Demo](video/location.gif)
 ### Setup__
-Dart SDK version: 3.0.5__
-Flutter version: 3.10.5__
+Dart SDK version: 3.0.5
+
+
+Flutter version: 3.10.5
 
 **INSTALL**
 

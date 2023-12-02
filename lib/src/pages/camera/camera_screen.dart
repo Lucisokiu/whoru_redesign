@@ -12,15 +12,13 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            MyAppBar(),
-            Text(
-              "Game Page",
-            )
-          ],
-        ),
+      body: Column(
+        children: [
+          MyAppBar(),
+          Text(
+            "Game Page",
+          )
+        ],
       ),
     );
   }

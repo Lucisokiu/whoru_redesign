@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whoru/src/matherial/matherial_animation.dart';
-import 'package:whoru/src/utils/color.dart';
 
 
 

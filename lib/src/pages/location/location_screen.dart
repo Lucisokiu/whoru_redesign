@@ -11,6 +11,13 @@ class LocationPage extends StatefulWidget {
 
 class _LocationPageState extends State<LocationPage> {
   String? typeMap;
+
+  @override
+  void initState() {
+    typeMap = 'Street Map';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

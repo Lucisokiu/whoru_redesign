@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+import 'package:whoru/src/model/user.dart';
 import 'package:whoru/src/pages/location/widget/customize_marker.dart';
 import 'package:whoru/src/service/location_service.dart';
 
@@ -16,15 +17,10 @@ class MapWidget extends StatefulWidget {
 
 class _MapWidgetState extends State<MapWidget> {
   LocationData? _userLocation;
-  LocationService locationService = LocationService();
+  LocationService? locationService;
   late LocationData userLocation;
-
-  Future<LocationData> getLocation() async {
-    return await Location().getLocation();
-  }
-
   void CurrentLocation() async {
-    await locationService.getLocation().then((value) {
+    await locationService!.getLocation().then((value) {
       if (mounted) {
         setState(() {
           _userLocation = value;
@@ -33,33 +29,31 @@ class _MapWidgetState extends State<MapWidget> {
         _userLocation = value;
       }
     });
-    if (mounted) {
-      locationService.location.onLocationChanged.listen((event) {
+    locationService!.location.onLocationChanged.listen((event) {
+      if (mounted) {
         setState(() {
           _userLocation = event;
         });
-      });
-    }
+      } else {
+        _userLocation = event;
+      }
+    });
   }
 
   @override
   void initState() {
+    locationService = LocationService();
     CurrentLocation();
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.typeMap);
-    print('latitude: $_userLocation');
-    print('longitude: $_userLocation');
-
     return Container(
       child: _userLocation == null
           ? Center(
@@ -67,9 +61,12 @@ class _MapWidgetState extends State<MapWidget> {
             )
           : FlutterMap(
               options: MapOptions(
+                maxZoom: 18,
+                                minZoom: 16.0,
+
                   center: LatLng(
                       _userLocation!.latitude!, _userLocation!.longitude!),
-                  zoom: 17),
+                  zoom: 17.0),
               children: [
                 TileLayer(
                   urlTemplate: widget.typeMap == 'Real Map'
@@ -82,15 +79,18 @@ class _MapWidgetState extends State<MapWidget> {
                   },
                 ),
                 CustomizeMarker(
-                  latLng: LatLng(
-                      _userLocation!.latitude!, _userLocation!.longitude!),
+                  latLng: const LatLng(10.849577683349953, 106.77095389939772),
+                  user: user1,
                 ),
                 CustomizeMarker(
-                    latLng:
-                        const LatLng(10.845128535877942, 106.79611632216462)),
+                  latLng: const LatLng(10.851011968630182, 106.76874281365166),
+                  user: user2,
+                ),
                 CustomizeMarker(
-                    latLng:
-                        const LatLng(10.851011968630182, 106.76874281365166)),
+                  latLng: LatLng(
+                      _userLocation!.latitude!, _userLocation!.longitude!),
+                  user: user,
+                ),
               ],
             ),
     );

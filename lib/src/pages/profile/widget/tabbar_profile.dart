@@ -31,21 +31,24 @@ class _TabBarProfileState extends State<TabBarProfile>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          TabBar(controller: _tabController, tabs: [
-            const Tab(
-              icon: Icon(Icons.view_headline_sharp),
-            ),
-            Tab(
-              icon: Icon(PhosphorIcons.thin.thumbsUp),
-            ),
-            Tab(
-              icon: Icon(PhosphorIcons.thin.fileArrowDown),
-            ),
-          ]),
+          TabBar(
+            controller: _tabController,
+            tabs: [
+              const Tab(
+                icon: Icon(Icons.view_headline_sharp),
+              ),
+              Tab(
+                icon: Icon(PhosphorIcons.bold.thumbsUp),
+              ),
+              Tab(
+                icon: Icon(PhosphorIcons.bold.fileArrowDown),
+              ),
+            ],
+          ),
           Expanded(
             child: Container(
               alignment: Alignment.center,
-              color: const Color.fromARGB(0, 196, 44, 44),
+              // color: const Color.fromARGB(0, 196, 44, 44),
               child: TabBarView(
                 controller: _tabController,
                 children: [
