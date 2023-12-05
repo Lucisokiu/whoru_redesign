@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -7,6 +6,8 @@ import 'package:whoru/src/matherial/themes.dart';
 import 'package:whoru/src/pages/splash/splash.dart';
 import 'package:whoru/src/service/certificate_verify_failed.dart';
 import 'package:whoru/src/utils/get_theme.dart';
+
+// GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +29,8 @@ class MyApp extends StatelessWidget {
     // ));
     return Sizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(
+        // builder: FToastBuilder(),
+        // navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'Whoru',
         theme: AppTheme.light().data,

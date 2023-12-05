@@ -28,7 +28,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                       MaterialPageRoute(
                         builder: (context) => const SplashScreen(),
                       ),
-                      (route) => false, // Xóa toàn bộ màn hình khỏi stack
+                      (route) => false,
                     );
                   },
                   child: SizedBox(

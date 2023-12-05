@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:whoru/src/api/feed.dart';
+import 'package:whoru/src/api/like.dart';
 import 'package:whoru/src/model/feed.dart';
 import 'package:whoru/src/pages/feed/controller/build_Image.dart';
+import 'package:whoru/src/service/show_toast.dart';
 
-class CardFeed extends StatelessWidget {
-  final FeedModel feedModel;
-  const CardFeed({super.key, required this.feedModel});
+class CardFeed extends StatefulWidget {
+  FeedModel feed;
 
+  CardFeed({super.key, required this.feed});
+
+  @override
+  State<CardFeed> createState() => _CardFeedState();
+}
+
+class _CardFeedState extends State<CardFeed> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,15 +56,20 @@ class CardFeed extends StatelessWidget {
                     width: 60,
                     height: 60,
                     child: GestureDetector(
-                      onTap: () {},
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(70),
-                        child: Image.network(
-                          feedModel.userModel.avt,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
+                        onTap: () {},
+                        child: CircleAvatar(
+                          radius: 30.0, // Set the radius based on your design
+                          backgroundColor: Colors
+                              .transparent, // Set background color to transparent
+                          child: ClipOval(
+                            child: Image.network(
+                              widget.feed.avatar,
+                              width: 60.0, // Set width based on your design
+                              height: 60.0, // Set height based on your design
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        )),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,35 +78,36 @@ class CardFeed extends StatelessWidget {
                         height: 1.h,
                       ),
                       Text(
-                        feedModel.userModel.username,
+                        widget.feed.fullName,
                         style: const TextStyle(
                           fontFamily: "Montserrat",
                           fontWeight: FontWeight.w600,
                           fontSize: 20,
                         ),
                       ),
-                      SizedBox(
-                        width: 50.w,
-                        child: Wrap(
-                          children: [
-                            Text(
-                              feedModel.title,
-                              style: const TextStyle(
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // SizedBox(
+                      //   width: 50.w,
+                      //   child: Wrap(
+                      //     children: [
+                      //       Text(
+                      //         widget.feedModel.title,
+                      //         style: const TextStyle(
+                      //           fontFamily: "Montserrat",
+                      //           fontWeight: FontWeight.w400,
+                      //           fontSize: 14,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                   const Spacer(),
                   IconButton(
                       onPressed: () {},
                       icon: Icon(
-                        color: Theme.of(context).buttonTheme.colorScheme!.primary,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme!.primary,
                         PhosphorIcons.fill.dotsThreeOutlineVertical,
                         size: 20.0,
                       )),
@@ -104,7 +119,7 @@ class CardFeed extends StatelessWidget {
               Wrap(
                 children: [
                   Text(
-                    feedModel.content,
+                    widget.feed.content,
                     style: const TextStyle(fontFamily: "Inter", fontSize: 16),
                   ),
                 ],
@@ -112,32 +127,49 @@ class CardFeed extends StatelessWidget {
               const SizedBox(height: 16),
               Stack(
                 children: [
-                  (feedModel.imageUrls.length == 1)
-                      ? buildSingleImage(context, feedModel.imageUrls[0])
-                      : (feedModel.imageUrls.length == 2)
-                          ? buildDoubleImage(context, feedModel.imageUrls[0],
-                              feedModel.imageUrls[1])
-                          : (feedModel.imageUrls.length == 3)
+                  (widget.feed.imageUrls.length == 1)
+                      ? buildSingleImage(context, widget.feed.imageUrls[0])
+                      : (widget.feed.imageUrls.length == 2)
+                          ? buildDoubleImage(context, widget.feed.imageUrls[0],
+                              widget.feed.imageUrls[1])
+                          : (widget.feed.imageUrls.length == 3)
                               ? buildTripleImage(
                                   context,
-                                  feedModel.imageUrls[0],
-                                  feedModel.imageUrls[1],
-                                  feedModel.imageUrls[2])
-                              : buildMultipleImage(context, feedModel.imageUrls)
+                                  widget.feed.imageUrls[0],
+                                  widget.feed.imageUrls[1],
+                                  widget.feed.imageUrls[2])
+                              : buildMultipleImage(
+                                  context, widget.feed.imageUrls)
                 ],
               ),
               const SizedBox(height: 16),
               Row(
                 children: [
                   const SizedBox(width: 5.0),
-                  buildButton(
-                      PhosphorIcons.thin.heart, feedModel.likeCount.toString()),
+                  BuildButtonFeed(
+                    icon: PhosphorIcons.fill.heart,
+                    label: widget.feed.likeCount,
+                    onPressed: () {
+                      likePost(widget.feed.idFeed);
+                    },
+                    isLike: false,
+                  ),
                   const SizedBox(width: 5.0),
-                  buildButton(PhosphorIcons.thin.chatTeardrop,
-                      feedModel.commentCount.toString()),
+                  BuildButtonFeed(
+                    icon: PhosphorIcons.fill.chatTeardrop,
+                    label: widget.feed.commentCount,
+                    onPressed: () {
+                      likePost(widget.feed.idFeed);
+                    },
+                  ),
                   const Spacer(),
-                  buildButton(PhosphorIcons.thin.shareFat,
-                      feedModel.shareCount.toString()),
+                  BuildButtonFeed(
+                    icon: PhosphorIcons.fill.shareFat,
+                    label: widget.feed.shareCount,
+                    onPressed: () {
+                      likePost(widget.feed.idFeed);
+                    },
+                  ),
                 ],
               ),
             ],
@@ -147,3 +179,5 @@ class CardFeed extends StatelessWidget {
     );
   }
 }
+
+void call() {}

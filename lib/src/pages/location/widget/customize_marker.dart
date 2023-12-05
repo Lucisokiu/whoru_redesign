@@ -7,7 +7,7 @@ class CustomizeMarker extends StatelessWidget {
   LatLng latLng;
   UserModel user;
   CustomizeMarker({super.key, required this.latLng, required this.user});
-
+  
   @override
   Widget build(BuildContext context) {
     return MarkerLayer(

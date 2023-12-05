@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:whoru/src/model/user.dart';
 
-Widget info(BuildContext context) {
+Widget info(BuildContext context, UserModel user) {
   final double screenHeight = MediaQuery.of(context).size.height;
   final double screenWidth = MediaQuery.of(context).size.width;
   return Column(children: [
@@ -25,88 +26,112 @@ Widget info(BuildContext context) {
       ),
     ),
     Text(
-      user.username,
+      user.fullName,
       style: const TextStyle(
         fontFamily: "Lato",
         fontWeight: FontWeight.bold,
         fontSize: 24,
       ),
     ),
-    Row(
-      mainAxisAlignment:
-          MainAxisAlignment.center, // Căn giữa các phần tử theo chiều ngang
+    const Row(
+      // mainAxisAlignment:
+      //     MainAxisAlignment.center, // Căn giữa các phần tử theo chiều ngang
 
       children: [
         Expanded(
-          child: Container(
-            child: const Column(
-              children: [
-                Text(
-                  "99",
-                  style: TextStyle(
-                    fontFamily: "Lato",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
+          child: Column(
+            children: [
+              Text(
+                "99",
+                style: TextStyle(
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
                 ),
-                Text(
-                  "Followers",
-                  style: TextStyle(
-                    fontFamily: "Lobster",
-                    fontSize: 20,
-                  ),
+              ),
+              Text(
+                "Followers",
+                style: TextStyle(
+                  fontFamily: "Lobster",
+                  fontSize: 20,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         Expanded(
-          child: Container(
-            child: const Column(
-              children: [
-                Text(
-                  "19",
-                  style: TextStyle(
-                    fontFamily: "Lato",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
+          child: Column(
+            children: [
+              Text(
+                "19",
+                style: TextStyle(
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
                 ),
-                Text(
-                  "Following",
-                  style: TextStyle(
-                    fontFamily: "Lobster",
-                    fontSize: 20,
-                  ),
+              ),
+              Text(
+                "Following",
+                style: TextStyle(
+                  fontFamily: "Lobster",
+                  fontSize: 20,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         Expanded(
-          child: Container(
-            child: const Column(
-              children: [
-                Text(
-                  "999",
-                  style: TextStyle(
-                    fontFamily: "Lato",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
+          child: Column(
+            children: [
+              Text(
+                "999",
+                style: TextStyle(
+                  fontFamily: "Lato",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
                 ),
-                Text(
-                  "Like",
-                  style: TextStyle(
-                    fontFamily: "Lobster",
-                    fontSize: 20,
-                  ),
+              ),
+              Text(
+                "Like",
+                style: TextStyle(
+                  fontFamily: "Lobster",
+                  fontSize: 20,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],
     ),
+    SizedBox(
+      height: 10.h,
+    ),
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Container(
+          alignment: Alignment.topLeft,
+          child: Text(
+            'Study at: ${user.work}',
+            style: const TextStyle(
+              fontFamily: "Lato",
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
+          ),
+        ),
+        Container(
+          alignment: Alignment.topLeft,
+          child: Text(
+            user.study,
+            style: const TextStyle(
+              fontFamily: "Lato",
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
+          ),
+        ),
+      ],
+    )
   ]);
 }

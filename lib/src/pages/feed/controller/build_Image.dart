@@ -168,25 +168,56 @@ Widget buildMultipleImage(context, List listImage) {
   );
 }
 
-Widget buildButton(IconData icon, String label) {
-  return Container(
-    // height: 50,
-    // width: 50,
-    child: InkWell(
-      onTap: () {
-        print("click");
-      },
-      child: Row(
+class BuildButtonFeed extends StatefulWidget {
+  IconData icon;
+  int label;
+  VoidCallback onPressed;
+  bool? isLike;
+  BuildButtonFeed({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.onPressed,
+    this.isLike,
+  });
+
+  @override
+  State<BuildButtonFeed> createState() => _BuildButtonFeedState();
+}
+
+class _BuildButtonFeedState extends State<BuildButtonFeed> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            icon,
-            size: 30,
-          ),
+          (widget.isLike != null)
+              ? IconButton(
+                  icon: Icon(widget.icon),
+                  color: widget.isLike! ? Colors.red : null,
+                  onPressed: () {
+                    widget.onPressed();
+                    setState(() {
+                      if (widget.isLike!) {
+                        widget.label--;
+                      } else {
+                        widget.label++;
+                      }
+                      widget.isLike = !widget.isLike!;
+
+                      print(widget.isLike);
+                    });
+                  },
+                )
+              : IconButton(
+                  icon: Icon(widget.icon),
+                  onPressed: () {
+                    widget.onPressed;
+                  },
+                ),
           const SizedBox(width: 4),
-          Text(label),
+          Text(widget.label.toString()),
         ],
-      ),
-    ),
-  );
+    );
+  }
 }

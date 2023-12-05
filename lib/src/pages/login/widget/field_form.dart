@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/log.dart';
 import 'package:whoru/src/model/login.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
+import 'package:whoru/src/service/show_toast.dart';
 
 Widget TextFormFieldBox(String myhintText, IconData myIcons, bool canObscure,
     TextEditingController controller) {
@@ -74,27 +75,34 @@ class _SignInFormState extends State<SignInForm> {
       isShowLoading = true;
       isShowConfetti = true;
     });
-    Future.delayed(Duration(seconds: 1), () async {
+    Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
         await callAPILogin(userName, password);
         if (login.success) {
           // show success
           check.fire();
-          Future.delayed(Duration(seconds: 2), () {
-            setState(() {
-              isShowLoading = false;
-            });
-            confetti.fire();
+          Future.delayed(const Duration(seconds: 2), () {
+            if (mounted) {
+              setState(() {
+                isShowLoading = false;
+              });
+              confetti.fire();
+              Future.delayed(const Duration(seconds: 2), () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const Navigation()),
+                  (Route<dynamic> route) => false,
+                );
+              });
+            }
           });
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => Navigation()),
-              (Route<dynamic> route) => false);
         } else {
           error.fire();
           Future.delayed(Duration(seconds: 2), () {
             setState(() {
               isShowLoading = false;
             });
+            // showToast(
+            //     context, '❌ Error: Something went wrong');
           });
         }
       } else {
@@ -103,9 +111,17 @@ class _SignInFormState extends State<SignInForm> {
           setState(() {
             isShowLoading = false;
           });
+          // showToast(context, '❌');
         });
       }
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _userNameController.clear();
+    _passwordController.clear();
   }
 
   @override
@@ -118,7 +134,7 @@ class _SignInFormState extends State<SignInForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Email",
+                  "Usname",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 Padding(
@@ -132,11 +148,19 @@ class _SignInFormState extends State<SignInForm> {
                       return null;
                     },
                     onSaved: (email) {},
+                    style: TextStyle(
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .color), // Màu văn bản nhập vào
                     decoration: InputDecoration(
+                        hintStyle: TextStyle(
+                            color:
+                                Theme.of(context).textTheme.bodyMedium!.color),
                         prefixIcon: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: SvgPicture.asset("assets/icons/email.svg"),
-                    )),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: SvgPicture.asset("assets/icons/email.svg"),
+                        )),
                   ),
                 ),
                 Text(
@@ -155,6 +179,12 @@ class _SignInFormState extends State<SignInForm> {
                     },
                     onSaved: (password) {},
                     obscureText: true,
+                    style: TextStyle(
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .color), // Màu văn bản nhập vào
+
                     decoration: InputDecoration(
                         prefixIcon: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -198,7 +228,7 @@ class _SignInFormState extends State<SignInForm> {
                   reset = controller.findSMI("Reset") as SMITrigger;
                 },
               ))
-            : const SizedBox(),
+            : Container(),
         isShowConfetti
             ? CustomPositioned(
                 child: Transform.scale(

@@ -41,14 +41,10 @@ class _NavigationState extends State<Navigation> {
           margin: const EdgeInsets.fromLTRB(24, 16, 24, 16),
           decoration: BoxDecoration(
             color: Colors.black87.withOpacity(0.8),
-
             borderRadius: const BorderRadius.all(Radius.circular(24)),
           ),
-
           child: Row(
-            mainAxisAlignment: MainAxisAlignment
-                .spaceBetween,
-
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
                 iconSize: 36,

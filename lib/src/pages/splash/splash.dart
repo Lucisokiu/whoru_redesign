@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:lottie/lottie.dart';
 import 'package:whoru/src/pages/login/login_screen.dart';
+import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/utils/token.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen>
       token = result;
     });
   }
-      
+
   @override
   void initState() {
     super.initState();
@@ -31,7 +32,9 @@ class _SplashScreenState extends State<SplashScreen>
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => LoginScreen(),
+          builder: (context) =>  
+          // LoginScreen(),
+          token != null ? Navigation() : LoginScreen(),
         ),
       );
     });

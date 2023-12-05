@@ -3,6 +3,7 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/appbar/widget/build_PopupMenu.dart';
 import 'package:whoru/src/pages/camera/camera_screen.dart';
 import 'package:whoru/src/pages/chat/chat_screen.dart';
+import 'package:whoru/src/pages/login/login_screen.dart';
 import 'package:whoru/src/pages/search/controller/search_bar.dart';
 
 Widget buildActionHome(context, title, icon) {
@@ -12,16 +13,16 @@ Widget buildActionHome(context, title, icon) {
           showPopupMenu(context);
         }
         if (title == "Search") {
-          showSearch(
-            context: context,
-            delegate: CustomSearch(),
-          );
+          // showSearch(
+          //   context: context,
+          //   delegate: CustomSearch(),
+          // );
         }
         if (title == "Chat") {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const ChatPage(),
+              builder: (context) => const LoginScreen(), // ChatPage(),
             ),
           );
         }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:whoru/src/pages/login/widget/animated_btn.dart';
 import 'package:whoru/src/pages/login/widget/custom_signin.dart';
+import 'package:whoru/src/service/show_toast.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -56,19 +57,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       width: 260,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                        Text(
-                          "Whoru",
-                          style: TextStyle(
-                              fontSize: 60, fontFamily: "Poppins", height: 1.2),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Text(
-                            "Discover, connect, and share life's moments. Your social journey begins here!")
-                      ]),
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Whoru",
+                              style: TextStyle(
+                                  fontSize: 60,
+                                  fontFamily: "Poppins",
+                                  height: 1.2),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                                "Discover, connect, and share life's moments. Your social journey begins here!")
+                          ]),
                     ),
                     const Spacer(
                       flex: 2,
@@ -87,6 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             });
                           });
                         });
+                        // showToast("This Toast!!!");
                       },
                     ),
                     const Padding(

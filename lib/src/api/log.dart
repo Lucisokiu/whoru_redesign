@@ -7,29 +7,28 @@ import 'package:whoru/src/utils/token.dart';
 Future<Login> apiLogin(Map map) async {
   var url = Uri.https(baseUrl, '/api/Log/Login'); // Sửa lỗi dấu nháy đơn ở đây
   print('apiLogin $url');
-
-  try {
-    var response = await http.post(
-      url,
-      headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: jsonEncode(map),
-    );
-    print('apiLogin ${response.body}');
-    if (response.statusCode == 200) {
-      String token = jsonDecode(response.body)['token'];
-      setToken(token);
-      Map<String, dynamic> jsonData = jsonDecode(response.body);
-      jsonData['success'] = true;
-      print('apiLogin $jsonData');
-      return Login.fromJson(jsonData);
-    } else {
-      throw Exception('Failed auth');
-    }
-  } catch (e) {
-    throw Exception('Error during API call: $e');
+  var response = await http.post(
+    url,
+    headers: {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: jsonEncode(map),
+  );
+  if (response.statusCode == 200) {
+    String token = jsonDecode(response.body)['token'];
+    int idUser = jsonDecode(response.body)['userId'];
+    setToken(token);
+    setIdUser(idUser);
+    Map<dynamic, dynamic> jsonData = jsonDecode(response.body);
+    jsonData['success'] = true;
+    print('apiLogin statuscode 200 $jsonData');
+    return Login.fromJson(jsonData);
+  } else {
+    Map<dynamic, dynamic> jsonData = await jsonDecode(response.body);
+    jsonData['success'] = false;
+    print('apiLogin without statuscode 200 $jsonData');
+    return Login.fromJson(jsonData);
   }
 }
 

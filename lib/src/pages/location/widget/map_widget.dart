@@ -15,6 +15,15 @@ class MapWidget extends StatefulWidget {
   State<MapWidget> createState() => _MapWidgetState();
 }
 
+  UserModel user = UserModel(
+    id: 1,
+    fullName: 'LuciSoKiu',
+    avt: 'https://avatars.githubusercontent.com/u/95356357?v=4',
+    background: 'https://avatars.githubusercontent.com/u/95356357?v=4',
+    description: 'A software developer',
+    work: 'Software Company',
+    study: 'University XYZ',
+  );
 class _MapWidgetState extends State<MapWidget> {
   LocationData? _userLocation;
   LocationService? locationService;
@@ -80,11 +89,11 @@ class _MapWidgetState extends State<MapWidget> {
                 ),
                 CustomizeMarker(
                   latLng: const LatLng(10.849577683349953, 106.77095389939772),
-                  user: user1,
+                  user: user,
                 ),
                 CustomizeMarker(
                   latLng: const LatLng(10.851011968630182, 106.76874281365166),
-                  user: user2,
+                  user: user,
                 ),
                 CustomizeMarker(
                   latLng: LatLng(

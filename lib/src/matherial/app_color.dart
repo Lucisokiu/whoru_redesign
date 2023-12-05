@@ -76,7 +76,7 @@ class AppColors {
         disabled: Colors.white12,
         error: Color(0xFFFF5544),
         divider: Colors.white24,
-        button: Colors.black,
+        button: Colors.white24,
         contentText1: mCL,
         contentText2: mCL,
         shadow: Colors.white38,

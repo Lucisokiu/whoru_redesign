@@ -84,7 +84,7 @@ Future<Object?> customSigninDialog(BuildContext context,
                   bottom: -15,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop(); // Close the dialog
+                      Navigator.of(context).pop();
                     },
                     child: const CircleAvatar(
                       radius: 16,
