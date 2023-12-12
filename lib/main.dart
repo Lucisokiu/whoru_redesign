@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/matherial/themes.dart';
 import 'package:whoru/src/pages/splash/splash.dart';
+import 'package:whoru/src/service/NoOverScoll.dart';
 import 'package:whoru/src/service/certificate_verify_failed.dart';
 import 'package:whoru/src/utils/get_theme.dart';
 
@@ -29,8 +30,12 @@ class MyApp extends StatelessWidget {
     // ));
     return Sizer(builder: (context, orientation, deviceType) {
       return GetMaterialApp(
-        // builder: FToastBuilder(),
-        // navigatorKey: navigatorKey,
+        builder: (context, child) {
+          return ScrollConfiguration(
+            behavior: MyBehavior(),
+            child: child!,
+          );
+        },
         debugShowCheckedModeBanner: false,
         title: 'Whoru',
         theme: AppTheme.light().data,

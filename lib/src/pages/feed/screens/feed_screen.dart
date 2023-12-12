@@ -18,6 +18,7 @@ class FeedPage extends StatefulWidget {
 
 class _FeedPageState extends State<FeedPage> {
   List<FeedModel> listFeed = [];
+
   void getFeed() async {
     List<FeedModel>? result = await getAllPost();
     if (mounted) {
@@ -47,35 +48,35 @@ class _FeedPageState extends State<FeedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const MyAppBar(),
-          (listFeed.isNotEmpty)
-              ? Expanded(
-                  child: Builder(
-                    builder: (context) {
-                      return ListView.builder(
-                        padding: EdgeInsets.zero,
-                        scrollDirection: Axis.vertical,
-                        itemCount: listFeed.length,
-                        itemBuilder: (context, index) {
-                          if (index == 0) {
-                            return Column(
-                              children: [
-                                storywidget(context),
-                                SizedBox(height: 2.h),
-                                CardFeed(feed: listFeed[index]),
-                              ],
-                            );
-                          } else {
-                            return CardFeed(feed: listFeed[index]);
-                          }
-                        },
-                      );
-                    },
-                  ),
-                )
-              : Expanded(child: MySkeletonLoadingWidget()),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor, // Màu nền của SliverAppBar
+
+            pinned: false,
+            floating: true,
+            snap: true,
+            // expandedHeight: 15.h, // Điều chỉnh chiều cao khi mở rộng
+            flexibleSpace: MyAppBar(),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index == 0) {
+                  return Column(
+                    children: [
+                      storywidget(context),
+                      SizedBox(height: 2.h),
+                      CardFeed(feed: listFeed[index]),
+                    ],
+                  );
+                } else {
+                  return CardFeed(feed: listFeed[index]);
+                }
+              },
+              childCount: listFeed.length,
+            ),
+          ),
         ],
       ),
     );
