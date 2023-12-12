@@ -1,14 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:whoru/src/model/feed.dart';
+import 'package:whoru/src/model/Feed.dart';
 import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 Future<List<FeedModel>?> getAllPost() async {
   try {
-    var url = Uri.https(baseUrl, '/api/Feed/GetAllPost');
+    var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPost');
     String? token = await getToken();
 
     var response = await http.get(
@@ -53,4 +54,38 @@ Future<void> Delete(idPost) async {
   } else {
     print('Failed to make POST request. Status code: ${response.statusCode}');
   }
+}
+
+Future<void> postApiWithImages({
+  required List<File> imageFiles,
+  required String content,
+}) async {
+
+      var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPost');
+
+    // Tạo request
+    var request = http.MultipartRequest(
+      'POST',
+      url,
+    );
+
+    // Thêm các trường dữ liệu khác vào FormData nếu cần
+    request.fields['content'] = 'Your Content';
+
+    // Thêm ảnh vào FormData
+    var file = await http.MultipartFile.fromPath(
+      'image', // Thay thế 'image' bằng tên trường chứa ảnh trên API của bạn
+      'path/to/your/image.jpg',
+    );
+    request.files.add(file);
+
+    // Gửi request và nhận response
+    var response = await request.send();
+
+    // Kiểm tra mã trạng thái của response
+    if (response.statusCode == 200) {
+      print('Success');
+    } else {
+      print('Failed with status ${response.statusCode}');
+    }
 }

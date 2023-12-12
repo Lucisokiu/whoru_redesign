@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/model/story.dart';
+import 'package:whoru/src/model/Story.dart';
 
 Widget storywidget(BuildContext context) {
   return SingleChildScrollView(

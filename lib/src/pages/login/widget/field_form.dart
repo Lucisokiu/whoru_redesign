@@ -5,36 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/log.dart';
-import 'package:whoru/src/model/login.dart';
+import 'package:whoru/src/model/Login.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/service/show_toast.dart';
-
-Widget TextFormFieldBox(String myhintText, IconData myIcons, bool canObscure,
-    TextEditingController controller) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 50.00),
-    child: TextFormField(
-      style: const TextStyle(color: Colors.white),
-      obscureText: canObscure,
-      controller: controller,
-      decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.transparent),
-          borderRadius: BorderRadius.circular(40.0),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.black),
-          borderRadius: BorderRadius.circular(40.0),
-        ),
-        prefixIcon: Icon(myIcons, color: Colors.white),
-        hintText: myhintText,
-        hintStyle: const TextStyle(color: Colors.white),
-        filled: true,
-        fillColor: const Color.fromRGBO(81, 165, 243, 1),
-      ),
-    ),
-  );
-}
 
 class SignInForm extends StatefulWidget {
   const SignInForm({
@@ -57,7 +30,7 @@ class _SignInFormState extends State<SignInForm> {
   late SMITrigger reset;
   late Login login;
   late SMITrigger confetti;
-
+  var response;
   StateMachineController getRiveController(Artboard artboard) {
     StateMachineController? controller =
         StateMachineController.fromArtboard(artboard, "State Machine 1");
@@ -67,7 +40,7 @@ class _SignInFormState extends State<SignInForm> {
 
   Future<void> callAPILogin(userName, password) async {
     dynamic map = createMapLogin(userName, password);
-    login = await apiLogin(map);
+    response = await apiLogin(map);
   }
 
   void signIn(BuildContext context, String userName, String password) {
@@ -78,7 +51,7 @@ class _SignInFormState extends State<SignInForm> {
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
         await callAPILogin(userName, password);
-        if (login.success) {
+        if (response.statusCode == 200) {
           // show success
           check.fire();
           Future.delayed(const Duration(seconds: 2), () {

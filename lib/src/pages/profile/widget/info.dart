@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/model/user.dart';
+import 'package:whoru/src/model/User.dart';
 
 Widget info(BuildContext context, UserModel user) {
   final double screenHeight = MediaQuery.of(context).size.height;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whoru/src/api/user.dart';
 import 'package:whoru/src/api/userInfo.dart';
-import 'package:whoru/src/model/user.dart';
+import 'package:whoru/src/model/User.dart';
 
 class CustomSearch extends SearchDelegate {
   List<UserModel>? user;

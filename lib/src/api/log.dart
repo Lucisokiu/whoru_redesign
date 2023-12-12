@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:whoru/src/model/login.dart';
 import 'package:whoru/src/utils/url.dart';
 import 'package:whoru/src/utils/token.dart';
 
-Future<Login> apiLogin(Map map) async {
-  var url = Uri.https(baseUrl, '/api/Log/Login'); // Sửa lỗi dấu nháy đơn ở đây
+Future<http.Response> apiLogin(Map map) async {
+  var url = Uri.https(baseUrl, '/api/v1/Logs/Login');
   print('apiLogin $url');
+  print("map $map");
+
   var response = await http.post(
     url,
     headers: {
@@ -15,20 +16,18 @@ Future<Login> apiLogin(Map map) async {
     },
     body: jsonEncode(map),
   );
+    print("response.statusCode ${response}");
+
+  print("response.statusCode ${response.statusCode}");
   if (response.statusCode == 200) {
     String token = jsonDecode(response.body)['token'];
     int idUser = jsonDecode(response.body)['userId'];
     setToken(token);
     setIdUser(idUser);
-    Map<dynamic, dynamic> jsonData = jsonDecode(response.body);
-    jsonData['success'] = true;
-    print('apiLogin statuscode 200 $jsonData');
-    return Login.fromJson(jsonData);
+    return response;
   } else {
-    Map<dynamic, dynamic> jsonData = await jsonDecode(response.body);
-    jsonData['success'] = false;
-    print('apiLogin without statuscode 200 $jsonData');
-    return Login.fromJson(jsonData);
+    print('apiLogin statuscode without 200 ${response.body}');
+    return response;
   }
 }
 

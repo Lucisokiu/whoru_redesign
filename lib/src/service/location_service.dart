@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:location/location.dart';
-import 'package:whoru/src/model/locationModels.dart';
+import 'package:whoru/src/model/LocationModels.dart';
 
 class LocationService {
   late LocationData _userLocation;

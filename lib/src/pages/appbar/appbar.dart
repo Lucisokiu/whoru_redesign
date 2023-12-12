@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/appbar/widget/build_button.dart';
 import 'package:whoru/src/pages/camera/camera_screen.dart';
-import 'package:whoru/src/pages/chat/chat_screen.dart';
+import 'package:whoru/src/pages/chat/ChatPage.dart';
 import 'package:whoru/src/pages/splash/splash.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -57,7 +57,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               Spacer(),
               buildActionHome(
                 context,
-                'Camera',
+                'Create',
                 PhosphorIcons.fill.plusCircle,
               ),
               Padding(

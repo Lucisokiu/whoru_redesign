@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
-import 'package:whoru/src/model/user.dart';
+import 'package:whoru/src/model/User.dart';
 import 'package:whoru/src/pages/location/widget/customize_marker.dart';
 import 'package:whoru/src/service/location_service.dart';
 

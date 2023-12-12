@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/feed.dart';
-import 'package:whoru/src/model/feed.dart';
-import 'package:whoru/src/model/login.dart';
+import 'package:whoru/src/model/Feed.dart';
+import 'package:whoru/src/model/Login.dart';
 import 'package:whoru/src/pages/appbar/appbar.dart';
 import 'package:whoru/src/pages/feed/widget/feed_cart.dart';
 import 'package:whoru/src/pages/feed/widget/skeleton_loading.dart';

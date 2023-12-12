@@ -21,7 +21,7 @@ class Login {
       userName: json['userName'] as String?,
       message: json['message'],
       success: json['success'],
-      isDisabled: json['isDisabled'],
+      isDisabled: json['isDisabled'] as bool?,
       token: json['token'] as String?,
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:whoru/src/pages/feed/page/feed_screen.dart';
+import 'package:whoru/src/pages/feed/screens/feed_screen.dart';
 import 'package:whoru/src/pages/location/location_screen.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/pages/search/page/search_page.dart';

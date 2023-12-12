@@ -3,7 +3,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/api/like.dart';
-import 'package:whoru/src/model/feed.dart';
+import 'package:whoru/src/model/Feed.dart';
 import 'package:whoru/src/pages/feed/controller/build_Image.dart';
 import 'package:whoru/src/service/show_toast.dart';
 
