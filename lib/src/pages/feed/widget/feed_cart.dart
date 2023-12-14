@@ -146,13 +146,14 @@ class _CardFeedState extends State<CardFeed> {
               Row(
                 children: [
                   const SizedBox(width: 5.0),
+
                   BuildButtonFeed(
                     icon: PhosphorIcons.fill.heart,
                     label: widget.feed.likeCount,
                     onPressed: () {
                       likePost(widget.feed.idFeed);
                     },
-                    isLike: false,
+                    isLike: widget.feed.isLike,
                   ),
                   const SizedBox(width: 5.0),
                   BuildButtonFeed(

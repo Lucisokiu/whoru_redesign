@@ -5,6 +5,7 @@ class FeedModel {
   String content;
   List<String> imageUrls;
   int likeCount;
+  bool isLike;
   int commentCount;
   int shareCount;
   int idUser;
@@ -19,6 +20,7 @@ class FeedModel {
     required this.likeCount,
     required this.commentCount,
     required this.shareCount,
+    required this.isLike,
   });
   factory FeedModel.fromJson(Map<String, dynamic> json) {
     return FeedModel(
@@ -31,6 +33,7 @@ class FeedModel {
               .toList() ??
           [],
       likeCount: json['likesCount'] as int,
+      isLike: json['isLike'] as bool,
       commentCount: json['commentsCount'] as int,
       shareCount: json['sharesCount'] as int,
       idUser: json['idUser'] as int,

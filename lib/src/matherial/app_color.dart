@@ -35,6 +35,7 @@ class AppColors {
   final Color contentText2;
   final Color shadow;
   final Color text;
+  final Color icon;
 
   const AppColors({
     required this.header,
@@ -49,6 +50,7 @@ class AppColors {
     required this.contentText2,
     required this.shadow,
     required this.text,
+    required this.icon,
   });
 
   factory AppColors.light() {
@@ -64,7 +66,8 @@ class AppColors {
         contentText1: colorBlack,
         contentText2: colorPrimaryBlack,
         shadow: Colors.black38,
-        text: colorBlack);
+        text: colorBlack,
+        icon: colorBlack);
   }
 
   factory AppColors.dark() {
@@ -80,7 +83,7 @@ class AppColors {
         contentText1: mCL,
         contentText2: mCL,
         shadow: Colors.white38,
-        text: mC
-        );
+        text: mC,
+        icon: Colors.white38);
   }
 }

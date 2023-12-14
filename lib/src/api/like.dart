@@ -3,7 +3,7 @@ import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 Future<void> likePost(idPost) async {
-  var url = Uri.https(baseUrl,'/api/Like/LikePost');
+  var url = Uri.https(baseUrl,'/api/v1/Likes/LikePost');
   String? token = await getToken();
   print(url);
   var response = await http.post(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 Widget buildSingleImage(context, urlImage) {
   // final size = MediaQuery.of(context).size;
@@ -9,12 +10,12 @@ Widget buildSingleImage(context, urlImage) {
       ClipRRect(
         borderRadius: BorderRadius.circular(16.0),
         child: Container(
-          // height: _size.height * .42,
+          // height: 30.h,
           color: Colors.grey.withOpacity(0.1),
           alignment: Alignment.center,
           child: Image.network(
             urlImage,
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
         ),
       ),

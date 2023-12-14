@@ -73,6 +73,7 @@ class AppTheme {
           primary: appColors.button,
         ),
       ),
+      iconTheme: IconThemeData().copyWith(color: appColors.icon),
       shadowColor: appColors.shadow,
       textTheme: TextTheme(
         bodyMedium: TextStyle(

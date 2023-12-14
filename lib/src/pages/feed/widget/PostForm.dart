@@ -13,12 +13,12 @@ class _CreatePostFormState extends State<CreatePostForm> {
   TextEditingController contentController = TextEditingController();
   XFile? pickedImage;
   final picker = ImagePicker();
-  List<File> imageFiles = []; // Khởi tạo danh sách trống
+  List<File> imageFiles = [];
 
   Future<void> _pickImage() async {
     pickedImage = await picker.pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
-      imageFiles.add(File(pickedImage!.path)); // Thêm ảnh vào danh sách
+      imageFiles.add(File(pickedImage!.path));
     }
   }
 
@@ -31,6 +31,18 @@ class _CreatePostFormState extends State<CreatePostForm> {
             "Create Post",
             style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
           ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              controller: contentController,
+              style: Theme.of(context).textTheme.bodyMedium,
+              decoration: InputDecoration(
+                hintText: 'Enter your post content...',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 3,
+            ),
+          ),
           ElevatedButton(
             onPressed: () async {
               await _pickImage();
@@ -38,26 +50,28 @@ class _CreatePostFormState extends State<CreatePostForm> {
             },
             child: Text('Pick Image'),
           ),
-          Spacer(),
           pickedImage != null
-              ? Align(
-                  alignment: Alignment.center,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        for (var imageFile in imageFiles)
-                          Image.file(
-                            imageFile,
-                            height: 300,
-                          ),
-                      ],
+              ? Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          for (var imageFile in imageFiles)
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Image.file(
+                                imageFile,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 )
-              : SizedBox(),
-          Spacer(), // Sử dụng Spacer để đẩy widget về dưới cùng
-
+              : Spacer(),
           Align(
             alignment: Alignment.bottomCenter,
             child: ElevatedButton(
@@ -67,6 +81,7 @@ class _CreatePostFormState extends State<CreatePostForm> {
                     imageFiles: imageFiles,
                     content: contentController.text,
                   );
+                  Navigator.pop(context);
                 }
               },
               child: Text('Create Post'),

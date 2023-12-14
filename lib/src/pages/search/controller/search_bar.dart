@@ -1,10 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:whoru/src/api/user.dart';
 import 'package:whoru/src/api/userInfo.dart';
 import 'package:whoru/src/model/User.dart';
 
 class CustomSearch extends SearchDelegate {
-  List<UserModel>? user;
+  var res;
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -12,7 +13,7 @@ class CustomSearch extends SearchDelegate {
           onPressed: () => {
                 query = '',
               },
-          icon: const Icon(Icons.clear)),
+          icon: Icon(Icons.clear, color: Theme.of(context).iconTheme.color)),
     ];
   }
 
@@ -22,24 +23,26 @@ class CustomSearch extends SearchDelegate {
         onPressed: () => {
               close(context, null),
             },
-        icon: const Icon(Icons.arrow_back));
+        icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color));
   }
 
   void getUser(String name) async {
-    // user = await getInfoUserByName(name);
+    res = await getInfoUserByName(name);
   }
+
   @override
   Widget buildSuggestions(BuildContext context) {
+    getUser(query);
     List<UserModel> matchQuery = [];
-
-    // for (UserModel item in listUsers) {
-    //   if (query.isNotEmpty &&
-    //       item.username.toLowerCase().contains(query.toLowerCase())) {
-    //     print("$item + $query");
-    //     matchQuery.add(item);
-    //   }
-    // }
-
+    if (res != null && res.statusCode == 200) {
+      List<Map<dynamic, dynamic>> jsonList = jsonDecode(res.body);
+      // Convert each item in the JSON array to a UserModel
+      matchQuery = jsonList.map((item) => UserModel.fromJson(item)).toList();
+    } else {
+      return const Center(
+        child: Text('No results found.'),
+      );
+    }
     if (matchQuery.isEmpty) {
       return const Center(
         child: Text('No results found.'),
@@ -53,27 +56,22 @@ class CustomSearch extends SearchDelegate {
           leading: CircleAvatar(
             backgroundImage: NetworkImage(result.avt),
           ),
-          // title: Text(result.username),
+          title: Text(result.fullName),
         );
       },
     );
   }
 
-// cho phép tìm kiếm bài viết theo tên người dùng, cho các lựa chọn [người dùng, bài viết]
-// nhập username -> tìm người dùng : bài viết của người dùng đó
   @override
   Widget buildResults(BuildContext context) {
-    print(query);
-    List<UserModel> matchQuery = [];
-    // for (UserModel item in listUsers) {
-    //   if (query.isNotEmpty &&
-    //       item.username.toLowerCase().contains(query.toLowerCase())) {
-    //     print("$item + $query");
-    //     matchQuery.add(item);
-    //   }
-    // }
+    getUser(query);
 
-    if (matchQuery.isEmpty) {
+    List<UserModel> matchQuery = [];
+    if (res != null && res.statusCode == 200) {
+      List<Map<dynamic, dynamic>> jsonList = jsonDecode(res.body);
+      // Convert each item in the JSON array to a UserModel
+      matchQuery = jsonList.map((item) => UserModel.fromJson(item)).toList();
+    } else {
       return const Center(
         child: Text('No results found.'),
       );
@@ -86,9 +84,27 @@ class CustomSearch extends SearchDelegate {
           leading: CircleAvatar(
             backgroundImage: NetworkImage(result.avt),
           ),
-          // title: Text(result.username),
+          title: Text(result.fullName),
         );
       },
+    );
+  }
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
+    return ThemeData(
+      appBarTheme: AppBarTheme(
+        color: theme.primaryColor,
+      ),
+      primaryColor: theme.primaryColor,
+      primaryIconTheme: IconThemeData(
+        color: theme.iconTheme.color,
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        hintStyle: theme.textTheme.bodyMedium,
+      ),
     );
   }
 }
