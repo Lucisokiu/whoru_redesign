@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:lottie/lottie.dart';
-import 'package:whoru/src/pages/login/login_screen.dart';
+import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/utils/token.dart';
 

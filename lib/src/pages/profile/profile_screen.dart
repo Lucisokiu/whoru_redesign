@@ -4,7 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/userInfo.dart';
 import 'package:whoru/src/model/User.dart';
-import 'package:whoru/src/pages/login/login_screen.dart';
+import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/profile/widget/info.dart';
 import 'package:whoru/src/pages/profile/widget/tabbar_profile.dart';
 import 'package:whoru/src/utils/get_theme.dart';

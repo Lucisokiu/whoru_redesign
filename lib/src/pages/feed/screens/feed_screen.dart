@@ -7,7 +7,7 @@ import 'package:whoru/src/pages/appbar/appbar.dart';
 import 'package:whoru/src/pages/feed/widget/feed_cart.dart';
 import 'package:whoru/src/pages/feed/widget/skeleton_loading.dart';
 import 'package:whoru/src/pages/feed/widget/story_widget.dart';
-import 'package:whoru/src/pages/login/login_screen.dart';
+import 'package:whoru/src/pages/login/LoginSreen.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key});

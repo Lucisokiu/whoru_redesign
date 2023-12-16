@@ -55,7 +55,7 @@ Future<void> getUserByName(idPost) async {
 }
 
 Future<void> CreateAccount(Map map) async {
-  var url = Uri.https('$baseUrl  + /api/User/GetUserByName');
+  var url = Uri.https('$baseUrl  + /api/v1/Users/Create');
   String? token = await getToken();
 
   try {

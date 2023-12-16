@@ -74,8 +74,6 @@ class _SignInFormState extends State<SignInForm> {
             setState(() {
               isShowLoading = false;
             });
-            // showToast(
-            //     context, '❌ Error: Something went wrong');
           });
         }
       } else {
@@ -84,7 +82,6 @@ class _SignInFormState extends State<SignInForm> {
           setState(() {
             isShowLoading = false;
           });
-          // showToast(context, '❌');
         });
       }
     });
