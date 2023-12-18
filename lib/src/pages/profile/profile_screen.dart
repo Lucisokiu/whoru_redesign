@@ -96,8 +96,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              info(context, user!),
-
+                              info(context, user!),                              
                               // const TabBarProfile(),
                             ],
                           )
@@ -106,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     )
                   ],
                 )
-              : Expanded(child: MySkeletonLoadingWidget()),
+              : MySkeletonLoadingWidget(),
         ],
         // ),
       ),

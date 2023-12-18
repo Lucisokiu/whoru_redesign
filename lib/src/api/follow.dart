@@ -3,7 +3,7 @@ import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 Future<void> followUser(idUser) async {
-  var url = Uri.https('$baseUrl  + /api/Follow/FollowUser');
+  var url = Uri.https('$baseUrl  + /api/v1/UserInfos/UpdateInfo');
   String? token = await getToken();
 
   try {
@@ -29,7 +29,7 @@ Future<void> followUser(idUser) async {
 }
 
 Future<void> unFollowUser(idUser) async {
-  var url = Uri.https('$baseUrl  + /api/Follow/UnFollowUser');
+  var url = Uri.https(baseUrl, '/api/v1/Follows/UnFollowUser');
   String? token = await getToken();
 
   try {
@@ -55,7 +55,7 @@ Future<void> unFollowUser(idUser) async {
 }
 
 Future<void> getAllFollower() async {
-  var url = Uri.https('$baseUrl  + /api/Follow/GetAllFollower');
+  var url = Uri.https(baseUrl,'/api/v1/Follows/GetAllFollower');
   String? token = await getToken();
 
   try {
@@ -80,7 +80,7 @@ Future<void> getAllFollower() async {
 }
 
 Future<void> getAllFollowing() async {
-  var url = Uri.https('$baseUrl  + /api/Follow/GetAllFollowing');
+  var url = Uri.https(baseUrl,'/api/v1/Follows/GetAllFollowing');
   String? token = await getToken();
 
   try {

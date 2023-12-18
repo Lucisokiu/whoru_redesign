@@ -198,6 +198,7 @@ class _BuildButtonFeedState extends State<BuildButtonFeed> {
                   color: widget.isLike! ? Colors.red : null,
                   onPressed: () {
                     widget.onPressed();
+
                     setState(() {
                       if (widget.isLike!) {
                         widget.label--;
@@ -213,7 +214,7 @@ class _BuildButtonFeedState extends State<BuildButtonFeed> {
               : IconButton(
                   icon: Icon(widget.icon),
                   onPressed: () {
-                    widget.onPressed;
+                    widget.onPressed();
                   },
                 ),
           const SizedBox(width: 4),

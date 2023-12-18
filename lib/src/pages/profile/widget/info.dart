@@ -33,6 +33,26 @@ Widget info(BuildContext context, UserModel user) {
         fontSize: 24,
       ),
     ),
+
+
+    // ElevatedButton(
+    //   onPressed: () {
+    //     // Handle follow button tap
+    //     // You can implement the logic to follow/unfollow the user here
+    //   },
+    //   style: ElevatedButton.styleFrom(
+    //     primary: Colors.blue, // Button color
+    //     onPrimary: Colors.white, // Text color
+    //     shape: RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.circular(8.0),
+    //     ),
+    //     padding: EdgeInsets.symmetric(horizontal: 16.0),
+    //   ),
+    //   child: Text(
+    //     'Follow',
+    //     style: TextStyle(fontSize: 16.0),
+    //   ),
+    // ),
     const Row(
       // mainAxisAlignment:
       //     MainAxisAlignment.center, // Căn giữa các phần tử theo chiều ngang
@@ -106,32 +126,32 @@ Widget info(BuildContext context, UserModel user) {
     SizedBox(
       height: 10.h,
     ),
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          child: Text(
-            'Study at: ${user.work}',
-            style: const TextStyle(
-              fontFamily: "Lato",
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
-            ),
-          ),
-        ),
-        Container(
-          alignment: Alignment.topLeft,
-          child: Text(
-            user.study,
-            style: const TextStyle(
-              fontFamily: "Lato",
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
-            ),
-          ),
-        ),
-      ],
-    )
+    // Column(
+    //   crossAxisAlignment: CrossAxisAlignment.end,
+    //   children: [
+    //     Container(
+    //       alignment: Alignment.topLeft,
+    //       child: Text(
+    //         'Study at: ${user.work}',
+    //         style: const TextStyle(
+    //           fontFamily: "Lato",
+    //           fontWeight: FontWeight.bold,
+    //           fontSize: 24,
+    //         ),
+    //       ),
+    //     ),
+    //     Container(
+    //       alignment: Alignment.topLeft,
+    //       child: Text(
+    //         user.study,
+    //         style: const TextStyle(
+    //           fontFamily: "Lato",
+    //           fontWeight: FontWeight.bold,
+    //           fontSize: 24,
+    //         ),
+    //       ),
+    //     ),
+    //   ],
+    // )
   ]);
 }

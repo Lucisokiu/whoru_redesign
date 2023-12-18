@@ -76,6 +76,11 @@ class CustomSearch extends SearchDelegate {
         child: Text('No results found.'),
       );
     }
+    if (matchQuery.isEmpty) {
+      return const Center(
+        child: Text('No results found.'),
+      );
+    }
     return ListView.builder(
       itemCount: matchQuery.length,
       itemBuilder: (context, index) {

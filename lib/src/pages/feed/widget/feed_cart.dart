@@ -5,6 +5,7 @@ import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/api/like.dart';
 import 'package:whoru/src/model/Feed.dart';
 import 'package:whoru/src/pages/feed/controller/build_Image.dart';
+import 'package:whoru/src/pages/feed/widget/CommentDialog.dart';
 import 'package:whoru/src/service/show_toast.dart';
 
 class CardFeed extends StatefulWidget {
@@ -146,7 +147,6 @@ class _CardFeedState extends State<CardFeed> {
               Row(
                 children: [
                   const SizedBox(width: 5.0),
-
                   BuildButtonFeed(
                     icon: PhosphorIcons.fill.heart,
                     label: widget.feed.likeCount,
@@ -160,16 +160,54 @@ class _CardFeedState extends State<CardFeed> {
                     icon: PhosphorIcons.fill.chatTeardrop,
                     label: widget.feed.commentCount,
                     onPressed: () {
-                      likePost(widget.feed.idFeed);
+                      List<Map<String, dynamic>> sampleComments = [
+                        {
+                          'comment': 'This is a great post!',
+                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
+                        },
+                        {
+                          'comment': 'I love the content!',
+                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
+                        },
+                        {
+                          'comment': 'Nice picture!',
+                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
+                        },
+                        {
+                          'comment': 'Awesome!',
+                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
+                        },
+                        {
+                          'comment': 'Keep it up!',
+                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
+                        },
+                                                {
+                          'comment': 'Keep it up!',
+                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
+                        },
+                                                {
+                          'comment': 'Keep it up!',
+                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
+                        },
+                                                {
+                          'comment': 'Keep it up!',
+                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
+                        },
+                                                {
+                          'comment': 'Keep it up!',
+                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
+                        },
+                        
+                      ];
+
+                      showCommentDialog(context, sampleComments);
                     },
                   ),
                   const Spacer(),
                   BuildButtonFeed(
                     icon: PhosphorIcons.fill.shareFat,
                     label: widget.feed.shareCount,
-                    onPressed: () {
-                      likePost(widget.feed.idFeed);
-                    },
+                    onPressed: () {},
                   ),
                 ],
               ),
@@ -180,5 +218,3 @@ class _CardFeedState extends State<CardFeed> {
     );
   }
 }
-
-void call() {}

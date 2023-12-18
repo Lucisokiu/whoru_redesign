@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/model/Feed.dart';
@@ -51,13 +52,11 @@ class _FeedPageState extends State<FeedPage> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor, // Màu nền của SliverAppBar
-
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             pinned: false,
             floating: true,
             snap: true,
-            // expandedHeight: 15.h, // Điều chỉnh chiều cao khi mở rộng
-            flexibleSpace: MyAppBar(),
+            flexibleSpace: const MyAppBar(),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(

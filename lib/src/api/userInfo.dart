@@ -6,7 +6,7 @@ import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 Future<void> createInfoUser(Map map) async {
-  var url = Uri.https(baseUrl, '/api/UserInfo/Create');
+  var url = Uri.https(baseUrl, '/api/v1/UserInfos/UpdateInfo');
   String? token = await getToken();
 
   try {
@@ -32,7 +32,7 @@ Future<void> createInfoUser(Map map) async {
 }
 
 Future<void> updateInfoUser(Map map) async {
-  var url = Uri.https('$baseUrl/api/UserInfo/UpdateInfo');
+  var url = Uri.https(baseUrl,'/api/v1/UserInfos/UpdateInfo');
   String? token = await getToken();
 
   try {
@@ -77,7 +77,7 @@ Future<http.Response> getInfoUserByName(String name) async {
 }
 
 Future<UserModel?> getInfoUserById(int Id) async {
-  var url = Uri.https(baseUrl, 'api/UserInfo/GetInfoById');
+  var url = Uri.https(baseUrl, '/api/v1/UserInfos/GetInfoById');
   String? token = await getToken();
   var response = await http.post(
     url,
