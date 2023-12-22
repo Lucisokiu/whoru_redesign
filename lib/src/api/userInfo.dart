@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:whoru/src/model/User.dart';
@@ -58,7 +59,7 @@ Future<void> updateInfoUser(Map map) async {
 }
 
 Future<http.Response> getInfoUserByName(String name) async {
-  var url = Uri.https(baseUrl, '/api/v1/Users/GetUserByName');
+  var url = Uri.https(baseUrl, '/api/v1/UserInfos/SearchUser');
   String? token = await getToken();
 
   name = '"$name"';
@@ -76,7 +77,7 @@ Future<http.Response> getInfoUserByName(String name) async {
   return response;
 }
 
-Future<UserModel?> getInfoUserById(int Id) async {
+Future<UserModel?> getInfoUserById(int id) async {
   var url = Uri.https(baseUrl, '/api/v1/UserInfos/GetInfoById');
   String? token = await getToken();
   var response = await http.post(
@@ -86,7 +87,7 @@ Future<UserModel?> getInfoUserById(int Id) async {
       'Accept': 'application/json',
       'Authorization': 'bearer $token',
     },
-    body: Id.toString(),
+    body: id.toString(),
   );
 
   if (response.statusCode == 200) {
@@ -97,3 +98,89 @@ Future<UserModel?> getInfoUserById(int Id) async {
     return null;
   }
 }
+
+
+Future<void> updateAvatar({
+  required File? imageFile,
+}) async {
+  try {
+    var url = Uri.https(baseUrl, '/api/v1/UserInfos/UpdateAvatar');
+    String? token = await getToken();
+    Map<String, String> headers = <String, String>{
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'bearer $token',
+    };
+    // Tạo request
+    var request = http.MultipartRequest(
+      'POST',
+      url,
+    );
+
+    // Thêm các trường dữ liệu khác vào FormData nếu cần
+    request.headers.addAll(headers);
+    // Thêm ảnh vào FormData
+    if (imageFile != null) {
+        var file = await http.MultipartFile.fromPath(
+          'file',
+          imageFile.path,
+        );
+        request.files.add(file);
+    }
+
+    // Gửi request và nhận response
+    var response = await request.send();
+
+    // Kiểm tra mã trạng thái của response
+    if (response.statusCode.isEven) {
+      print('Success');
+    } else {
+      print('Failed with status ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Failed with status $e');
+  }
+}
+
+Future<void> updateBackground({
+  required File? imageFile,
+}) async {
+  try {
+    var url = Uri.https(baseUrl, '/api/v1/UserInfos/UpdateBackground');
+    String? token = await getToken();
+    Map<String, String> headers = <String, String>{
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'bearer $token',
+    };
+    // Tạo request
+    var request = http.MultipartRequest(
+      'POST',
+      url,
+    );
+
+    // Thêm các trường dữ liệu khác vào FormData nếu cần
+    request.headers.addAll(headers);
+    // Thêm ảnh vào FormData
+    if (imageFile != null) {
+      var file = await http.MultipartFile.fromPath(
+        'file',
+        imageFile.path,
+      );
+      request.files.add(file);
+    }
+
+    // Gửi request và nhận response
+    var response = await request.send();
+
+    // Kiểm tra mã trạng thái của response
+    if (response.statusCode.isEven) {
+      print('Success');
+    } else {
+      print('Failed with status ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Failed with status $e');
+  }
+}
+

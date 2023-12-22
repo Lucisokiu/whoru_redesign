@@ -36,7 +36,7 @@ class _SearchPageState extends State<SearchPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // MyAppBar(),
-      
+
               Center(
                 child: Text(
                   "enter information",

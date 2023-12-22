@@ -17,3 +17,13 @@ Future<int?> getIdUser() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getInt('idUser');
 }
+
+Future<void> deleteToken() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove('token');
+}
+
+Future<void> deleteIdUser() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove('idUser');
+}

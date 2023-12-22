@@ -10,10 +10,10 @@ class ThemeController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    await _getDarkMode().then((value) => isDarkMode = value);
+    await getDarkMode().then((value) => isDarkMode = value);
   }
 
-  _getDarkMode() async {
+  getDarkMode() async {
     SharedPreferences pref = await _prefs;
     isDarkMode = (pref.getBool('isDarkMode') ?? false);
     Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);

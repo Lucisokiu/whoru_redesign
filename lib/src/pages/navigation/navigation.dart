@@ -4,6 +4,7 @@ import 'package:whoru/src/pages/feed/screens/feed_screen.dart';
 import 'package:whoru/src/pages/location/location_screen.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/pages/search/page/search_page.dart';
+import 'package:whoru/src/pages/user/user.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
@@ -19,7 +20,7 @@ class _NavigationState extends State<Navigation> {
     const FeedPage(),
     const SearchPage(),
     const LocationPage(),
-    const ProfilePage(),
+    const UserPage(),
   ];
 
   @override
@@ -33,8 +34,11 @@ class _NavigationState extends State<Navigation> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         extendBody: true,
-        body: Container(
-          child: _screens[currentPage],
+        body: SafeArea(
+          bottom: false,
+          child: Container(
+            child: _screens[currentPage],
+          ),
         ),
         bottomNavigationBar: Container(
           padding: const EdgeInsets.all(12),

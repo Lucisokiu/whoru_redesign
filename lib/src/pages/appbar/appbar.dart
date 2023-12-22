@@ -12,75 +12,70 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(height: 2.h),
-          Container(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            height: 10.h,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                InkWell(
-                    onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SplashScreen(),
-                        ),
-                        (route) => false,
-                      );
-                    },
-                    child: SizedBox(
-                      height: 15.h,
-                      width: 15.w,
-                      child: Lottie.asset('assets/lottie/splash_cat.json'),
-                    )),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SplashScreen(),
-                      ),
-                      (route) => false, // Xóa toàn bộ màn hình khỏi stack
-                    );
-                  },
-                  child: Text(
-                    'Whoru',
-                    style: TextStyle(
-                      fontFamily: 'Lobster',
-                      fontSize: 20.sp,
+    return SafeArea(
+      child: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        height: 10.h,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            InkWell(
+                onTap: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SplashScreen(),
                     ),
-                  ),
-                ),
-                Spacer(),
-                buildActionHome(
+                    (route) => false,
+                  );
+                },
+                child: SizedBox(
+                  height: 15.h,
+                  width: 15.w,
+                  child: Lottie.asset('assets/lottie/splash_cat.json'),
+                )),
+            InkWell(
+              onTap: () {
+                Navigator.pushAndRemoveUntil(
                   context,
-                  'Create',
-                  PhosphorIcons.fill.plusCircle,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: buildActionHome(
-                    context,
-                    'Search',
-                    PhosphorIcons.fill.magnifyingGlass,
+                  MaterialPageRoute(
+                    builder: (context) => const SplashScreen(),
                   ),
+                  (route) => false, // Xóa toàn bộ màn hình khỏi stack
+                );
+              },
+              child: Text(
+                'Whoru',
+                style: TextStyle(
+                  fontFamily: 'Lobster',
+                  fontSize: 20.sp,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: buildActionHome(
-                    context,
-                    'Chat',
-                    PhosphorIcons.fill.wechatLogo,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+            Spacer(),
+            buildActionHome(
+              context,
+              'Create',
+              PhosphorIcons.fill.plusCircle,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: buildActionHome(
+                context,
+                'Search',
+                PhosphorIcons.fill.magnifyingGlass,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: buildActionHome(
+                context,
+                'Chat',
+                PhosphorIcons.fill.wechatLogo,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

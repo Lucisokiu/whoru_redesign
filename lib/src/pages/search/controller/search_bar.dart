@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:whoru/src/api/userInfo.dart';
-import 'package:whoru/src/model/User.dart';
+import 'package:whoru/src/model/SearchModel.dart';
+import 'package:whoru/src/pages/profile/profile_screen.dart';
 
 class CustomSearch extends SearchDelegate {
   var res;
@@ -33,32 +34,59 @@ class CustomSearch extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     getUser(query);
-    List<UserModel> matchQuery = [];
+    List<SearchModel> matchQuery = [];
     if (res != null && res.statusCode == 200) {
-      List<Map<dynamic, dynamic>> jsonList = jsonDecode(res.body);
+      List<dynamic> jsonList = jsonDecode(res.body);
       // Convert each item in the JSON array to a UserModel
-      matchQuery = jsonList.map((item) => UserModel.fromJson(item)).toList();
+      matchQuery = jsonList.map((item) => SearchModel.fromJson(item)).toList();
     } else {
-      return const Center(
-        child: Text('No results found.'),
+      return Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Center(
+          child: Text(
+            'No results found.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
       );
     }
     if (matchQuery.isEmpty) {
-      return const Center(
-        child: Text('No results found.'),
+      return Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Center(
+          child: Text(
+            'No results found.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
       );
     }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        UserModel result = matchQuery[index];
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(result.avt),
-          ),
-          title: Text(result.fullName),
-        );
-      },
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: ListView.builder(
+        itemCount: matchQuery.length,
+        itemBuilder: (context, index) {
+          SearchModel result = matchQuery[index];
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(result.avatar),
+            ),
+            title: Text(
+              result.fullName,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (builder) => ProfilePage(
+                            idUser: result.idUser,
+                            isMy: false,
+                          )));
+            },
+          );
+        },
+      ),
     );
   }
 
@@ -66,32 +94,59 @@ class CustomSearch extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     getUser(query);
 
-    List<UserModel> matchQuery = [];
+    List<SearchModel> matchQuery = [];
     if (res != null && res.statusCode == 200) {
-      List<Map<dynamic, dynamic>> jsonList = jsonDecode(res.body);
+      List<dynamic> jsonList = jsonDecode(res.body);
       // Convert each item in the JSON array to a UserModel
-      matchQuery = jsonList.map((item) => UserModel.fromJson(item)).toList();
+      matchQuery = jsonList.map((item) => SearchModel.fromJson(item)).toList();
     } else {
-      return const Center(
-        child: Text('No results found.'),
+      return Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Center(
+          child: Text(
+            'No results found.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
       );
     }
     if (matchQuery.isEmpty) {
-      return const Center(
-        child: Text('No results found.'),
+      return Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Center(
+          child: Text(
+            'No results found.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
       );
     }
-    return ListView.builder(
-      itemCount: matchQuery.length,
-      itemBuilder: (context, index) {
-        UserModel result = matchQuery[index];
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(result.avt),
-          ),
-          title: Text(result.fullName),
-        );
-      },
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: ListView.builder(
+        itemCount: matchQuery.length,
+        itemBuilder: (context, index) {
+          SearchModel result = matchQuery[index];
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(result.avatar),
+            ),
+            title: Text(
+              result.fullName,
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (builder) => ProfilePage(
+                            idUser: result.idUser,
+                            isMy: false,
+                          )));
+            },
+          );
+        },
+      ),
     );
   }
 
@@ -100,16 +155,12 @@ class CustomSearch extends SearchDelegate {
     final ThemeData theme = Theme.of(context);
 
     return ThemeData(
-      appBarTheme: AppBarTheme(
-        color: theme.primaryColor,
-      ),
-      primaryColor: theme.primaryColor,
-      primaryIconTheme: IconThemeData(
-        color: theme.iconTheme.color,
-      ),
-      inputDecorationTheme: InputDecorationTheme(
-        hintStyle: theme.textTheme.bodyMedium,
-      ),
-    );
+        appBarTheme: AppBarTheme(
+          color: theme.scaffoldBackgroundColor,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          hintStyle: Theme.of(context).textTheme.bodyMedium
+        ),
+        textTheme: Theme.of(context).textTheme);
   }
 }

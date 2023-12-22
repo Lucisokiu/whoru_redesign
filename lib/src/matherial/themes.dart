@@ -35,6 +35,8 @@ class AppTheme {
           primary: appColors.button,
         ),
       ),
+      iconTheme: IconThemeData().copyWith(color: appColors.icon),
+
       textTheme: TextTheme(
         bodyMedium: TextStyle(
           color: appColors.text,

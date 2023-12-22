@@ -4,6 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:lottie/lottie.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
+import 'package:whoru/src/pages/user/user.dart';
 import 'package:whoru/src/utils/token.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -32,8 +33,7 @@ class _SplashScreenState extends State<SplashScreen>
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) =>  
-          // LoginScreen(),
+          builder: (context) =>
           token != null ? Navigation() : LoginScreen(),
         ),
       );

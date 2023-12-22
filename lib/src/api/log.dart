@@ -5,8 +5,6 @@ import 'package:whoru/src/utils/token.dart';
 
 Future<http.Response> apiLogin(Map map) async {
   var url = Uri.https(baseUrl, '/api/v1/Logs/Login');
-  print('apiLogin $url');
-  print("map $map");
 
   var response = await http.post(
     url,

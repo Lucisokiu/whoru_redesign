@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/log.dart';
 import 'package:whoru/src/model/Login.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/service/show_toast.dart';
+import 'package:whoru/src/utils/token.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({

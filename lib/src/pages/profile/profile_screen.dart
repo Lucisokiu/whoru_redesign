@@ -5,6 +5,7 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/userInfo.dart';
 import 'package:whoru/src/model/User.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
+import 'package:whoru/src/pages/profile/widget/UpdateProfile.dart';
 import 'package:whoru/src/pages/profile/widget/info.dart';
 import 'package:whoru/src/pages/profile/widget/tabbar_profile.dart';
 import 'package:whoru/src/utils/get_theme.dart';
@@ -13,31 +14,26 @@ import 'package:whoru/src/utils/token.dart';
 import '../feed/widget/skeleton_loading.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  int? idUser;
+  bool isMy;
+
+  ProfilePage({super.key, this.idUser, required this.isMy});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  int? idUser;
   UserModel? user;
+
   fetchData() async {
-    idUser = await getIdUser();
+    widget.idUser ??= await getIdUser();
     if (mounted) {
-      if (idUser != null) {
-        user = await getInfoUserById(idUser!);
-        setState(() {});
-      } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LoginScreen(),
-          ),
-          (route) => false,
-        );
+      if (widget.idUser == null) {
+        widget.idUser = await getIdUser();
       }
+      user = await getInfoUserById(widget.idUser!);
+      setState(() {});
     }
   }
 
@@ -49,11 +45,50 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeController themeController = Get.find<ThemeController>();
-
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        title: Text(user?.fullName ?? 'Loading...'),
+        leading: IconButton(
+          icon: Icon(Icons
+              .arrow_back_ios_new_rounded), // Replace with your default icon
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      endDrawer: (widget.isMy)
+          ? Drawer(
+              child: ListView(
+                padding: EdgeInsets.fromLTRB(0, 10.h, 0, 0),
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text(user?.fullName ?? 'Loading...'),
+                  ),
+                  ListTile(
+                    title: Text('Update Avatar'),
+                    onTap: () {
+                      customUpdateProfileDialog(context, 'avatar');
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Update background'),
+                    onTap: () {
+                      customUpdateProfileDialog(context, 'background');
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Update Info'),
+                    onTap: () {
+                      customUpdateProfileDialog(context, 'info');
+                    },
+                  ),
+                ],
+              ),
+            )
+          : null,
       body:
           // SafeArea(
           //   bottom: false,
@@ -85,18 +120,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                           ),
-                          Positioned(
-                            top: screenHeight * 0.3,
-                            right: 0,
-                            child: IconButton(
-                                onPressed: () =>
-                                    {themeController.toggleDarkMode()},
-                                icon: const Icon(Icons.brightness_2)),
-                          ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              info(context, user!),                              
+                              info(context, user!),
                               // const TabBarProfile(),
                             ],
                           )

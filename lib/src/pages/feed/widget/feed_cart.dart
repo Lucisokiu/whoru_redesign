@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:whoru/src/api/comment.dart';
 import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/api/like.dart';
+import 'package:whoru/src/model/CommentModel.dart';
 import 'package:whoru/src/model/Feed.dart';
 import 'package:whoru/src/pages/feed/controller/build_Image.dart';
 import 'package:whoru/src/pages/feed/widget/CommentDialog.dart';
+import 'package:whoru/src/pages/location/widget/map_widget.dart';
+import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/service/show_toast.dart';
 
 class CardFeed extends StatefulWidget {
   FeedModel feed;
+  final int CurrentUser;
 
-  CardFeed({super.key, required this.feed});
+  CardFeed({super.key, required this.feed,required this.CurrentUser});
 
   @override
   State<CardFeed> createState() => _CardFeedState();
 }
 
 class _CardFeedState extends State<CardFeed> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,11 +68,26 @@ class _CardFeedState extends State<CardFeed> {
                     width: 60,
                     height: 60,
                     child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          if (widget.CurrentUser != widget.feed.idUser) {
+                            Navigator.push(context, MaterialPageRoute(builder: (builder) =>
+                            ProfilePage(
+                              idUser: widget.feed.idUser,
+                              isMy: false,
+                            )));
+                          } else {
+                            Navigator.push(context, MaterialPageRoute(builder: (builder) =>
+                                ProfilePage(
+                                  idUser: widget.feed.idUser,
+                                  isMy: true,
+                                )));
+                          }
+                        },
                         child: CircleAvatar(
-                          radius: 30.0, // Set the radius based on your design
-                          backgroundColor: Colors
-                              .transparent, // Set background color to transparent
+                          radius: 30.0,
+                          // Set the radius based on your design
+                          backgroundColor: Colors.transparent,
+                          // Set background color to transparent
                           child: ClipOval(
                             child: Image.network(
                               widget.feed.avatar,
@@ -159,48 +185,10 @@ class _CardFeedState extends State<CardFeed> {
                   BuildButtonFeed(
                     icon: PhosphorIcons.fill.chatTeardrop,
                     label: widget.feed.commentCount,
-                    onPressed: () {
-                      List<Map<String, dynamic>> sampleComments = [
-                        {
-                          'comment': 'This is a great post!',
-                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
-                        },
-                        {
-                          'comment': 'I love the content!',
-                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
-                        },
-                        {
-                          'comment': 'Nice picture!',
-                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
-                        },
-                        {
-                          'comment': 'Awesome!',
-                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
-                        },
-                        {
-                          'comment': 'Keep it up!',
-                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
-                        },
-                                                {
-                          'comment': 'Keep it up!',
-                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
-                        },
-                                                {
-                          'comment': 'Keep it up!',
-                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
-                        },
-                                                {
-                          'comment': 'Keep it up!',
-                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
-                        },
-                                                {
-                          'comment': 'Keep it up!',
-                          'avatar': 'https://avatars.githubusercontent.com/u/95356357?v=4',
-                        },
-                        
-                      ];
-
-                      showCommentDialog(context, sampleComments);
+                    onPressed: () async {
+                      getCommentByIdFeed(widget.feed.idFeed);
+                      List<CommentModel>? sampleComments = await getCommentByIdFeed(widget.feed.idFeed);
+                      showCommentDialog(context,sampleComments,widget.feed.idFeed, widget.CurrentUser!);
                     },
                   ),
                   const Spacer(),
