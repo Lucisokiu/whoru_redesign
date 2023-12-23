@@ -12,7 +12,6 @@ class UpdateBackground extends StatefulWidget {
 }
 
 class _UpdateBackgroundState extends State<UpdateBackground> {
-
   XFile? pickedImage;
   final picker = ImagePicker();
 
@@ -26,7 +25,7 @@ class _UpdateBackgroundState extends State<UpdateBackground> {
       child: Column(
         children: [
           const Text(
-            "Create Post",
+            "Update Background",
             style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
           ),
           ElevatedButton(
@@ -38,17 +37,17 @@ class _UpdateBackgroundState extends State<UpdateBackground> {
           ),
           pickedImage != null
               ? Expanded(
-            child: Align(
-              alignment: Alignment.center,
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 8.0),
-                child: Image.file(
-                  File(pickedImage!.path),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          )
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Image.file(
+                        File(pickedImage!.path),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                )
               : Spacer(),
           Align(
             alignment: Alignment.bottomCenter,

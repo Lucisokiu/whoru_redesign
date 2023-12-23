@@ -14,7 +14,6 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(ThemeController());
   HttpOverrides.global = MyHttpOverrides();
-
   runApp(const MyApp());
 }
 

@@ -15,6 +15,9 @@ class MapWidget extends StatefulWidget {
   State<MapWidget> createState() => _MapWidgetState();
 }
 
+
+
+class _MapWidgetState extends State<MapWidget> {
   UserModel user = UserModel(
     id: 1,
     fullName: 'LuciSoKiu',
@@ -23,11 +26,14 @@ class MapWidget extends StatefulWidget {
     description: 'A software developer',
     work: 'Software Company',
     study: 'University XYZ',
+    followerCount: 1,
+    followingCount: 1,
+    isFollow: true,
   );
-class _MapWidgetState extends State<MapWidget> {
   LocationData? _userLocation;
   LocationService? locationService;
   late LocationData userLocation;
+
   void CurrentLocation() async {
     await locationService!.getLocation().then((value) {
       if (mounted) {
@@ -70,9 +76,8 @@ class _MapWidgetState extends State<MapWidget> {
             )
           : FlutterMap(
               options: MapOptions(
-                maxZoom: 18,
-                                minZoom: 16.0,
-
+                  maxZoom: 18,
+                  minZoom: 16.0,
                   center: LatLng(
                       _userLocation!.latitude!, _userLocation!.longitude!),
                   zoom: 17.0),

@@ -26,7 +26,7 @@ class _UpdateAvatarState extends State<UpdateAvatar> {
       child: Column(
         children: [
           const Text(
-            "Create Post",
+            "Update Avatar",
             style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
           ),
           ElevatedButton(

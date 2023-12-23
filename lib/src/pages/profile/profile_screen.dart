@@ -93,15 +93,14 @@ class _ProfilePageState extends State<ProfilePage> {
           // SafeArea(
           //   bottom: false,
           //   child:
-          Stack(
-        children: [
           (user != null)
-              ? Column(
-                  children: [
-                    Expanded(
-                      child: Stack(
+              ? SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Stack(
                         children: [
                           Container(
+                            color: Theme.of(context).cardColor,
                             height: 40.h,
                             child: ClipRRect(
                               child: Image.network(
@@ -110,32 +109,39 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                           ),
-                          Container(
-                            padding: const EdgeInsets.all(12),
-                            margin: EdgeInsets.only(top: screenHeight * 0.3),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.background,
-                              borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(40), // Bán kính góc trên
+                          Positioned.fill(
+                            top: screenHeight * 0.3,
+                            child: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).scaffoldBackgroundColor,
+                                // color: Colors.transparent,
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(40),
+                                ),
                               ),
                             ),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              info(context, user!),
-                              // const TabBarProfile(),
-                            ],
+                          SingleChildScrollView(
+                            child: Container(
+                              // color: Theme.of(context).colorScheme.background,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  info(context, user!, widget.isMy),
+                                  // const TabBarProfile(),
+                                  info(context, user!, widget.isMy),
+                                  info(context, user!, widget.isMy),
+                                ],
+                              ),
+                            ),
                           )
                         ],
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 )
               : MySkeletonLoadingWidget(),
-        ],
-        // ),
-      ),
     );
   }
 }
