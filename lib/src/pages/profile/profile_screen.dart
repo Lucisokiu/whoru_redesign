@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/api/userInfo.dart';
+import 'package:whoru/src/model/Feed.dart';
 import 'package:whoru/src/model/User.dart';
+import 'package:whoru/src/pages/feed/widget/feed_cart.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/profile/widget/UpdateProfile.dart';
 import 'package:whoru/src/pages/profile/widget/info.dart';
@@ -25,6 +28,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   UserModel? user;
+  List<FeedModel>? allPost;
 
   fetchData() async {
     widget.idUser ??= await getIdUser();
@@ -33,6 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
         widget.idUser = await getIdUser();
       }
       user = await getInfoUserById(widget.idUser!);
+      allPost = await getAllPostById(widget.idUser!);
       setState(() {});
     }
   }
@@ -85,63 +90,80 @@ class _ProfilePageState extends State<ProfilePage> {
                       customUpdateProfileDialog(context, 'info');
                     },
                   ),
+                  ListTile(
+                    title: Text('Change Password'),
+                    onTap: () {
+                      customUpdateProfileDialog(context, 'changePass');
+                    },
+                  ),
                 ],
               ),
             )
           : null,
-      body:
-          // SafeArea(
-          //   bottom: false,
-          //   child:
-          (user != null)
-              ? SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          Container(
-                            color: Theme.of(context).cardColor,
-                            height: 40.h,
-                            child: ClipRRect(
-                              child: Image.network(
-                                user!.background,
-                                fit: BoxFit.fitHeight,
+      body: (user != null)
+          ? SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          color: Theme.of(context).cardColor,
+                          height: 40.h,
+                          child: ClipRRect(
+                            child: Image.network(
+                              user!.background,
+                              fit: BoxFit.fitHeight,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: screenHeight * 0.3,
+                          bottom: 0, // Đặt vị trí cuối cùng từ bottom
+                          left: 0, // Đặt vị trí bắt đầu từ left
+                          right: 0, // Đặt vị trí cuối cùng từ right
+                          child: Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              // color: Colors.white,
+                              borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(40),
                               ),
                             ),
                           ),
-                          Positioned.fill(
-                            top: screenHeight * 0.3,
-                            child: Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).scaffoldBackgroundColor,
-                                // color: Colors.transparent,
-                                borderRadius: const BorderRadius.vertical(
-                                  top: Radius.circular(40),
-                                ),
-                              ),
-                            ),
+                        ),
+                        Container(
+                          color: Colors.transparent,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              info(context, user!, widget.isMy),
+
+
+                              // (allPost != null)
+                              //     ? ((allPost!.isNotEmpty)
+                              //         ? ListView.builder(
+                              //             itemCount: allPost!.length,
+                              //             itemBuilder: (context, index) {
+                              //               final feed = allPost![index];
+                              //               return CardFeed(
+                              //                   feed: feed,
+                              //                   CurrentUser: user!.id);
+                              //             },
+                              //           )
+                              //         : Container())
+                              //     : MySkeletonLoadingWidget(),
+                            ],
                           ),
-                          SingleChildScrollView(
-                            child: Container(
-                              // color: Theme.of(context).colorScheme.background,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  info(context, user!, widget.isMy),
-                                  // const TabBarProfile(),
-                                  info(context, user!, widget.isMy),
-                                  info(context, user!, widget.isMy),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                )
-              : MySkeletonLoadingWidget(),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : MySkeletonLoadingWidget(),
     );
   }
 }

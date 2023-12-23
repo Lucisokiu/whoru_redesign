@@ -99,7 +99,7 @@ Future<void> updateAccount(Map map) async {
       print('Follow request successful');
     } else {
       print(
-          'Failed to make Follow request. Status code: ${response.statusCode}');
+          'Failed to make updateAccount request. Status code: ${response.statusCode}');
     }
   } catch (e) {
     print('Error during API call: $e');

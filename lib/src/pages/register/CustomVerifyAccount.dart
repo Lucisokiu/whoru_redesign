@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:whoru/src/pages/register/widget/FieldFormSignUp.dart';
 import 'package:whoru/src/pages/login/widget/FieldFormSignIn.dart';
+import 'package:whoru/src/pages/register/widget/FieldFormVerify.dart';
 
 Future<Object?> customVerifyDialog(
   BuildContext context,
@@ -53,10 +54,10 @@ class _VerifyState extends State<Verify> {
                     children: [
                       Column(children: [
                         const Text(
-                          "Sign In",
+                          "Verify",
                           style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
                         ),
-                        // SignUpForm(),
+                        VerifyForm(),
                         Row(
                           children: [
                             Expanded(

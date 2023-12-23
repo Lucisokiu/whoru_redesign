@@ -5,6 +5,7 @@
 import FlutterMacOS
 import Foundation
 
+import emoji_picker_flutter
 import file_selector_macos
 import location
 import path_provider_foundation
@@ -12,6 +13,7 @@ import rive_common
 import shared_preferences_foundation
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
+  EmojiPickerFlutterPlugin.register(with: registry.registrar(forPlugin: "EmojiPickerFlutterPlugin"))
   FileSelectorPlugin.register(with: registry.registrar(forPlugin: "FileSelectorPlugin"))
   LocationPlugin.register(with: registry.registrar(forPlugin: "LocationPlugin"))
   PathProviderPlugin.register(with: registry.registrar(forPlugin: "PathProviderPlugin"))

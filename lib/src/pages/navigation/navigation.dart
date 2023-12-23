@@ -34,12 +34,7 @@ class _NavigationState extends State<Navigation> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         extendBody: true,
-        body: SafeArea(
-          bottom: false,
-          child: Container(
-            child: _screens[currentPage],
-          ),
-        ),
+        body: _screens[currentPage],
         bottomNavigationBar: Container(
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.fromLTRB(24, 16, 24, 16),
@@ -53,8 +48,8 @@ class _NavigationState extends State<Navigation> {
               IconButton(
                 iconSize: 36,
                 icon: Icon(currentPage == 0
-                    ? PhosphorIcons.fill.house
-                    : PhosphorIcons.thin.house),
+                    ? PhosphorIconsFill.house
+                    : PhosphorIconsThin.house),
                 color: Colors.white,
                 onPressed: () {
                   print("Home");
@@ -66,8 +61,8 @@ class _NavigationState extends State<Navigation> {
               IconButton(
                 iconSize: 36,
                 icon: Icon(currentPage == 1
-                    ? PhosphorIcons.fill.magnifyingGlass
-                    : PhosphorIcons.thin.magnifyingGlass),
+                    ? PhosphorIconsFill.magnifyingGlass
+                    : PhosphorIconsThin.magnifyingGlass),
                 color: Colors.white,
                 onPressed: () {
                   print("Chat");
@@ -79,8 +74,8 @@ class _NavigationState extends State<Navigation> {
               IconButton(
                 iconSize: 36,
                 icon: Icon(currentPage == 2
-                    ? PhosphorIcons.fill.mapPinLine
-                    : PhosphorIcons.light.mapPinLine),
+                    ? PhosphorIconsFill.mapPinLine
+                    : PhosphorIconsLight.mapPinLine),
                 color: Colors.white,
                 onPressed: () {
                   print("Location");
@@ -92,8 +87,8 @@ class _NavigationState extends State<Navigation> {
               IconButton(
                 iconSize: 36,
                 icon: Icon(currentPage == 3
-                    ? PhosphorIcons.fill.userCircle
-                    : PhosphorIcons.thin.userCircle),
+                    ? PhosphorIconsFill.userCircle
+                    : PhosphorIconsThin.userCircle),
                 color: Colors.white,
                 onPressed: () {
                   print("Profile");

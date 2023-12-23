@@ -2,9 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:whoru/src/api/userInfo.dart';
 import 'package:whoru/src/model/SearchModel.dart';
-import 'package:whoru/src/pages/profile/profile_screen.dart';
+import 'package:whoru/src/model/UserChat.dart';
+import 'package:whoru/src/pages/chat/screens/IndividualPage.dart';
+import 'package:whoru/src/pages/feed/screens/feed_screen.dart';
+import 'package:whoru/src/utils/token.dart';
 
-class CustomSearch extends SearchDelegate {
+class SearchUserChat extends SearchDelegate {
   var res;
 
   @override
@@ -28,7 +31,6 @@ class CustomSearch extends SearchDelegate {
   }
 
   void getUser(String name) async {
-    print("getUser $name");
     res = await getInfoUserByName(name);
   }
 
@@ -37,7 +39,6 @@ class CustomSearch extends SearchDelegate {
     getUser(query);
     List<SearchModel> matchQuery = [];
     if (res != null && res.statusCode == 200) {
-      print("check Res ${res.body}");
       List<dynamic> jsonList = jsonDecode(res.body);
       // Convert each item in the JSON array to a UserModel
       matchQuery = jsonList.map((item) => SearchModel.fromJson(item)).toList();
@@ -77,13 +78,15 @@ class CustomSearch extends SearchDelegate {
               result.fullName,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            onTap: () {
-              Navigator.push(
+            onTap: () async {
+              int? id = await getIdUser();
+              Navigator.pop(context);
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (builder) => ProfilePage(
-                            idUser: result.idUser,
-                            isMy: false,
+                      builder: (builder) => IndividualPage(
+                            user: UserChat.fromSearchModel(result),
+                            currentId: id!,
                           )));
             },
           );
@@ -137,14 +140,17 @@ class CustomSearch extends SearchDelegate {
               result.fullName,
               style: TextStyle(color: Colors.white),
             ),
-            onTap: () {
-              Navigator.push(
+            onTap: () async {
+              int? id = await getIdUser();
+
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (builder) => ProfilePage(
-                            idUser: result.idUser,
-                            isMy: false,
-                          )));
+                      builder: (builder) => IndividualPage(
+                            user: UserChat.fromSearchModel(result),
+                            currentId: id!,
+                          ))
+              );
             },
           );
         },
@@ -161,8 +167,7 @@ class CustomSearch extends SearchDelegate {
           color: theme.scaffoldBackgroundColor,
         ),
         inputDecorationTheme: InputDecorationTheme(
-          hintStyle: Theme.of(context).textTheme.bodyMedium
-        ),
+            hintStyle: Theme.of(context).textTheme.bodyMedium),
         textTheme: Theme.of(context).textTheme);
   }
 }

@@ -72,7 +72,7 @@ Future<void> sendCodeByEmail(idUser) async {
       print('Follow request successful');
     } else {
       print(
-          'Failed to make Follow request. Status code: ${response.statusCode}');
+          'Failed to make sendCodeByEmail request. Status code: ${response.statusCode}');
     }
   } catch (e) {
     print('Error during API call: $e');

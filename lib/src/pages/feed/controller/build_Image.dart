@@ -173,12 +173,15 @@ class BuildButtonFeed extends StatefulWidget {
   IconData icon;
   int label;
   VoidCallback onPressed;
+  VoidCallback onLongPress; // Add this line
   bool? isLike;
+
   BuildButtonFeed({
     super.key,
     required this.icon,
     required this.label,
     required this.onPressed,
+    required this.onLongPress, // Add this line
     this.isLike,
   });
 
@@ -190,10 +193,13 @@ class _BuildButtonFeedState extends State<BuildButtonFeed> {
   @override
   Widget build(BuildContext context) {
     return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          (widget.isLike != null)
-              ? IconButton(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        (widget.isLike != null)
+            ? GestureDetector(
+                // Wrap IconButton with GestureDetector
+                onLongPress: widget.onLongPress, // Add this line
+                child: IconButton(
                   icon: Icon(widget.icon),
                   color: widget.isLike! ? Colors.red : null,
                   onPressed: () {
@@ -210,16 +216,20 @@ class _BuildButtonFeedState extends State<BuildButtonFeed> {
                       print(widget.isLike);
                     });
                   },
-                )
-              : IconButton(
+                ),
+              )
+            : GestureDetector(
+                onLongPress: widget.onLongPress, // Add this line
+                child: IconButton(
                   icon: Icon(widget.icon),
                   onPressed: () {
                     widget.onPressed();
                   },
                 ),
-          const SizedBox(width: 4),
-          Text(widget.label.toString()),
-        ],
+              ),
+        const SizedBox(width: 4),
+        Text(widget.label.toString()),
+      ],
     );
   }
 }

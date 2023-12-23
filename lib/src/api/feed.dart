@@ -99,3 +99,37 @@ Future<void> postApiWithImages({
     print('Failed with status $e');
   }
 }
+
+Future<List<FeedModel>?> getAllPostById(int id) async {
+  try {
+    var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPostByUserId');
+    String? token = await getToken();
+
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'bearer $token',
+      },
+      body: id.toString(),
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> decodedData = jsonDecode(response.body);
+      List<FeedModel> feedList =
+          decodedData.map((data) => FeedModel.fromJson(data)).toList();
+      return feedList;
+    } else if (response.statusCode == 404) {
+      // Return an empty list if the status code is 404
+      return [];
+    } else {
+      print("Fail with StatusCode ${response.statusCode}");
+
+      return null;
+    }
+  } catch (e) {
+    print("Fail with StatusCode ${e}");
+  }
+  return [];
+}

@@ -74,6 +74,7 @@ Future<http.Response> getInfoUserByName(String name) async {
     body: "$name",
   );
   print('getInfoUserByName ${json.encode(response.body)}');
+  print('getInfoUserByName ${response.statusCode}');
   return response;
 }
 
@@ -94,7 +95,7 @@ Future<UserModel?> getInfoUserById(int id) async {
     Map<dynamic, dynamic> jsonData = jsonDecode(response.body);
     return UserModel.fromJson(jsonData);
   } else {
-    print('Failed to make Follow request. Status code: ${response.statusCode}');
+    print('Failed to make getInfoUserById request. Status code: ${response.statusCode}');
     return null;
   }
 }

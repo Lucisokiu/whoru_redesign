@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:whoru/src/pages/chat/widget/SearchUser.dart';
 import 'package:whoru/src/pages/chat/screens/CreateGroup.dart';
 import 'package:whoru/src/pages/chat/widget/ButtonCard.dart';
 import 'package:whoru/src/pages/chat/widget/ContactCard.dart';
+import 'package:whoru/src/pages/search/controller/search_bar.dart';
 
 import '../../../model/ChatModel.dart';
 
 class SelectContact extends StatefulWidget {
-  SelectContact({super.key});
+  const SelectContact({super.key});
 
   @override
   _SelectContactState createState() => _SelectContactState();
@@ -16,44 +18,44 @@ class _SelectContactState extends State<SelectContact> {
   @override
   Widget build(BuildContext context) {
     List<ChatModel> contacts = [
-    ChatModel(
-      name: "Dev Stack",
-      isGroup: false,
-      currentMessage: "Hi Everyone",
-      time: "4:00",
-      icon: "person.svg",
-      id: 1,
-      status: "A full stack developer",
-    ),
-    ChatModel(
-      name: "Kishor",
-      isGroup: false,
-      currentMessage: "Hi Kishor",
-      time: "13:00",
-      icon: "person.svg",
-      id: 2,
-      status: "A full stack developer",
-    ),
-
-    ChatModel(
-      name: "Collins",
-      isGroup: false,
-      currentMessage: "Hi Dev Stack",
-      time: "8:00",
-      icon: "person.svg",
-      id: 3,
-      status: "A full stack developer",
-    ),
-
-    ChatModel(
-      name: "Balram Rathore",
-      isGroup: false,
-      currentMessage: "Hi Dev Stack",
-      time: "2:00",
-      icon: "person.svg",
-      id: 4,
-      status: "A full stack developer",
-    ),
+      // ChatModel(
+      //   name: "Dev Stack",
+      //   isGroup: false,
+      //   currentMessage: "Hi Everyone",
+      //   time: "4:00",
+      //   icon: "person.svg",
+      //   id: 1,
+      //   status: "A full stack developer",
+      // ),
+      // ChatModel(
+      //   name: "Kishor",
+      //   isGroup: false,
+      //   currentMessage: "Hi Kishor",
+      //   time: "13:00",
+      //   icon: "person.svg",
+      //   id: 2,
+      //   status: "A full stack developer",
+      // ),
+      //
+      // ChatModel(
+      //   name: "Collins",
+      //   isGroup: false,
+      //   currentMessage: "Hi Dev Stack",
+      //   time: "8:00",
+      //   icon: "person.svg",
+      //   id: 3,
+      //   status: "A full stack developer",
+      // ),
+      //
+      // ChatModel(
+      //   name: "Balram Rathore",
+      //   isGroup: false,
+      //   currentMessage: "Hi Dev Stack",
+      //   time: "2:00",
+      //   icon: "person.svg",
+      //   id: 4,
+      //   status: "A full stack developer",
+      // ),
     ];
 
     return Scaffold(
@@ -69,12 +71,12 @@ class _SelectContactState extends State<SelectContact> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                "256 contacts",
-                style: TextStyle(
-                  fontSize: 13,
-                ),
-              )
+              // Text(
+              //   "256 contacts",
+              //   style: TextStyle(
+              //     fontSize: 13,
+              //   ),
+              // )
             ],
           ),
           actions: [
@@ -83,7 +85,12 @@ class _SelectContactState extends State<SelectContact> {
                   Icons.search,
                   size: 26,
                 ),
-                onPressed: () {}),
+                onPressed: () {
+                  showSearch(
+                    context: context,
+                    delegate: SearchUserChat(),
+                  );
+                }),
             PopupMenuButton<String>(
               padding: EdgeInsets.all(0),
               onSelected: (value) {

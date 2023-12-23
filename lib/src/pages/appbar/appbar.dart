@@ -56,14 +56,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             buildActionHome(
               context,
               'Create',
-              PhosphorIcons.fill.plusCircle,
+              PhosphorIconsFill.plusCircle,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: buildActionHome(
                 context,
                 'Search',
-                PhosphorIcons.fill.magnifyingGlass,
+                PhosphorIconsFill.magnifyingGlass,
               ),
             ),
             Padding(
@@ -71,7 +71,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: buildActionHome(
                 context,
                 'Chat',
-                PhosphorIcons.fill.wechatLogo,
+                PhosphorIconsFill.wechatLogo,
               ),
             ),
           ],

@@ -42,45 +42,45 @@ class _SignUpFormState extends State<SignUpForm> {
       'email': email,
       'phone': phone,
     };
-    // Future.delayed(Duration(milliseconds: 800), () {
-    //   Navigator.of(context).pop();
-    // }).then((value) => customVerifyDialog(widget.contextScafford));
+    Future.delayed(Duration(milliseconds: 800), () {
+      Navigator.of(context).pop();
+    }).then((value) => customVerifyDialog(widget.contextScafford));
 
-    // Future.delayed(const Duration(seconds: 1), () async {
-    //   if (_formKey.currentState!.validate()) {
-    //     CreateAccount(SignUpData);
-    //     if (response.statusCode == 200) {
-    //       Future.delayed(Duration(milliseconds: 800), () {
-    //             Navigator.of(context).pop();
-    //       }).then((value) => customVerifyDialog(widget.contextScafford));
-    //       //   // show success
-    //       //   Future.delayed(const Duration(seconds: 2), () {
-    //       //     if (mounted) {
-    //       //       setState(() {});
-    //       //       Future.delayed(const Duration(seconds: 2), () {
-    //       //         Navigator.of(context).pushAndRemoveUntil(
-    //       //           MaterialPageRoute(builder: (context) => const Navigation()),
-    //       //           (Route<dynamic> route) => false,
-    //       //         );
-    //       //       });
-    //       //     }
-    //       //   });
-    //       // } else {
-    //       //   Future.delayed(Duration(seconds: 2), () {
-    //       //     setState(() {});
-    //       //   });
-    //     }
-    //   } else {
-    //     setState(() {
-    //       // showError = true;
-    //     });
-    //     Future.delayed(Duration(seconds: 2), () {
-    //       setState(() {
-    //         // showError = false;
-    //       });
-    //     });
-    //   }
-    // });
+    Future.delayed(const Duration(seconds: 1), () async {
+      if (_formKey.currentState!.validate()) {
+        CreateAccount(SignUpData);
+        if (response.statusCode == 200) {
+          Future.delayed(Duration(milliseconds: 800), () {
+                Navigator.of(context).pop();
+          }).then((value) => customVerifyDialog(widget.contextScafford));
+          //   // show success
+          //   Future.delayed(const Duration(seconds: 2), () {
+          //     if (mounted) {
+          //       setState(() {});
+          //       Future.delayed(const Duration(seconds: 2), () {
+          //         Navigator.of(context).pushAndRemoveUntil(
+          //           MaterialPageRoute(builder: (context) => const Navigation()),
+          //           (Route<dynamic> route) => false,
+          //         );
+          //       });
+          //     }
+          //   });
+          // } else {
+          //   Future.delayed(Duration(seconds: 2), () {
+          //     setState(() {});
+          //   });
+        }
+      } else {
+        setState(() {
+          // showError = true;
+        });
+        Future.delayed(Duration(seconds: 2), () {
+          setState(() {
+            // showError = false;
+          });
+        });
+      }
+    });
   }
 
   @override

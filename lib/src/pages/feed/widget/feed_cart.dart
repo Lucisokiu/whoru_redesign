@@ -4,10 +4,12 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/comment.dart';
 import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/api/like.dart';
+import 'package:whoru/src/api/share.dart';
 import 'package:whoru/src/model/CommentModel.dart';
 import 'package:whoru/src/model/Feed.dart';
 import 'package:whoru/src/pages/feed/controller/build_Image.dart';
 import 'package:whoru/src/pages/feed/widget/CommentDialog.dart';
+import 'package:whoru/src/pages/feed/widget/ListDialog.dart';
 import 'package:whoru/src/pages/location/widget/map_widget.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/service/show_toast.dart';
@@ -16,7 +18,7 @@ class CardFeed extends StatefulWidget {
   FeedModel feed;
   final int CurrentUser;
 
-  CardFeed({super.key, required this.feed,required this.CurrentUser});
+  CardFeed({super.key, required this.feed, required this.CurrentUser});
 
   @override
   State<CardFeed> createState() => _CardFeedState();
@@ -70,17 +72,21 @@ class _CardFeedState extends State<CardFeed> {
                     child: GestureDetector(
                         onTap: () {
                           if (widget.CurrentUser != widget.feed.idUser) {
-                            Navigator.push(context, MaterialPageRoute(builder: (builder) =>
-                            ProfilePage(
-                              idUser: widget.feed.idUser,
-                              isMy: false,
-                            )));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => ProfilePage(
+                                          idUser: widget.feed.idUser,
+                                          isMy: false,
+                                        )));
                           } else {
-                            Navigator.push(context, MaterialPageRoute(builder: (builder) =>
-                                ProfilePage(
-                                  idUser: widget.feed.idUser,
-                                  isMy: true,
-                                )));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => ProfilePage(
+                                          idUser: widget.feed.idUser,
+                                          isMy: true,
+                                        )));
                           }
                         },
                         child: CircleAvatar(
@@ -135,7 +141,7 @@ class _CardFeedState extends State<CardFeed> {
                       icon: Icon(
                         color:
                             Theme.of(context).buttonTheme.colorScheme!.primary,
-                        PhosphorIcons.fill.dotsThreeOutlineVertical,
+                        PhosphorIconsFill.dotsThreeOutlineVertical,
                         size: 20.0,
                       )),
                 ],
@@ -174,28 +180,42 @@ class _CardFeedState extends State<CardFeed> {
                 children: [
                   const SizedBox(width: 5.0),
                   BuildButtonFeed(
-                    icon: PhosphorIcons.fill.heart,
+                    icon: PhosphorIconsFill.heart,
                     label: widget.feed.likeCount,
                     onPressed: () {
                       likePost(widget.feed.idFeed);
+                    },
+                    onLongPress: () async {
+                      List<Map<String, dynamic>> listLike =
+                          await getListLike(widget.feed.idFeed);
+                      showListDialog(context, listLike);
                     },
                     isLike: widget.feed.isLike,
                   ),
                   const SizedBox(width: 5.0),
                   BuildButtonFeed(
-                    icon: PhosphorIcons.fill.chatTeardrop,
+                    icon: PhosphorIconsFill.chatTeardrop,
                     label: widget.feed.commentCount,
                     onPressed: () async {
-                      getCommentByIdFeed(widget.feed.idFeed);
-                      List<CommentModel>? sampleComments = await getCommentByIdFeed(widget.feed.idFeed);
-                      showCommentDialog(context,sampleComments,widget.feed.idFeed, widget.CurrentUser!);
+                      List<CommentModel>? sampleComments =
+                          await getCommentByIdFeed(widget.feed.idFeed);
+                      showCommentDialog(context, sampleComments,
+                          widget.feed.idFeed, widget.CurrentUser!);
                     },
+                    onLongPress: () {},
                   ),
                   const Spacer(),
                   BuildButtonFeed(
-                    icon: PhosphorIcons.fill.shareFat,
+                    icon: PhosphorIconsFill.shareFat,
                     label: widget.feed.shareCount,
-                    onPressed: () {},
+                    onPressed: () {
+                      sharePost(widget.feed.idFeed);
+                    },
+                    onLongPress: () async {
+                      List<Map<String, dynamic>> listLike =
+                          await getListShare(widget.feed.idFeed);
+                      showListDialog(context, listLike);
+                    },
                   ),
                 ],
               ),

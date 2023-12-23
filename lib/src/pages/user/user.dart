@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/utils/get_theme.dart';
@@ -124,10 +125,13 @@ class _UserPageState extends State<UserPage> {
               onPressed: () async {
                 deleteToken();
                 deleteIdUser();
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => LoginScreen()), (route) => false);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (builder) => LoginScreen()),
+                    (route) => false);
               },
               icon: Icon(
-                Icons.color_lens, // Choose an appropriate icon
+                Icons.account_circle, // Choose an appropriate icon
                 size: 24.0,
               ),
               label: Row(

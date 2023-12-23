@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whoru/src/api/userInfo.dart';
 
 class UpdateInfo extends StatefulWidget {
   const UpdateInfo({super.key});
@@ -61,8 +62,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
             // Button to post API
             ElevatedButton(
               onPressed: () {
-                // Post API using the values from text fields
-                postApi();
+                    postApi();
               },
               child: Text('Update Info'),
             ),
@@ -77,9 +77,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
       "work": workController.text,
       "study": studyController.text,
     };
-
-    // Perform API request using requestData
-    // Replace this with your actual API integration code
+    updateInfoUser(requestData);
     print(requestData);
   }
 }

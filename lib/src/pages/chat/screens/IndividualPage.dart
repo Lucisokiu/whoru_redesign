@@ -1,15 +1,20 @@
-
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:whoru/src/model/ChatModel.dart';
 import 'package:whoru/src/model/MessageModel.dart';
+import 'package:whoru/src/model/SearchModel.dart';
+import 'package:whoru/src/model/UserChat.dart';
+import 'package:whoru/src/pages/call/audiocall/AudioCallScreen.dart';
 import 'package:whoru/src/pages/chat/widget/OwnMessengerCard.dart';
 import 'package:whoru/src/pages/chat/widget/ReplyCard.dart';
 
 class IndividualPage extends StatefulWidget {
-  const IndividualPage({super.key, required this.chatModel, required this.sourchat});
-  final ChatModel chatModel;
-  final ChatModel sourchat;
+  const IndividualPage(
+      {super.key, required this.user, required this.currentId});
+
+  final UserChat user;
+  final int currentId;
 
   @override
   _IndividualPageState createState() => _IndividualPageState();
@@ -22,6 +27,7 @@ class _IndividualPageState extends State<IndividualPage> {
   List<MessageModel> messages = [];
   TextEditingController _controller = TextEditingController();
   ScrollController _scrollController = ScrollController();
+
   // IO.Socket socket;
   @override
   // void initState() {
@@ -80,12 +86,12 @@ class _IndividualPageState extends State<IndividualPage> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.network(
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png",
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.cover,
-        ),
+        // Image.network(
+        //   "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png",
+        //   height: MediaQuery.of(context).size.height,
+        //   width: MediaQuery.of(context).size.width,
+        //   fit: BoxFit.cover,
+        // ),
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: PreferredSize(
@@ -101,17 +107,18 @@ class _IndividualPageState extends State<IndividualPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.arrow_back,
+                      Icons.arrow_back_ios_rounded,
                       size: 24,
                     ),
                     CircleAvatar(
-                      child: Image.network(
-                        widget.chatModel.isGroup
-                            ? "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png"
-                            : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png",
-                        color: Colors.white,
-                        height: 36,
-                        width: 36,
+                      child: ClipOval(
+                        child: Image.network(
+                          widget.user.avatar,
+                              // ? "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png"
+                              // : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png",
+                          height: 36,
+                          width: 36,
+                        ),
                       ),
                       radius: 20,
                       backgroundColor: Colors.blueGrey,
@@ -128,14 +135,14 @@ class _IndividualPageState extends State<IndividualPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.chatModel.name,
+                        widget.user.fullName,
                         style: TextStyle(
                           fontSize: 18.5,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        "last seen today at 12:05",
+                        "Online",
                         style: TextStyle(
                           fontSize: 13,
                         ),
@@ -145,8 +152,19 @@ class _IndividualPageState extends State<IndividualPage> {
                 ),
               ),
               actions: [
-                IconButton(icon: Icon(Icons.videocam), onPressed: () {}),
-                IconButton(icon: Icon(Icons.call), onPressed: () {}),
+                IconButton(
+                    icon: Icon(Icons.videocam),
+                    onPressed: () {
+
+                    }),
+                IconButton(icon: Icon(Icons.call), onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AudioCallScreen(),
+                    ),
+                  );
+                }),
                 PopupMenuButton<String>(
                   padding: EdgeInsets.all(0),
                   onSelected: (value) {
@@ -445,12 +463,11 @@ class _IndividualPageState extends State<IndividualPage> {
 
 //   Widget emojiSelect() {
 //     return EmojiPicker(
-//         rows: 4,
-//         columns: 7,
+// textEditingController: _controller,
 //         onEmojiSelected: (emoji, category) {
 //           print(emoji);
 //           setState(() {
-//             _controller.text = _controller.text + emoji.emoji;
+//             _controller.text = _controller.text + emoji;
 //           });
 //         });
 //   }

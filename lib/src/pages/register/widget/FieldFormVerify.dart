@@ -117,7 +117,7 @@ class _VerifyFormState extends State<VerifyForm> {
                       onPressed: () {
                         verify(context, _verifyCodeController.text);
                         Future.delayed(Duration(milliseconds: 800), () {
-                          customVerifyDialog(context);
+                          // customVerifyDialog(context);
                         });
                       },
                       style: ElevatedButton.styleFrom(

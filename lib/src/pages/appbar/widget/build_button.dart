@@ -7,10 +7,11 @@ import 'package:whoru/src/pages/chat/ChatPage.dart';
 import 'package:whoru/src/pages/feed/widget/create_post.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/search/controller/search_bar.dart';
+import 'package:whoru/src/utils/token.dart';
 
 Widget buildActionHome(context, title, icon) {
   return InkWell(
-      onTap: () {
+      onTap: () async {
         if (title == "Create") {
           // showPopupMenu(context);
           customCreatePostDialog(context);
@@ -22,11 +23,12 @@ Widget buildActionHome(context, title, icon) {
           );
         }
         if (title == "Chat") {
+          int? id = await getIdUser();
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  ChatPage(chatmodels: chatmodels, sourchat: srcchat),
+                  ChatPage(chatmodels: chatmodels, currentId: id!),
             ),
           );
         }
