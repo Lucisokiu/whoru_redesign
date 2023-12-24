@@ -2,28 +2,35 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/log.dart';
-import 'package:whoru/src/model/Login.dart';
+import 'package:whoru/src/api/user.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
-import 'package:whoru/src/service/show_toast.dart';
-import 'package:whoru/src/utils/token.dart';
+import 'package:whoru/src/pages/register/CustomSignUp.dart';
+import 'package:whoru/src/pages/register/CustomVerifyAccount.dart';
 
-class SignInForm extends StatefulWidget {
-  const SignInForm({
+class CreateInfoForm extends StatefulWidget {
+  BuildContext contextScafford;
+
+  CreateInfoForm({
     super.key,
+    required this.contextScafford,
+
   });
 
   @override
-  State<SignInForm> createState() => _SignInFormState();
+  State<CreateInfoForm> createState() => _CreateInfoFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _userNameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+class _CreateInfoFormState extends State<CreateInfoForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _studyController = TextEditingController();
+  final TextEditingController _workController = TextEditingController();
+  final TextEditingController _desController = TextEditingController();
+
+  bool showError = false;
   bool isShowLoading = false;
   bool isShowConfetti = false;
 
@@ -31,58 +38,54 @@ class _SignInFormState extends State<SignInForm> {
   late SMITrigger error;
   late SMITrigger reset;
   late SMITrigger confetti;
+
   var response;
   StateMachineController getRiveController(Artboard artboard) {
     StateMachineController? controller =
-        StateMachineController.fromArtboard(artboard, "State Machine 1");
+    StateMachineController.fromArtboard(artboard, "State Machine 1");
     artboard.addController(controller!);
     return controller;
   }
 
-  Future<void> callAPILogin(userName, password) async {
-    dynamic map = createMapLogin(userName, password);
-    response = await apiLogin(map);
-  }
-
-  void signIn(BuildContext context, String userName, String password) {
+  void verify(BuildContext context,String Code) {
     setState(() {
       isShowLoading = true;
       isShowConfetti = true;
     });
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
-        await callAPILogin(userName, password);
+
         if (response.statusCode == 200) {
-          // show success
           check.fire();
+
+          // show success
           Future.delayed(const Duration(seconds: 2), () {
             if (mounted) {
               setState(() {
                 isShowLoading = false;
+
               });
-              confetti.fire();
               Future.delayed(const Duration(seconds: 2), () {
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => const Navigation()),
-                  (Route<dynamic> route) => false,
+                      (Route<dynamic> route) => false,
                 );
               });
             }
           });
         } else {
           error.fire();
+
           Future.delayed(Duration(seconds: 2), () {
             setState(() {
               isShowLoading = false;
+
             });
           });
         }
       } else {
-        error.fire();
-        Future.delayed(Duration(seconds: 2), () {
-          setState(() {
-            isShowLoading = false;
-          });
+        setState(() {
+          isShowLoading = false;
         });
       }
     });
@@ -91,8 +94,6 @@ class _SignInFormState extends State<SignInForm> {
   @override
   void dispose() {
     super.dispose();
-    _userNameController.clear();
-    _passwordController.clear();
   }
 
   @override
@@ -105,20 +106,20 @@ class _SignInFormState extends State<SignInForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Usname",
+                  "Verify Code",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 16),
                   child: TextFormField(
-                    controller: _userNameController,
+                    controller: _fullNameController,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "";
+                        return "Plesea fill this fileds";
                       }
                       return null;
                     },
-                    onSaved: (email) {},
+                    onSaved: (code) {},
                     style: TextStyle(
                         color: Theme.of(context)
                             .textTheme
@@ -127,48 +128,96 @@ class _SignInFormState extends State<SignInForm> {
                     decoration: InputDecoration(
                         hintStyle: TextStyle(
                             color:
-                                Theme.of(context).textTheme.bodyMedium!.color),
+                            Theme.of(context).textTheme.bodyMedium!.color),
                         prefixIcon: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: SvgPicture.asset("assets/icons/email.svg"),
+                          child: SvgPicture.asset("assets/icons/password.svg"),
                         )),
                   ),
-                ),
-                Text(
-                  "Password",
-                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 16),
                   child: TextFormField(
-                    controller: _passwordController,
+                    controller: _studyController,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return "";
+                        return "Plesea fill this fileds";
                       }
                       return null;
                     },
-                    onSaved: (password) {},
-                    obscureText: true,
+                    onSaved: (code) {},
                     style: TextStyle(
                         color: Theme.of(context)
                             .textTheme
                             .bodyMedium!
                             .color), // Màu văn bản nhập vào
-
                     decoration: InputDecoration(
+                        hintStyle: TextStyle(
+                            color:
+                            Theme.of(context).textTheme.bodyMedium!.color),
                         prefixIcon: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: SvgPicture.asset("assets/icons/password.svg"),
-                    )),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: SvgPicture.asset("assets/icons/password.svg"),
+                        )),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 16),
+                  child: TextFormField(
+                    controller: _workController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Plesea fill this fileds";
+                      }
+                      return null;
+                    },
+                    onSaved: (code) {},
+                    style: TextStyle(
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .color), // Màu văn bản nhập vào
+                    decoration: InputDecoration(
+                        hintStyle: TextStyle(
+                            color:
+                            Theme.of(context).textTheme.bodyMedium!.color),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: SvgPicture.asset("assets/icons/password.svg"),
+                        )),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 16),
+                  child: TextFormField(
+                    controller: _desController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Plesea fill this fileds";
+                      }
+                      return null;
+                    },
+                    onSaved: (code) {},
+                    style: TextStyle(
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .color), // Màu văn bản nhập vào
+                    decoration: InputDecoration(
+                        hintStyle: TextStyle(
+                            color:
+                            Theme.of(context).textTheme.bodyMedium!.color),
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: SvgPicture.asset("assets/icons/password.svg"),
+                        )),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 24),
                   child: ElevatedButton.icon(
                       onPressed: () {
-                        signIn(context, _userNameController.text,
-                            _passwordController.text);
+                        // verify(context, _verifyCodeController.text);
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFF77D8E),
@@ -183,37 +232,38 @@ class _SignInFormState extends State<SignInForm> {
                         CupertinoIcons.arrow_right,
                         color: Color(0xFFFE0037),
                       ),
-                      label: const Text("Sign In")),
+                      label: const Text("Register")),
                 )
               ],
             )),
+
         isShowLoading
             ? CustomPositioned(
-                child: RiveAnimation.asset(
-                "assets/RiveAssets/check.riv",
-                onInit: (artboard) {
-                  StateMachineController controller =
-                      getRiveController(artboard);
-                  check = controller.findSMI("Check") as SMITrigger;
-                  error = controller.findSMI("Error") as SMITrigger;
-                  reset = controller.findSMI("Reset") as SMITrigger;
-                },
-              ))
+            child: RiveAnimation.asset(
+              "assets/RiveAssets/check.riv",
+              onInit: (artboard) {
+                StateMachineController controller =
+                getRiveController(artboard);
+                check = controller.findSMI("Check") as SMITrigger;
+                error = controller.findSMI("Error") as SMITrigger;
+                reset = controller.findSMI("Reset") as SMITrigger;
+              },
+            ))
             : Container(),
         isShowConfetti
             ? CustomPositioned(
-                child: Transform.scale(
-                scale: 6,
-                child: RiveAnimation.asset(
-                  "assets/RiveAssets/confetti.riv",
-                  onInit: (artboard) {
-                    StateMachineController controller =
-                        getRiveController(artboard);
-                    confetti =
-                        controller.findSMI("Trigger explosion") as SMITrigger;
-                  },
-                ),
-              ))
+            child: Transform.scale(
+              scale: 6,
+              child: RiveAnimation.asset(
+                "assets/RiveAssets/confetti.riv",
+                onInit: (artboard) {
+                  StateMachineController controller =
+                  getRiveController(artboard);
+                  confetti =
+                  controller.findSMI("Trigger explosion") as SMITrigger;
+                },
+              ),
+            ))
             : const SizedBox()
       ],
     );

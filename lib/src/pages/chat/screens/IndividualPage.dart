@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:web_socket_channel/io.dart';
 import 'package:whoru/src/model/ChatModel.dart';
 import 'package:whoru/src/model/MessageModel.dart';
 import 'package:whoru/src/model/SearchModel.dart';
@@ -8,6 +11,7 @@ import 'package:whoru/src/model/UserChat.dart';
 import 'package:whoru/src/pages/call/audiocall/AudioCallScreen.dart';
 import 'package:whoru/src/pages/chat/widget/OwnMessengerCard.dart';
 import 'package:whoru/src/pages/chat/widget/ReplyCard.dart';
+import 'package:whoru/src/socket/chatSocket.dart';
 
 class IndividualPage extends StatefulWidget {
   const IndividualPage(
@@ -29,58 +33,87 @@ class _IndividualPageState extends State<IndividualPage> {
   ScrollController _scrollController = ScrollController();
 
   // IO.Socket socket;
+  late IOWebSocketChannel channel;
+
   @override
-  // void initState() {
-  //   super.initState();
-  //   // connect();
+  void initState() {
+    super.initState();
+      connect();
 
-  //   focusNode.addListener(() {
-  //     if (focusNode.hasFocus) {
-  //       setState(() {
-  //         show = false;
-  //       });
-  //     }
-  //   });
-  //   connect();
-  // }
+    //   focusNode.addListener(() {
+    //     if (focusNode.hasFocus) {
+    //       setState(() {
+    //         show = false;
+    //       });
+    //     }
+    //   });
+    //   connect();
+  }
 
-  // void connect() {
-  //   // MessageModel messageModel = MessageModel(sourceId: widget.sourceChat.id.toString(),targetId: );
-  //   socket = IO.io("http://192.168.0.106:5000", <String, dynamic>{
-  //     "transports": ["websocket"],
-  //     "autoConnect": false,
-  //   });
-  //   socket.connect();
-  //   socket.emit("signin", widget.sourchat.id);
-  //   socket.onConnect((data) {
-  //     print("Connected");
-  //     socket.on("message", (msg) {
-  //       print(msg);
-  //       setMessage("destination", msg["message"]);
-  //       _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-  //           duration: Duration(milliseconds: 300), curve: Curves.easeOut);
-  //     });
-  //   });
-  //   print(socket.connected);
-  // }
+  void connect() {
+    onConnected({"protocol": "json", "version": 1});
+    Online({
+      "arguments": [1],
+      "target": "Online",
+      "type": 1
+    });
+  }
 
-  // void sendMessage(String message, int sourceId, int targetId) {
-  //   setMessage("source", message);
-  //   socket.emit("message",
-  //       {"message": message, "sourceId": sourceId, "targetId": targetId});
-  // }
+  void sendMessage(String message, int sourceId, int targetId) {
+    final messageData = {
+      'type': 1,
+      'target': "SendMessage",
+      'arguments': [sourceId, targetId, message],
+    };
+    print(messageData);
+    sendMessageSocket(messageData);
+    setMessage(message);
+  }
 
-  // void setMessage(String type, String message) {
-  //   MessageModel messageModel = MessageModel(
-  //       type: type,
-  //       message: message,
-  //       time: DateTime.now().toString().substring(10, 16));
-  //   print(messages);
+  void ReceiveMesage() {
+    channel.stream.listen(
+      (data) {
+        // Phân tích dữ liệu JSON
+        Map<String, dynamic> jsonData = jsonDecode(data);
 
-  //   setState(() {
-  //     messages.add(messageModel);
-  //   });
-  // }
+        // Truy cập giá trị của các trường
+        int type = jsonData['type'];
+        String target = jsonData['target'];
+        List<dynamic> arguments = jsonData['arguments'];
+
+        // In ra giá trị
+        print('Type: $type');
+        print('Target: $target');
+        print('Arguments: $arguments');
+
+        // Kiểm tra xem target có phải là "ReceiveMessage" hay không
+        if (target == 'ReceiveMessage') {
+          // Nếu là "ReceiveMessage", lấy ra giá trị của arguments
+          String message = arguments[0];
+          print('Received message: $message');
+          setMessage(message);
+                _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+                    duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+        }
+      },
+    );
+  }
+
+  void setMessage(String message) {
+
+    MessageModel messageModel = MessageModel(
+      date: DateTime.now().toString().substring(10, 16),
+      message: message,
+      type: "Message",
+      userSend: widget.currentId,
+      userReceive:  widget.user.idUser,
+    );
+    print(messages);
+
+    setState(() {
+      messages.add(messageModel);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,8 +147,8 @@ class _IndividualPageState extends State<IndividualPage> {
                       child: ClipOval(
                         child: Image.network(
                           widget.user.avatar,
-                              // ? "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png"
-                              // : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png",
+                          // ? "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png"
+                          // : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png",
                           height: 36,
                           width: 36,
                         ),
@@ -152,19 +185,17 @@ class _IndividualPageState extends State<IndividualPage> {
                 ),
               ),
               actions: [
+                IconButton(icon: Icon(Icons.videocam), onPressed: () {}),
                 IconButton(
-                    icon: Icon(Icons.videocam),
+                    icon: Icon(Icons.call),
                     onPressed: () {
-
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AudioCallScreen(),
+                        ),
+                      );
                     }),
-                IconButton(icon: Icon(Icons.call), onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AudioCallScreen(),
-                    ),
-                  );
-                }),
                 PopupMenuButton<String>(
                   padding: EdgeInsets.all(0),
                   onSelected: (value) {
@@ -220,15 +251,16 @@ class _IndividualPageState extends State<IndividualPage> {
                             height: 70,
                           );
                         }
-                        if (messages[index].type == "source") {
+                        if (messages[index].userSend == widget.currentId) {
+                          print("messages[index].message ${messages[index].message}");
                           return OwnMessageCard(
                             message: messages[index].message,
-                            time: messages[index].time,
+                            time: messages[index].date,
                           );
                         } else {
                           return ReplyCard(
                             message: messages[index].message,
-                            time: messages[index].time,
+                            time: messages[index].date,
                           );
                         }
                       },
@@ -342,10 +374,10 @@ class _IndividualPageState extends State<IndividualPage> {
                                             duration:
                                                 Duration(milliseconds: 300),
                                             curve: Curves.easeOut);
-                                        // sendMessage(
-                                        //     _controller.text,
-                                        //     widget.sourchat.id,
-                                        //     widget.chatModel.id);
+                                        sendMessage(
+                                            _controller.text,
+                                            widget.currentId,
+                                            widget.user.idUser);
                                         _controller.clear();
                                         setState(() {
                                           sendButton = false;

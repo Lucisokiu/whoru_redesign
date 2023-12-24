@@ -11,43 +11,8 @@ class CreateGroup extends StatefulWidget {
 }
 
 class _CreateGroupState extends State<CreateGroup> {
+
   List<ChatModel> contacts = [
-    ChatModel(
-      name: "Dev Stack",
-      isGroup: false,
-      currentMessage: "Hi Everyone",
-      time: "4:00",
-      icon: "person.svg",
-      id: 1,
-      status: "A full stack developer",
-    ),
-    ChatModel(
-      name: "Kishor",
-      isGroup: false,
-      currentMessage: "Hi Kishor",
-      time: "13:00",
-      icon: "person.svg",
-      id: 2,
-      status: "A full stack developer",
-    ),
-    ChatModel(
-      name: "Collins",
-      isGroup: false,
-      currentMessage: "Hi Dev Stack",
-      time: "8:00",
-      icon: "person.svg",
-      id: 3,
-      status: "A full stack developer",
-    ),
-    ChatModel(
-      name: "Balram Rathore",
-      isGroup: false,
-      currentMessage: "Hi Dev Stack",
-      time: "2:00",
-      icon: "person.svg",
-      id: 4,
-      status: "A full stack developer",
-    ),
   ];
   List<ChatModel> groupmember = [];
   @override
@@ -88,65 +53,65 @@ class _CreateGroupState extends State<CreateGroup> {
             child: Icon(Icons.arrow_forward)),
         body: Stack(
           children: [
-            ListView.builder(
-                itemCount: contacts.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return Container(
-                      height: groupmember.length > 0 ? 90 : 10,
-                    );
-                  }
-                  return InkWell(
-                    onTap: () {
-                      setState(() {
-                        if (contacts[index - 1].select == true) {
-                          groupmember.remove(contacts[index - 1]);
-                          contacts[index - 1].select = false;
-                        } else {
-                          groupmember.add(contacts[index - 1]);
-                          contacts[index - 1].select = true;
-                        }
-                      });
-                    },
-                    child: ContactCard(
-                      contact: contacts[index - 1],
-                    ),
-                  );
-                }),
-            groupmember.length > 0
-                ? Align(
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 75,
-                          color: Colors.white,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: contacts.length,
-                              itemBuilder: (context, index) {
-                                if (contacts[index].select == true)
-                                  return InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        groupmember.remove(contacts[index]);
-                                        contacts[index].select = false;
-                                      });
-                                    },
-                                    child: AvatarCard(
-                                      chatModel: contacts[index],
-                                    ),
-                                  );
-                                return Container();
-                              }),
-                        ),
-                        Divider(
-                          thickness: 1,
-                        ),
-                      ],
-                    ),
-                    alignment: Alignment.topCenter,
-                  )
-                : Container(),
+            // ListView.builder(
+            //     itemCount: contacts.length + 1,
+            //     itemBuilder: (context, index) {
+            //       if (index == 0) {
+            //         return Container(
+            //           height: groupmember.length > 0 ? 90 : 10,
+            //         );
+            //       }
+            //       return InkWell(
+            //         onTap: () {
+            //           setState(() {
+            //             // if (contacts[index - 1].select == true) {
+            //             //   groupmember.remove(contacts[index - 1]);
+            //             //   contacts[index - 1].select = false;
+            //             // } else {
+            //             //   groupmember.add(contacts[index - 1]);
+            //             //   contacts[index - 1].select = true;
+            //             // }
+            //           });
+            //         },
+            //         child: ContactCard(
+            //           contact: contacts[index - 1],
+            //         ),
+            //       );
+            //     }),
+            // groupmember.length > 0
+            //     ? Align(
+            //         child: Column(
+            //           children: [
+            //             Container(
+            //               height: 75,
+            //               color: Colors.white,
+            //               child: ListView.builder(
+            //                   scrollDirection: Axis.horizontal,
+            //                   itemCount: contacts.length,
+            //                   itemBuilder: (context, index) {
+            //                     if (contacts[index].select == true)
+            //                       return InkWell(
+            //                         onTap: () {
+            //                           setState(() {
+            //                             groupmember.remove(contacts[index]);
+            //                             contacts[index].select = false;
+            //                           });
+            //                         },
+            //                         child: AvatarCard(
+            //                           chatModel: contacts[index],
+            //                         ),
+            //                       );
+            //                     return Container();
+            //                   }),
+            //             ),
+            //             Divider(
+            //               thickness: 1,
+            //             ),
+            //           ],
+            //         ),
+            //         alignment: Alignment.topCenter,
+            //       )
+            //     : Container(),
           ],
         ));
   }

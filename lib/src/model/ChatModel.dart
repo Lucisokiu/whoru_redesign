@@ -1,70 +1,58 @@
 class ChatModel {
-  final String name;
-  final String icon;
-  final bool isGroup;
-  final String time;
+  final int idUser;
+  final String fullName;
+  final String avatar;
   final String currentMessage;
-  String? status;
-  bool select = false;
-  final int id;
+  final String type;
+  bool isSeen;
+
   ChatModel({
-    required this.name,
-    required this.icon,
-    required this.isGroup,
-    required this.time,
+    required this.idUser,
+    required this.fullName,
+    required this.avatar,
     required this.currentMessage,
-    this.status,
-    this.select = false,
-    required this.id,
+    required this.type,
+    this.isSeen = false,
   });
 }
-  List<ChatModel> chatmodels = [
-    ChatModel(
-      name: "Dev Stack",
-      isGroup: false,
-      currentMessage: "Hi Everyone",
-      time: "4:00",
-      icon: "person.svg",
-      id: 1,
-      status: "A full stack developer",
-    ),
-    ChatModel(
-      name: "Kishor",
-      isGroup: false,
-      currentMessage: "Hi Kishor",
-      time: "13:00",
-      icon: "person.svg",
-      id: 2,
-      status: "A full stack developer",
-    ),
 
-    ChatModel(
-      name: "Collins",
-      isGroup: false,
-      currentMessage: "Hi Dev Stack",
-      time: "8:00",
-      icon: "person.svg",
-      id: 3,
-      status: "A full stack developer",
-    ),
+List<ChatModel> chatmodels = [
+  ChatModel(
+    idUser: 3,
+    fullName: "Nguyen Minh Nhut",
+    avatar:
+    "https://firebasestorage.googleapis.com/v0/b/whoru-2f115.appspot.com/o/Avatars%2Fdefault-avatar.jpg?alt=media&token=7721df77-f806-41c7-bcfe-2aae9acc98c7",
+    currentMessage: "hello",
+    type: "Message",
+    isSeen: true,
+  ),
+  ChatModel(
+    idUser: 2,
+    fullName: "Nguyen Minh Nhut",
+    avatar:
+    "https://firebasestorage.googleapis.com/v0/b/whoru-2f115.appspot.com/o/Avatars%2Fdefault-avatar.jpg?alt=media&token=7721df77-f806-41c7-bcfe-2aae9acc98c7",
+    currentMessage: "hello",
+    type: "Message",
+    isSeen: true,
+  ),
+];
 
-    ChatModel(
-      name: "Balram Rathore",
-      isGroup: false,
-      currentMessage: "Hi Dev Stack",
-      time: "2:00",
-      icon: "person.svg",
-      id: 4,
-      status: "A full stack developer",
-    ),
-  ];
+List<ChatModel> additionalChatmodels = [
+  ChatModel(
+    idUser: 4,
+    fullName: "Balram Rathore",
+    avatar: "path_to_avatar", // Thay thế bằng đường dẫn thực sự đến hình ảnh avatar
+    currentMessage: "Hi Dev Stack",
+    type: "Message",
+    isSeen: false, // Thay đổi tùy thuộc vào trạng thái
+  ),
+];
 
-  ChatModel srcchat =     ChatModel(
-      name: "Balram Rathore",
-      isGroup: false,
-      currentMessage: "Hi Dev Stack",
-      time: "2:00",
-      icon: "person.svg",
-      id: 4,
-      status: "A full stack developer",
-    );
+ChatModel srcchat = ChatModel(
+  idUser: 4,
+  fullName: "Balram Rathore",
+  avatar: "path_to_avatar", // Thay thế bằng đường dẫn thực sự đến hình ảnh avatar
+  currentMessage: "Hi Dev Stack",
+  type: "Message",
+  isSeen: false, // Thay đổi tùy thuộc vào trạng thái
+);

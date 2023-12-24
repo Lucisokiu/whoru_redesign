@@ -29,9 +29,9 @@ class UserChat {
   }
   factory UserChat.fromChatModel(ChatModel chatModel) {
     return UserChat(
-      idUser: chatModel.id,
-      fullName: chatModel.name,
-      avatar: chatModel.icon,
+      idUser: chatModel.idUser,
+      fullName: chatModel.fullName,
+      avatar: chatModel.avatar,
     );
   }
 }

@@ -13,6 +13,7 @@ import 'package:whoru/src/pages/register/CustomVerifyAccount.dart';
 
 class SignUpForm extends StatefulWidget {
   BuildContext contextScafford;
+
   SignUpForm({
     super.key,
     required this.contextScafford,
@@ -31,8 +32,21 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   bool _useEmail = true;
+  bool isShowLoading = false;
+  bool isShowConfetti = false;
 
+  late SMITrigger check;
+  late SMITrigger error;
+  late SMITrigger reset;
+  late SMITrigger confetti;
   var response;
+
+  StateMachineController getRiveController(Artboard artboard) {
+    StateMachineController? controller =
+        StateMachineController.fromArtboard(artboard, "State Machine 1");
+    artboard.addController(controller!);
+    return controller;
+  }
 
   void signup(BuildContext context, String userName, String password,
       String email, String phone) {
@@ -42,41 +56,36 @@ class _SignUpFormState extends State<SignUpForm> {
       'email': email,
       'phone': phone,
     };
-    Future.delayed(Duration(milliseconds: 800), () {
-      Navigator.of(context).pop();
-    }).then((value) => customVerifyDialog(widget.contextScafford));
 
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
-        CreateAccount(SignUpData);
-        if (response.statusCode == 200) {
+        response = await CreateAccount(SignUpData);
+        if (response) {
+          check.fire();
           Future.delayed(Duration(milliseconds: 800), () {
+            if (mounted) {
+              setState(() {
+                isShowLoading = false;
+              });
+              confetti.fire();
+              Future.delayed(const Duration(seconds: 2), () {
                 Navigator.of(context).pop();
+              });
+            }
           }).then((value) => customVerifyDialog(widget.contextScafford));
-          //   // show success
-          //   Future.delayed(const Duration(seconds: 2), () {
-          //     if (mounted) {
-          //       setState(() {});
-          //       Future.delayed(const Duration(seconds: 2), () {
-          //         Navigator.of(context).pushAndRemoveUntil(
-          //           MaterialPageRoute(builder: (context) => const Navigation()),
-          //           (Route<dynamic> route) => false,
-          //         );
-          //       });
-          //     }
-          //   });
-          // } else {
-          //   Future.delayed(Duration(seconds: 2), () {
-          //     setState(() {});
-          //   });
+        } else {
+          error.fire();
+          Future.delayed(Duration(seconds: 2), () {
+            setState(() {
+              isShowLoading = false;
+            });
+          });
         }
       } else {
-        setState(() {
-          // showError = true;
-        });
+        error.fire();
         Future.delayed(Duration(seconds: 2), () {
           setState(() {
-            // showError = false;
+            isShowLoading = false;
           });
         });
       }
@@ -115,10 +124,8 @@ class _SignUpFormState extends State<SignUpForm> {
                     },
                     onSaved: (username) {},
                     style: TextStyle(
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .color), // Màu văn bản nhập vào
+                        color: Theme.of(context).textTheme.bodyMedium!.color),
+                    // Màu văn bản nhập vào
                     decoration: InputDecoration(
                         hintStyle: TextStyle(
                             color:
@@ -146,10 +153,8 @@ class _SignUpFormState extends State<SignUpForm> {
                     onSaved: (password) {},
                     obscureText: true,
                     style: TextStyle(
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .color), // Màu văn bản nhập vào
+                        color: Theme.of(context).textTheme.bodyMedium!.color),
+                    // Màu văn bản nhập vào
 
                     decoration: InputDecoration(
                         prefixIcon: Padding(
@@ -179,10 +184,8 @@ class _SignUpFormState extends State<SignUpForm> {
                     onSaved: (confirm) {},
                     obscureText: true,
                     style: TextStyle(
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .color), // Màu văn bản nhập vào
+                        color: Theme.of(context).textTheme.bodyMedium!.color),
+                    // Màu văn bản nhập vào
 
                     decoration: InputDecoration(
                         prefixIcon: Padding(
@@ -215,7 +218,8 @@ class _SignUpFormState extends State<SignUpForm> {
                                     color: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
-                                        .color), // Màu văn bản nhập vào
+                                        .color),
+                                // Màu văn bản nhập vào
 
                                 decoration: InputDecoration(
                                     prefixIcon: Padding(
@@ -241,7 +245,8 @@ class _SignUpFormState extends State<SignUpForm> {
                                     color: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
-                                        .color), // Màu văn bản nhập vào
+                                        .color),
+                                // Màu văn bản nhập vào
 
                                 decoration: InputDecoration(
                                     prefixIcon: Padding(
@@ -292,6 +297,34 @@ class _SignUpFormState extends State<SignUpForm> {
                 )
               ],
             )),
+        isShowLoading
+            ? CustomPositioned(
+                child: RiveAnimation.asset(
+                "assets/RiveAssets/check.riv",
+                onInit: (artboard) {
+                  StateMachineController controller =
+                      getRiveController(artboard);
+                  check = controller.findSMI("Check") as SMITrigger;
+                  error = controller.findSMI("Error") as SMITrigger;
+                  reset = controller.findSMI("Reset") as SMITrigger;
+                },
+              ))
+            : Container(),
+        isShowConfetti
+            ? CustomPositioned(
+                child: Transform.scale(
+                scale: 6,
+                child: RiveAnimation.asset(
+                  "assets/RiveAssets/confetti.riv",
+                  onInit: (artboard) {
+                    StateMachineController controller =
+                        getRiveController(artboard);
+                    confetti =
+                        controller.findSMI("Trigger explosion") as SMITrigger;
+                  },
+                ),
+              ))
+            : const SizedBox()
       ],
     );
   }
@@ -299,6 +332,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
 class CustomPositioned extends StatelessWidget {
   const CustomPositioned({super.key, required this.child, this.size = 100});
+
   final Widget child;
   final double size;
 

@@ -58,6 +58,19 @@ class _LoginDialogState extends State<LoginDialog> {
                           style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
                         ),
                         SignInForm(),
+                                                                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          child: TextButton(
+                              onPressed: () {
+                                Future.delayed(Duration(milliseconds: 800), () {
+                                  Navigator.of(context).pop();
+                                }).then((_) =>{ customRegisDialog(widget.contextScafford)});
+                              },
+                              child: Text(
+                                  "If you forgot your Account, click here",
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium)),
+                        ),
                         Row(
                           children: [
                             Expanded(
@@ -75,6 +88,7 @@ class _LoginDialogState extends State<LoginDialog> {
                             ),
                           ],
                         ),
+
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: TextButton(

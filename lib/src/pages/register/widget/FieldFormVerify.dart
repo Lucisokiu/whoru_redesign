@@ -6,14 +6,17 @@ import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/log.dart';
 import 'package:whoru/src/api/user.dart';
-import 'package:whoru/src/model/Login.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/pages/register/CustomSignUp.dart';
 import 'package:whoru/src/pages/register/CustomVerifyAccount.dart';
 
 class VerifyForm extends StatefulWidget {
+    BuildContext contextScafford;
+
   VerifyForm({
     super.key,
+        required this.contextScafford,
+
   });
 
   @override
@@ -23,7 +26,14 @@ class VerifyForm extends StatefulWidget {
 class _VerifyFormState extends State<VerifyForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _verifyCodeController = TextEditingController();
-  // bool showError = false;
+  bool showError = false;
+  bool isShowLoading = false;
+  bool isShowConfetti = false;
+
+  late SMITrigger check;
+  late SMITrigger error;
+  late SMITrigger reset;
+  late SMITrigger confetti;
 
   var response;
   StateMachineController getRiveController(Artboard artboard) {
@@ -34,34 +44,44 @@ class _VerifyFormState extends State<VerifyForm> {
   }
 
   void verify(BuildContext context,String Code) {
+        setState(() {
+      isShowLoading = true;
+      isShowConfetti = true;
+    });
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
-        // if (response.statusCode == 200) {
-        //   // show success
-        //   Future.delayed(const Duration(seconds: 2), () {
-        //     if (mounted) {
-        //       setState(() {});
-        //       Future.delayed(const Duration(seconds: 2), () {
-        //         Navigator.of(context).pushAndRemoveUntil(
-        //           MaterialPageRoute(builder: (context) => const Navigation()),
-        //           (Route<dynamic> route) => false,
-        //         );
-        //       });
-        //     }
-        //   });
-        // } else {
-        //   Future.delayed(Duration(seconds: 2), () {
-        //     setState(() {});
-        //   });
-        // }
+
+        if (response.statusCode == 200) {
+                    check.fire();
+
+          // show success
+          Future.delayed(const Duration(seconds: 2), () {
+            if (mounted) {
+              setState(() {
+                                isShowLoading = false;
+
+              });
+              Future.delayed(const Duration(seconds: 2), () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const Navigation()),
+                  (Route<dynamic> route) => false,
+                );
+              });
+            }
+          });
+        } else {
+                    error.fire();
+
+          Future.delayed(Duration(seconds: 2), () {
+            setState(() {
+                            isShowLoading = false;
+
+            });
+          });
+        }
       } else {
         setState(() {
-          // showError = true;
-        });
-        Future.delayed(Duration(seconds: 2), () {
-          setState(() {
-            // showError = false;
-          });
+            isShowLoading = false;
         });
       }
     });
@@ -95,7 +115,7 @@ class _VerifyFormState extends State<VerifyForm> {
                       }
                       return null;
                     },
-                    onSaved: (username) {},
+                    onSaved: (code) {},
                     style: TextStyle(
                         color: Theme.of(context)
                             .textTheme
@@ -107,7 +127,7 @@ class _VerifyFormState extends State<VerifyForm> {
                                 Theme.of(context).textTheme.bodyMedium!.color),
                         prefixIcon: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: SvgPicture.asset("assets/icons/email.svg"),
+                          child: SvgPicture.asset("assets/icons/password.svg"),
                         )),
                   ),
                 ),
@@ -116,9 +136,6 @@ class _VerifyFormState extends State<VerifyForm> {
                   child: ElevatedButton.icon(
                       onPressed: () {
                         verify(context, _verifyCodeController.text);
-                        Future.delayed(Duration(milliseconds: 800), () {
-                          // customVerifyDialog(context);
-                        });
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFF77D8E),
@@ -137,6 +154,35 @@ class _VerifyFormState extends State<VerifyForm> {
                 )
               ],
             )),
+
+            isShowLoading
+            ? CustomPositioned(
+                child: RiveAnimation.asset(
+                "assets/RiveAssets/check.riv",
+                onInit: (artboard) {
+                  StateMachineController controller =
+                      getRiveController(artboard);
+                  check = controller.findSMI("Check") as SMITrigger;
+                  error = controller.findSMI("Error") as SMITrigger;
+                  reset = controller.findSMI("Reset") as SMITrigger;
+                },
+              ))
+            : Container(),
+        isShowConfetti
+            ? CustomPositioned(
+                child: Transform.scale(
+                scale: 6,
+                child: RiveAnimation.asset(
+                  "assets/RiveAssets/confetti.riv",
+                  onInit: (artboard) {
+                    StateMachineController controller =
+                        getRiveController(artboard);
+                    confetti =
+                        controller.findSMI("Trigger explosion") as SMITrigger;
+                  },
+                ),
+              ))
+            : const SizedBox()
       ],
     );
   }

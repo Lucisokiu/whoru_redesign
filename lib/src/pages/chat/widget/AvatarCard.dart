@@ -44,7 +44,7 @@ class AvatarCard extends StatelessWidget {
             height: 2,
           ),
           Text(
-            chatModel.name,
+            chatModel.fullName,
             style: TextStyle(
               fontSize: 12,
             ),

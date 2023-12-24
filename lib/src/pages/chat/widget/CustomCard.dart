@@ -28,17 +28,15 @@ class CustomCard extends StatelessWidget {
             leading: CircleAvatar(
               radius: 30,
               child: Image.network(
-                chatModel.isGroup
-                    ? "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png"
-                    : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png",
-                color : Colors.white,
+                chatModel.avatar,
+                // color : Colors.white,
                 height: 36,
                 width: 36,
               ),
               backgroundColor: Colors.blueGrey,
             ),
             title: Text(
-              chatModel.name,
+              chatModel.fullName,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -58,7 +56,7 @@ class CustomCard extends StatelessWidget {
                 ),
               ],
             ),
-            trailing: Text(chatModel.time),
+            trailing: Text(chatModel.type),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 20, left: 80),

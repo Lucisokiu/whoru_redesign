@@ -80,7 +80,6 @@ class SearchUserChat extends SearchDelegate {
             ),
             onTap: () async {
               int? id = await getIdUser();
-              Navigator.pop(context);
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

@@ -5,12 +5,12 @@ import 'package:whoru/src/pages/login/widget/FieldFormSignIn.dart';
 import 'package:whoru/src/pages/register/widget/FieldFormVerify.dart';
 
 Future<Object?> customVerifyDialog(
-  BuildContext context,
+  BuildContext contextScafford,
 ) {
   return showGeneralDialog(
       barrierDismissible: true,
       barrierLabel: "Verify Code",
-      context: context,
+      context: contextScafford,
       transitionDuration: const Duration(milliseconds: 400),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         Tween<Offset> tween = Tween(begin: Offset(0, -1), end: Offset.zero);
@@ -19,12 +19,13 @@ Future<Object?> customVerifyDialog(
                 CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
             child: child);
       },
-      pageBuilder: (context, _, __) => Verify());
+      pageBuilder: (contextScafford, _, __) => Verify(contextScafford: contextScafford));
 }
 
 class Verify extends StatefulWidget {
+  BuildContext contextScafford;
 
-  Verify({super.key});
+  Verify({super.key,required this.contextScafford});
 
   @override
   State<Verify> createState() => _VerifyState();
@@ -57,39 +58,39 @@ class _VerifyState extends State<Verify> {
                           "Verify",
                           style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
                         ),
-                        VerifyForm(),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Divider(),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: Text(
-                                "OR",
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10.0),
-                          child: TextButton(
-                              onPressed: () {
-                                // Navigator.of(context).pushReplacement(
-                                //   MaterialPageRoute(
-                                //       builder: (context) =>
-                                //           ()),
-                                // );
-                              },
-                              child: Text(
-                                  "If you don't have Account, Sign up here",
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium)),
-                        )
+                        VerifyForm(contextScafford:widget.contextScafford),
+                        // Row(
+                        //   children: [
+                        //     Expanded(
+                        //       child: Divider(),
+                        //     ),
+                        //     Padding(
+                        //       padding: EdgeInsets.symmetric(horizontal: 16),
+                        //       child: Text(
+                        //         "OR",
+                        //         style: Theme.of(context).textTheme.bodyMedium,
+                        //       ),
+                        //     ),
+                        //     Expanded(
+                        //       child: Divider(),
+                        //     ),
+                        //   ],
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        //   child: TextButton(
+                        //       onPressed: () {
+                        //         // Navigator.of(context).pushReplacement(
+                        //         //   MaterialPageRoute(
+                        //         //       builder: (context) =>
+                        //         //           ()),
+                        //         // );
+                        //       },
+                        //       child: Text(
+                        //           "If you don't have Account, Sign up here",
+                        //           style:
+                        //               Theme.of(context).textTheme.bodyMedium)),
+                        // )
                       ]),
                     ],
                   ),
