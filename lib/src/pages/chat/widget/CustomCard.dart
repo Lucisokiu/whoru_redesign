@@ -19,7 +19,7 @@ class CustomCard extends StatelessWidget {
             MaterialPageRoute(
                 builder: (contex) => IndividualPage(
                       user: UserChat.fromChatModel(chatModel),
-                      currentId: 1,
+                      currentId: currentId,
                     )));
       },
       child: Column(

@@ -19,7 +19,7 @@ Future<http.Response> apiLogin(Map map) async {
   print("response.statusCode ${response.statusCode}");
   if (response.statusCode == 200) {
     String token = jsonDecode(response.body)['token'];
-    int idUser = jsonDecode(response.body)['userId'];
+    int idUser = jsonDecode(response.body)['infoId'];
     setToken(token);
     setIdUser(idUser);
     return response;

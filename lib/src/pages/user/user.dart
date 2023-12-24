@@ -143,7 +143,14 @@ class _UserPageState extends State<UserPage> {
                   Spacer(),
                   IconButton(
                     icon: Icon(Icons.logout_outlined),
-                    onPressed: () {},
+                    onPressed: () async {
+                      deleteToken();
+                      deleteIdUser();
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (builder) => LoginScreen()),
+                              (route) => false);
+                    },
                   )
                 ],
               ),

@@ -12,6 +12,7 @@ import 'package:whoru/src/pages/call/audiocall/AudioCallScreen.dart';
 import 'package:whoru/src/pages/chat/widget/OwnMessengerCard.dart';
 import 'package:whoru/src/pages/chat/widget/ReplyCard.dart';
 import 'package:whoru/src/socket/chatSocket.dart';
+import 'package:whoru/src/utils/url.dart';
 
 class IndividualPage extends StatefulWidget {
   const IndividualPage(
@@ -38,77 +39,84 @@ class _IndividualPageState extends State<IndividualPage> {
   @override
   void initState() {
     super.initState();
-      connect();
+    channel = IOWebSocketChannel.connect(socketUrl);
 
-    //   focusNode.addListener(() {
-    //     if (focusNode.hasFocus) {
-    //       setState(() {
-    //         show = false;
-    //       });
-    //     }
-    //   });
-    //   connect();
+    connect();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    channel.sink.close();
   }
 
   void connect() {
-    onConnected({"protocol": "json", "version": 1});
-    Online({
-      "arguments": [1],
+    ReceiveMesage();
+    onConnected(channel, {"protocol": "json", "version": 1});
+    Online(channel, {
+      "arguments": [widget.currentId],
       "target": "Online",
       "type": 1
     });
   }
 
-  void sendMessage(String message, int sourceId, int targetId) {
+  void sendMessage(
+      IOWebSocketChannel channel, String message, int sourceId, int targetId) {
     final messageData = {
-      'type': 1,
-      'target': "SendMessage",
-      'arguments': [sourceId, targetId, message],
+      "type": 1,
+      "target": "SendMessage",
+      "arguments": [sourceId, targetId, message],
     };
-    print(messageData);
-    sendMessageSocket(messageData);
-    setMessage(message);
+    sendMessageSocket(channel, messageData);
+    setMessage(message, widget.currentId, widget.user.idUser);
   }
 
   void ReceiveMesage() {
     channel.stream.listen(
       (data) {
-        // Phân tích dữ liệu JSON
-        Map<String, dynamic> jsonData = jsonDecode(data);
-
-        // Truy cập giá trị của các trường
-        int type = jsonData['type'];
-        String target = jsonData['target'];
-        List<dynamic> arguments = jsonData['arguments'];
-
-        // In ra giá trị
-        print('Type: $type');
-        print('Target: $target');
-        print('Arguments: $arguments');
-
-        // Kiểm tra xem target có phải là "ReceiveMessage" hay không
-        if (target == 'ReceiveMessage') {
-          // Nếu là "ReceiveMessage", lấy ra giá trị của arguments
-          String message = arguments[0];
-          print('Received message: $message');
-          setMessage(message);
-                _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-                    duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+        try {
+          var receivedMessage = data.replaceAll(String.fromCharCode(0x1E), '');
+          print("data---------------- $receivedMessage");
+          Map<dynamic, dynamic> jsonData = jsonDecode(receivedMessage);
+          int type = jsonData['type'];
+          if (type == 1) {
+            String? target = jsonData['target'];
+            if (target == "ReceiveMessage") {
+              List<dynamic>? arguments = jsonData['arguments'];
+              String message = arguments![0];
+              int userSend = arguments![1];
+              if (userSend == widget.user.idUser) {
+                setMessage(message, userSend, widget.currentId);
+                _scrollController.animateTo(
+                  _scrollController.position.maxScrollExtent,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                );
+              }
+            }
+          }
+        } catch (e) {
+          print("error $e");
         }
+      },
+      onDone: () {
+        debugPrint('ws channel closed');
+      },
+      onError: (error) {
+        debugPrint('ws error $error');
       },
     );
   }
 
-  void setMessage(String message) {
-
+  void setMessage(String message, int currentId, int idReceiver) {
     MessageModel messageModel = MessageModel(
       date: DateTime.now().toString().substring(10, 16),
       message: message,
       type: "Message",
-      userSend: widget.currentId,
-      userReceive:  widget.user.idUser,
+      userSend: currentId,
+      userReceive: idReceiver,
     );
-    print(messages);
 
     setState(() {
       messages.add(messageModel);
@@ -251,8 +259,10 @@ class _IndividualPageState extends State<IndividualPage> {
                             height: 70,
                           );
                         }
+                        print(
+                            "messages[index].userSend ${messages[index].userSend}");
+                        print("messages[index].currentId ${widget.currentId}");
                         if (messages[index].userSend == widget.currentId) {
-                          print("messages[index].message ${messages[index].message}");
                           return OwnMessageCard(
                             message: messages[index].message,
                             time: messages[index].date,
@@ -375,6 +385,7 @@ class _IndividualPageState extends State<IndividualPage> {
                                                 Duration(milliseconds: 300),
                                             curve: Curves.easeOut);
                                         sendMessage(
+                                            channel,
                                             _controller.text,
                                             widget.currentId,
                                             widget.user.idUser);

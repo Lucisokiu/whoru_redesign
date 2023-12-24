@@ -2,26 +2,22 @@ import 'dart:convert';
 import 'package:web_socket_channel/io.dart';
 import 'package:whoru/src/utils/url.dart';
 
-void onConnected(Map<String, dynamic> messageData) {
-  final channel = IOWebSocketChannel.connect(socketUrl);
+void onConnected(IOWebSocketChannel channel, Map<String, dynamic> messageData) {
   final message = jsonEncode(messageData) + String.fromCharCode(0x1E);
   channel.sink.add(message);
   print(message);
 }
-void Online(Map<String, dynamic> messageData) {
-  final channel = IOWebSocketChannel.connect(socketUrl);
+void Online(IOWebSocketChannel channel, Map<String, dynamic> messageData) {
   final message = jsonEncode(messageData) + String.fromCharCode(0x1E);
   channel.sink.add(message);
   print(message);
 
 }
 
-void sendMessageSocket(Map<String, dynamic> messageData) {
-  final channel = IOWebSocketChannel.connect(socketUrl);
+void sendMessageSocket(IOWebSocketChannel channel, Map<String, dynamic> messageData) {
   final message = jsonEncode(messageData) + String.fromCharCode(0x1E);
+  print("sendMessageSocket $message ");
   channel.sink.add(message);
-  print(message);
-
 }
 
 void handleServerEvent(String message) {

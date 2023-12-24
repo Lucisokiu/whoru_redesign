@@ -6,9 +6,11 @@ import 'package:whoru/src/model/ChatModel.dart';
 import 'package:whoru/src/pages/chat/screens/SelectContact.dart';
 import 'package:whoru/src/pages/chat/widget/CustomCard.dart';
 import 'package:whoru/src/socket/chatSocket.dart';
+import 'package:whoru/src/utils/url.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key, required this.chatmodels, required this.currentId});
+  const ChatPage(
+      {super.key, required this.chatmodels, required this.currentId});
 
   final List<ChatModel> chatmodels;
   final int currentId;
@@ -17,7 +19,6 @@ class ChatPage extends StatefulWidget {
   _ChatPageState createState() => _ChatPageState();
 }
 
-
 class _ChatPageState extends State<ChatPage> {
   late IOWebSocketChannel channel;
 
@@ -25,23 +26,42 @@ class _ChatPageState extends State<ChatPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // channel = IOWebSocketChannel.connect(socketUrl);
+    // connected();
   }
-void connected(){
-  onConnected({"protocol": "json", "version": 1});
-  Online({"arguments":[widget.currentId],"target":"Online","type":1});
-  channel.stream.listen((message) {
-    // Phân tích chuỗi JSON thành một đối tượng Dart
-    Map<String, dynamic> jsonData = jsonDecode(message);
 
-    // Truy cập giá trị của các trường
-    String target = jsonData['target'];
-    List<dynamic> arguments = jsonData['arguments'];
+  void connected() {
 
-    // In ra giá trị
-    print('Target: $target');
-    print('Arguments: $arguments');
-  });
-}
+    channel.stream.listen(
+      (message) {
+        print(message);
+        Map<String, dynamic> jsonData = jsonDecode(message);
+
+        String target = jsonData['target'];
+        List<dynamic> arguments = jsonData['arguments'];
+      },
+      onDone: () {
+        debugPrint('ws channel closed');
+      },
+      onError: (error) {
+        debugPrint('ws error $error');
+      },
+    );
+    onConnected(channel,{"protocol": "json", "version": 1});
+    Online(channel,{
+      "arguments": [widget.currentId],
+      "target": "Online",
+      "type": 1
+    });
+  }
+
+  @override
+  void dispose() {
+    // print("channel.sink.close();");
+    super.dispose();
+    // channel.sink.close();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
