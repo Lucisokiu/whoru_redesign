@@ -5,6 +5,8 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   emoji_picker_flutter
   file_selector_windows
+  flutter_webrtc
+  permission_handler_windows
   rive_common
 )
 

@@ -38,6 +38,7 @@ dependencies:
   fluttertoast: ^8.2.2
   #device
   camera: ^0.10.5+6
+  permission_handler: ^11.0.1
 
 
   #Storage
@@ -48,6 +49,7 @@ dependencies:
   #API
   http: ^1.1.0
   web_socket_channel: ^2.4.0
+  flutter_webrtc: ^0.9.47
 
   #animation
   flutter_animate: ^4.2.0

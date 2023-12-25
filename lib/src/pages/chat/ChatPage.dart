@@ -26,12 +26,11 @@ class _ChatPageState extends State<ChatPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // channel = IOWebSocketChannel.connect(socketUrl);
-    // connected();
+    channel = IOWebSocketChannel.connect(socketUrl);
+    connected();
   }
 
   void connected() {
-
     channel.stream.listen(
       (message) {
         print(message);
@@ -47,12 +46,12 @@ class _ChatPageState extends State<ChatPage> {
         debugPrint('ws error $error');
       },
     );
-    onConnected(channel,{"protocol": "json", "version": 1});
-    Online(channel,{
-      "arguments": [widget.currentId],
-      "target": "Online",
-      "type": 1
-    });
+    // onConnected(channel, {"protocol": "json", "version": 1});
+    // Online(channel, {
+    //   "arguments": [widget.currentId],
+    //   "target": "Online",
+    //   "type": 1
+    // });
   }
 
   @override
@@ -76,8 +75,10 @@ class _ChatPageState extends State<ChatPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (builder) => SelectContact()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (builder) => SelectContact(channel: channel)));
         },
         child: Icon(
           Icons.chat,
@@ -87,6 +88,7 @@ class _ChatPageState extends State<ChatPage> {
       body: ListView.builder(
         itemCount: widget.chatmodels.length,
         itemBuilder: (contex, index) => CustomCard(
+          channel: channel,
           chatModel: widget.chatmodels[index],
           currentId: widget.currentId,
         ),

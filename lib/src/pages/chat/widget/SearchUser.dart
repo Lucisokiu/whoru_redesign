@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:web_socket_channel/io.dart';
 import 'package:whoru/src/api/userInfo.dart';
 import 'package:whoru/src/model/SearchModel.dart';
 import 'package:whoru/src/model/UserChat.dart';
@@ -8,6 +9,11 @@ import 'package:whoru/src/pages/feed/screens/feed_screen.dart';
 import 'package:whoru/src/utils/token.dart';
 
 class SearchUserChat extends SearchDelegate {
+  IOWebSocketChannel channel;
+
+  SearchUserChat(
+      {required this.channel}); // Constructor để nhận giá trị từ hàm gọi
+
   var res;
 
   @override
@@ -84,6 +90,7 @@ class SearchUserChat extends SearchDelegate {
                   context,
                   MaterialPageRoute(
                       builder: (builder) => IndividualPage(
+                            channel: channel,
                             user: UserChat.fromSearchModel(result),
                             currentId: id!,
                           )));
@@ -146,10 +153,10 @@ class SearchUserChat extends SearchDelegate {
                   context,
                   MaterialPageRoute(
                       builder: (builder) => IndividualPage(
+                            channel: channel,
                             user: UserChat.fromSearchModel(result),
                             currentId: id!,
-                          ))
-              );
+                          )));
             },
           );
         },

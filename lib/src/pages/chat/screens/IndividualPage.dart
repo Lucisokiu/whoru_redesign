@@ -9,6 +9,7 @@ import 'package:whoru/src/model/MessageModel.dart';
 import 'package:whoru/src/model/SearchModel.dart';
 import 'package:whoru/src/model/UserChat.dart';
 import 'package:whoru/src/pages/call/audiocall/AudioCallScreen.dart';
+import 'package:whoru/src/pages/call/videocall/VideoCallScreen.dart';
 import 'package:whoru/src/pages/chat/widget/OwnMessengerCard.dart';
 import 'package:whoru/src/pages/chat/widget/ReplyCard.dart';
 import 'package:whoru/src/socket/chatSocket.dart';
@@ -16,8 +17,12 @@ import 'package:whoru/src/utils/url.dart';
 
 class IndividualPage extends StatefulWidget {
   const IndividualPage(
-      {super.key, required this.user, required this.currentId});
+      {super.key,
+      required this.channel,
+      required this.user,
+      required this.currentId});
 
+  final IOWebSocketChannel channel;
   final UserChat user;
   final int currentId;
 
@@ -90,7 +95,7 @@ class _IndividualPageState extends State<IndividualPage> {
                 setMessage(message, userSend, widget.currentId);
                 _scrollController.animateTo(
                   _scrollController.position.maxScrollExtent,
-                  duration: Duration(milliseconds: 300),
+                  duration: Duration(milliseconds: 500),
                   curve: Curves.easeOut,
                 );
               }
@@ -155,8 +160,6 @@ class _IndividualPageState extends State<IndividualPage> {
                       child: ClipOval(
                         child: Image.network(
                           widget.user.avatar,
-                          // ? "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png"
-                          // : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Group_font_awesome.svg/768px-Group_font_awesome.svg.png",
                           height: 36,
                           width: 36,
                         ),
@@ -193,7 +196,16 @@ class _IndividualPageState extends State<IndividualPage> {
                 ),
               ),
               actions: [
-                IconButton(icon: Icon(Icons.videocam), onPressed: () {}),
+                IconButton(
+                    icon: Icon(Icons.videocam),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VideoCallScreen(),
+                        ),
+                      );
+                    }),
                 IconButton(
                     icon: Icon(Icons.call),
                     onPressed: () {
@@ -263,9 +275,30 @@ class _IndividualPageState extends State<IndividualPage> {
                             "messages[index].userSend ${messages[index].userSend}");
                         print("messages[index].currentId ${widget.currentId}");
                         if (messages[index].userSend == widget.currentId) {
-                          return OwnMessageCard(
-                            message: messages[index].message,
-                            time: messages[index].date,
+                          return GestureDetector(
+                            onLongPress: () {
+                              // Hiển thị pop-up menu khi đặt ngón tay lên card
+                              showMenu(
+                                context: context,
+                                position: RelativeRect.fromLTRB(0, 0, 0, 0),
+                                items: [
+                                  PopupMenuItem(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        // deleteCard(index);
+                                        Navigator.pop(
+                                            context); // Ẩn pop-up menu
+                                      },
+                                      child: Text("Xóa"),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                            child: OwnMessageCard(
+                              message: messages[index].message,
+                              time: messages[index].date,
+                            ),
                           );
                         } else {
                           return ReplyCard(
