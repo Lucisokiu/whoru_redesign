@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whoru/src/pages/register/CustomSignUp.dart';
 import 'package:whoru/src/pages/login/widget/FieldFormSignIn.dart';
+import 'package:whoru/src/pages/register/CustomVerifyAccount.dart';
 
 Future<Object?> customSigninDialog(BuildContext contextScafford,
     {required ValueChanged onClosed}) {
@@ -65,7 +66,7 @@ class _LoginDialogState extends State<LoginDialog> {
                                 Future.delayed(Duration(milliseconds: 800), () {
                                   Navigator.of(context).pop();
                                 }).then((_) => {
-                                      customRegisDialog(widget.contextScafford)
+                                  customVerifyDialog(widget.contextScafford)
                                     });
                               },
                               child: Text(

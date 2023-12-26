@@ -39,12 +39,12 @@ class _IndividualPageState extends State<IndividualPage> {
   ScrollController _scrollController = ScrollController();
 
   // IO.Socket socket;
-  late IOWebSocketChannel channel;
+  // late IOWebSocketChannel channel;
 
   @override
   void initState() {
     super.initState();
-    channel = IOWebSocketChannel.connect(socketUrl);
+    // channel = IOWebSocketChannel.connect(socketUrl);
 
     connect();
   }
@@ -53,17 +53,17 @@ class _IndividualPageState extends State<IndividualPage> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    channel.sink.close();
+    // channel.sink.close();
   }
 
   void connect() {
     ReceiveMesage();
-    onConnected(channel, {"protocol": "json", "version": 1});
-    Online(channel, {
-      "arguments": [widget.currentId],
-      "target": "Online",
-      "type": 1
-    });
+    // onConnected(channel, {"protocol": "json", "version": 1});
+    // Online(channel, {
+    //   "arguments": [widget.currentId],
+    //   "target": "Online",
+    //   "type": 1
+    // });
   }
 
   void sendMessage(
@@ -78,7 +78,7 @@ class _IndividualPageState extends State<IndividualPage> {
   }
 
   void ReceiveMesage() {
-    channel.stream.listen(
+    widget.channel.stream.listen(
       (data) {
         try {
           var receivedMessage = data.replaceAll(String.fromCharCode(0x1E), '');
@@ -212,7 +212,10 @@ class _IndividualPageState extends State<IndividualPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AudioCallScreen(),
+                          builder: (context) => AudioCallScreen(
+                            avatar: widget.user.avatar,
+                            fullName: widget.user.fullName,
+                          ),
                         ),
                       );
                     }),
@@ -418,7 +421,7 @@ class _IndividualPageState extends State<IndividualPage> {
                                                 Duration(milliseconds: 300),
                                             curve: Curves.easeOut);
                                         sendMessage(
-                                            channel,
+                                            widget.channel,
                                             _controller.text,
                                             widget.currentId,
                                             widget.user.idUser);

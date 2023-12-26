@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:whoru/src/pages/login/widget/CustomSignIn.dart';
-import 'package:whoru/src/pages/register/widget/FieldFormSignUp.dart';
-import 'package:whoru/src/pages/login/widget/FieldFormSignIn.dart';
+import 'package:whoru/src/pages/register/widget/FieldFormCreateInfo.dart';
 
 Future<Object?> customCreateInfoDialog(
-    BuildContext contextScafford,
-    ) {
+  BuildContext contextScafford,
+) {
   return showGeneralDialog(
       barrierDismissible: true,
       barrierLabel: "Create Info",
@@ -20,8 +18,8 @@ Future<Object?> customCreateInfoDialog(
             child: child);
       },
       pageBuilder: (context, _, __) => CreateInfo(
-        contextScafford: contextScafford,
-      ));
+            contextScafford: contextScafford,
+          ));
 }
 
 class CreateInfo extends StatefulWidget {
@@ -34,6 +32,7 @@ class CreateInfo extends StatefulWidget {
 }
 
 class _CreateInfoState extends State<CreateInfo> {
+  late bool isSignInDialogShown;
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +60,9 @@ class _CreateInfoState extends State<CreateInfo> {
                           "Create Info",
                           style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
                         ),
-                        SignUpForm(contextScafford: widget.contextScafford),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Divider(),
-                            ),
-                          ],
+                        CreateInfoForm(contextScafford: widget.contextScafford),
+                        Expanded(
+                          child: Divider(),
                         ),
                       ]),
                     ],

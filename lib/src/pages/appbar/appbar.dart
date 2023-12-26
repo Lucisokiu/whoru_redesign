@@ -3,8 +3,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/appbar/widget/build_button.dart';
-import 'package:whoru/src/pages/camera/camera_screen.dart';
-import 'package:whoru/src/pages/chat/ChatPage.dart';
 import 'package:whoru/src/pages/splash/splash.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {

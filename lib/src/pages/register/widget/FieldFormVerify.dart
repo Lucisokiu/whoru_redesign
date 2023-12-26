@@ -5,18 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/log.dart';
-import 'package:whoru/src/api/user.dart';
-import 'package:whoru/src/pages/navigation/navigation.dart';
-import 'package:whoru/src/pages/register/CustomSignUp.dart';
-import 'package:whoru/src/pages/register/CustomVerifyAccount.dart';
+import 'package:whoru/src/pages/register/CustomCreateInfo.dart';
 
 class VerifyForm extends StatefulWidget {
-    BuildContext contextScafford;
+  BuildContext contextScafford;
 
   VerifyForm({
     super.key,
-        required this.contextScafford,
-
+    required this.contextScafford,
   });
 
   @override
@@ -36,6 +32,7 @@ class _VerifyFormState extends State<VerifyForm> {
   late SMITrigger confetti;
 
   var response;
+
   StateMachineController getRiveController(Artboard artboard) {
     StateMachineController? controller =
         StateMachineController.fromArtboard(artboard, "State Machine 1");
@@ -43,45 +40,40 @@ class _VerifyFormState extends State<VerifyForm> {
     return controller;
   }
 
-  void verify(BuildContext context,String Code) {
-        setState(() {
+  void verify(BuildContext context, String Code) {
+    setState(() {
       isShowLoading = true;
       isShowConfetti = true;
     });
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
+        response = await verifyAccount(Code);
 
         if (response.statusCode == 200) {
-                    check.fire();
+          check.fire();
 
           // show success
           Future.delayed(const Duration(seconds: 2), () {
             if (mounted) {
               setState(() {
-                                isShowLoading = false;
-
+                isShowLoading = false;
               });
               Future.delayed(const Duration(seconds: 2), () {
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const Navigation()),
-                  (Route<dynamic> route) => false,
-                );
-              });
+              }).then((value) => customCreateInfoDialog(widget.contextScafford));
             }
           });
         } else {
-                    error.fire();
+          error.fire();
 
           Future.delayed(Duration(seconds: 2), () {
             setState(() {
-                            isShowLoading = false;
-
+              isShowLoading = false;
             });
           });
         }
       } else {
         setState(() {
-            isShowLoading = false;
+          isShowLoading = false;
         });
       }
     });
@@ -117,10 +109,8 @@ class _VerifyFormState extends State<VerifyForm> {
                     },
                     onSaved: (code) {},
                     style: TextStyle(
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .color), // Màu văn bản nhập vào
+                        color: Theme.of(context).textTheme.bodyMedium!.color),
+                    // Màu văn bản nhập vào
                     decoration: InputDecoration(
                         hintStyle: TextStyle(
                             color:
@@ -154,8 +144,7 @@ class _VerifyFormState extends State<VerifyForm> {
                 )
               ],
             )),
-
-            isShowLoading
+        isShowLoading
             ? CustomPositioned(
                 child: RiveAnimation.asset(
                 "assets/RiveAssets/check.riv",
@@ -190,6 +179,7 @@ class _VerifyFormState extends State<VerifyForm> {
 
 class CustomPositioned extends StatelessWidget {
   const CustomPositioned({super.key, required this.child, this.size = 100});
+
   final Widget child;
   final double size;
 

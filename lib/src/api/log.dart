@@ -14,7 +14,7 @@ Future<http.Response> apiLogin(Map map) async {
     },
     body: jsonEncode(map),
   );
-    print("response.statusCode ${response}");
+  print("response.statusCode ${response}");
 
   print("response.statusCode ${response.statusCode}");
   if (response.statusCode == 200) {
@@ -80,51 +80,38 @@ Future<void> sendCodeByEmail(idUser) async {
 }
 
 Future<void> sendCodeBySMS(idUser) async {
-  var url = Uri.https('$baseUrl  + /api/Log/SendCodeBySMS');
+  var url = Uri.https(baseUrl, '/api/Log/SendCodeBySMS');
   String? token = await getToken();
+  var response = await http.post(
+    url,
+    headers: {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'bearer $token',
+    },
+    body: idUser,
+  );
 
-  try {
-    var response = await http.post(
-      url,
-      headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'bearer $token',
-      },
-      body: idUser,
-    );
-
-    if (response.statusCode == 200) {
-      print('Follow request successful');
-    } else {
-      print(
-          'Failed to make Follow request. Status code: ${response.statusCode}');
-    }
-  } catch (e) {
-    print('Error during API call: $e');
+  if (response.statusCode == 200) {
+    print('sendCodeBySMS request successful');
+  } else {
+    print(
+        'sendCodeBySMS to make Follow request. Status code: ${response.statusCode}');
   }
 }
 
-void verifyAccount(code) async {
+Future<http.Response> verifyAccount(code) async {
   var url = Uri.https('$baseUrl  + /api/Log/VerifyAccount');
   String? token = await getToken();
-  try {
-    var response = await http.post(
-      url,
-      headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'bearer $token',
-      },
-      body: code,
-    );
+  var response = await http.post(
+    url,
+    headers: {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'bearer $token',
+    },
+    body: code,
+  );
 
-    if (response.statusCode == 200) {
-      print("Reset Password Success");
-    } else {
-      throw Exception('Failed auth');
-    }
-  } catch (e) {
-    throw Exception('Error during API call: $e');
-  }
+  return response;
 }

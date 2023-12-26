@@ -2,13 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/log.dart';
 import 'package:whoru/src/model/Login.dart';
+import 'package:whoru/src/pages/register/CustomCreateInfo.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
-import 'package:whoru/src/service/show_toast.dart';
 import 'package:whoru/src/utils/token.dart';
 
 class SignInForm extends StatefulWidget {
@@ -52,7 +51,16 @@ class _SignInFormState extends State<SignInForm> {
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
         await callAPILogin(userName, password);
+        int? idInfo = await getIdUser();
         if (response.statusCode == 200) {
+          if(idInfo == -1) {
+            Future.delayed(Duration(milliseconds: 300), () {
+              Navigator.of(context).pop();
+            }).then((_) =>
+            {
+              customCreateInfoDialog(context)
+            });
+          }
           // show success
           check.fire();
           Future.delayed(const Duration(seconds: 2), () {

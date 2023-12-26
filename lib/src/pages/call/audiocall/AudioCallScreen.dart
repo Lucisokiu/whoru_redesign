@@ -5,7 +5,10 @@ import 'package:whoru/src/pages/call/widget/RoundedButton.dart';
 
 
 class AudioCallScreen extends StatefulWidget {
-  const AudioCallScreen({super.key});
+  final String avatar;
+  final String fullName;
+  const AudioCallScreen({super.key, required this.avatar, required this.fullName
+  });
 
   @override
   State<AudioCallScreen> createState() => _AudioCallScreenState();
@@ -37,7 +40,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
                         backgroundColor: Colors.blueGrey[200],
                         child: ClipOval(
                           child: Image.network(
-                            "https://avatars.githubusercontent.com/u/95356357?v=4",
+                            widget.avatar,
                             height: 168, // Kích thước ảnh đã nhân đôi bán kính của CircleAvatar
                             width: 168,  // Kích thước ảnh đã nhân đôi bán kính của CircleAvatar
                             fit: BoxFit.cover,
@@ -47,7 +50,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
 
                       SizedBox(height: 1.h,),
                       Text(
-                        "LuciSoKiu",
+                        widget.fullName,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontSize: 3.h, // Thay đổi kích thước font ở đây
                         ),

@@ -20,6 +20,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   bool _isMicOn = true;
   bool _isAudioOn = true;
   bool _isVideoOn = true;
+  bool isShowButton = true;
 
   @override
   void initState() {
@@ -66,14 +67,12 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
       "video": {"facingMode": "user"},
     });
 
-      _localStream!.getTracks().forEach((track) {
-        _peerConnection!.addTrack(track, _localStream!);
-      });
-      _localRenderer.srcObject = _localStream;
+    _localStream!.getTracks().forEach((track) {
+      _peerConnection!.addTrack(track, _localStream!);
+    });
+    _localRenderer.srcObject = _localStream;
 
-setState(() {
-
-});
+    setState(() {});
   }
 
   void _hangUp() {
@@ -112,62 +111,81 @@ setState(() {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Stack(
-          children: [
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // if (_remoteStream != null)
-                  //   RTCVideoView(_remoteRenderer),
-                  if (_localStream != null)
-                    Container(height: 100, color: Colors.red),
-                  RTCVideoView(
-                    _localRenderer,
-                    mirror: true,
-                    objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+        child: GestureDetector(
+          onTap: () {
+            setState(() {
+              isShowButton = !isShowButton;
+              print(isShowButton);
+            });
+          },
+          child: Stack(
+            children: [
+              (_remoteStream != null)
+                  ? Container(child: RTCVideoView(_remoteRenderer))
+                  : Container(color: Colors.transparent,),
+              if (_localStream != null)
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16.0),
+                      child: SizedBox(
+                        height: 25.h,
+                        width: 35.w,
+                        child: Container(
+                          color: Colors.grey,
+                          child: RTCVideoView(
+                            _localRenderer,
+                            mirror: true,
+                            objectFit: RTCVideoViewObjectFit
+                                .RTCVideoViewObjectFitCover,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                ),
+              if (isShowButton)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      CircularButton(
-                        icon: Icons.mic,
-                        onPressed: _toggleMic,
-                        isToggled: _isMicOn,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircularButton(
+                            icon: Icons.mic,
+                            onPressed: _toggleMic,
+                            isToggled: _isMicOn,
+                          ),
+                          CircularButton(
+                            icon: Icons.volume_up,
+                            onPressed: _toggleAudio,
+                            isToggled: _isAudioOn,
+                          ),
+                          CircularButton(
+                            icon: Icons.videocam,
+                            onPressed: _toggleVideo,
+                            isToggled: _isVideoOn,
+                          ),
+                        ],
                       ),
-                      CircularButton(
-                        icon: Icons.volume_up,
-                        onPressed: _toggleAudio,
-                        isToggled: _isAudioOn,
-                      ),
-                      CircularButton(
-                        icon: Icons.videocam,
-                        onPressed: _toggleVideo,
-                        isToggled: _isVideoOn,
+                      FloatingActionButton(
+                        onPressed: () {
+                          _hangUp;
+                          Navigator.pop(context);
+                        },
+                        child: Icon(Icons.call_end),
+                        backgroundColor: Colors.red,
+                        elevation: 0,
                       ),
                     ],
                   ),
-                  FloatingActionButton(
-                    onPressed: () {
-                      _hangUp;
-                      Navigator.pop(context);
-                    },
-                    child: Icon(Icons.call_end),
-                    backgroundColor: Colors.red,
-                    elevation: 0,
-                  ),
-                ],
-              ),
-            ),
-          ],
+                ),
+            ],
+          ),
         ),
       ),
     );

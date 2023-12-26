@@ -61,11 +61,12 @@ class _CardFeedState extends State<CardFeed> {
         child: Padding(
           padding: const EdgeInsets.only(bottom: 14.0, left: 15.0, right: 15.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 10.0, right: 14.0),
+                    margin: const EdgeInsets.only(top: 10.0, right: 5.0),
                     decoration: const BoxDecoration(shape: BoxShape.circle),
                     width: 60,
                     height: 60,
@@ -104,36 +105,13 @@ class _CardFeedState extends State<CardFeed> {
                           ),
                         )),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      Text(
-                        widget.feed.fullName,
-                        style: const TextStyle(
-                          fontFamily: "Montserrat",
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20,
-                        ),
-                      ),
-                      // SizedBox(
-                      //   width: 50.w,
-                      //   child: Wrap(
-                      //     children: [
-                      //       Text(
-                      //         widget.feedModel.title,
-                      //         style: const TextStyle(
-                      //           fontFamily: "Montserrat",
-                      //           fontWeight: FontWeight.w400,
-                      //           fontSize: 14,
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-                    ],
+                  Text(
+                    widget.feed.fullName,
+                    style: const TextStyle(
+                      fontFamily: "Montserrat",
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20,
+                    ),
                   ),
                   const Spacer(),
                   IconButton(

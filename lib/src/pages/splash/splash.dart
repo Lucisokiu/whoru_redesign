@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:lottie/lottie.dart';
+import 'package:whoru/src/pages/call/videocall/VideoCallScreen.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/pages/user/user.dart';
@@ -37,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen>
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) =>
+              // VideoCallScreen(),
           token != null ? Navigation() : LoginScreen(),
         ),
       );

@@ -26,39 +26,39 @@ class _ChatPageState extends State<ChatPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    channel = IOWebSocketChannel.connect(socketUrl);
     connected();
   }
 
   void connected() {
-    channel.stream.listen(
-      (message) {
-        print(message);
-        Map<String, dynamic> jsonData = jsonDecode(message);
-
-        String target = jsonData['target'];
-        List<dynamic> arguments = jsonData['arguments'];
-      },
-      onDone: () {
-        debugPrint('ws channel closed');
-      },
-      onError: (error) {
-        debugPrint('ws error $error');
-      },
-    );
-    // onConnected(channel, {"protocol": "json", "version": 1});
-    // Online(channel, {
-    //   "arguments": [widget.currentId],
-    //   "target": "Online",
-    //   "type": 1
-    // });
+    channel = IOWebSocketChannel.connect(socketUrl);
+    // channel.stream.listen(
+    //   (message) {
+    //     print(message);
+    //     Map<String, dynamic> jsonData = jsonDecode(message);
+    //
+    //     String target = jsonData['target'];
+    //     List<dynamic> arguments = jsonData['arguments'];
+    //   },
+    //   onDone: () {
+    //     debugPrint('ws channel closed');
+    //   },
+    //   onError: (error) {
+    //     debugPrint('ws error $error');
+    //   },
+    // );
+    onConnected(channel, {"protocol": "json", "version": 1});
+    Online(channel, {
+      "arguments": [widget.currentId],
+      "target": "Online",
+      "type": 1
+    });
   }
 
   @override
   void dispose() {
-    // print("channel.sink.close();");
+    print("channel.sink.close();");
     super.dispose();
-    // channel.sink.close();
+    channel.sink.close();
   }
 
   @override

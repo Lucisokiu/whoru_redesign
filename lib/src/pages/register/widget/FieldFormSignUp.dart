@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,7 +61,9 @@ class _SignUpFormState extends State<SignUpForm> {
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
         response = await CreateAccount(SignUpData);
-        if (response) {
+        if (response.statusCode == 201) {
+          Map<String, dynamic> jsonMap = json.decode(response);
+          int userId = jsonMap['userId'];
           check.fire();
           Future.delayed(Duration(milliseconds: 800), () {
             if (mounted) {
@@ -69,6 +72,12 @@ class _SignUpFormState extends State<SignUpForm> {
               });
               confetti.fire();
               Future.delayed(const Duration(seconds: 2), () {
+                if(_emailController.text != null){
+                  sendCodeByEmail(userId);
+                }else {
+                  sendCodeBySMS(userId);
+                }
+
                 Navigator.of(context).pop();
               });
             }

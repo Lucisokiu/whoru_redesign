@@ -4,11 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:whoru/src/api/log.dart';
-import 'package:whoru/src/api/user.dart';
+import 'package:whoru/src/api/userInfo.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
-import 'package:whoru/src/pages/register/CustomSignUp.dart';
-import 'package:whoru/src/pages/register/CustomVerifyAccount.dart';
 
 class CreateInfoForm extends StatefulWidget {
   BuildContext contextScafford;
@@ -46,18 +43,27 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
     artboard.addController(controller!);
     return controller;
   }
+  Future<void> callAPICreateInfo(fullName, description,work,study) async {
+    Map<dynamic, dynamic> CreateInfoData = {
+      'fullName': fullName,
+      'description': description,
+      'work': work,
+      'study': study,
+    };
+    response = await createInfoUser(CreateInfoData);
+  }
 
-  void verify(BuildContext context,String Code) {
+  void createInfo(BuildContext context,String fullName, String description, String work, String study) {
+
     setState(() {
       isShowLoading = true;
       isShowConfetti = true;
     });
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
-
+        callAPICreateInfo(fullName,description,work,study);
         if (response.statusCode == 200) {
           check.fire();
-
           // show success
           Future.delayed(const Duration(seconds: 2), () {
             if (mounted) {
@@ -217,7 +223,7 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
                   padding: const EdgeInsets.only(top: 8.0, bottom: 24),
                   child: ElevatedButton.icon(
                       onPressed: () {
-                        // verify(context, _verifyCodeController.text);
+                        createInfo(context, _fullNameController.text,_desController.text,_workController.text,_studyController.text);
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFF77D8E),

@@ -54,7 +54,7 @@ Future<void> getUserByName(idPost) async {
   }
 }
 
-Future<bool> CreateAccount(Map map) async {
+Future<http.Response> CreateAccount(Map map) async {
   var url = Uri.https('$baseUrl  + /api/v1/Users/Create');
   String? token = await getToken();
 
@@ -67,15 +67,7 @@ Future<bool> CreateAccount(Map map) async {
       },
       body: jsonEncode(map),
     );
-
-    if (response.statusCode == 200) {
-      print('Follow request successful');
-      return true;
-    } else {
-      print(
-          'Failed to make Follow request. Status code: ${response.statusCode}');
-          return false;
-    }
+      return response;
 
 }
 
