@@ -14,25 +14,35 @@ class ChatModel {
     required this.type,
     this.isSeen = false,
   });
+  factory ChatModel.fromJson(Map<String, dynamic> json) {
+    return ChatModel(
+      idUser: json['idUser'] as int,
+      fullName: json['fullName'] as String,
+      avatar: json['avatar'] as String,
+      currentMessage: json['currentMessage'] as String,
+      type: json['type'] as String,
+      isSeen: json['isSeen'] as bool? ?? false,
+    );
+  }
 }
-
-List<ChatModel> chatmodels = [
-  ChatModel(
-    idUser: 2,
-    fullName: "Nguyen Minh Nhut",
-    avatar:
-    "https://firebasestorage.googleapis.com/v0/b/whoru-2f115.appspot.com/o/Avatars%2Fdefault-avatar.jpg?alt=media&token=7721df77-f806-41c7-bcfe-2aae9acc98c7",
-    currentMessage: "hello",
-    type: "Message",
-    isSeen: true,
-  ),
-  ChatModel(
-    idUser: 1,
-    fullName: "Nguyen Minh Cuong",
-    avatar:
-    "https://firebasestorage.googleapis.com/v0/b/whoru-2f115.appspot.com/o/Avatars%2Fdefault-avatar.jpg?alt=media&token=7721df77-f806-41c7-bcfe-2aae9acc98c7",
-    currentMessage: "hello",
-    type: "Message",
-    isSeen: true,
-  ),
-];
+//
+// List<ChatModel> chatmodels = [
+//   ChatModel(
+//     idUser: 2,
+//     fullName: "Nguyen Minh Nhut",
+//     avatar:
+//     "https://firebasestorage.googleapis.com/v0/b/whoru-2f115.appspot.com/o/Avatars%2Fdefault-avatar.jpg?alt=media&token=7721df77-f806-41c7-bcfe-2aae9acc98c7",
+//     currentMessage: "hello",
+//     type: "Message",
+//     isSeen: true,
+//   ),
+//   ChatModel(
+//     idUser: 1,
+//     fullName: "Nguyen Minh Cuong",
+//     avatar:
+//     "https://firebasestorage.googleapis.com/v0/b/whoru-2f115.appspot.com/o/Avatars%2Fdefault-avatar.jpg?alt=media&token=7721df77-f806-41c7-bcfe-2aae9acc98c7",
+//     currentMessage: "hello",
+//     type: "Message",
+//     isSeen: true,
+//   ),
+// ];

@@ -5,13 +5,14 @@ import 'package:whoru/src/pages/chat/screens/CreateGroup.dart';
 import 'package:whoru/src/pages/chat/widget/ButtonCard.dart';
 import 'package:whoru/src/pages/chat/widget/ContactCard.dart';
 import 'package:whoru/src/pages/search/controller/search_bar.dart';
+import 'package:whoru/src/service/WebSocketService.dart';
 
 import '../../../model/ChatModel.dart';
 
 class SelectContact extends StatefulWidget {
-  IOWebSocketChannel channel;
+  WebSocketService webSocketService;
 
-  SelectContact({super.key, required this.channel});
+  SelectContact({super.key, required this.webSocketService});
 
   @override
   _SelectContactState createState() => _SelectContactState();
@@ -91,7 +92,7 @@ class _SelectContactState extends State<SelectContact> {
                 onPressed: () {
                   showSearch(
                     context: context,
-                    delegate: SearchUserChat(channel: widget.channel),
+                    delegate: SearchUserChat(webSocketService: widget.webSocketService),
                   );
                 }),
             PopupMenuButton<String>(

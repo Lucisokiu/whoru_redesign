@@ -1,28 +1,31 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:web_socket_channel/io.dart';
+import 'package:whoru/src/api/chat.dart';
 import 'package:whoru/src/model/ChatModel.dart';
 import 'package:whoru/src/model/MessageModel.dart';
 import 'package:whoru/src/model/SearchModel.dart';
 import 'package:whoru/src/model/UserChat.dart';
 import 'package:whoru/src/pages/call/audiocall/AudioCallScreen.dart';
 import 'package:whoru/src/pages/call/videocall/VideoCallScreen.dart';
+import 'package:whoru/src/pages/chat/controller/ChatSocket.dart';
 import 'package:whoru/src/pages/chat/widget/OwnMessengerCard.dart';
 import 'package:whoru/src/pages/chat/widget/ReplyCard.dart';
-import 'package:whoru/src/socket/chatSocket.dart';
+import 'package:whoru/src/service/WebSocketService.dart';
 import 'package:whoru/src/utils/url.dart';
 
 class IndividualPage extends StatefulWidget {
   const IndividualPage(
       {super.key,
-      required this.channel,
+      required this.webSocketService,
       required this.user,
       required this.currentId});
 
-  final IOWebSocketChannel channel;
+  final WebSocketService webSocketService;
   final UserChat user;
   final int currentId;
 
@@ -37,52 +40,42 @@ class _IndividualPageState extends State<IndividualPage> {
   List<MessageModel> messages = [];
   TextEditingController _controller = TextEditingController();
   ScrollController _scrollController = ScrollController();
-
-  // IO.Socket socket;
-  // late IOWebSocketChannel channel;
+  late StreamSubscription<dynamic> messageSubscription;
 
   @override
   void initState() {
     super.initState();
-    // channel = IOWebSocketChannel.connect(socketUrl);
-
+      getChat();
     connect();
   }
+
+  void getChat() async {
+    messages = await getAllChat(widget.user.idUser);
+    if (messages.isNotEmpty) {
+      setState(() {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      });
+    }
+  }
+
+
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    // channel.sink.close();
+    messageSubscription.cancel();
   }
 
   void connect() {
-    ReceiveMesage();
-    // onConnected(channel, {"protocol": "json", "version": 1});
-    // Online(channel, {
-    //   "arguments": [widget.currentId],
-    //   "target": "Online",
-    //   "type": 1
-    // });
-  }
-
-  void sendMessage(
-      IOWebSocketChannel channel, String message, int sourceId, int targetId) {
-    final messageData = {
-      "type": 1,
-      "target": "SendMessage",
-      "arguments": [sourceId, targetId, message],
-    };
-    sendMessageSocket(channel, messageData);
-    setMessage(message, widget.currentId, widget.user.idUser);
-  }
-
-  void ReceiveMesage() {
-    widget.channel.stream.listen(
-      (data) {
+    messageSubscription = widget.webSocketService.onMessage.listen(
+      (event) {
         try {
-          var receivedMessage = data.replaceAll(String.fromCharCode(0x1E), '');
-          print("data---------------- $receivedMessage");
+          var receivedMessage = event.replaceAll(String.fromCharCode(0x1E), '');
           Map<dynamic, dynamic> jsonData = jsonDecode(receivedMessage);
           int type = jsonData['type'];
           if (type == 1) {
@@ -91,11 +84,14 @@ class _IndividualPageState extends State<IndividualPage> {
               List<dynamic>? arguments = jsonData['arguments'];
               String message = arguments![0];
               int userSend = arguments![1];
+              print("----------------");
               if (userSend == widget.user.idUser) {
+                print("--------------");
                 setMessage(message, userSend, widget.currentId);
                 _scrollController.animateTo(
+                  // 1.0,
                   _scrollController.position.maxScrollExtent,
-                  duration: Duration(milliseconds: 500),
+                  duration: Duration(milliseconds: 800),
                   curve: Curves.easeOut,
                 );
               }
@@ -114,6 +110,22 @@ class _IndividualPageState extends State<IndividualPage> {
     );
   }
 
+  void disconnect() {
+    print("disconnect IndividualScreen");
+    messageSubscription.cancel();
+  }
+
+  void sendMessage(WebSocketService webSocketService, String message,
+      int sourceId, int targetId) {
+    final messageData = {
+      "type": 1,
+      "target": "SendMessage",
+      "arguments": [sourceId, targetId, message],
+    };
+    webSocketService.sendMessageSocket(messageData);
+    setMessage(message, widget.currentId, widget.user.idUser);
+  }
+
   void setMessage(String message, int currentId, int idReceiver) {
     MessageModel messageModel = MessageModel(
       date: DateTime.now().toString().substring(10, 16),
@@ -124,9 +136,12 @@ class _IndividualPageState extends State<IndividualPage> {
     );
 
     setState(() {
+      // messages.insert(0, messageModel);
       messages.add(messageModel);
+
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -270,13 +285,10 @@ class _IndividualPageState extends State<IndividualPage> {
                       itemCount: messages.length + 1,
                       itemBuilder: (context, index) {
                         if (index == messages.length) {
-                          return Container(
+                          return SizedBox(
                             height: 70,
                           );
                         }
-                        print(
-                            "messages[index].userSend ${messages[index].userSend}");
-                        print("messages[index].currentId ${widget.currentId}");
                         if (messages[index].userSend == widget.currentId) {
                           return GestureDetector(
                             onLongPress: () {
@@ -310,6 +322,8 @@ class _IndividualPageState extends State<IndividualPage> {
                           );
                         }
                       },
+                      physics: BouncingScrollPhysics(), // Sử dụng BouncingScrollPhysics
+
                     ),
                   ),
                   Align(
@@ -414,17 +428,16 @@ class _IndividualPageState extends State<IndividualPage> {
                                     ),
                                     onPressed: () {
                                       if (sendButton) {
-                                        _scrollController.animateTo(
-                                            _scrollController
-                                                .position.maxScrollExtent,
-                                            duration:
-                                                Duration(milliseconds: 300),
-                                            curve: Curves.easeOut);
                                         sendMessage(
-                                            widget.channel,
+                                            widget.webSocketService,
                                             _controller.text,
                                             widget.currentId,
                                             widget.user.idUser);
+                                        _scrollController.animateTo(
+                                          _scrollController.position.maxScrollExtent,
+                                          duration: Duration(milliseconds: 500),
+                                          curve: Curves.easeInOut,
+                                        );
                                         _controller.clear();
                                         setState(() {
                                           sendButton = false;

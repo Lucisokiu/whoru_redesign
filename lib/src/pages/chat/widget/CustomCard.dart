@@ -4,23 +4,24 @@ import 'package:web_socket_channel/io.dart';
 import 'package:whoru/src/model/ChatModel.dart';
 import 'package:whoru/src/model/UserChat.dart';
 import 'package:whoru/src/pages/chat/screens/IndividualPage.dart';
+import 'package:whoru/src/service/WebSocketService.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard(
-      {super.key,required this.channel, required this.chatModel, required this.currentId});
-  final IOWebSocketChannel channel;
+      {super.key,required this.webSocketService, required this.chatModel, required this.currentId});
+  final WebSocketService webSocketService;
   final ChatModel chatModel;
   final int currentId;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (contex) => IndividualPage(
-                      channel: channel,
+                  webSocketService: webSocketService,
                       user: UserChat.fromChatModel(chatModel),
                       currentId: currentId,
                     )));

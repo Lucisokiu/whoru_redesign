@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:whoru/src/api/chat.dart';
 import 'package:whoru/src/model/ChatModel.dart';
 import 'package:whoru/src/pages/appbar/widget/build_PopupMenu.dart';
 import 'package:whoru/src/pages/camera/camera_screen.dart';
@@ -28,7 +29,7 @@ Widget buildActionHome(context, title, icon) {
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  ChatPage(chatmodels: chatmodels, currentId: id!),
+                  ChatPage(currentId: id!),
             ),
           );
         }

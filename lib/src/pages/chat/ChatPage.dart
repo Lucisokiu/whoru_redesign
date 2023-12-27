@@ -1,18 +1,20 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
+import 'package:whoru/src/api/chat.dart';
 import 'package:whoru/src/model/ChatModel.dart';
 import 'package:whoru/src/pages/chat/screens/SelectContact.dart';
 import 'package:whoru/src/pages/chat/widget/CustomCard.dart';
-import 'package:whoru/src/socket/chatSocket.dart';
+import 'package:whoru/src/service/WebSocketService.dart';
+import 'package:whoru/src/pages/chat/controller/chatSocket.dart';
 import 'package:whoru/src/utils/url.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage(
-      {super.key, required this.chatmodels, required this.currentId});
+      {super.key, required this.currentId});
 
-  final List<ChatModel> chatmodels;
   final int currentId;
 
   @override
@@ -20,45 +22,40 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  late IOWebSocketChannel channel;
+  List<ChatModel> chatmodels = [];
+  WebSocketService webSocketService = WebSocketService(socketUrl);
+  late StreamSubscription<dynamic> messageSubscription;
+  Future<void> getUser () async {
+    chatmodels = await getAllUserChat();
+    setState(() {
 
+    });
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getUser();
     connected();
-  }
 
+  }
   void connected() {
-    channel = IOWebSocketChannel.connect(socketUrl);
-    // channel.stream.listen(
-    //   (message) {
-    //     print(message);
-    //     Map<String, dynamic> jsonData = jsonDecode(message);
-    //
-    //     String target = jsonData['target'];
-    //     List<dynamic> arguments = jsonData['arguments'];
-    //   },
-    //   onDone: () {
-    //     debugPrint('ws channel closed');
-    //   },
-    //   onError: (error) {
-    //     debugPrint('ws error $error');
-    //   },
-    // );
-    onConnected(channel, {"protocol": "json", "version": 1});
-    Online(channel, {
-      "arguments": [widget.currentId],
-      "target": "Online",
-      "type": 1
-    });
-  }
+    // channel = IOWebSocketChannel.connect(socketUrl);
+    webSocketService.connect();
 
+    messageSubscription = webSocketService.onMessage.listen((event) {
+      print("onMessage ChatPage");
+    });
+
+  }
+  void disconnected(){
+    messageSubscription.cancel();
+  }
   @override
   void dispose() {
-    print("channel.sink.close();");
     super.dispose();
-    channel.sink.close();
+    webSocketService.close();
+    // channel.sink.close();
   }
 
   @override
@@ -78,7 +75,7 @@ class _ChatPageState extends State<ChatPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (builder) => SelectContact(channel: channel)));
+                  builder: (builder) => SelectContact(webSocketService: webSocketService)));
         },
         child: Icon(
           Icons.chat,
@@ -86,10 +83,11 @@ class _ChatPageState extends State<ChatPage> {
         ),
       ),
       body: ListView.builder(
-        itemCount: widget.chatmodels.length,
-        itemBuilder: (contex, index) => CustomCard(
-          channel: channel,
-          chatModel: widget.chatmodels[index],
+        itemCount: chatmodels.length,
+        itemBuilder: (contex, index) =>
+            CustomCard(
+              webSocketService: webSocketService,
+          chatModel: chatmodels[index],
           currentId: widget.currentId,
         ),
       ),
