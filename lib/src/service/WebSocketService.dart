@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/io.dart';
+import 'package:whoru/src/pages/call/videocall/VideoCallScreen.dart';
 import 'package:whoru/src/pages/chat/controller/chatSocket.dart';
 import 'package:whoru/src/utils/token.dart';
 
@@ -34,7 +36,14 @@ class WebSocketService {
       "type": 1
     });
   }
-  void sendMessageSocket(Map<String, dynamic> messageData) {
+
+  void sendMessageSocket(String target, List arguments) {
+    final messageData = {
+      "type": 1,
+      "target": target,
+      "arguments": arguments,
+    };
+
     final message = jsonEncode(messageData) + String.fromCharCode(0x1E);
     _channel.sink.add(message);
   }
@@ -42,7 +51,63 @@ class WebSocketService {
   void close() {
     _channel.sink.close();
     print("channel.sink.close();");
+  }
 
+  void showCallDialog(int caller, String name, String avt, int receiver,
+      BuildContext context, WebSocketService webSocketService) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Text(
+                  'Incoming Call',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(height: 8),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Text('Call from $caller'),
+              ),
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (builder) => VideoCallScreen(
+                                  idUser: caller,
+                                  currentId: receiver,
+                                  webSocketService: webSocketService,
+                                isJoinRoom: true,
+                              )));
+                    },
+                    icon: Icon(Icons.call),
+                    color: Colors.green, // Màu nền của nút xanh lá
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(
+                          context); // Đóng hộp thoại khi kết thúc cuộc gọi
+                    },
+                    icon: Icon(Icons.call_end),
+                    color: Colors.red, // Màu nền của nút đỏ
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Stream<dynamic> get onMessage => _controller.stream;

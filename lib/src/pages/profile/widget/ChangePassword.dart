@@ -49,11 +49,14 @@ class _ChangePasswordState extends State<ChangePassword> {
 
 
           // Button to post API
-          ElevatedButton(
-            onPressed: () {
-              // postApi();
-            },
-            child: Text('Change Pass'),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: ElevatedButton(
+              onPressed: () {
+                // postApi();
+              },
+              child: Text('Change Pass'),
+            ),
           ),
         ],
       ),

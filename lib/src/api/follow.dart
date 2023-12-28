@@ -5,7 +5,7 @@ import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 Future<void> followUser(idUser) async {
-  var url = Uri.https(baseUrl,'/api/v1/Follows/FollowUser');
+  var url = Uri.http(baseUrl,'/api/v1/Follows/FollowUser');
   String? token = await getToken();
 
   try {
@@ -31,7 +31,7 @@ Future<void> followUser(idUser) async {
 }
 
 Future<void> unFollowUser(idUser) async {
-  var url = Uri.https(baseUrl, '/api/v1/Follows/UnFollowUser');
+  var url = Uri.http(baseUrl, '/api/v1/Follows/UnFollowUser');
   String? token = await getToken();
 
   try {
@@ -57,7 +57,7 @@ Future<void> unFollowUser(idUser) async {
 }
 
 Future<List<Map<String, dynamic>>> getAllFollower() async {
-  var url = Uri.https(baseUrl, '/api/v1/Follows/GetAllFollower');
+  var url = Uri.http(baseUrl, '/api/v1/Follows/GetAllFollower');
   String? token = await getToken();
   var response = await http.get(
     url,
@@ -79,7 +79,7 @@ Future<List<Map<String, dynamic>>> getAllFollower() async {
 }
 
 Future<List<Map<String, dynamic>>> getAllFollowing() async {
-  var url = Uri.https(baseUrl, '/api/v1/Follows/GetAllFollowing');
+  var url = Uri.http(baseUrl, '/api/v1/Follows/GetAllFollowing');
   String? token = await getToken();
 
   var response = await http.get(

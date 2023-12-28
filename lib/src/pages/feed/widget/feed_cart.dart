@@ -98,8 +98,8 @@ class _CardFeedState extends State<CardFeed> {
                           child: ClipOval(
                             child: Image.network(
                               widget.feed.avatar,
-                              width: 60.0, // Set width based on your design
-                              height: 60.0, // Set height based on your design
+                              width: 45.0, // Set width based on your design
+                              height: 45.0, // Set height based on your design
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -110,7 +110,7 @@ class _CardFeedState extends State<CardFeed> {
                     style: const TextStyle(
                       fontFamily: "Montserrat",
                       fontWeight: FontWeight.w600,
-                      fontSize: 20,
+                      fontSize: 16,
                     ),
                   ),
                   const Spacer(),
@@ -127,13 +127,16 @@ class _CardFeedState extends State<CardFeed> {
               SizedBox(
                 height: 0.5.h,
               ),
-              Wrap(
-                children: [
-                  Text(
-                    widget.feed.content,
-                    style: const TextStyle(fontFamily: "Inter", fontSize: 16),
-                  ),
-                ],
+              Container(
+                margin: EdgeInsets.only(top: 8,left: 10, right: 10), // Điều này sẽ tạo khoảng cách giữa Container và các widget trước đó
+
+                child: Align(
+                  alignment: Alignment.topLeft,
+                    child: Text(
+                      widget.feed.content,
+                      style: const TextStyle(fontFamily: "Inter", fontSize: 16),
+                    )
+                ),
               ),
               const SizedBox(height: 16),
               Stack(
@@ -190,9 +193,9 @@ class _CardFeedState extends State<CardFeed> {
                       sharePost(widget.feed.idFeed);
                     },
                     onLongPress: () async {
-                      List<Map<String, dynamic>> listLike =
+                      List<Map<String, dynamic>> listShare =
                           await getListShare(widget.feed.idFeed);
-                      showListDialog(context, listLike);
+                      showListDialog(context, listShare);
                     },
                   ),
                 ],

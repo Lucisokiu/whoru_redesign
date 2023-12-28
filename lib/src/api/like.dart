@@ -5,7 +5,7 @@ import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 Future<void> likePost(idPost) async {
-  var url = Uri.https(baseUrl, '/api/v1/Likes/LikePost');
+  var url = Uri.http(baseUrl, '/api/v1/Likes/LikePost');
   String? token = await getToken();
   print(url);
   var response = await http.post(
@@ -26,7 +26,7 @@ Future<void> likePost(idPost) async {
 }
 
 Future<List<Map<String, dynamic>>> getListLike(idPost) async {
-  var url = Uri.https(baseUrl, '/api/v1/Likes/GetAllLikedUser');
+  var url = Uri.http(baseUrl, '/api/v1/Likes/GetAllLikedUser');
   String? token = await getToken();
 
   try {

@@ -117,18 +117,15 @@ class _IndividualPageState extends State<IndividualPage> {
 
   void sendMessage(WebSocketService webSocketService, String message,
       int sourceId, int targetId) {
-    final messageData = {
-      "type": 1,
-      "target": "SendMessage",
-      "arguments": [sourceId, targetId, message],
-    };
-    webSocketService.sendMessageSocket(messageData);
+    webSocketService.sendMessageSocket("SendMessage", [sourceId, targetId, message]);
     setMessage(message, widget.currentId, widget.user.idUser);
   }
 
   void setMessage(String message, int currentId, int idReceiver) {
+    TimeOfDay now = TimeOfDay.now();
+
     MessageModel messageModel = MessageModel(
-      date: DateTime.now().toString().substring(10, 16),
+      date: "${now.hour}:${now.minute}",
       message: message,
       type: "Message",
       userSend: currentId,
@@ -217,7 +214,7 @@ class _IndividualPageState extends State<IndividualPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => VideoCallScreen(),
+                          builder: (context) => VideoCallScreen(idUser: widget.user.idUser,currentId: widget.currentId,webSocketService: widget.webSocketService,),
                         ),
                       );
                     }),

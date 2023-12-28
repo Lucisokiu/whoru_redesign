@@ -1,8 +1,26 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:whoru/src/model/User.dart';
+import 'package:whoru/src/model/UserChat.dart';
+import 'package:whoru/src/service/WebSocketService.dart';
 
 class VideoCallScreen extends StatefulWidget {
+  final WebSocketService webSocketService;
+  bool isJoinRoom = false;
+  final int idUser;
+  final int currentId;
+
+  VideoCallScreen(
+      {super.key,
+      required this.webSocketService,
+      bool? isJoinRoom,
+      required this.idUser,
+      required this.currentId})
+      : isJoinRoom = isJoinRoom ?? false;
+
   @override
   _VideoCallScreenState createState() => _VideoCallScreenState();
 }
@@ -32,9 +50,68 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     // Khởi tạo các đối tượng RTCVideoRenderer
     await _localRenderer.initialize();
     await _remoteRenderer.initialize();
-
+    await _listenServer();
     await _createPeerConnection();
     await _getUserMedia();
+
+    if (widget.isJoinRoom) {
+      makeCall();
+    }else{
+      print(widget.isJoinRoom);
+      sendNotif();
+    }
+  }
+
+  Future<void> _listenServer() async {
+    widget.webSocketService.onMessage.listen((event) async {
+      var receivedMessage = event.replaceAll(String.fromCharCode(0x1E), '');
+      Map<dynamic, dynamic> jsonData = jsonDecode(receivedMessage);
+      int type = jsonData['type'];
+      if (type == 1) {
+        String target = jsonData["target"];
+        if (target == "ReceiveOffer") {
+
+          List<dynamic> arguments = jsonData["arguments"];
+          String offer = arguments[3];
+          print("Offer $offer");
+          Map<dynamic, dynamic> receiveData = jsonDecode(offer);
+          String event = receiveData["event"];
+          if (event == "offer") {
+            _peerConnection!.setRemoteDescription(
+              RTCSessionDescription(
+                receiveData["data"]["sdp"],
+                receiveData["data"]["type"],
+              ),
+            );
+            // Create an answer
+            RTCSessionDescription answer =
+                await _peerConnection!.createAnswer();
+
+            await _peerConnection!.setLocalDescription(answer);
+
+            widget.webSocketService.sendMessageSocket("SendOffer", [
+              widget.currentId,
+              widget.idUser,
+              jsonEncode({"event": "answer", "data": answer.toMap()})
+            ]);
+          }
+          if (event == "answer") {
+            _peerConnection!.setRemoteDescription(
+              RTCSessionDescription(
+                receiveData["data"]["sdp"],
+                receiveData["data"]["type"],
+              ),
+            );
+          }
+          if (event == "ice") {
+            _peerConnection!.addCandidate(RTCIceCandidate(
+                receiveData["data"]["candidate"],
+                receiveData["data"]["sdpMid"],
+                receiveData["data"]["sdpMLineIndex"]));
+          }
+        }
+      }
+    });
   }
 
   Future<void> _createPeerConnection() async {
@@ -48,17 +125,36 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
         }
       ]
     };
-
-    _peerConnection = await createPeerConnection(configuration);
-
-    _peerConnection!.onIceCandidate = (candidate) {
-      // Xử lý sự kiện ICE candidate
+    final Map<String, dynamic> offerSdpConstraints = {
+      "mandatory": {
+        "OfferToReceiveAudio": true,
+        "OfferToReceiveVideo": true,
+      },
+      "optional": [],
     };
+    _peerConnection =
+        await createPeerConnection(configuration, offerSdpConstraints);
+
     // listen for remotePeer mediaTrack event
     _peerConnection!.onTrack = (event) {
       _remoteRenderer.srcObject = event.streams[0];
       setState(() {});
     };
+
+    // _peerConnection!.onIceCandidate = (candidate) {
+    //   if (candidate.candidate != null) {
+    //     print(jsonEncode({
+    //       'candidate': candidate.candidate.toString(),
+    //       'sdpMid': candidate.sdpMid.toString(),
+    //       'sdpMLineIndex': candidate.sdpMLineIndex,
+    //     }));
+    //   }
+    //   String messageData = jsonEncode({"event": "ice", "data": candidate.toMap()});
+    //     widget.webSocketService.sendMessageSocket(
+    //       "SendOffer",messageData
+    //     );
+    //
+    // };
   }
 
   Future<void> _getUserMedia() async {
@@ -73,6 +169,25 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     _localRenderer.srcObject = _localStream;
 
     setState(() {});
+  }
+
+  void makeCall() async {
+    // Creating a offer for remote peer
+    RTCSessionDescription offer = await _peerConnection!.createOffer();
+    print("offer $offer");
+    // Setting own SDP as local description
+    await _peerConnection?.setLocalDescription(offer);
+
+    // Sending the offer
+    widget.webSocketService.sendMessageSocket("SendOffer", [
+      widget.idUser,
+      widget.currentId,
+      jsonEncode({"event": "offer", "data": offer.toMap()})
+    ]);
+  }
+
+  void sendNotif(){
+    widget.webSocketService.sendMessageSocket("SendSignal", [widget.currentId,widget.idUser,"Video"]);
   }
 
   void _hangUp() {
@@ -122,7 +237,9 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             children: [
               (_remoteStream != null)
                   ? Container(child: RTCVideoView(_remoteRenderer))
-                  : Container(color: Colors.transparent,),
+                  : Container(
+                      color: Colors.transparent,
+                    ),
               if (_localStream != null)
                 Padding(
                   padding: const EdgeInsets.all(16.0),

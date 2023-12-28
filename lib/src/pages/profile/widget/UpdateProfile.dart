@@ -41,7 +41,9 @@ Future<void> customUpdateProfileDialog(
                         ? UpdateAvatar()
                         : (title == 'background')
                             ? UpdateBackground()
-                            : ChangePassword(),
+                            : (title == 'changePass')
+                                ? ChangePassword()
+                                : UpdateInfo(),
                   ),
                 ),
                 Positioned(

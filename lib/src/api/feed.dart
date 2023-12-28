@@ -7,9 +7,9 @@ import 'package:whoru/src/utils/url.dart';
 
 Future<List<FeedModel>?> getAllPost() async {
   try {
-    var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPost');
+    var url = Uri.http(baseUrl, '/api/v1/Feeds/GetAllPost');
     String? token = await getToken();
-
+    print(url);
     var response = await http.get(
       url,
       headers: {
@@ -26,15 +26,18 @@ Future<List<FeedModel>?> getAllPost() async {
           decodedData.map((data) => FeedModel.fromJson(data)).toList();
       return feedList;
     } else {
+      print("fail call api getAllPost");
       return null;
     }
   } catch (e) {
+    print("fail call api getAllPost $e");
+
     return null;
   }
 }
 
 Future<void> Delete(idPost) async {
-  var url = Uri.https(baseUrl, '/api/Feed/Delete');
+  var url = Uri.http(baseUrl, '/api/Feed/Delete');
   String? token = await getToken();
 
   var response = await http.post(
@@ -59,7 +62,7 @@ Future<void> postApiWithImages({
   required String content,
 }) async {
   try {
-    var url = Uri.https(baseUrl, '/api/v1/Feeds/Post');
+    var url = Uri.http(baseUrl, '/api/v1/Feeds/Post');
     String? token = await getToken();
     Map<String, String> headers = <String, String>{
       'Content-type': 'application/json',
@@ -102,7 +105,7 @@ Future<void> postApiWithImages({
 
 Future<List<FeedModel>?> getAllPostById(int id) async {
   try {
-    var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPostByUserId');
+    var url = Uri.http(baseUrl, '/api/v1/Feeds/GetAllPostByUserId');
     String? token = await getToken();
 
     var response = await http.post(

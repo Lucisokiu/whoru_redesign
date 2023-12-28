@@ -7,7 +7,7 @@ import 'package:whoru/src/utils/url.dart';
 
 Future<List<ChatModel>> getAllUserChat() async {
   try {
-    var url = Uri.https(baseUrl, '/api/v1/Chats/GetAllChatUser');
+    var url = Uri.http(baseUrl, '/api/v1/Chats/GetAllChatUser');
     String? token = await getToken();
 
     var response = await http.get(
@@ -29,13 +29,14 @@ Future<List<ChatModel>> getAllUserChat() async {
       return [];
     }
   } catch (e) {
+    print("Error $e");
     return [];
   }
 }
 
 Future<List<MessageModel>> getAllChat(int idUser) async {
   try {
-    var url = Uri.https(baseUrl, '/api/v1/Chats/GetAllChat');
+    var url = Uri.http(baseUrl, '/api/v1/Chats/GetAllChat');
     String? token = await getToken();
 
     var response = await http.post(

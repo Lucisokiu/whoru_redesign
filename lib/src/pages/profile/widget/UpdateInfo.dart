@@ -60,11 +60,14 @@ class _UpdateInfoState extends State<UpdateInfo> {
             SizedBox(height: 16),
 
             // Button to post API
-            ElevatedButton(
-              onPressed: () {
-                    postApi();
-              },
-              child: Text('Update Info'),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                onPressed: () {
+                      postApi();
+                },
+                child: Text('Update Info'),
+              ),
             ),
           ],
         ),

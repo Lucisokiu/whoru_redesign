@@ -28,7 +28,6 @@ class _ChatPageState extends State<ChatPage> {
   Future<void> getUser () async {
     chatmodels = await getAllUserChat();
     setState(() {
-
     });
   }
   @override
@@ -44,7 +43,21 @@ class _ChatPageState extends State<ChatPage> {
     webSocketService.connect();
 
     messageSubscription = webSocketService.onMessage.listen((event) {
-      print("onMessage ChatPage");
+      getUser();
+      var receivedMessage = event.replaceAll(String.fromCharCode(0x1E), '');
+
+      print("ChatPage $event");
+      Map<String, dynamic> message = jsonDecode(receivedMessage);
+
+      if (message['type'] == 1 && message['target'] == 'ReceiveSignal') {
+        List<dynamic> arguments = message['arguments'];
+        int idCaller = arguments[0];
+        String name = arguments[1];
+        String avt = arguments[2];
+        int idReceiver = arguments[3];
+        String type = arguments[4];
+        webSocketService.showCallDialog(idCaller,name,avt,idReceiver, context, webSocketService);
+      }
     });
 
   }

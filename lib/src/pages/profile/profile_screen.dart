@@ -6,12 +6,8 @@ import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/api/userInfo.dart';
 import 'package:whoru/src/model/Feed.dart';
 import 'package:whoru/src/model/User.dart';
-import 'package:whoru/src/pages/feed/widget/feed_cart.dart';
-import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/profile/widget/UpdateProfile.dart';
 import 'package:whoru/src/pages/profile/widget/info.dart';
-import 'package:whoru/src/pages/profile/widget/tabbar_profile.dart';
-import 'package:whoru/src/utils/get_theme.dart';
 import 'package:whoru/src/utils/token.dart';
 
 import '../feed/widget/skeleton_loading.dart';
@@ -70,28 +66,28 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   ListTile(
                     leading: Icon(Icons.person),
-                    title: Text(user?.fullName ?? 'Loading...'),
+                    title: Text(user?.fullName ?? 'Loading...', style: Theme.of(context).textTheme.bodyMedium),
                   ),
                   ListTile(
-                    title: Text('Update Avatar'),
+                    title: Text('Update Avatar', style: Theme.of(context).textTheme.bodyMedium),
                     onTap: () {
                       customUpdateProfileDialog(context, 'avatar');
                     },
                   ),
                   ListTile(
-                    title: Text('Update background'),
+                    title: Text('Update background', style: Theme.of(context).textTheme.bodyMedium),
                     onTap: () {
                       customUpdateProfileDialog(context, 'background');
                     },
                   ),
                   ListTile(
-                    title: Text('Update Info'),
+                    title: Text('Update Info', style: Theme.of(context).textTheme.bodyMedium,),
                     onTap: () {
                       customUpdateProfileDialog(context, 'info');
                     },
                   ),
                   ListTile(
-                    title: Text('Change Password'),
+                    title: Text('Change Password', style: Theme.of(context).textTheme.bodyMedium),
                     onTap: () {
                       customUpdateProfileDialog(context, 'changePass');
                     },
@@ -139,8 +135,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               info(context, user!, widget.isMy),
-
-
                               // (allPost != null)
                               //     ? ((allPost!.isNotEmpty)
                               //         ? ListView.builder(

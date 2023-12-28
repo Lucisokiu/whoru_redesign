@@ -5,7 +5,7 @@ import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 Future<void> getAll(idPost) async {
-  var url = Uri.https('$baseUrl  + /api/User/GetAll');
+  var url = Uri.http('$baseUrl  + /api/User/GetAll');
   String? token = await getToken();
 
   try {
@@ -30,7 +30,7 @@ Future<void> getAll(idPost) async {
 }
 
 Future<void> getUserByName(idPost) async {
-  var url = Uri.https('$baseUrl  + /api/User/GetUserByName');
+  var url = Uri.http('$baseUrl  + /api/User/GetUserByName');
   String? token = await getToken();
 
   try {
@@ -55,7 +55,7 @@ Future<void> getUserByName(idPost) async {
 }
 
 Future<http.Response> CreateAccount(Map map) async {
-  var url = Uri.https('$baseUrl  + /api/v1/Users/Create');
+  var url = Uri.http('$baseUrl  + /api/v1/Users/Create');
   String? token = await getToken();
 
     var response = await http.post(
@@ -72,7 +72,7 @@ Future<http.Response> CreateAccount(Map map) async {
 }
 
 Future<void> updateAccount(Map map) async {
-  var url = Uri.https('$baseUrl  + /api/User/Update');
+  var url = Uri.http('$baseUrl  + /api/User/Update');
   String? token = await getToken();
 
   try {

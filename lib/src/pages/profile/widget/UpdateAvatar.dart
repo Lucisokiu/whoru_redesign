@@ -59,7 +59,7 @@ class _UpdateAvatarState extends State<UpdateAvatar> {
                   Navigator.pop(context);
                 }
               },
-              child: Text('Create Post'),
+              child: Text('Update'),
             ),
           ),
         ],

@@ -29,21 +29,21 @@ class CustomCard extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            leading: CircleAvatar(
-              radius: 30,
+            leading: ClipOval(
               child: Image.network(
                 chatModel.avatar,
                 // color : Colors.white,
-                height: 36,
-                width: 36,
+                height: 40,
+                width: 40,
+                fit: BoxFit.cover,
               ),
-              backgroundColor: Colors.blueGrey,
             ),
             title: Text(
               chatModel.fullName,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
+                color: Theme.of(context).textTheme.bodyMedium!.color,
               ),
             ),
             subtitle: Row(

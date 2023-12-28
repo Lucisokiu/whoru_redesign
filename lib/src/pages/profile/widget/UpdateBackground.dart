@@ -58,7 +58,7 @@ class _UpdateBackgroundState extends State<UpdateBackground> {
                   Navigator.pop(context);
                 }
               },
-              child: Text('Create Post'),
+              child: Text('Update'),
             ),
           ),
         ],

@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<CommentModel>?> getCommentByIdFeed(int idFeed) async {
   try {
-    var url = Uri.https(baseUrl, '/api/v1/Comments/GetAllCommentByFeedId');
+    var url = Uri.http(baseUrl, '/api/v1/Comments/GetAllCommentByFeedId');
     String? token = await getToken();
 
     var response = await http.post(
@@ -34,7 +34,7 @@ Future<List<CommentModel>?> getCommentByIdFeed(int idFeed) async {
 }
 
 Future<void> PostComment(idFeed,content) async {
-  var url = Uri.https(baseUrl, '/api/v1/Comments/Post');
+  var url = Uri.http(baseUrl, '/api/v1/Comments/Post');
   String? token = await getToken();
   var comment = createMapComment(idFeed, content);
   var response = await http.post(
@@ -56,7 +56,7 @@ Future<void> PostComment(idFeed,content) async {
 
 
 Future<void> DeleteComment(idComment) async {
-  var url = Uri.https(baseUrl, '/api/v1/Comments/Delete');
+  var url = Uri.http(baseUrl, '/api/v1/Comments/Delete');
   String? token = await getToken();
   var response = await http.delete(
     url,

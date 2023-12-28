@@ -222,7 +222,7 @@ class _SignUpFormState extends State<SignUpForm> {
                                   return null;
                                 },
                                 onSaved: (email) {},
-                                obscureText: true,
+                                obscureText: false,
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .textTheme
@@ -249,7 +249,7 @@ class _SignUpFormState extends State<SignUpForm> {
                                   return null;
                                 },
                                 onSaved: (phone) {},
-                                obscureText: true,
+                                obscureText: false,
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .textTheme
