@@ -160,9 +160,12 @@ class CustomSearch extends SearchDelegate {
         appBarTheme: AppBarTheme(
           color: theme.scaffoldBackgroundColor,
         ),
+
         inputDecorationTheme: InputDecorationTheme(
-          hintStyle: Theme.of(context).textTheme.bodyMedium
+          hintStyle: theme.textTheme.bodyMedium,
         ),
-        textTheme: Theme.of(context).textTheme);
+        textTheme: Theme.of(context).textTheme.copyWith(
+    titleLarge: TextStyle(color: theme.textTheme.bodyMedium!.color),)
+    );
   }
 }

@@ -18,8 +18,8 @@ Future<http.Response> createInfoUser(Map map) async {
       },
       body: jsonEncode(map),
     );
-
-    if (response.statusCode == 200) {
+    print(jsonEncode(map));
+    if (response.statusCode == 201) {
       print('createInfoUser request successful');
       return response;
     } else {
@@ -35,7 +35,7 @@ Future<void> updateInfoUser(Map map) async {
   String? token = await getToken();
 
   try {
-    var response = await http.post(
+    var response = await http.put(
       url,
       headers: {
         'Content-type': 'application/json',
@@ -112,7 +112,7 @@ Future<void> updateAvatar({
     };
     // Tạo request
     var request = http.MultipartRequest(
-      'POST',
+      'PUT',
       url,
     );
 
@@ -131,7 +131,7 @@ Future<void> updateAvatar({
     var response = await request.send();
 
     // Kiểm tra mã trạng thái của response
-    if (response.statusCode.isEven) {
+    if (response.statusCode == 200) {
       print('Success');
     } else {
       print('Failed with status ${response.statusCode}');
@@ -154,7 +154,7 @@ Future<void> updateBackground({
     };
     // Tạo request
     var request = http.MultipartRequest(
-      'POST',
+      'PUT',
       url,
     );
 

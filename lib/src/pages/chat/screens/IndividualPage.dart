@@ -1,22 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:web_socket_channel/io.dart';
 import 'package:whoru/src/api/chat.dart';
-import 'package:whoru/src/model/ChatModel.dart';
 import 'package:whoru/src/model/MessageModel.dart';
-import 'package:whoru/src/model/SearchModel.dart';
 import 'package:whoru/src/model/UserChat.dart';
 import 'package:whoru/src/pages/call/audiocall/AudioCallScreen.dart';
 import 'package:whoru/src/pages/call/videocall/VideoCallScreen.dart';
-import 'package:whoru/src/pages/chat/controller/ChatSocket.dart';
 import 'package:whoru/src/pages/chat/widget/OwnMessengerCard.dart';
 import 'package:whoru/src/pages/chat/widget/ReplyCard.dart';
 import 'package:whoru/src/service/WebSocketService.dart';
-import 'package:whoru/src/utils/url.dart';
 
 class IndividualPage extends StatefulWidget {
   const IndividualPage(
@@ -74,9 +67,9 @@ class _IndividualPageState extends State<IndividualPage> {
   void connect() {
     messageSubscription = widget.webSocketService.onMessage.listen(
       (event) {
-        try {
           var receivedMessage = event.replaceAll(String.fromCharCode(0x1E), '');
           Map<dynamic, dynamic> jsonData = jsonDecode(receivedMessage);
+          print("jsonData $jsonData");
           int type = jsonData['type'];
           if (type == 1) {
             String? target = jsonData['target'];
@@ -97,9 +90,6 @@ class _IndividualPageState extends State<IndividualPage> {
               }
             }
           }
-        } catch (e) {
-          print("error $e");
-        }
       },
       onDone: () {
         debugPrint('ws channel closed');
@@ -133,7 +123,6 @@ class _IndividualPageState extends State<IndividualPage> {
     );
 
     setState(() {
-      // messages.insert(0, messageModel);
       messages.add(messageModel);
 
     });
@@ -214,7 +203,8 @@ class _IndividualPageState extends State<IndividualPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => VideoCallScreen(idUser: widget.user.idUser,currentId: widget.currentId,webSocketService: widget.webSocketService,),
+                          builder: (context) =>
+                          VideoCallScreen(idUser: widget.user.idUser,currentId: widget.currentId,webSocketService: widget.webSocketService,),
                         ),
                       );
                     }),

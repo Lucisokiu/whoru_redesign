@@ -5,7 +5,7 @@ import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 Future<void> getAll(idPost) async {
-  var url = Uri.http('$baseUrl  + /api/User/GetAll');
+  var url = Uri.http(baseUrl,'/api/v1/Users/GetAll');
   String? token = await getToken();
 
   try {
@@ -29,33 +29,8 @@ Future<void> getAll(idPost) async {
   }
 }
 
-Future<void> getUserByName(idPost) async {
-  var url = Uri.http('$baseUrl  + /api/User/GetUserByName');
-  String? token = await getToken();
-
-  try {
-    var response = await http.get(
-      url,
-      headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'bearer $token',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      print('Follow request successful');
-    } else {
-      print(
-          'Failed to make Follow request. Status code: ${response.statusCode}');
-    }
-  } catch (e) {
-    print('Error during API call: $e');
-  }
-}
-
 Future<http.Response> CreateAccount(Map map) async {
-  var url = Uri.http('$baseUrl  + /api/v1/Users/Create');
+  var url = Uri.http(baseUrl, '/api/v1/Users/Create');
   String? token = await getToken();
 
     var response = await http.post(
@@ -72,7 +47,7 @@ Future<http.Response> CreateAccount(Map map) async {
 }
 
 Future<void> updateAccount(Map map) async {
-  var url = Uri.http('$baseUrl  + /api/User/Update');
+  var url = Uri.http(baseUrl, '/api/v1/Users/Update');
   String? token = await getToken();
 
   try {

@@ -3,4 +3,4 @@
 // const String baseUrl  = '10.0.2.2:7175';
 // const String socketUrl = 'wss://10.0.2.2:7175/chatHub';
 const String baseUrl  = 'messi6554-001-site1.atempurl.com';
-const String socketUrl = 'ws://http://messi6554-001-site1.atempurl.com/chatHub';
+const String socketUrl = 'ws://messi6554-001-site1.atempurl.com/chatHub';

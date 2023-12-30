@@ -78,7 +78,7 @@ class _CardFeedState extends State<CardFeed> {
                                 MaterialPageRoute(
                                     builder: (builder) => ProfilePage(
                                           idUser: widget.feed.idUser,
-                                          isMy: false,
+                                          isMy: widget.CurrentUser == widget.feed.idUser ? true : false,
                                         )));
                           } else {
                             Navigator.push(
@@ -115,7 +115,11 @@ class _CardFeedState extends State<CardFeed> {
                   ),
                   const Spacer(),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if(widget.CurrentUser == widget.feed.idUser){
+
+                        }
+                      },
                       icon: Icon(
                         color:
                             Theme.of(context).buttonTheme.colorScheme!.primary,

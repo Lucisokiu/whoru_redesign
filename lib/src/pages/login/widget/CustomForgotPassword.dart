@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:whoru/src/pages/login/widget/FieldFormForgotPass.dart';
 import 'package:whoru/src/pages/register/widget/FieldFormSignUp.dart';
 import 'package:whoru/src/pages/login/widget/FieldFormSignIn.dart';
 import 'package:whoru/src/pages/register/widget/FieldFormVerify.dart';
 
-Future<Object?> customVerifyDialog(
-    int userId,
-  BuildContext contextScafford,
-) {
+Future<Object?> customForgotPassDialog(
+    BuildContext contextScafford,
+    ) {
   return showGeneralDialog(
       barrierDismissible: true,
       barrierLabel: "Verify Code",
@@ -20,20 +20,19 @@ Future<Object?> customVerifyDialog(
                 CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
             child: child);
       },
-      pageBuilder: (contextScafford, _, __) => Verify(contextScafford: contextScafford,userId: userId,));
+      pageBuilder: (contextScafford, _, __) => Forgot(contextScafford: contextScafford));
 }
 
-class Verify extends StatefulWidget {
-  int userId;
+class Forgot extends StatefulWidget {
   BuildContext contextScafford;
 
-  Verify({super.key,required this.contextScafford,required this.userId});
+  Forgot({super.key,required this.contextScafford});
 
   @override
-  State<Verify> createState() => _VerifyState();
+  State<Forgot> createState() => _ForgotState();
 }
 
-class _VerifyState extends State<Verify> {
+class _ForgotState extends State<Forgot> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -56,11 +55,14 @@ class _VerifyState extends State<Verify> {
                     clipBehavior: Clip.none,
                     children: [
                       Column(children: [
-                        const Text(
-                          "Verify",
-                          style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: const Text(
+                            "Forgot Password",
+                            style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
+                          ),
                         ),
-                        VerifyForm(contextScafford:widget.contextScafford,userId: widget.userId),
+                        ForgotPassForm(contextScafford:widget.contextScafford),
                         // Row(
                         //   children: [
                         //     Expanded(

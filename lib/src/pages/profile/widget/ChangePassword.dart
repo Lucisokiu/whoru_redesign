@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whoru/src/api/log.dart';
 import 'package:whoru/src/api/userInfo.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -53,7 +54,10 @@ class _ChangePasswordState extends State<ChangePassword> {
             alignment: Alignment.bottomCenter,
             child: ElevatedButton(
               onPressed: () {
-                // postApi();
+                if(newPass.text == confirmPass.text){
+                postApi(newPass.text);
+                Navigator.pop(context);
+                };
               },
               child: Text('Change Pass'),
             ),
@@ -62,14 +66,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       ),
     );
   }
-  void postApi() {
-    // final Map<String, String> requestData = {
-    //   "fullName": fullNameController.text,
-    //   "description": descriptionController.text,
-    //   "work": workController.text,
-    //   "study": studyController.text,
-    // };
-    // updateInfoUser(requestData);
-    // print(requestData);
+  void postApi(newPass) {
+    ChangePass(newPass);
   }
 }

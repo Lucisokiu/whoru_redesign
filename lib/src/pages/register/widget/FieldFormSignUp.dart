@@ -57,12 +57,15 @@ class _SignUpFormState extends State<SignUpForm> {
       'email': email,
       'phone': phone,
     };
-
+    setState(() {
+      isShowLoading = true;
+      isShowConfetti = true;
+    });
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
         response = await CreateAccount(SignUpData);
         if (response.statusCode == 201) {
-          Map<String, dynamic> jsonMap = json.decode(response);
+          Map<String, dynamic> jsonMap = jsonDecode(response.body);
           int userId = jsonMap['userId'];
           check.fire();
           Future.delayed(Duration(milliseconds: 800), () {
@@ -77,12 +80,12 @@ class _SignUpFormState extends State<SignUpForm> {
                 }else {
                   sendCodeBySMS(userId);
                 }
-
-                Navigator.of(context).pop();
               });
             }
-          }).then((value) => customVerifyDialog(widget.contextScafford));
+            Navigator.of(context).pop();
+          }).then((value) => customVerifyDialog(userId,widget.contextScafford));
         } else {
+          print("status code ${response.statusCode}");
           error.fire();
           Future.delayed(Duration(seconds: 2), () {
             setState(() {

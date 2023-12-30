@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/follow.dart';
 import 'package:whoru/src/model/User.dart';
+import 'package:whoru/src/pages/chat/ChatPage.dart';
 import 'package:whoru/src/pages/feed/widget/ListDialog.dart';
 
 Widget info(BuildContext context, UserModel user, bool isMy) {
@@ -137,7 +138,10 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        // Xử lý khi nút "Message" được nhấn
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (contex) => ChatPage(currentId: widget.currentId)
                       },
                       child: Text('Message'),
                     ),

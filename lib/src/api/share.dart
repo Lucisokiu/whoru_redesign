@@ -42,7 +42,7 @@ Future<void> unSharePost(idPost) async {
         'Accept': 'application/json',
         'Authorization': 'bearer $token',
       },
-      body: idPost,
+      body: idPost.toString(),
     );
 
     if (response.statusCode == 200) {

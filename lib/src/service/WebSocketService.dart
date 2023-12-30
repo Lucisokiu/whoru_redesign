@@ -43,7 +43,7 @@ class WebSocketService {
       "target": target,
       "arguments": arguments,
     };
-
+    print(messageData);
     final message = jsonEncode(messageData) + String.fromCharCode(0x1E);
     _channel.sink.add(message);
   }

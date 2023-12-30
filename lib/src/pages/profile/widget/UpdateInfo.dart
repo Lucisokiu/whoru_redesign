@@ -65,6 +65,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
               child: ElevatedButton(
                 onPressed: () {
                       postApi();
+                      Navigator.pop(context);
                 },
                 child: Text('Update Info'),
               ),

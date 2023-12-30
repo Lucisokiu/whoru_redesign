@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whoru/src/pages/login/widget/CustomForgotPassword.dart';
 import 'package:whoru/src/pages/register/CustomSignUp.dart';
 import 'package:whoru/src/pages/login/widget/FieldFormSignIn.dart';
 import 'package:whoru/src/pages/register/CustomVerifyAccount.dart';
@@ -66,7 +67,7 @@ class _LoginDialogState extends State<LoginDialog> {
                                 Future.delayed(Duration(milliseconds: 800), () {
                                   Navigator.of(context).pop();
                                 }).then((_) => {
-                                  customVerifyDialog(widget.contextScafford)
+                                  customForgotPassDialog(widget.contextScafford)
                                     });
                               },
                               child: Text(

@@ -32,7 +32,6 @@ class CreateInfo extends StatefulWidget {
 }
 
 class _CreateInfoState extends State<CreateInfo> {
-  late bool isSignInDialogShown;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +40,7 @@ class _CreateInfoState extends State<CreateInfo> {
         clipBehavior: Clip.none,
         children: [
           Container(
-            height: 720,
+            height: 620,
             margin: const EdgeInsets.symmetric(horizontal: 16),
             padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
             decoration: BoxDecoration(
@@ -56,14 +55,14 @@ class _CreateInfoState extends State<CreateInfo> {
                     clipBehavior: Clip.none,
                     children: [
                       Column(children: [
-                        const Text(
-                          "Create Info",
-                          style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: const Text(
+                            "Create Info",
+                            style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
+                          ),
                         ),
                         CreateInfoForm(contextScafford: widget.contextScafford),
-                        Expanded(
-                          child: Divider(),
-                        ),
                       ]),
                     ],
                   ),

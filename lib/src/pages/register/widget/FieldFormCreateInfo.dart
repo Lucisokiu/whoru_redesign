@@ -43,15 +43,6 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
     artboard.addController(controller!);
     return controller;
   }
-  Future<void> callAPICreateInfo(fullName, description,work,study) async {
-    Map<dynamic, dynamic> CreateInfoData = {
-      'fullName': fullName,
-      'description': description,
-      'work': work,
-      'study': study,
-    };
-    response = await createInfoUser(CreateInfoData);
-  }
 
   void createInfo(BuildContext context,String fullName, String description, String work, String study) {
 
@@ -61,8 +52,15 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
     });
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
-        callAPICreateInfo(fullName,description,work,study);
-        if (response.statusCode == 200) {
+        Map<dynamic, dynamic> createInfoData = {
+          'fullName': fullName,
+          'description': description,
+          'work': work,
+          'study': study,
+        };
+        response = await createInfoUser(createInfoData);
+
+        if (response.statusCode == 201) {
           check.fire();
           // show success
           Future.delayed(const Duration(seconds: 2), () {
@@ -81,7 +79,6 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
           });
         } else {
           error.fire();
-
           Future.delayed(Duration(seconds: 2), () {
             setState(() {
               isShowLoading = false;
@@ -112,7 +109,7 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Verify Code",
+                  "Full Name",
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 Padding(
@@ -141,6 +138,10 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
                         )),
                   ),
                 ),
+                Text(
+                  "Study at?",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 16),
                   child: TextFormField(
@@ -167,6 +168,10 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
                         )),
                   ),
                 ),
+                Text(
+                  "Woking at?",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 16),
                   child: TextFormField(
@@ -192,6 +197,10 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
                           child: SvgPicture.asset("assets/icons/password.svg"),
                         )),
                   ),
+                ),
+                Text(
+                  "Description",
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 16),
@@ -238,7 +247,7 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
                         CupertinoIcons.arrow_right,
                         color: Color(0xFFFE0037),
                       ),
-                      label: const Text("Register")),
+                      label: const Text("Create Info")),
                 )
               ],
             )),

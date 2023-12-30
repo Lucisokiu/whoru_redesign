@@ -15,7 +15,6 @@ Future<http.Response> apiLogin(Map map) async {
     },
     body: jsonEncode(map),
   );
-  print("response.statusCode ${response}");
 
   print("response.statusCode ${response.statusCode}");
   if (response.statusCode == 200) {
@@ -30,33 +29,34 @@ Future<http.Response> apiLogin(Map map) async {
   }
 }
 
-void resetPassword(password) async {
-  var url = Uri.http('$baseUrl  + /api/Log/ResetPassword');
+Future<int?> ForgotPassword(email) async {
+  var url = Uri.http(baseUrl, '/api/v1/Logs/ForgotPassword');
   String? token = await getToken();
-  try {
-    var response = await http.post(
-      url,
-      headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'bearer $token',
-      },
-      body: password,
-    );
+  var response = await http.post(
+    url,
+    headers: {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'bearer $token',
+    },
+    body: jsonEncode(email),
+  );
 
-    if (response.statusCode == 200) {
-      print("Reset Password Success");
-    } else {
-      throw Exception('Failed auth');
-    }
-  } catch (e) {
-    throw Exception('Error during API call: $e');
+  if (response.statusCode == 200) {
+    print("Reset Password Success");
+    Map<String, dynamic> jsonData = jsonDecode(response.body);
+    String messageValue = jsonData["message"];
+    int? numberValue = int.tryParse(messageValue);
+    return numberValue;
   }
+  print(response.statusCode);
+
+  return null;
+
 }
 
 Future<void> sendCodeByEmail(idUser) async {
-  var url = Uri.http('$baseUrl  + /api/Log/SendCodeByMail');
-  String? token = await getToken();
+  var url = Uri.http(baseUrl,'/api/v1/Logs/SendCodeByMail');
 
   try {
     var response = await http.post(
@@ -64,9 +64,8 @@ Future<void> sendCodeByEmail(idUser) async {
       headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'bearer $token',
       },
-      body: idUser,
+      body: idUser.toString(),
     );
 
     if (response.statusCode == 200) {
@@ -82,15 +81,13 @@ Future<void> sendCodeByEmail(idUser) async {
 
 Future<void> sendCodeBySMS(idUser) async {
   var url = Uri.http(baseUrl, '/api/Log/SendCodeBySMS');
-  String? token = await getToken();
   var response = await http.post(
     url,
     headers: {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'bearer $token',
     },
-    body: idUser,
+    body: idUser.toString(),
   );
 
   if (response.statusCode == 200) {
@@ -101,8 +98,29 @@ Future<void> sendCodeBySMS(idUser) async {
   }
 }
 
-Future<http.Response> verifyAccount(code) async {
-  var url = Uri.http('$baseUrl  + /api/Log/VerifyAccount');
+Future<http.Response> verifyAccount(int idUser,String code) async {
+  var url = Uri.http(baseUrl,'/api/v1/Logs/VerifyAccount');
+  Map data = {
+    "idUser": idUser,
+    "code": code,
+  };
+  print(jsonEncode(data));
+  var response = await http.post(
+    url,
+    headers: {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: jsonEncode(data),
+  );
+  Map<String, dynamic> responseDataMap = jsonDecode(response.body);
+  String message = responseDataMap['message'];
+  setToken(message);
+  return response;
+}
+
+void ChangePass(String pass) async {
+  var url = Uri.http(baseUrl, '/api/v1/Logs/ChangePassword');
   String? token = await getToken();
   var response = await http.post(
     url,
@@ -111,8 +129,12 @@ Future<http.Response> verifyAccount(code) async {
       'Accept': 'application/json',
       'Authorization': 'bearer $token',
     },
-    body: code,
+    body: '"$pass"',
   );
 
-  return response;
+  if (response.statusCode == 200) {
+    print("Reset Password Success");
+  }else{
+    print(response.statusCode);
+  }
 }

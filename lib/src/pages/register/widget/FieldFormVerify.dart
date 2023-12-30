@@ -9,9 +9,10 @@ import 'package:whoru/src/pages/register/CustomCreateInfo.dart';
 
 class VerifyForm extends StatefulWidget {
   BuildContext contextScafford;
-
+  int userId;
   VerifyForm({
     super.key,
+    required this.userId,
     required this.contextScafford,
   });
 
@@ -47,8 +48,8 @@ class _VerifyFormState extends State<VerifyForm> {
     });
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
-        response = await verifyAccount(Code);
-
+        response = await verifyAccount(widget.userId,Code);
+        print(response.body);
         if (response.statusCode == 200) {
           check.fire();
 
@@ -63,6 +64,7 @@ class _VerifyFormState extends State<VerifyForm> {
             }
           });
         } else {
+          print("StatusCode ${response.statusCode}");
           error.fire();
 
           Future.delayed(Duration(seconds: 2), () {
@@ -140,7 +142,7 @@ class _VerifyFormState extends State<VerifyForm> {
                         CupertinoIcons.arrow_right,
                         color: Color(0xFFFE0037),
                       ),
-                      label: const Text("Register")),
+                      label: const Text("Verify")),
                 )
               ],
             )),
