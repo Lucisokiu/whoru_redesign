@@ -27,8 +27,10 @@ class _ChatPageState extends State<ChatPage> {
   late StreamSubscription<dynamic> messageSubscription;
   Future<void> getUser () async {
     chatmodels = await getAllUserChat();
+    if(mounted){
     setState(() {
     });
+    }
   }
   @override
   void initState() {

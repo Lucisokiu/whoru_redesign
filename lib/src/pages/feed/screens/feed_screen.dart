@@ -40,15 +40,16 @@ class _FeedPageState extends State<FeedPage> {
       }
     }
   }
-  void getCurentUser () async{
+
+  void getCurentUser() async {
     int? id = await getIdUser();
-    if(mounted){
+    if (mounted) {
       setState(() {
         CurrentUser = id;
       });
     }
-    print(CurrentUser);
   }
+
   @override
   void initState() {
     super.initState();
@@ -79,11 +80,17 @@ class _FeedPageState extends State<FeedPage> {
                       children: [
                         storywidget(context),
                         SizedBox(height: 2.h),
-                        CardFeed(feed: listFeed[index],CurrentUser: CurrentUser!,),
+                        CardFeed(
+                          feed: listFeed[index],
+                          CurrentUser: CurrentUser!,
+                        ),
                       ],
                     );
                   } else {
-                    return CardFeed(feed: listFeed[index], CurrentUser: CurrentUser!,);
+                    return CardFeed(
+                      feed: listFeed[index],
+                      CurrentUser: CurrentUser!,
+                    );
                   }
                 },
                 childCount: listFeed.length,

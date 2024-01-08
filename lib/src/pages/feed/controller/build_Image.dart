@@ -46,8 +46,11 @@ Widget buildSingleImage(BuildContext context, String urlImage) {
   );
 }
 
-Widget buildDoubleImage(BuildContext context, String urlImage1, String urlImage2) {
+Widget buildDoubleImage(
+    BuildContext context, String urlImage1, String urlImage2) {
   final size = MediaQuery.of(context).size;
+  print(urlImage1);
+  print(urlImage2);
 
   return ClipRRect(
     borderRadius: BorderRadius.circular(16.0),
@@ -63,7 +66,8 @@ Widget buildDoubleImage(BuildContext context, String urlImage1, String urlImage2
                     itemCount: 2,
                     builder: (context, index) {
                       return PhotoViewGalleryPageOptions(
-                        imageProvider: NetworkImage(index == 0 ? urlImage1 : urlImage2),
+                        imageProvider:
+                            NetworkImage(index == 0 ? urlImage1 : urlImage2),
                         minScale: PhotoViewComputedScale.contained * 0.8,
                         maxScale: PhotoViewComputedScale.covered * 2,
                       );
@@ -97,7 +101,8 @@ Widget buildDoubleImage(BuildContext context, String urlImage1, String urlImage2
                     itemCount: 2,
                     builder: (context, index) {
                       return PhotoViewGalleryPageOptions(
-                        imageProvider: NetworkImage(index == 0 ? urlImage1 : urlImage2),
+                        imageProvider:
+                            NetworkImage(index == 0 ? urlImage1 : urlImage2),
                         minScale: PhotoViewComputedScale.contained * 0.8,
                         maxScale: PhotoViewComputedScale.covered * 2,
                       );
@@ -125,7 +130,8 @@ Widget buildDoubleImage(BuildContext context, String urlImage1, String urlImage2
   );
 }
 
-Widget buildTripleImage(BuildContext context, String urlImage1, String urlImage2, String urlImage3) {
+Widget buildTripleImage(BuildContext context, String urlImage1,
+    String urlImage2, String urlImage3) {
   final size = MediaQuery.of(context).size;
 
   return ClipRRect(
@@ -158,7 +164,7 @@ Widget buildTripleImage(BuildContext context, String urlImage1, String urlImage2
               );
             },
             child: SizedBox(
-              height: size.height * 0.38,
+              height: size.height * 0.30,
               child: Image.network(
                 urlImage1,
                 fit: BoxFit.cover,
@@ -170,7 +176,7 @@ Widget buildTripleImage(BuildContext context, String urlImage1, String urlImage2
         Expanded(
           flex: 4,
           child: SizedBox(
-            height: size.height * 0.38,
+            height: size.height * 0.30,
             child: Column(
               children: [
                 Expanded(
@@ -184,7 +190,8 @@ Widget buildTripleImage(BuildContext context, String urlImage1, String urlImage2
                             builder: (context, index) {
                               return PhotoViewGalleryPageOptions(
                                 imageProvider: NetworkImage(urlImage2),
-                                minScale: PhotoViewComputedScale.contained * 0.8,
+                                minScale:
+                                    PhotoViewComputedScale.contained * 0.8,
                                 maxScale: PhotoViewComputedScale.covered * 2,
                               );
                             },
@@ -197,7 +204,8 @@ Widget buildTripleImage(BuildContext context, String urlImage1, String urlImage2
                         ),
                       );
                     },
-                    child: Container(
+                    child: SizedBox(
+                      width: size.width * 0.35,
                       child: Image.network(
                         urlImage2,
                         fit: BoxFit.cover,
@@ -217,12 +225,13 @@ Widget buildTripleImage(BuildContext context, String urlImage1, String urlImage2
                             builder: (context, index) {
                               return PhotoViewGalleryPageOptions(
                                 imageProvider: NetworkImage(urlImage3),
-                                minScale: PhotoViewComputedScale.contained * 0.8,
+                                minScale:
+                                    PhotoViewComputedScale.contained * 0.8,
                                 maxScale: PhotoViewComputedScale.covered * 2,
                               );
                             },
-                            scrollPhysics: BouncingScrollPhysics(),
-                            backgroundDecoration: BoxDecoration(
+                            scrollPhysics: const BouncingScrollPhysics(),
+                            backgroundDecoration: const BoxDecoration(
                               color: Colors.black,
                             ),
                             pageController: PageController(),
@@ -230,7 +239,8 @@ Widget buildTripleImage(BuildContext context, String urlImage1, String urlImage2
                         ),
                       );
                     },
-                    child: Container(
+                    child: SizedBox(
+                      width: size.width * 0.35,
                       child: Image.network(
                         urlImage3,
                         fit: BoxFit.cover,
@@ -306,7 +316,8 @@ Widget buildMultipleImage(BuildContext context, List<String> listImage) {
                             builder: (context, index) {
                               return PhotoViewGalleryPageOptions(
                                 imageProvider: NetworkImage(listImage[1]),
-                                minScale: PhotoViewComputedScale.contained * 0.8,
+                                minScale:
+                                    PhotoViewComputedScale.contained * 0.8,
                                 maxScale: PhotoViewComputedScale.covered * 2,
                               );
                             },
@@ -319,7 +330,7 @@ Widget buildMultipleImage(BuildContext context, List<String> listImage) {
                         ),
                       );
                     },
-                    child: Container(
+                    child: SizedBox(
                       width: size.width * 0.35,
                       child: Image.network(
                         listImage[1],
@@ -339,8 +350,10 @@ Widget buildMultipleImage(BuildContext context, List<String> listImage) {
                             itemCount: listImage.length - 2,
                             builder: (context, index) {
                               return PhotoViewGalleryPageOptions(
-                                imageProvider: NetworkImage(listImage[index + 2]),
-                                minScale: PhotoViewComputedScale.contained * 0.8,
+                                imageProvider:
+                                    NetworkImage(listImage[index + 2]),
+                                minScale:
+                                    PhotoViewComputedScale.contained * 0.8,
                                 maxScale: PhotoViewComputedScale.covered * 2,
                               );
                             },

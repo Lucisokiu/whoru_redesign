@@ -40,9 +40,7 @@ class _CardFeedState extends State<CardFeed> {
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).cardTheme.color,
-
-          borderRadius: BorderRadius.circular(10.0), // Bán kính bo góc
-
+          borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).shadowColor,
@@ -78,7 +76,10 @@ class _CardFeedState extends State<CardFeed> {
                                 MaterialPageRoute(
                                     builder: (builder) => ProfilePage(
                                           idUser: widget.feed.idUser,
-                                          isMy: widget.CurrentUser == widget.feed.idUser ? true : false,
+                                          isMy: widget.CurrentUser ==
+                                                  widget.feed.idUser
+                                              ? true
+                                              : false,
                                         )));
                           } else {
                             Navigator.push(
@@ -116,9 +117,7 @@ class _CardFeedState extends State<CardFeed> {
                   const Spacer(),
                   IconButton(
                       onPressed: () {
-                        if(widget.CurrentUser == widget.feed.idUser){
-
-                        }
+                        if (widget.CurrentUser == widget.feed.idUser) {}
                       },
                       icon: Icon(
                         color:
@@ -132,15 +131,18 @@ class _CardFeedState extends State<CardFeed> {
                 height: 0.5.h,
               ),
               Container(
-                margin: EdgeInsets.only(top: 8,left: 10, right: 10), // Điều này sẽ tạo khoảng cách giữa Container và các widget trước đó
+                margin: EdgeInsets.only(
+                    top: 8,
+                    left: 10,
+                    right:
+                        10), // Điều này sẽ tạo khoảng cách giữa Container và các widget trước đó
 
                 child: Align(
-                  alignment: Alignment.topLeft,
+                    alignment: Alignment.topLeft,
                     child: Text(
                       widget.feed.content,
                       style: const TextStyle(fontFamily: "Inter", fontSize: 16),
-                    )
-                ),
+                    )),
               ),
               const SizedBox(height: 16),
               Stack(
