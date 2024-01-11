@@ -60,7 +60,7 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
         };
         response = await createInfoUser(createInfoData);
 
-        if (response.statusCode == 201) {
+        if (response) {
           check.fire();
           // show success
           Future.delayed(const Duration(seconds: 2), () {

@@ -14,12 +14,17 @@ Hello, this is a first version, it will be updated in the future.
 ### Setup__
 Dart SDK version: 3.0.5
 
-
 Flutter version: 3.10.5
 
 **INSTALL**
 
 git clone https://github.com/Lucisokiu/whoru_redesign.git
+
+Open Android Studio
+
+In terminal -> flutter pub get
+
+Run project
 
 
 

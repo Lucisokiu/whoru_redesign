@@ -126,30 +126,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                 receiveData["data"]["candidate"],
                 receiveData["data"]["sdpMid"],
                 receiveData["data"]["sdpMLineIndex"]));
-            // _peerConnection?.onIceCandidate = (RTCIceCandidate candidate) {
-            //   widget.webSocketService.sendMessageSocket("SendOffer", [
-            //     widget.currentId,
-            //     widget.idUser,
-            //     jsonEncode({"event": "sendIce", "data": candidate.toMap()})
-            //   ]);
-            //   _peerConnection?.onTrack = ((tracks) {
-            //     tracks.streams[0].getTracks().forEach((track) {
-            //       _remoteStream?.addTrack(track);
-            //     });
-            //   });
-            //   _peerConnection?.onAddStream = (MediaStream stream) {
-            //     _remoteRenderer.srcObject = stream;
-            //     setState(() {});
-            //   };
-            // };
           }
-          // if (eventData == "sendIce") {
-          //   _peerConnection!.addCandidate(RTCIceCandidate(
-          //       receiveData["data"]["candidate"],
-          //       receiveData["data"]["sdpMid"],
-          //       receiveData["data"]["sdpMLineIndex"]));
-
-          // }
         }
       }
     });

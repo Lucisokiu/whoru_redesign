@@ -4,7 +4,8 @@ import 'package:whoru/src/utils/url.dart';
 import 'package:whoru/src/utils/token.dart';
 
 Future<http.Response> apiLogin(Map map) async {
-  var url = Uri.http(baseUrl, '/api/v1/Logs/Login');
+  try{
+  var url = await Uri.http(baseUrl, '/api/v1/Logs/Login');
   print(url);
 
   var response = await http.post(
@@ -27,6 +28,10 @@ Future<http.Response> apiLogin(Map map) async {
     print('apiLogin statuscode without 200 ${response.body}');
     return response;
   }
+  }catch (error) {
+  print('apiLogin error: $error');
+  throw('Error occurred during API call', 500);
+}
 }
 
 Future<int?> ForgotPassword(email) async {
@@ -113,10 +118,14 @@ Future<http.Response> verifyAccount(int idUser,String code) async {
     },
     body: jsonEncode(data),
   );
-  Map<String, dynamic> responseDataMap = jsonDecode(response.body);
-  String message = responseDataMap['message'];
-  setToken(message);
+  if(response.statusCode == 200) {
+    Map<String, dynamic> responseDataMap = jsonDecode(response.body);
+    String message = responseDataMap['message'];
+    setToken(message);
+    return response;
+  }
   return response;
+
 }
 
 void ChangePass(String pass) async {

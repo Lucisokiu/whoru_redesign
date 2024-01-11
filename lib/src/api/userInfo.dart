@@ -6,7 +6,7 @@ import 'package:whoru/src/model/User.dart';
 import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
-Future<http.Response> createInfoUser(Map map) async {
+Future<bool> createInfoUser(Map map) async {
   var url = Uri.http(baseUrl, '/api/v1/UserInfos/Create');
   String? token = await getToken();
     var response = await http.post(
@@ -21,11 +21,12 @@ Future<http.Response> createInfoUser(Map map) async {
     print(jsonEncode(map));
     if (response.statusCode == 201) {
       print('createInfoUser request successful');
-      return response;
+      setIdUser(int.parse(response.body));
+      return true;
     } else {
       print(
           'Failed to make createInfoUser request. Status code: ${response.statusCode}');
-      return response;
+      return false;
 
     }
 }
