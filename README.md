@@ -1,6 +1,20 @@
-**WHORU**__
+**WHORU**
 
 Hello, this is a first version, it will be updated in the future.
+
+**FEATURE**  
+Login/Register  
+Verify code  
+Create Feed  
+Like/Comment/Share  
+View list Like/Comment/Share  
+Search Users  
+User Location  
+User Profile  
+Update Avatar/Background/Info user  
+Realtime chat  
+Video/Voice call  
+
 
 # **DEMO**
 ![Alt text](image/regis.png)
@@ -9,11 +23,15 @@ Hello, this is a first version, it will be updated in the future.
 ![Alt text](image/feed-2.png)
 ![Alt text](image/search-1.png)
 ![Alt text](image/search-2.png)
+![Project Demo](image/user.png)
 ![Alt text](image/profile.png)
 ![Project Demo](video/location.gif)
-### Setup__
-Dart SDK version: 3.0.5
+![Project Demo](image/message.png)
+![Project Demo](image/video_call.png)
+![Project Demo](image/voice_call.png)
 
+### Setup  
+Dart SDK version: 3.0.5  
 Flutter version: 3.10.5
 
 **INSTALL**
@@ -25,7 +43,4 @@ Open Android Studio
 In terminal -> flutter pub get
 
 Run project
-
-
-
 
