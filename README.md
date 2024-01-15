@@ -44,3 +44,5 @@ In terminal -> flutter pub get
 
 Run project
 
+Link deloy: https://apkpure.net/p/com.example.whoru
+
