@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:whoru/src/pages/feed/screens/feed_screen.dart';
 import 'package:whoru/src/pages/location/location_screen.dart';
+import 'package:whoru/src/pages/notification/screen/NotificationScreen.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/pages/search/page/search_page.dart';
 import 'package:whoru/src/pages/user/user.dart';
@@ -18,7 +19,7 @@ class _NavigationState extends State<Navigation> {
 
   final _screens = [
     const FeedPage(),
-    const SearchPage(),
+    const NotificationScreen(),
     const LocationPage(),
     const UserPage(),
   ];
@@ -61,8 +62,8 @@ class _NavigationState extends State<Navigation> {
               IconButton(
                 iconSize: 36,
                 icon: Icon(currentPage == 1
-                    ? PhosphorIconsFill.magnifyingGlass
-                    : PhosphorIconsThin.magnifyingGlass),
+                    ? PhosphorIconsFill.bellSimpleRinging
+                    : PhosphorIconsThin.bellSimpleRinging),
                 color: Colors.white,
                 onPressed: () {
                   print("Chat");

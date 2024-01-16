@@ -36,7 +36,19 @@ class CustomSearch extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     getUser(query);
     List<SearchModel> matchQuery = [];
-    if (res != null && res.statusCode == 200) {
+    if(query.isEmpty)
+      {
+        return Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: Center(
+            child: Text(
+              'Enter information',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ),
+        );
+      }
+    else if (res != null && res.statusCode == 200) {
       print("check Res ${res.body}");
       List<dynamic> jsonList = jsonDecode(res.body);
       // Convert each item in the JSON array to a UserModel
@@ -97,7 +109,19 @@ class CustomSearch extends SearchDelegate {
     getUser(query);
 
     List<SearchModel> matchQuery = [];
-    if (res != null && res.statusCode == 200) {
+    if(query.isEmpty)
+    {
+      return Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Center(
+          child: Text(
+            'Enter information',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+      );
+    }
+    else if (res != null && res.statusCode == 200) {
       List<dynamic> jsonList = jsonDecode(res.body);
       // Convert each item in the JSON array to a UserModel
       matchQuery = jsonList.map((item) => SearchModel.fromJson(item)).toList();

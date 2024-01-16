@@ -14,20 +14,22 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  // bool? darkMode;
+  bool darkMode = false;
   final ThemeController themeController = Get.find<ThemeController>();
 
-  // getTheme() {
-  //   setState(() async {
-  //     darkMode = await themeController.getDarkMode();
-  //   });
-  // }
+  getTheme() async {
+    if(mounted) {
+        darkMode = await themeController.getDarkMode();
+        setState(() {
+        });
+    }
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // getTheme();
+    getTheme();
   }
 
   @override
@@ -110,9 +112,12 @@ class _UserPageState extends State<UserPage> {
                   ),
                   Spacer(),
                   IconButton(
-                    icon: Icon(Icons.change_circle_outlined),
+                    icon: darkMode ?Icon(Icons.toggle_on):  Icon(Icons.toggle_off_outlined),
                     onPressed: () {
-                      themeController.toggleDarkMode();
+                      setState(() {
+                        darkMode = !darkMode!;
+                        themeController.toggleDarkMode();
+                      });
                     },
                   )
                 ],

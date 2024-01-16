@@ -122,6 +122,7 @@ Future<List<FeedModel>?> getAllPostById(int id) async {
       List<dynamic> decodedData = jsonDecode(response.body);
       List<FeedModel> feedList =
           decodedData.map((data) => FeedModel.fromJson(data)).toList();
+
       return feedList;
     } else if (response.statusCode == 404) {
       // Return an empty list if the status code is 404

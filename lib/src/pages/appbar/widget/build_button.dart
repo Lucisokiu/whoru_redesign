@@ -5,7 +5,7 @@ import 'package:whoru/src/model/ChatModel.dart';
 import 'package:whoru/src/pages/appbar/widget/build_PopupMenu.dart';
 import 'package:whoru/src/pages/camera/camera_screen.dart';
 import 'package:whoru/src/pages/chat/ChatPage.dart';
-import 'package:whoru/src/pages/feed/widget/create_post.dart';
+import 'package:whoru/src/pages/feed/widget/CreatePost.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/search/controller/search_bar.dart';
 import 'package:whoru/src/utils/token.dart';

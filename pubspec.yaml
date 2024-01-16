@@ -39,7 +39,7 @@ dependencies:
   #device
   camera: ^0.10.5+6
   permission_handler: ^11.0.1
-
+  flutter_local_notifications: ^16.3.0
 
   #Storage
   shared_preferences: ^2.2.2

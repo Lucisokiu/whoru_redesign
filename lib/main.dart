@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/matherial/themes.dart';
+import 'package:whoru/src/pages/notification/controller/NotificationController.dart';
 import 'package:whoru/src/pages/splash/splash.dart';
 import 'package:whoru/src/service/NoOverScoll.dart';
 import 'package:whoru/src/service/certificate_verify_failed.dart';
@@ -10,10 +12,13 @@ import 'package:whoru/src/utils/get_theme.dart';
 
 // GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(ThemeController());
   HttpOverrides.global = MyHttpOverrides();
+  await NotificationsController.init();
+  await NotificationsController.requestPermission();
+
   runApp(const MyApp());
 }
 

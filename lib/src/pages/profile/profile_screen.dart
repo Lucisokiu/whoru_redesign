@@ -6,6 +6,7 @@ import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/api/userInfo.dart';
 import 'package:whoru/src/model/Feed.dart';
 import 'package:whoru/src/model/User.dart';
+import 'package:whoru/src/pages/feed/widget/FeedCart.dart';
 import 'package:whoru/src/pages/profile/widget/UpdateProfile.dart';
 import 'package:whoru/src/pages/profile/widget/info.dart';
 import 'package:whoru/src/utils/token.dart';
@@ -66,28 +67,35 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   ListTile(
                     leading: Icon(Icons.person),
-                    title: Text(user?.fullName ?? 'Loading...', style: Theme.of(context).textTheme.bodyMedium),
+                    title: Text(user?.fullName ?? 'Loading...',
+                        style: Theme.of(context).textTheme.bodyMedium),
                   ),
                   ListTile(
-                    title: Text('Update Avatar', style: Theme.of(context).textTheme.bodyMedium),
+                    title: Text('Update Avatar',
+                        style: Theme.of(context).textTheme.bodyMedium),
                     onTap: () {
                       customUpdateProfileDialog(context, 'avatar');
                     },
                   ),
                   ListTile(
-                    title: Text('Update background', style: Theme.of(context).textTheme.bodyMedium),
+                    title: Text('Update background',
+                        style: Theme.of(context).textTheme.bodyMedium),
                     onTap: () {
                       customUpdateProfileDialog(context, 'background');
                     },
                   ),
                   ListTile(
-                    title: Text('Update Info', style: Theme.of(context).textTheme.bodyMedium,),
+                    title: Text(
+                      'Update Info',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
                     onTap: () {
                       customUpdateProfileDialog(context, 'info');
                     },
                   ),
                   ListTile(
-                    title: Text('Change Password', style: Theme.of(context).textTheme.bodyMedium),
+                    title: Text('Change Password',
+                        style: Theme.of(context).textTheme.bodyMedium),
                     onTap: () {
                       customUpdateProfileDialog(context, 'changePass');
                     },
@@ -100,63 +108,54 @@ class _ProfilePageState extends State<ProfilePage> {
           ? SafeArea(
               child: SingleChildScrollView(
                 child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          color: Theme.of(context).cardColor,
-                          height: 40.h,
-                          child: ClipRRect(
-                            child: Image.network(
-                              user!.background,
-                              fit: BoxFit.fitHeight,
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        color: Theme.of(context).cardColor,
+                        height: 40.h,
+                        child: ClipRRect(
+                          child: Image.network(
+                            user!.background,
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.3,
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            // color: Colors.white,
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(40),
                             ),
                           ),
                         ),
-                        Positioned(
-                          top: screenHeight * 0.3,
-                          bottom: 0, // Đặt vị trí cuối cùng từ bottom
-                          left: 0, // Đặt vị trí bắt đầu từ left
-                          right: 0, // Đặt vị trí cuối cùng từ right
-                          child: Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              // color: Colors.white,
-                              borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(40),
-                              ),
-                            ),
-                          ),
+                      ),
+                      // info(context, user!, widget.isMy),
+
+                      Container(
+                        color: Colors.transparent,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            info(context, user!, widget.isMy),
+                            // info(context, user!, widget.isMy),
+                          ],
                         ),
-                        Container(
-                          color: Colors.transparent,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              info(context, user!, widget.isMy),
-                              // (allPost != null)
-                              //     ? ((allPost!.isNotEmpty)
-                              //         ? ListView.builder(
-                              //             itemCount: allPost!.length,
-                              //             itemBuilder: (context, index) {
-                              //               final feed = allPost![index];
-                              //               return CardFeed(
-                              //                   feed: feed,
-                              //                   CurrentUser: user!.id);
-                              //             },
-                              //           )
-                              //         : Container())
-                              //     : MySkeletonLoadingWidget(),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            )
+                      )
+                    ],
+                  ),
+                  for (final feed in allPost!)
+                    CardFeed(feed: feed, CurrentUser: user!.id),
+                ],
+            ),
+              ))
           : MySkeletonLoadingWidget(),
     );
   }

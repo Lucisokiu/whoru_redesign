@@ -5,9 +5,9 @@ import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/model/Feed.dart';
 import 'package:whoru/src/model/Login.dart';
 import 'package:whoru/src/pages/appbar/appbar.dart';
-import 'package:whoru/src/pages/feed/widget/feed_cart.dart';
+import 'package:whoru/src/pages/feed/widget/FeedCart.dart';
 import 'package:whoru/src/pages/feed/widget/skeleton_loading.dart';
-import 'package:whoru/src/pages/feed/widget/story_widget.dart';
+import 'package:whoru/src/pages/story/StoryWidget.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/utils/token.dart';
 
