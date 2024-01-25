@@ -16,7 +16,7 @@ class LocationService {
           _locationController.add(UserLocation(
               latitude: locationData.longitude!,
               longitude: locationData.longitude!,
-              userId: 1)); // truyền user người dùng vào userId
+              userId: 1));
         });
       }
     });

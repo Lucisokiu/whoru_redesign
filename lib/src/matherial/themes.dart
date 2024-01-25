@@ -7,9 +7,11 @@ class AppTheme {
     required this.data,
     required this.appColors,
   });
+
   final ThemeMode mode;
   final ThemeData data;
   final AppColors appColors;
+
   factory AppTheme.light() {
     const mode = ThemeMode.light;
     final appColors = AppColors.light();
@@ -36,11 +38,13 @@ class AppTheme {
         ),
       ),
       iconTheme: IconThemeData().copyWith(color: appColors.icon),
-
       textTheme: TextTheme(
         bodyMedium: TextStyle(
           color: appColors.text,
         ),
+      ),
+      listTileTheme: const ListTileThemeData(
+        iconColor: Colors.red,
       ),
     );
     return AppTheme(
@@ -82,7 +86,9 @@ class AppTheme {
           color: appColors.text,
         ),
       ),
-    );
+      listTileTheme: const ListTileThemeData(
+        iconColor: Colors.red,
+      ),    );
     return AppTheme(
       mode: mode,
       data: themeData,

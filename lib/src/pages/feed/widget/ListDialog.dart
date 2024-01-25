@@ -32,7 +32,7 @@ void showListDialog(BuildContext context, List<Map<String, dynamic>> list) {
                   ),
                   Flexible(
                     child: ListView.builder(
-                      itemCount: list!.length,
+                      itemCount: list.length,
                       itemBuilder: (context, index) {
                         GlobalKey commentKey = GlobalKey();
                         return ListTile(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
-import 'package:whoru/src/utils/get_theme.dart';
+import 'package:whoru/src/pages/user/controller/get_theme.dart';
+import 'package:whoru/src/pages/user/controller/language.dart';
 import 'package:whoru/src/utils/token.dart';
 
 class UserPage extends StatefulWidget {
@@ -16,20 +16,28 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   bool darkMode = false;
   final ThemeController themeController = Get.find<ThemeController>();
+  late String selectedLanguage;
 
   getTheme() async {
-    if(mounted) {
-        darkMode = await themeController.getDarkMode();
-        setState(() {
-        });
+    if (mounted) {
+      darkMode = await themeController.getDarkMode();
+      setState(() {});
+    }
+  }
+
+  getLanguage() {
+    if (mounted) {
+      selectedLanguage = LocalizationService.locale!.languageCode;
+      print(selectedLanguage);
+      setState(() {});
     }
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getTheme();
+    getLanguage();
   }
 
   @override
@@ -97,11 +105,9 @@ class _UserPageState extends State<UserPage> {
             margin: EdgeInsets.all(16),
             child: TextButton.icon(
               onPressed: () {
-                // Handle button tap
-                // Change the background color
               },
               icon: Icon(
-                Icons.color_lens, // Choose an appropriate icon
+                Icons.color_lens,
                 size: 24.0,
               ),
               label: Row(
@@ -112,14 +118,46 @@ class _UserPageState extends State<UserPage> {
                   ),
                   Spacer(),
                   IconButton(
-                    icon: darkMode ?Icon(Icons.toggle_on):  Icon(Icons.toggle_off_outlined),
+                    icon: darkMode
+                        ? Icon(Icons.toggle_on)
+                        : Icon(Icons.toggle_off_outlined),
                     onPressed: () {
                       setState(() {
-                        darkMode = !darkMode!;
+                        darkMode = !darkMode;
                         themeController.toggleDarkMode();
                       });
                     },
                   )
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.all(16),
+            child: TextButton.icon(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.language, // Choose an appropriate icon
+                size: 24.0,
+              ),
+              label: Row(
+                children: [
+                  Text(
+                    'changeLanguage'.tr,
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                  Spacer(),
+                  DropdownButton<String>(
+                    icon: const Icon(Icons.arrow_drop_down),
+                    value: selectedLanguage,
+                    items: _buildDropdownMenuItems(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        setState(() => selectedLanguage = newValue!);
+                        LocalizationService.changeLocale(newValue!);
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
@@ -153,8 +191,9 @@ class _UserPageState extends State<UserPage> {
                       deleteIdUser();
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (builder) => LoginScreen()),
-                              (route) => false);
+                          MaterialPageRoute(
+                              builder: (builder) => LoginScreen()),
+                          (route) => false);
                     },
                   )
                 ],
@@ -164,5 +203,16 @@ class _UserPageState extends State<UserPage> {
         ],
       ),
     );
+  }
+
+  List<DropdownMenuItem<String>> _buildDropdownMenuItems() {
+    var list = <DropdownMenuItem<String>>[];
+    LocalizationService.langs.forEach((key, value) {
+      list.add(DropdownMenuItem<String>(
+        value: key,
+        child: Text(value),
+      ));
+    });
+    return list;
   }
 }

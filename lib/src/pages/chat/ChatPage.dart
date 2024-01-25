@@ -2,13 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/io.dart';
 import 'package:whoru/src/api/chat.dart';
 import 'package:whoru/src/model/ChatModel.dart';
 import 'package:whoru/src/pages/chat/screens/SelectContact.dart';
 import 'package:whoru/src/pages/chat/widget/CustomCard.dart';
 import 'package:whoru/src/service/WebSocketService.dart';
-import 'package:whoru/src/pages/chat/controller/chatSocket.dart';
 import 'package:whoru/src/utils/url.dart';
 
 class ChatPage extends StatefulWidget {

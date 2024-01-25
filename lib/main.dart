@@ -2,23 +2,20 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/matherial/themes.dart';
-import 'package:whoru/src/pages/notification/controller/NotificationController.dart';
 import 'package:whoru/src/pages/splash/splash.dart';
 import 'package:whoru/src/service/NoOverScoll.dart';
 import 'package:whoru/src/service/certificate_verify_failed.dart';
-import 'package:whoru/src/utils/get_theme.dart';
-
-// GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+import 'package:whoru/src/pages/user/controller/get_theme.dart';
+import 'package:whoru/src/pages/user/controller/language.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(ThemeController());
   HttpOverrides.global = MyHttpOverrides();
-  await NotificationsController.init();
-  await NotificationsController.requestPermission();
-
+  LocalizationService.getLocale();
   runApp(const MyApp());
 }
 
@@ -44,6 +41,9 @@ class MyApp extends StatelessWidget {
         title: 'Whoru',
         theme: AppTheme.light().data,
         darkTheme: AppTheme.dark().data,
+        locale: LocalizationService.locale,
+        fallbackLocale: LocalizationService.fallbackLocale,
+        translations: LocalizationService(),
         home: const SplashScreen(),
       );
     });

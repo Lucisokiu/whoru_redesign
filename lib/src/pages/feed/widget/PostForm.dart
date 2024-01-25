@@ -71,7 +71,21 @@ class _CreatePostFormState extends State<CreatePostForm> {
                     ),
                   ),
                 )
-              : Spacer(),
+              : Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(
+                      color: Theme.of(context).dividerColor, // Màu viền
+                      width: 2.0, // Độ rộng của viền
+                    ),
+                  ),
+                    ),
+                ),
+              ),
           Align(
             alignment: Alignment.bottomCenter,
             child: ElevatedButton(

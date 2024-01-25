@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:whoru/src/api/log.dart';
-import 'package:whoru/src/api/userInfo.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});

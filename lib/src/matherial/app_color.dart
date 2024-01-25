@@ -84,6 +84,6 @@ class AppColors {
         contentText2: mCL,
         shadow: Colors.white38,
         text: mC,
-        icon: Colors.white38);
+        icon: mCM);
   }
 }

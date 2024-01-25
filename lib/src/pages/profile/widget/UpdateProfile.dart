@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:whoru/src/pages/feed/widget/PostForm.dart';
 import 'package:whoru/src/pages/profile/widget/ChangePassword.dart';
 import 'package:whoru/src/pages/profile/widget/UpdateAvatar.dart';
 import 'package:whoru/src/pages/profile/widget/UpdateBackground.dart';

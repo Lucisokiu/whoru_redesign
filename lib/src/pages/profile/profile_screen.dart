@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/api/userInfo.dart';
@@ -29,12 +27,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   fetchData() async {
     widget.idUser ??= await getIdUser();
-    if (mounted) {
-      if (widget.idUser == null) {
-        widget.idUser = await getIdUser();
-      }
+    print(widget.idUser);
       user = await getInfoUserById(widget.idUser!);
       allPost = await getAllPostById(widget.idUser!);
+    if (mounted) {
       setState(() {});
     }
   }

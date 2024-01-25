@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-import 'package:sizer/sizer.dart';
 
 Widget buildSingleImage(BuildContext context, String urlImage) {
   final size = MediaQuery.of(context).size;
@@ -11,24 +10,36 @@ Widget buildSingleImage(BuildContext context, String urlImage) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PhotoViewGallery.builder(
-            itemCount: 1,
-            builder: (context, index) {
-              return PhotoViewGalleryPageOptions(
-                imageProvider: NetworkImage(urlImage),
-                minScale: PhotoViewComputedScale.contained * 0.8,
-                maxScale: PhotoViewComputedScale.covered * 2,
-              );
-            },
-            scrollPhysics: BouncingScrollPhysics(),
-            backgroundDecoration: BoxDecoration(
-              color: Colors.black,
+          builder: (context) => Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
             ),
-            pageController: PageController(),
+            body: PhotoViewGallery.builder(
+              itemCount: 1,
+              builder: (context, index) {
+                return PhotoViewGalleryPageOptions(
+                  imageProvider: NetworkImage(urlImage),
+                  minScale: PhotoViewComputedScale.contained * 0.8,
+                  maxScale: PhotoViewComputedScale.covered * 2,
+                );
+              },
+              scrollPhysics: BouncingScrollPhysics(),
+              backgroundDecoration: BoxDecoration(
+                color: Colors.black,
+              ),
+              pageController: PageController(),
+            ),
           ),
         ),
       );
     },
+
     child: Stack(
       children: [
         ClipRRect(
