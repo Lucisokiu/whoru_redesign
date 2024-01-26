@@ -31,35 +31,26 @@ class _UpdateInfoState extends State<UpdateInfo> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Text field for fullName
             TextField(
               controller: fullNameController,
               decoration: InputDecoration(labelText: 'Full Name'),
             ),
             SizedBox(height: 16),
-
-            // Text field for description
             TextField(
               controller: descriptionController,
               decoration: InputDecoration(labelText: 'Description'),
             ),
             SizedBox(height: 16),
-
-            // Text field for work
             TextField(
               controller: workController,
               decoration: InputDecoration(labelText: 'Work'),
             ),
             SizedBox(height: 16),
-
-            // Text field for study
             TextField(
               controller: studyController,
               decoration: InputDecoration(labelText: 'Study'),
             ),
             SizedBox(height: 16),
-
-            // Button to post API
             Align(
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(

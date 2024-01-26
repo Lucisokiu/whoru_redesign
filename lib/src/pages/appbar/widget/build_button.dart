@@ -6,7 +6,7 @@ import 'package:whoru/src/pages/appbar/widget/build_PopupMenu.dart';
 import 'package:whoru/src/pages/camera/camera_screen.dart';
 import 'package:whoru/src/pages/chat/ChatPage.dart';
 import 'package:whoru/src/pages/feed/widget/CreatePost.dart';
-import 'package:whoru/src/pages/login/LoginSreen.dart';
+import 'package:whoru/src/pages/feed/widget/Create_Post.dart';
 import 'package:whoru/src/pages/search/controller/search_bar.dart';
 import 'package:whoru/src/utils/token.dart';
 
@@ -14,8 +14,13 @@ Widget buildActionHome(context, title, icon) {
   return InkWell(
       onTap: () async {
         if (title == "Create") {
-          // showPopupMenu(context);
-          customCreatePostDialog(context);
+          // customCreatePostDialog(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CreatePost(),
+            ),
+          );
         }
         if (title == "Search") {
           showSearch(
@@ -28,8 +33,7 @@ Widget buildActionHome(context, title, icon) {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  ChatPage(currentId: id!),
+              builder: (context) => ChatPage(currentId: id!),
             ),
           );
         }
