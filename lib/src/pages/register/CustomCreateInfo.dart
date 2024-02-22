@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:whoru/src/pages/register/widget/FieldFormCreateInfo.dart';
 
 Future<Object?> customCreateInfoDialog(

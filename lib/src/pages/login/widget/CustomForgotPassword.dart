@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:whoru/src/pages/login/widget/FieldFormForgotPass.dart';
 import 'package:whoru/src/pages/register/widget/FieldFormSignUp.dart';
 import 'package:whoru/src/pages/login/widget/FieldFormSignIn.dart';
