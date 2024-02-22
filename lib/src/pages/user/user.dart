@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
-import 'package:whoru/src/pages/user/controller/get_theme.dart';
-import 'package:whoru/src/pages/user/controller/language.dart';
+import 'package:whoru/src/pages/user/controller/theme/get_theme.dart';
+import 'package:whoru/src/pages/user/controller/language/language.dart';
 import 'package:whoru/src/utils/token.dart';
+
+import 'controller/language/app_localization.dart';
+import 'controller/language/bloc/language_bloc.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -15,8 +18,8 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage> {
   bool darkMode = false;
-  final ThemeController themeController = Get.find<ThemeController>();
   late String selectedLanguage;
+  ThemeController themeController = ThemeController(ThemeMode.system);
 
   getTheme() async {
     if (mounted) {
@@ -42,6 +45,8 @@ class _UserPageState extends State<UserPage> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeController theme =
+        BlocProvider.of<ThemeController>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
@@ -104,8 +109,7 @@ class _UserPageState extends State<UserPage> {
           Container(
             margin: EdgeInsets.all(16),
             child: TextButton.icon(
-              onPressed: () {
-              },
+              onPressed: () {},
               icon: Icon(
                 Icons.color_lens,
                 size: 24.0,
@@ -124,7 +128,7 @@ class _UserPageState extends State<UserPage> {
                     onPressed: () {
                       setState(() {
                         darkMode = !darkMode;
-                        themeController.toggleDarkMode();
+                        theme.toggleDarkMode();
                       });
                     },
                   )
@@ -143,7 +147,7 @@ class _UserPageState extends State<UserPage> {
               label: Row(
                 children: [
                   Text(
-                    'changeLanguage'.tr,
+                    AppLocalization.of(context).getTranslatedValues('Change language'),
                     style: const TextStyle(fontSize: 18),
                   ),
                   Spacer(),
@@ -153,8 +157,10 @@ class _UserPageState extends State<UserPage> {
                     items: _buildDropdownMenuItems(),
                     onChanged: (String? newValue) {
                       setState(() {
-                        setState(() => selectedLanguage = newValue!);
-                        LocalizationService.changeLocale(newValue!);
+                        selectedLanguage = newValue!;
+                        LocalizationService.changeLocale(newValue);
+                        BlocProvider.of<LanguageBloc>(context)
+                            .add(LoadLanguage(Locale('en')));
                       });
                     },
                   ),
@@ -210,7 +216,10 @@ class _UserPageState extends State<UserPage> {
     LocalizationService.langs.forEach((key, value) {
       list.add(DropdownMenuItem<String>(
         value: key,
-        child: Text(value),
+        child: Text(
+          value,
+          style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color),
+        ),
       ));
     });
     return list;

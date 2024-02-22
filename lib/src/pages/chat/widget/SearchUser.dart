@@ -6,7 +6,7 @@ import 'package:whoru/src/model/SearchModel.dart';
 import 'package:whoru/src/model/UserChat.dart';
 import 'package:whoru/src/pages/chat/screens/IndividualPage.dart';
 import 'package:whoru/src/pages/feed/screens/feed_screen.dart';
-import 'package:whoru/src/service/WebSocketService.dart';
+import 'package:whoru/src/socket/WebSocketService.dart';
 import 'package:whoru/src/utils/token.dart';
 
 class SearchUserChat extends SearchDelegate {

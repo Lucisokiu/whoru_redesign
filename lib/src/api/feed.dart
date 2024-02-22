@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:whoru/src/model/Feed.dart';
 import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 Future<List<FeedModel>?> getAllPost() async {
   try {
-    var url = Uri.http(baseUrl, '/api/v1/Feeds/GetAllPost');
+    var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPost');
     String? token = await getToken();
     print(url);
     var response = await http.get(
@@ -37,7 +38,7 @@ Future<List<FeedModel>?> getAllPost() async {
 }
 
 Future<void> Delete(idPost) async {
-  var url = Uri.http(baseUrl, '/api/Feed/Delete');
+  var url = Uri.https(baseUrl, '/api/Feed/Delete');
   String? token = await getToken();
 
   var response = await http.post(
@@ -62,7 +63,7 @@ Future<void> postApiWithImages({
   required String content,
 }) async {
   try {
-    var url = Uri.http(baseUrl, '/api/v1/Feeds/Post');
+    var url = Uri.https(baseUrl, '/api/v1/Feeds/Post');
     String? token = await getToken();
     Map<String, String> headers = <String, String>{
       'Content-type': 'application/json',
@@ -93,8 +94,8 @@ Future<void> postApiWithImages({
     var response = await request.send();
 
     // Kiểm tra mã trạng thái của response
-    if (response.statusCode.isEven) {
-      print('Success');
+    if (response.statusCode == 201) {
+      print('Success with status ${response.statusCode}');
     } else {
       print('Failed with status ${response.statusCode}');
     }
@@ -105,7 +106,7 @@ Future<void> postApiWithImages({
 
 Future<List<FeedModel>?> getAllPostById(int id) async {
   try {
-    var url = Uri.http(baseUrl, '/api/v1/Feeds/GetAllPostByUserId');
+    var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPostByUserId');
     String? token = await getToken();
 
     var response = await http.post(

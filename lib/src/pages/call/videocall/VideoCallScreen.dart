@@ -6,7 +6,7 @@ import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/model/User.dart';
 import 'package:whoru/src/model/UserChat.dart';
-import 'package:whoru/src/service/WebSocketService.dart';
+import 'package:whoru/src/socket/WebSocketService.dart';
 
 class VideoCallScreen extends StatefulWidget {
   final WebSocketService webSocketService;

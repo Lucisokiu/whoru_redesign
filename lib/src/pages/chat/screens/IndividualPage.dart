@@ -9,7 +9,7 @@ import 'package:whoru/src/pages/call/audiocall/AudioCallScreen.dart';
 import 'package:whoru/src/pages/call/videocall/VideoCallScreen.dart';
 import 'package:whoru/src/pages/chat/widget/OwnMessengerCard.dart';
 import 'package:whoru/src/pages/chat/widget/ReplyCard.dart';
-import 'package:whoru/src/service/WebSocketService.dart';
+import 'package:whoru/src/socket/WebSocketService.dart';
 
 class IndividualPage extends StatefulWidget {
   const IndividualPage(

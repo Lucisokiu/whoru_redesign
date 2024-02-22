@@ -6,7 +6,7 @@ import 'package:whoru/src/api/chat.dart';
 import 'package:whoru/src/model/ChatModel.dart';
 import 'package:whoru/src/pages/chat/screens/SelectContact.dart';
 import 'package:whoru/src/pages/chat/widget/CustomCard.dart';
-import 'package:whoru/src/service/WebSocketService.dart';
+import 'package:whoru/src/socket/WebSocketService.dart';
 import 'package:whoru/src/utils/url.dart';
 
 class ChatPage extends StatefulWidget {

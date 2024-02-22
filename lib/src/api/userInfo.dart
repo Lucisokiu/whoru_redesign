@@ -7,7 +7,7 @@ import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 Future<bool> createInfoUser(Map map) async {
-  var url = Uri.http(baseUrl, '/api/v1/UserInfos/Create');
+  var url = Uri.https(baseUrl, '/api/v1/UserInfos/Create');
   String? token = await getToken();
     var response = await http.post(
       url,
@@ -32,7 +32,7 @@ Future<bool> createInfoUser(Map map) async {
 }
 
 Future<void> updateInfoUser(Map map) async {
-  var url = Uri.http(baseUrl,'/api/v1/UserInfos/UpdateInfo');
+  var url = Uri.https(baseUrl,'/api/v1/UserInfos/UpdateInfo');
   String? token = await getToken();
 
   try {
@@ -58,7 +58,7 @@ Future<void> updateInfoUser(Map map) async {
 }
 
 Future<http.Response> getInfoUserByName(String name) async {
-  var url = Uri.http(baseUrl, '/api/v1/UserInfos/SearchUser');
+  var url = Uri.https(baseUrl, '/api/v1/UserInfos/SearchUser');
   String? token = await getToken();
 
   name = '"$name"';
@@ -78,7 +78,7 @@ Future<http.Response> getInfoUserByName(String name) async {
 }
 
 Future<UserModel?> getInfoUserById(int id) async {
-  var url = Uri.http(baseUrl, '/api/v1/UserInfos/GetInfoById');
+  var url = Uri.https(baseUrl, '/api/v1/UserInfos/GetInfoById');
   String? token = await getToken();
   var response = await http.post(
     url,
@@ -104,7 +104,7 @@ Future<void> updateAvatar({
   required File? imageFile,
 }) async {
   try {
-    var url = Uri.http(baseUrl, '/api/v1/UserInfos/UpdateAvatar');
+    var url = Uri.https(baseUrl, '/api/v1/UserInfos/UpdateAvatar');
     String? token = await getToken();
     Map<String, String> headers = <String, String>{
       'Content-type': 'application/json',
@@ -146,7 +146,7 @@ Future<void> updateBackground({
   required File? imageFile,
 }) async {
   try {
-    var url = Uri.http(baseUrl, '/api/v1/UserInfos/UpdateBackground');
+    var url = Uri.https(baseUrl, '/api/v1/UserInfos/UpdateBackground');
     String? token = await getToken();
     Map<String, String> headers = <String, String>{
       'Content-type': 'application/json',

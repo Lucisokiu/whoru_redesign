@@ -5,7 +5,7 @@ import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 Future<void> sharePost(idPost) async {
-  var url = Uri.http(baseUrl, '/api/v1/Shares/SharePost');
+  var url = Uri.https(baseUrl, '/api/v1/Shares/SharePost');
   String? token = await getToken();
 
   try {
@@ -31,7 +31,7 @@ Future<void> sharePost(idPost) async {
 }
 
 Future<void> unSharePost(idPost) async {
-  var url = Uri.http('$baseUrl  + /api/Share/unSharePost');
+  var url = Uri.https('$baseUrl  + /api/Share/unSharePost');
   String? token = await getToken();
 
   try {
@@ -59,7 +59,7 @@ Future<void> unSharePost(idPost) async {
 
 
 Future<List<Map<String, dynamic>>> getListShare(idPost) async {
-  var url = Uri.http(baseUrl, '/api/v1/Shares/GetAllSharedUser');
+  var url = Uri.https(baseUrl, '/api/v1/Shares/GetAllSharedUser');
   String? token = await getToken();
 
   try {

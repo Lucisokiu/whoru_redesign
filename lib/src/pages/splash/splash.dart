@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/utils/token.dart';
+import 'package:whoru/src/pages/user/user.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,13 +31,13 @@ class _SplashScreenState extends State<SplashScreen>
 
     _loadToken();
 
-    
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) =>
-          token != null ? Navigation() : LoginScreen(),
+          builder: (context) => 
+          Navigation(),
+          // token != null ? Navigation() : LoginScreen(),
         ),
       );
     });

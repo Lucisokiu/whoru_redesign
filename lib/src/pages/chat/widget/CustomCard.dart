@@ -4,7 +4,7 @@ import 'package:web_socket_channel/io.dart';
 import 'package:whoru/src/model/ChatModel.dart';
 import 'package:whoru/src/model/UserChat.dart';
 import 'package:whoru/src/pages/chat/screens/IndividualPage.dart';
-import 'package:whoru/src/service/WebSocketService.dart';
+import 'package:whoru/src/socket/WebSocketService.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard(

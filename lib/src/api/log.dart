@@ -5,7 +5,7 @@ import 'package:whoru/src/utils/token.dart';
 
 Future<http.Response> apiLogin(Map map) async {
   try{
-  var url = await Uri.http(baseUrl, '/api/v1/Logs/Login');
+  var url = await Uri.https(baseUrl, '/api/v1/Logs/Login');
   print(url);
 
   var response = await http.post(
@@ -35,7 +35,7 @@ Future<http.Response> apiLogin(Map map) async {
 }
 
 Future<int?> ForgotPassword(email) async {
-  var url = Uri.http(baseUrl, '/api/v1/Logs/ForgotPassword');
+  var url = Uri.https(baseUrl, '/api/v1/Logs/ForgotPassword');
   String? token = await getToken();
   var response = await http.post(
     url,
@@ -61,7 +61,7 @@ Future<int?> ForgotPassword(email) async {
 }
 
 Future<void> sendCodeByEmail(idUser) async {
-  var url = Uri.http(baseUrl,'/api/v1/Logs/SendCodeByMail');
+  var url = Uri.https(baseUrl,'/api/v1/Logs/SendCodeByMail');
 
   try {
     var response = await http.post(
@@ -85,7 +85,7 @@ Future<void> sendCodeByEmail(idUser) async {
 }
 
 Future<void> sendCodeBySMS(idUser) async {
-  var url = Uri.http(baseUrl, '/api/Log/SendCodeBySMS');
+  var url = Uri.https(baseUrl, '/api/Log/SendCodeBySMS');
   var response = await http.post(
     url,
     headers: {
@@ -104,7 +104,7 @@ Future<void> sendCodeBySMS(idUser) async {
 }
 
 Future<http.Response> verifyAccount(int idUser,String code) async {
-  var url = Uri.http(baseUrl,'/api/v1/Logs/VerifyAccount');
+  var url = Uri.https(baseUrl,'/api/v1/Logs/VerifyAccount');
   Map data = {
     "idUser": idUser,
     "code": code,
@@ -129,7 +129,7 @@ Future<http.Response> verifyAccount(int idUser,String code) async {
 }
 
 void ChangePass(String pass) async {
-  var url = Uri.http(baseUrl, '/api/v1/Logs/ChangePassword');
+  var url = Uri.https(baseUrl, '/api/v1/Logs/ChangePassword');
   String? token = await getToken();
   var response = await http.post(
     url,

@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+part 'theme_state.dart';
 
+class ThemeController extends Bloc<ThemeState, ThemeMode> {
+  bool isDarkMode = false;
 
-class ThemeController extends GetxController {
-  late bool isDarkMode;
+  bool get isDark => isDarkMode;
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  @override
-  void onInit() async {
-    super.onInit();
-    await getDarkMode().then((value) => isDarkMode = value);
+
+  ThemeController(super.initialState) {
+    onInit();
+  }
+
+  void onInit() {
+    getDarkMode().then((value) => isDarkMode = value);
   }
 
   getDarkMode() async {
     SharedPreferences pref = await _prefs;
     isDarkMode = (pref.getBool('isDarkMode') ?? false);
-    Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);
+    emit(isDarkMode ? ThemeMode.dark : ThemeMode.light);
     return isDarkMode;
   }
 
@@ -28,7 +33,7 @@ class ThemeController extends GetxController {
   void toggleDarkMode() {
     print(isDarkMode);
     isDarkMode = !isDarkMode;
-    Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);
+    emit(isDarkMode ? ThemeMode.dark : ThemeMode.light);
     _saveDarkMode();
   }
 }

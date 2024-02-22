@@ -5,7 +5,7 @@ import 'package:whoru/src/pages/chat/screens/CreateGroup.dart';
 import 'package:whoru/src/pages/chat/widget/ButtonCard.dart';
 import 'package:whoru/src/pages/chat/widget/ContactCard.dart';
 import 'package:whoru/src/pages/search/controller/search_bar.dart';
-import 'package:whoru/src/service/WebSocketService.dart';
+import 'package:whoru/src/socket/WebSocketService.dart';
 
 import '../../../model/ChatModel.dart';
 
