@@ -15,11 +15,24 @@ void showCommentDialog(BuildContext context, List<CommentModel>? comments,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 2,
             child: Container(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Comment"),
+                      IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  ),
                   Expanded(
                     child: ListView.builder(
                       itemCount: comments!.length,
@@ -28,7 +41,6 @@ void showCommentDialog(BuildContext context, List<CommentModel>? comments,
                         return ListTile(
                           key: commentKey,
                           onLongPress: () {
-
                             if (comments[index].idUser == CurrentUser) {
                               showCommentContextMenu(
                                   context, comments[index], commentKey);

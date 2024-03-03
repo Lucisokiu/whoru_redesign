@@ -16,17 +16,17 @@ List<Story> storyList = [
   ),
   Story(
     imageUrl:
-        'https://vienthammydiva.vn/wp-content/uploads/2022/09/gai-xinh-chup-truoc-guong-1.jpg',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiZ6vGLQBc9GIK_tpP4YFbIXzFWQ85BO7r5Q&usqp=CAU',
     userName: 'Hồng Thắm',
   ),
   Story(
     imageUrl:
-        'https://www.vietnamfineart.com.vn/wp-content/uploads/2023/03/anh-gai-xinh-che-mat-1.jpg',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiZ6vGLQBc9GIK_tpP4YFbIXzFWQ85BO7r5Q&usqp=CAU',
     userName: 'Trương Thị Mỹ Linh',
   ),
   Story(
     imageUrl:
-        'https://www.vietnamfineart.com.vn/wp-content/uploads/2023/03/anh-gai-xinh-che-mat-1.jpg',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiZ6vGLQBc9GIK_tpP4YFbIXzFWQ85BO7r5Q&usqp=CAU',
     userName: 'Tào Tháo',
   ),
   Story(

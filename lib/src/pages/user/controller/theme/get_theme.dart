@@ -4,9 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'theme_state.dart';
 
 class ThemeController extends Bloc<ThemeState, ThemeMode> {
-  bool isDarkMode = false;
+  static bool isDarkMode = false;
 
-  bool get isDark => isDarkMode;
+  static bool get isDark => isDarkMode;
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -14,14 +14,14 @@ class ThemeController extends Bloc<ThemeState, ThemeMode> {
     onInit();
   }
 
-  void onInit() {
+  onInit() {
     getDarkMode().then((value) => isDarkMode = value);
+    print("isDarkMode: $isDarkMode");
   }
 
   getDarkMode() async {
     SharedPreferences pref = await _prefs;
     isDarkMode = (pref.getBool('isDarkMode') ?? false);
-    emit(isDarkMode ? ThemeMode.dark : ThemeMode.light);
     return isDarkMode;
   }
 

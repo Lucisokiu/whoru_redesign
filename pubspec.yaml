@@ -45,10 +45,12 @@ dependencies:
   camera: ^0.10.5+6
   permission_handler: ^11.0.1
   flutter_local_notifications: ^16.3.0
+  image_picker: ^1.0.4
 
   #Storage
   shared_preferences: ^2.2.2
-  image_picker: ^1.0.4
+  sqflite: ^2.3.2
+  path: ^1.8.3
   path_provider: ^2.1.1
 
   #API
@@ -92,6 +94,7 @@ dependencies:
 
   #Language
   intl: ^0.18.0
+
 
 
 dev_dependencies:

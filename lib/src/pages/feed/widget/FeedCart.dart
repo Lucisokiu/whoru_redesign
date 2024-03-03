@@ -9,10 +9,12 @@ import 'package:whoru/src/model/CommentModel.dart';
 import 'package:whoru/src/model/Feed.dart';
 import 'package:whoru/src/pages/feed/controller/build_Image.dart';
 import 'package:whoru/src/pages/feed/widget/CommentDialog.dart';
-import 'package:whoru/src/pages/feed/widget/ListDialog.dart';
+import 'package:whoru/src/pages/feed/widget/ListLikeDialog.dart';
 import 'package:whoru/src/pages/location/widget/map_widget.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/service/show_toast.dart';
+
+import 'CommentDialog_new.dart';
 
 class CardFeed extends StatefulWidget {
   FeedModel feed;
@@ -186,8 +188,14 @@ class _CardFeedState extends State<CardFeed> {
                     onPressed: () async {
                       List<CommentModel>? sampleComments =
                           await getCommentByIdFeed(widget.feed.idFeed);
-                      showCommentDialog(context, sampleComments,
-                          widget.feed.idFeed, widget.CurrentUser!);
+                      await customCommentDialog(context, sampleComments,
+                          widget.feed.idFeed, widget.CurrentUser);
+
+                      // showCommentDialog(context, sampleComments,
+                      //     widget.feed.idFeed, widget.CurrentUser!);
+                      Future.delayed(Duration(milliseconds: 800), () {
+
+                      });
                     },
                     onLongPress: () {},
                   ),

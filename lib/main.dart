@@ -16,6 +16,8 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
   LocalizationService.getLocale();
+  ThemeController(ThemeMode.system);
+
   runApp(
     MultiBlocProvider(
       providers: [
@@ -33,8 +35,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeController theme =
-        BlocProvider.of<ThemeController>(context, listen: true);
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     //   statusBarColor: Colors.blue, // Đặt màu sắc cho thanh trạng thái
     //   statusBarIconBrightness: Brightness
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
           title: 'Whoru',
           theme: AppTheme.light().data,
           darkTheme: AppTheme.dark().data,
-          themeMode: theme.isDark ? ThemeMode.dark : ThemeMode.light,
+          themeMode: ThemeController.isDark ? ThemeMode.dark : ThemeMode.light,
           locale: LocalizationService.locale,
           localizationsDelegates: [
             AppLocalization.delegate,

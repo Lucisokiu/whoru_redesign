@@ -12,7 +12,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Flutter Local Notifications")),
+        appBar: AppBar(title: const Text("Notifications")),
         body: SizedBox(
             height: double.infinity,
             child: Center(

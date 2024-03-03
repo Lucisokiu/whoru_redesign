@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
@@ -17,30 +19,28 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  bool darkMode = false;
+  late bool darkMode;
   late String selectedLanguage;
-  ThemeController themeController = ThemeController(ThemeMode.system);
 
-  getTheme() async {
-    if (mounted) {
-      darkMode = await themeController.getDarkMode();
-      setState(() {});
-    }
+  getTheme() {
+    setState(() {
+      darkMode = ThemeController.isDark;
+    });
   }
 
   getLanguage() {
-    if (mounted) {
+    setState(() {
       selectedLanguage = LocalizationService.locale!.languageCode;
       print(selectedLanguage);
-      setState(() {});
-    }
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    getTheme();
     getLanguage();
+    getTheme();
+    print(darkMode);
   }
 
   @override
@@ -52,7 +52,7 @@ class _UserPageState extends State<UserPage> {
         title: Text('Settings'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start, // Change to start
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             margin: EdgeInsets.all(16),
@@ -147,7 +147,7 @@ class _UserPageState extends State<UserPage> {
               label: Row(
                 children: [
                   Text(
-                    AppLocalization.of(context).getTranslatedValues('Change language'),
+                    AppLocalization.of(context).getTranslatedValues('language'),
                     style: const TextStyle(fontSize: 18),
                   ),
                   Spacer(),
@@ -218,7 +218,8 @@ class _UserPageState extends State<UserPage> {
         value: key,
         child: Text(
           value,
-          style: TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color),
+          style:
+              TextStyle(color: Theme.of(context).textTheme.bodyMedium!.color),
         ),
       ));
     });
