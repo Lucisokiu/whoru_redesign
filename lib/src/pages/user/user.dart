@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whoru/src/pages/face_detection/face_detection.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/pages/user/controller/theme/get_theme.dart';
@@ -42,11 +41,10 @@ class _UserPageState extends State<UserPage> {
     getTheme();
     print(darkMode);
   }
+    var list = <DropdownMenuItem<String>>[];
 
   @override
   Widget build(BuildContext context) {
-    ThemeController theme =
-        BlocProvider.of<ThemeController>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
@@ -68,10 +66,7 @@ class _UserPageState extends State<UserPage> {
               ],
             ),
             child: ElevatedButton(
-              onPressed: () {
-                // Handle button tap
-                // Navigate to user profile page
-              },
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
@@ -82,12 +77,7 @@ class _UserPageState extends State<UserPage> {
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  // Add space between widgets
                   children: [
-                    // CircleAvatar( // Add a circular image
-                    //   radius: 24,
-                    //   backgroundImage: AssetImage('images/avatar.jpg'), // Replace with your image asset
-                    // ),
                     Text(
                       'My account', // Add a label
                       style: TextStyle(fontSize: 18),
@@ -128,7 +118,8 @@ class _UserPageState extends State<UserPage> {
                     onPressed: () {
                       setState(() {
                         darkMode = !darkMode;
-                        theme.toggleDarkMode();
+                        BlocProvider.of<ThemeController>(context)
+                            .toggleDarkMode();
                       });
                     },
                   )
@@ -157,10 +148,11 @@ class _UserPageState extends State<UserPage> {
                     items: _buildDropdownMenuItems(),
                     onChanged: (String? newValue) {
                       setState(() {
-                        selectedLanguage = newValue!;
+                        print("newValue ${newValue!}");
+                        selectedLanguage = newValue;
                         LocalizationService.changeLocale(newValue);
                         BlocProvider.of<LanguageBloc>(context)
-                            .add(LoadLanguage(Locale('en')));
+                            .add(LoadLanguage(Locale('$newValue')));
                       });
                     },
                   ),
@@ -200,6 +192,36 @@ class _UserPageState extends State<UserPage> {
                           MaterialPageRoute(
                               builder: (builder) => LoginScreen()),
                           (route) => false);
+                    },
+                  )
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(16),
+            child: TextButton.icon(
+              onPressed: () {},
+              icon: Icon(
+                Icons.color_lens,
+                size: 24.0,
+              ),
+              label: Row(
+                children: [
+                  Text(
+                    'Face Dectection(Test)',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  Spacer(),
+                  IconButton(
+                    icon: Icon(Icons.arrow_forward),
+                    onPressed: () {
+                      setState(() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => FaceDetection()));
+                      });
                     },
                   )
                 ],

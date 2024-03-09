@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/matherial/themes.dart';
@@ -12,16 +13,21 @@ import 'package:whoru/src/pages/user/controller/language/language.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
+late List<CameraDescription> cameras;
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
   LocalizationService.getLocale();
-  ThemeController(ThemeMode.system);
+  ThemeController(ThemeMode.system).onInit();
+  cameras = await availableCameras();
 
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => ThemeController(ThemeMode.light)),
+        BlocProvider(
+            create: (context) => ThemeController(
+                ThemeController.isDark ? ThemeMode.dark : ThemeMode.light)),
         BlocProvider(
             create: (context) => LanguageBloc(LanguageState.initial())),
       ],
@@ -40,34 +46,34 @@ class MyApp extends StatelessWidget {
     //   statusBarIconBrightness: Brightness
     //       .light, // Đặt màu sắc của các biểu tượng trạng thái (light hoặc dark)
     // ));
-    return BlocBuilder<LanguageBloc, LanguageState>(builder: (context, state) {
-      return Sizer(builder: (context, orientation, deviceType) {
-        return MaterialApp(
-          builder: (context, child) {
-            return ScrollConfiguration(
-              behavior: MyBehavior(),
-              child: child!,
-            );
-          },
-          debugShowCheckedModeBanner: false,
-          title: 'Whoru',
-          theme: AppTheme.light().data,
-          darkTheme: AppTheme.dark().data,
-          themeMode: ThemeController.isDark ? ThemeMode.dark : ThemeMode.light,
-          locale: LocalizationService.locale,
-          localizationsDelegates: [
-            AppLocalization.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: [
-            Locale('en', 'US'),
-            Locale('vi', 'VN'),
-          ],
-          home: const SplashScreen(),
-        );
-      });
+    final isDark = context.select((ThemeController bloc) => bloc.state);
+    final locale = context.select((LanguageBloc bloc) => bloc.state.locale);
+    return Sizer(builder: (context, orientation, deviceType) {
+      return MaterialApp(
+        builder: (context, child) {
+          return ScrollConfiguration(
+            behavior: MyBehavior(),
+            child: child!,
+          );
+        },
+        debugShowCheckedModeBanner: false,
+        title: 'Whoru',
+        theme: AppTheme.light().data,
+        darkTheme: AppTheme.dark().data,
+        themeMode: isDark,
+        locale: locale,
+        localizationsDelegates: [
+          AppLocalization.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('en', 'US'),
+          Locale('vi', 'VN'),
+        ],
+        home: const SplashScreen(),
+      );
     });
   }
 }

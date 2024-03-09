@@ -12,7 +12,6 @@ import 'package:whoru/src/pages/feed/widget/CommentDialog.dart';
 import 'package:whoru/src/pages/feed/widget/ListLikeDialog.dart';
 import 'package:whoru/src/pages/location/widget/map_widget.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
-import 'package:whoru/src/service/show_toast.dart';
 
 import 'CommentDialog_new.dart';
 

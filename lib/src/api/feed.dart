@@ -20,7 +20,6 @@ Future<List<FeedModel>?> getAllPost() async {
     );
 
     if (response.statusCode == 200) {
-      // Decode JSON and map it to List<FeedModel>
       List<dynamic> decodedData = jsonDecode(response.body);
       List<FeedModel> feedList =
           decodedData.map((data) => FeedModel.fromJson(data)).toList();

@@ -5,7 +5,7 @@ class LanguageState {
 
   LanguageState(this.locale);
 
-  factory LanguageState.initial() => LanguageState(Locale('en', 'US'));
+  factory LanguageState.initial() => LanguageState(LocalizationService.locale!);
 
   LanguageState copyWith(Locale locale) => LanguageState(locale ?? this.locale);
 

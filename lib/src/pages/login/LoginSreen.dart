@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:whoru/src/pages/login/widget/AnimatedBtn.dart';
 import 'package:whoru/src/pages/login/widget/CustomSignIn.dart';
-import 'package:whoru/src/pages/register/CustomCreateInfo.dart';
-import 'package:whoru/src/service/show_toast.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
