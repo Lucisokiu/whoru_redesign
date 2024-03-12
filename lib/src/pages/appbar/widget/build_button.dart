@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/api/chat.dart';
-import 'package:whoru/src/model/ChatModel.dart';
-import 'package:whoru/src/pages/appbar/widget/build_PopupMenu.dart';
-import 'package:whoru/src/pages/camera/camera_screen.dart';
 import 'package:whoru/src/pages/chat/ChatPage.dart';
-import 'package:whoru/src/pages/feed/widget/CreatePostDialog.dart';
 import 'package:whoru/src/pages/feed/widget/CreatePost.dart';
 import 'package:whoru/src/pages/search/controller/search_bar.dart';
 import 'package:whoru/src/utils/token.dart';
@@ -20,7 +14,7 @@ Widget buildActionHome(context, title, icon) {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const CreatePost(),
+              builder: (context) => CreatePost(),
             ),
           );
         }

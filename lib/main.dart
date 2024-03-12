@@ -19,7 +19,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
   LocalizationService.getLocale();
-  ThemeController(ThemeMode.system).onInit();
+  ThemeController(ThemeMode.system);
   cameras = await availableCameras();
 
   runApp(
@@ -41,11 +41,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //   statusBarColor: Colors.blue, // Đặt màu sắc cho thanh trạng thái
-    //   statusBarIconBrightness: Brightness
-    //       .light, // Đặt màu sắc của các biểu tượng trạng thái (light hoặc dark)
-    // ));
     final isDark = context.select((ThemeController bloc) => bloc.state);
     final locale = context.select((LanguageBloc bloc) => bloc.state.locale);
     return Sizer(builder: (context, orientation, deviceType) {
@@ -62,13 +57,13 @@ class MyApp extends StatelessWidget {
         darkTheme: AppTheme.dark().data,
         themeMode: isDark,
         locale: locale,
-        localizationsDelegates: [
+        localizationsDelegates: const [
           AppLocalization.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: [
+        supportedLocales: const [
           Locale('en', 'US'),
           Locale('vi', 'VN'),
         ],

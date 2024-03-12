@@ -29,14 +29,13 @@ class _FeedPageState extends State<FeedPage> {
           listFeed = result;
         });
       } else {
-        // ignore: use_build_context_synchronously
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LoginScreen(),
-          ),
-          (route) => false,
-        );
+        // Navigator.pushAndRemoveUntil(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => const LoginScreen(),
+        //   ),
+        //   (route) => false,
+        // );
       }
     }
   }

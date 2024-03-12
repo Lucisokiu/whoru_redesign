@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whoru/src/pages/face_detection/face_detection.dart';
+import 'package:whoru/src/pages/camera/camera.dart';
 import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/pages/user/controller/theme/get_theme.dart';
@@ -217,10 +217,11 @@ class _UserPageState extends State<UserPage> {
                     icon: Icon(Icons.arrow_forward),
                     onPressed: () {
                       setState(() {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) => FaceDetection()));
+
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (builder) => FaceDetection()));
                       });
                     },
                   )
