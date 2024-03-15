@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:whoru/src/model/ChatModel.dart';
-import 'package:whoru/src/pages/chat/widget/AvatarCard.dart';
-import 'package:whoru/src/pages/chat/widget/ContactCard.dart';
 
 class CreateGroup extends StatefulWidget {
   CreateGroup({super.key});

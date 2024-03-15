@@ -6,7 +6,7 @@ import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/log.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
-import 'package:whoru/src/pages/register/CustomCreateInfo.dart';
+
 
 class ForgotPassForm extends StatefulWidget {
   BuildContext contextScafford;

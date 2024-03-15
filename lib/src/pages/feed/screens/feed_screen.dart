@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/feed.dart';
-import 'package:whoru/src/model/Feed.dart';
-import 'package:whoru/src/model/Login.dart';
+import 'package:whoru/src/model/FeedModel.dart';
 import 'package:whoru/src/pages/appbar/appbar.dart';
 import 'package:whoru/src/pages/feed/widget/FeedCart.dart';
-import 'package:whoru/src/pages/feed/widget/skeleton_loading.dart';
 import 'package:whoru/src/pages/story/StoryWidget.dart';
-import 'package:whoru/src/pages/login/LoginSreen.dart';
 import 'package:whoru/src/utils/token.dart';
 
 class FeedPage extends StatefulWidget {

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:web_socket_channel/io.dart';
 import 'package:whoru/src/model/ChatModel.dart';
 import 'package:whoru/src/model/UserChat.dart';
 import 'package:whoru/src/pages/chat/screens/IndividualPage.dart';

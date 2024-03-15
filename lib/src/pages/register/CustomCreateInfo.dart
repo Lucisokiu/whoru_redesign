@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/register/widget/FieldFormCreateInfo.dart';
 
 Future<Object?> customCreateInfoDialog(
@@ -31,7 +32,6 @@ class CreateInfo extends StatefulWidget {
 }
 
 class _CreateInfoState extends State<CreateInfo> {
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -39,7 +39,7 @@ class _CreateInfoState extends State<CreateInfo> {
         clipBehavior: Clip.none,
         children: [
           Container(
-            height: 620,
+            height: 75.h,
             margin: const EdgeInsets.symmetric(horizontal: 16),
             padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
             decoration: BoxDecoration(
@@ -58,7 +58,8 @@ class _CreateInfoState extends State<CreateInfo> {
                           padding: const EdgeInsets.all(8.0),
                           child: const Text(
                             "Create Info",
-                            style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
+                            style:
+                                TextStyle(fontSize: 34, fontFamily: "Poppins"),
                           ),
                         ),
                         CreateInfoForm(contextScafford: widget.contextScafford),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/api/userInfo.dart';
-import 'package:whoru/src/model/Feed.dart';
+import 'package:whoru/src/model/FeedModel.dart';
 import 'package:whoru/src/model/User.dart';
 import 'package:whoru/src/pages/feed/widget/FeedCart.dart';
 import 'package:whoru/src/pages/profile/widget/UpdateProfile.dart';

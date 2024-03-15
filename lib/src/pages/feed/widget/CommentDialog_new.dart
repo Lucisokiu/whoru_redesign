@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:whoru/src/pages/feed/widget/CommentDialog.dart';
-import 'package:whoru/src/pages/login/widget/CustomForgotPassword.dart';
-import 'package:whoru/src/pages/register/CustomSignUp.dart';
-import 'package:whoru/src/pages/login/widget/FieldFormSignIn.dart';
-import 'package:whoru/src/pages/register/CustomVerifyAccount.dart';
-
 import '../../../api/comment.dart';
 import '../../../model/CommentModel.dart';
 

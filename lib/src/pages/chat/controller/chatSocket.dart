@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-import 'package:whoru/src/socket/WebSocketService.dart';
 
 void onConnected(IOWebSocketChannel channel, Map<String, dynamic> messageData) {
   final message = jsonEncode(messageData) + String.fromCharCode(0x1E);

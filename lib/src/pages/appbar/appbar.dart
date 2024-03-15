@@ -10,70 +10,68 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        height: 10.h,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            InkWell(
-                onTap: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SplashScreen(),
-                    ),
-                    (route) => false,
-                  );
-                },
-                child: SizedBox(
-                  height: 15.h,
-                  width: 15.w,
-                  child: Lottie.asset('assets/lottie/splash_cat.json'),
-                )),
-            InkWell(
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      height: 10.h,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          InkWell(
               onTap: () {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const SplashScreen(),
                   ),
-                  (route) => false, // Xóa toàn bộ màn hình khỏi stack
+                  (route) => false,
                 );
               },
-              child: Text(
-                'Whoru',
-                style: TextStyle(
-                  fontFamily: 'Lobster',
-                  fontSize: 20.sp,
+              child: SizedBox(
+                height: 15.h,
+                width: 15.w,
+                child: Lottie.asset('assets/lottie/splash_cat.json'),
+              )),
+          InkWell(
+            onTap: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SplashScreen(),
                 ),
+                (route) => false, // Xóa toàn bộ màn hình khỏi stack
+              );
+            },
+            child: Text(
+              'Whoru',
+              style: TextStyle(
+                fontFamily: 'Lobster',
+                fontSize: 20.sp,
               ),
             ),
-            Spacer(),
-            buildActionHome(
+          ),
+          Spacer(),
+          buildActionHome(
+            context,
+            'Create',
+            PhosphorIconsFill.plusCircle,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: buildActionHome(
               context,
-              'Create',
-              PhosphorIconsFill.plusCircle,
+              'Search',
+              PhosphorIconsFill.magnifyingGlass,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: buildActionHome(
-                context,
-                'Search',
-                PhosphorIconsFill.magnifyingGlass,
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: buildActionHome(
+              context,
+              'Chat',
+              PhosphorIconsFill.wechatLogo,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: buildActionHome(
-                context,
-                'Chat',
-                PhosphorIconsFill.wechatLogo,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

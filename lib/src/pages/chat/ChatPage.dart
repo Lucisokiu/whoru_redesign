@@ -55,7 +55,6 @@ class _ChatPageState extends State<ChatPage> {
         String name = arguments[1];
         String avt = arguments[2];
         int idReceiver = arguments[3];
-        String type = arguments[4];
         webSocketService.showCallDialog(idCaller,name,avt,idReceiver, context, webSocketService);
       }
     });

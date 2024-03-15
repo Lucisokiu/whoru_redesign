@@ -1,46 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:sizer/sizer.dart';
 import 'package:whoru/src/model/User.dart';
 
 class CustomizeMarker extends StatelessWidget {
   LatLng latLng;
   UserModel user;
   CustomizeMarker({super.key, required this.latLng, required this.user});
-  
+
   @override
   Widget build(BuildContext context) {
     return MarkerLayer(
       markers: [
         Marker(
           point: latLng,
-          width: 80,
-          height: 80,
+          width: 10.h,
+          height: 10.w,
           builder: (context) {
-            return Container(
-              alignment: Alignment.center,
-              width: 50,
-              height: 50,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  const Icon(
-                    Icons.location_history,
-                    size: 50,
-                  ),
-                  Container(
-                    alignment: Alignment.topCenter,
-                    height: 33,
-                    width: 33,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(70),
-                      child: Image.network(
-                        user.avt,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ],
+            return CircleAvatar(
+              backgroundImage: NetworkImage(
+                user.avt,
               ),
             );
           },

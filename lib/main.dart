@@ -1,17 +1,19 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
-import 'package:whoru/src/matherial/themes.dart';
-import 'package:whoru/src/pages/splash/splash.dart';
-import 'package:whoru/src/pages/user/controller/language/app_localization.dart';
-import 'package:whoru/src/pages/user/controller/language/bloc/language_bloc.dart';
-import 'package:whoru/src/service/NoOverScoll.dart';
-import 'package:whoru/src/service/certificate_verify_failed.dart';
-import 'package:whoru/src/pages/user/controller/theme/get_theme.dart';
-import 'package:whoru/src/pages/user/controller/language/language.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sizer/sizer.dart';
+
+import 'src/pages/splash/splash.dart';
+import 'src/pages/user/controller/language/app_localization.dart';
+import 'src/pages/user/controller/language/bloc/language_bloc.dart';
+import 'src/service/NoOverScoll.dart';
+import 'src/service/certificate_verify_failed.dart';
+import 'src/pages/user/controller/theme/get_theme.dart';
+import 'src/pages/user/controller/language/language.dart';
+import 'src/matherial/themes.dart';
+
 
 late List<CameraDescription> cameras;
 

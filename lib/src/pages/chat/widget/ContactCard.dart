@@ -50,7 +50,7 @@ class ContactCard extends StatelessWidget {
         ),
       ),
       subtitle: Text(
-        contact.type!,
+        contact.type,
         style: TextStyle(
           fontSize: 13,
         ),

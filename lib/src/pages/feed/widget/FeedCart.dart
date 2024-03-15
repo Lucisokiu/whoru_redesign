@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/comment.dart';
-import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/api/like.dart';
 import 'package:whoru/src/api/share.dart';
 import 'package:whoru/src/model/CommentModel.dart';
-import 'package:whoru/src/model/Feed.dart';
+import 'package:whoru/src/model/FeedModel.dart';
 import 'package:whoru/src/pages/feed/controller/build_Image.dart';
-import 'package:whoru/src/pages/feed/widget/CommentDialog.dart';
 import 'package:whoru/src/pages/feed/widget/ListLikeDialog.dart';
-import 'package:whoru/src/pages/location/widget/map_widget.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 
 import 'CommentDialog_new.dart';

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:whoru/src/pages/login/widget/CustomForgotPassword.dart';
 import 'package:whoru/src/pages/register/CustomSignUp.dart';
 import 'package:whoru/src/pages/login/widget/FieldFormSignIn.dart';
-import 'package:whoru/src/pages/register/CustomVerifyAccount.dart';
 
 Future<Object?> customSigninDialog(BuildContext contextScafford,
     {required ValueChanged onClosed}) {

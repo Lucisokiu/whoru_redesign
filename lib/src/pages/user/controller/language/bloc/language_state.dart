@@ -7,7 +7,7 @@ class LanguageState {
 
   factory LanguageState.initial() => LanguageState(LocalizationService.locale!);
 
-  LanguageState copyWith(Locale locale) => LanguageState(locale ?? this.locale);
+  LanguageState copyWith(Locale locale) => LanguageState(locale);
 
   @override
   // TODO: implement props

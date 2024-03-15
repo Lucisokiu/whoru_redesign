@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/io.dart';
 import 'package:whoru/src/api/userInfo.dart';
 import 'package:whoru/src/model/SearchModel.dart';
 import 'package:whoru/src/model/UserChat.dart';
 import 'package:whoru/src/pages/chat/screens/IndividualPage.dart';
-import 'package:whoru/src/pages/feed/screens/feed_screen.dart';
 import 'package:whoru/src/socket/WebSocketService.dart';
 import 'package:whoru/src/utils/token.dart';
 

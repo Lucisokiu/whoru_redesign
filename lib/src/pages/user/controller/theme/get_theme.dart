@@ -10,7 +10,9 @@ class ThemeController extends Bloc<ThemeState, ThemeMode> {
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-  ThemeController(super.initialState);
+  ThemeController(super.initialState){
+    onInit();
+  }
 
   onInit() {
     getDarkMode().then((value) => isDarkMode = value);

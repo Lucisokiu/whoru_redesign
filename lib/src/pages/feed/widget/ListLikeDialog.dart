@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:whoru/src/api/comment.dart';
-import 'package:whoru/src/model/CommentModel.dart';
 
 void showListDialog(BuildContext context, List<Map<String, dynamic>> list) {
 
