@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:whoru/src/model/User.dart';
 import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
+
+import '../model/UserModel.dart';
 
 Future<bool> createInfoUser(Map map) async {
   var url = Uri.https(baseUrl, '/api/v1/UserInfos/Create');

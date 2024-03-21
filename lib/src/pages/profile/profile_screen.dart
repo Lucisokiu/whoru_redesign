@@ -3,12 +3,12 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/api/userInfo.dart';
 import 'package:whoru/src/model/FeedModel.dart';
-import 'package:whoru/src/model/User.dart';
 import 'package:whoru/src/pages/feed/widget/FeedCart.dart';
 import 'package:whoru/src/pages/profile/widget/UpdateProfile.dart';
 import 'package:whoru/src/pages/profile/widget/info.dart';
 import 'package:whoru/src/utils/token.dart';
 
+import '../../model/UserModel.dart';
 import '../feed/widget/skeleton_loading.dart';
 
 class ProfilePage extends StatefulWidget {

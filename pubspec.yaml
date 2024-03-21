@@ -94,8 +94,11 @@ dependencies:
   #Language
   intl: ^0.18.0
 
-  #google service
-  google_mlkit_face_detection: ^0.9.0
+  #ML
+  google_ml_kit: ^0.16.3
+  tflite_flutter: ^0.10.4
+  #LocalDB
+  hive: ^2.2.3
 
 
 

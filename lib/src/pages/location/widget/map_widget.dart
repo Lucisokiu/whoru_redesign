@@ -3,10 +3,10 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/model/User.dart';
 import 'package:whoru/src/pages/location/widget/customize_marker.dart';
 import 'package:whoru/src/service/location_service.dart';
 
+import '../../../model/UserModel.dart';
 import 'card_user.dart';
 
 class MapWidget extends StatefulWidget {

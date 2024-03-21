@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/follow.dart';
-import 'package:whoru/src/model/User.dart';
 import 'package:whoru/src/pages/feed/widget/ListLikeDialog.dart';
+
+import '../../../model/UserModel.dart';
 
 Widget info(BuildContext context, UserModel user, bool isMy) {
   final double screenHeight = MediaQuery.of(context).size.height;

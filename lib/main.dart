@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive/hive.dart';
 import 'package:sizer/sizer.dart';
 
 import 'src/pages/splash/splash.dart';
@@ -14,7 +15,6 @@ import 'src/pages/user/controller/theme/get_theme.dart';
 import 'src/pages/user/controller/language/language.dart';
 import 'src/matherial/themes.dart';
 
-
 late List<CameraDescription> cameras;
 
 void main() async {
@@ -23,6 +23,7 @@ void main() async {
   LocalizationService.getLocale();
   ThemeController(ThemeMode.system);
   cameras = await availableCameras();
+  Hive.init;
 
   runApp(
     MultiBlocProvider(

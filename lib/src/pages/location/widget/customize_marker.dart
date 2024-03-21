@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/model/User.dart';
+
+import '../../../model/UserModel.dart';
 
 class CustomizeMarker extends StatelessWidget {
   LatLng latLng;

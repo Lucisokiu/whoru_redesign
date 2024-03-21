@@ -34,15 +34,26 @@ Video/Voice call
 Dart SDK version: 3.0.5  
 Flutter version: 3.10.5
 
-**INSTALL**
+## INSTALL
 
+```sh
 git clone https://github.com/Lucisokiu/whoru_redesign.git
+```
 
 Open Android Studio
 
-In terminal -> flutter pub get
+In terminal
+
+```sh
+flutter pub get
+```
 
 Run project
 
 Link deloy: https://apkpure.net/p/com.example.whoru
 
+## Develop
+
+Face Recognition
+
+Virtual Background for video call
