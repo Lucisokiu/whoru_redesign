@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/log.dart';
-import 'package:whoru/src/pages/register/CustomCreateInfo.dart';
+import 'package:whoru/src/pages/register/custom_create_info.dart';
 
 class VerifyForm extends StatefulWidget {
   BuildContext contextScafford;

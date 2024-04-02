@@ -4,9 +4,9 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/location/widget/customize_marker.dart';
-import 'package:whoru/src/service/location_service.dart';
+import 'package:whoru/src/services/location_service.dart';
 
-import '../../../model/UserModel.dart';
+import '../../../models/user_model.dart';
 import 'card_user.dart';
 
 class MapWidget extends StatefulWidget {

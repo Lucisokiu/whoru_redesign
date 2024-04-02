@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
-import 'package:whoru/src/pages/call/videocall/VideoCallScreen.dart';
-import 'package:whoru/src/pages/chat/controller/chatSocket.dart';
+import 'package:whoru/src/pages/call/videocall/video_call_creen.dart';
 import 'package:whoru/src/utils/token.dart';
 
 class WebSocketService {
@@ -34,6 +33,19 @@ class WebSocketService {
       "target": "Online",
       "type": 1
     });
+  }
+
+  void onConnected(
+      IOWebSocketChannel channel, Map<String, dynamic> messageData) {
+    final message = jsonEncode(messageData) + String.fromCharCode(0x1E);
+    channel.sink.add(message);
+    print(message);
+  }
+
+  void Online(IOWebSocketChannel channel, Map<String, dynamic> messageData) {
+    final message = jsonEncode(messageData) + String.fromCharCode(0x1E);
+    channel.sink.add(message);
+    print(message);
   }
 
   void sendMessageSocket(String target, List arguments) {
@@ -83,11 +95,11 @@ class WebSocketService {
                           context,
                           MaterialPageRoute(
                               builder: (builder) => VideoCallScreen(
-                                  idUser: caller,
-                                  currentId: receiver,
-                                  webSocketService: webSocketService,
-                                isJoinRoom: true,
-                              )));
+                                    idUser: caller,
+                                    currentId: receiver,
+                                    webSocketService: webSocketService,
+                                    isJoinRoom: true,
+                                  )));
                     },
                     icon: Icon(Icons.call),
                     color: Colors.green, // Màu nền của nút xanh lá

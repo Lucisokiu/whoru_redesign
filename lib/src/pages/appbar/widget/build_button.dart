@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/pages/chat/ChatPage.dart';
-import 'package:whoru/src/pages/feed/widget/CreatePost.dart';
+import 'package:whoru/src/pages/chat/chat_oage.dart';
+import 'package:whoru/src/pages/feed/widget/create_post.dart';
 import 'package:whoru/src/pages/search/controller/search_bar.dart';
 import 'package:whoru/src/utils/token.dart';
 
@@ -26,6 +26,7 @@ Widget buildActionHome(context, title, icon) {
         }
         if (title == "Chat") {
           int? id = await getIdUser();
+          print(id);
           Navigator.push(
             context,
             MaterialPageRoute(

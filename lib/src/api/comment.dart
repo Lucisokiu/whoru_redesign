@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:whoru/src/model/CommentModel.dart';
+import 'package:whoru/src/models/comment_model.dart';
 import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 import 'package:http/http.dart' as http;

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:whoru/src/api/userInfo.dart';
-import 'package:whoru/src/model/SearchModel.dart';
+import 'package:whoru/src/models/search_model.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:http/http.dart' as http;
 

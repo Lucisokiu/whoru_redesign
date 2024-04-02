@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whoru/src/pages/login/LoginSreen.dart';
+import 'package:whoru/src/pages/login/login_screen.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/pages/user/controller/theme/get_theme.dart';
 import 'package:whoru/src/pages/user/controller/language/language.dart';
 import 'package:whoru/src/utils/token.dart';
 
+import '../face_detection/face_recogtion/pages/home.dart';
 import 'controller/language/app_localization.dart';
 import 'controller/language/bloc/language_bloc.dart';
 
@@ -40,7 +41,8 @@ class _UserPageState extends State<UserPage> {
     getTheme();
     print(darkMode);
   }
-    var list = <DropdownMenuItem<String>>[];
+
+  var list = <DropdownMenuItem<String>>[];
 
   @override
   Widget build(BuildContext context) {
@@ -216,11 +218,10 @@ class _UserPageState extends State<UserPage> {
                     icon: Icon(Icons.arrow_forward),
                     onPressed: () {
                       setState(() {
-
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (builder) => FaceDetection()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => HomeFaceRecognition()));
                       });
                     },
                   )

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:whoru/src/model/ChatModel.dart';
-import 'package:whoru/src/model/MessageModel.dart';
+import 'package:whoru/src/models/chat_model.dart';
+import 'package:whoru/src/models/message_model.dart';
 import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
@@ -23,9 +23,11 @@ Future<List<ChatModel>> getAllUserChat() async {
       // Decode JSON and map it to List<FeedModel>
       List<dynamic> decodedData = jsonDecode(response.body);
       List<ChatModel> chatList =
-      decodedData.map((data) => ChatModel.fromJson(data)).toList();
+          decodedData.map((data) => ChatModel.fromJson(data)).toList();
       return chatList;
     } else {
+      print("Error ${response.statusCode}");
+
       return [];
     }
   } catch (e) {
@@ -53,7 +55,7 @@ Future<List<MessageModel>> getAllChat(int idUser) async {
       // Decode JSON and map it to List<FeedModel>
       List<dynamic> decodedData = jsonDecode(response.body);
       List<MessageModel> chatList =
-      decodedData.map((data) => MessageModel.fromJson(data)).toList();
+          decodedData.map((data) => MessageModel.fromJson(data)).toList();
       return chatList;
     } else {
       return [];

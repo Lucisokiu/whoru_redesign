@@ -7,10 +7,10 @@ import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/log.dart';
 import 'package:whoru/src/api/user.dart';
-import 'package:whoru/src/model/Login.dart';
+import 'package:whoru/src/models/login_model.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
-import 'package:whoru/src/pages/register/CustomSignUp.dart';
-import 'package:whoru/src/pages/register/CustomVerifyAccount.dart';
+import 'package:whoru/src/pages/register/custom_signup.dart';
+import 'package:whoru/src/pages/register/custom_verify_account.dart';
 
 class SignUpForm extends StatefulWidget {
   BuildContext contextScafford;

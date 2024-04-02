@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:whoru/src/pages/feed/screens/feed_screen.dart';
 import 'package:whoru/src/pages/location/location_screen.dart';
-import 'package:whoru/src/pages/notification/controller/NotificationController.dart';
-import 'package:whoru/src/pages/notification/screen/NotificationScreen.dart';
+import 'package:whoru/src/pages/notification/controller/notifications_controller.dart';
+import 'package:whoru/src/pages/notification/screen/notification_screen.dart';
 import 'package:whoru/src/pages/user/user.dart';
 
 class Navigation extends StatefulWidget {

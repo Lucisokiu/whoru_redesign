@@ -48,7 +48,6 @@ dependencies:
 
   #Storage
   shared_preferences: ^2.2.2
-  sqflite: ^2.3.2
   path: ^1.8.3
   path_provider: ^2.1.1
 
@@ -77,6 +76,7 @@ dependencies:
   flutter_blurhash: ^0.7.0
   blurhash_dart: ^1.2.1
   image: ^4.0.17
+
   # blurhash: ^1.0.0
 
   rive: ^0.11.4
@@ -97,9 +97,12 @@ dependencies:
   #ML
   google_ml_kit: ^0.16.3
   tflite_flutter: ^0.10.4
-  #LocalDB
-  hive: ^2.2.3
+  google_mlkit_commons: ^0.6.1
 
+  #LocalDB
+  sqflite: ^2.3.2
+
+  get_it: ^7.6.7
 
 
 dev_dependencies:
@@ -134,6 +137,8 @@ flutter:
     - assets/Backgrounds/
     - assets/icons/
     - assets/translations/
+    - assets/facerecognition/mobilefacenet.tflite
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

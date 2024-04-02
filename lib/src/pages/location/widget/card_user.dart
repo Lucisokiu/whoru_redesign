@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../model/UserModel.dart';
+import '../../../models/user_model.dart';
 
 Future<Object?> CardUser(
   BuildContext contextScafford,
