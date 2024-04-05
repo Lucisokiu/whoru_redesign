@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/pages/chat/chat_oage.dart';
+import 'package:whoru/src/pages/chat/chat_page.dart';
 import 'package:whoru/src/pages/feed/widget/create_post.dart';
 import 'package:whoru/src/pages/search/controller/search_bar.dart';
 import 'package:whoru/src/utils/token.dart';
