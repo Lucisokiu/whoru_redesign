@@ -76,6 +76,7 @@ dependencies:
   flutter_blurhash: ^0.7.0
   blurhash_dart: ^1.2.1
   image: ^4.0.17
+  cached_network_image: ^3.3.1
 
   # blurhash: ^1.0.0
 
@@ -98,6 +99,7 @@ dependencies:
   google_ml_kit: ^0.16.3
   tflite_flutter: ^0.10.4
   google_mlkit_commons: ^0.6.1
+  google_mlkit_face_detection: ^0.9.0
 
   #LocalDB
   sqflite: ^2.3.2
@@ -137,7 +139,7 @@ flutter:
     - assets/Backgrounds/
     - assets/icons/
     - assets/translations/
-    - assets/facerecognition/mobilefacenet.tflite
+    - assets/facerecognition/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

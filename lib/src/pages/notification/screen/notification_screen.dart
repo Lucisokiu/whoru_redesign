@@ -10,7 +10,8 @@ class NotificationScreen extends StatefulWidget {
   State<NotificationScreen> createState() => _NotificationScreenState();
 }
 
-class _NotificationScreenState extends State<NotificationScreen> {
+class _NotificationScreenState extends State<NotificationScreen>
+    with AutomaticKeepAliveClientMixin {
   final List<NotificationModel> notifications = [
     NotificationModel(
       avatarUrl: 'https://via.placeholder.com/150',
@@ -99,6 +100,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: Column(
         children: [
@@ -107,8 +109,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
               child: const MyAppBar()),
           Expanded(
             child: ListView.builder(
+              addAutomaticKeepAlives: true,
               padding: EdgeInsets.only(top: 0, bottom: 11.h),
-
               itemCount: notifications.length,
               itemBuilder: (context, index) {
                 final notification = notifications[index];
@@ -148,10 +150,14 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   onTap: () {},
                 );
               },
+              
             ),
           ),
         ],
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -6,7 +6,7 @@ import 'package:whoru/src/pages/user/controller/theme/get_theme.dart';
 import 'package:whoru/src/pages/user/controller/language/language.dart';
 import 'package:whoru/src/utils/token.dart';
 
-import '../face_detection/face_recogtion/pages/home.dart';
+import '../face_detection/face_recognition.dart';
 import 'controller/language/app_localization.dart';
 import 'controller/language/bloc/language_bloc.dart';
 
@@ -221,7 +221,7 @@ class _UserPageState extends State<UserPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (builder) => HomeFaceRecognition()));
+                                builder: (builder) => FaceRecognitionPage()));
                       });
                     },
                   )
@@ -232,7 +232,9 @@ class _UserPageState extends State<UserPage> {
         ],
       ),
     );
+    
   }
+  bool get updateKeepAlive => true;
 
   List<DropdownMenuItem<String>> _buildDropdownMenuItems() {
     var list = <DropdownMenuItem<String>>[];

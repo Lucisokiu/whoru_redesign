@@ -86,7 +86,6 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
           Map<dynamic, dynamic> receiveData = jsonDecode(offerData);
           String eventData = receiveData["event"];
-          print("_listenServer eventData----------- $eventData");
           if (eventData == "offer") {
             _peerConnection!.setRemoteDescription(
               RTCSessionDescription(
@@ -169,7 +168,6 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
   Future<void> registerListeners() async {
     _peerConnection?.onIceGatheringState = (RTCIceGatheringState state) {
-      print('ICE gathering state changed: $state');
     };
 
     _peerConnection!.onIceCandidate = (RTCIceCandidate candidate) {

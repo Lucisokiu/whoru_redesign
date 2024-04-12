@@ -74,24 +74,19 @@ Future<void> postApiWithImages({
       url,
     );
 
-    // Thêm các trường dữ liệu khác vào FormData nếu cần
     request.fields['Status'] = content;
     request.headers.addAll(headers);
     // Thêm ảnh vào FormData
     if (imageFiles != null) {
       for (var imageFile in imageFiles) {
         var file = await http.MultipartFile.fromPath(
-          'Files', // Thay thế 'image' bằng tên trường chứa ảnh trên API của bạn
+          'Files',
           imageFile.path,
         );
         request.files.add(file);
       }
     }
-
-    // Gửi request và nhận response
     var response = await request.send();
-
-    // Kiểm tra mã trạng thái của response
     if (response.statusCode == 201) {
       print('Success with status ${response.statusCode}');
     } else {
@@ -104,7 +99,7 @@ Future<void> postApiWithImages({
 
 Future<List<FeedModel>?> getAllPostById(int id) async {
   try {
-    var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPostByUserId');
+    var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPostById');
     String? token = await getToken();
 
     var response = await http.post(
@@ -124,7 +119,6 @@ Future<List<FeedModel>?> getAllPostById(int id) async {
 
       return feedList;
     } else if (response.statusCode == 404) {
-      // Return an empty list if the status code is 404
       return [];
     } else {
       print("Fail with StatusCode ${response.statusCode}");

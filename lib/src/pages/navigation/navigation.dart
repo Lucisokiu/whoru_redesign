@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/feed/screens/feed_screen.dart';
 import 'package:whoru/src/pages/location/location_screen.dart';
 import 'package:whoru/src/pages/notification/controller/notifications_controller.dart';
@@ -39,11 +40,10 @@ class _NavigationState extends State<Navigation> {
         extendBody: true,
         body: _screens[currentPage],
         bottomNavigationBar: Container(
-          padding: const EdgeInsets.all(12),
-          margin: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+          margin: EdgeInsets.fromLTRB(7.w, 0, 7.w, 2.h),
           decoration: BoxDecoration(
             color: Colors.black87.withOpacity(0.8),
-            borderRadius: const BorderRadius.all(Radius.circular(24)),
+            borderRadius: const BorderRadius.all(Radius.circular(45)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,7 +68,7 @@ class _NavigationState extends State<Navigation> {
                     : PhosphorIconsThin.bellSimpleRinging),
                 color: Colors.white,
                 onPressed: () {
-                  print("Chat");
+                  print("Notifications");
                   setState(() {
                     currentPage = 1;
                   });

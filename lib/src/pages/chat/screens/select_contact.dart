@@ -4,7 +4,6 @@ import 'package:whoru/src/pages/chat/widget/search_user.dart';
 import 'package:whoru/src/pages/chat/screens/create_group.dart';
 import 'package:whoru/src/pages/chat/widget/button_card.dart';
 import 'package:whoru/src/pages/chat/widget/contact_card.dart';
-import 'package:whoru/src/pages/search/controller/search_bar.dart';
 import 'package:whoru/src/socket/WebSocketService.dart';
 
 import '../../../models/chat_model.dart';

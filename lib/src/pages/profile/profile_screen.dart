@@ -28,10 +28,12 @@ class _ProfilePageState extends State<ProfilePage> {
   fetchData() async {
     widget.idUser ??= await getIdUser();
     print(widget.idUser);
-      user = await getInfoUserById(widget.idUser!);
-      allPost = await getAllPostById(widget.idUser!);
+    user = await getInfoUserById(widget.idUser!);
+    allPost = await getAllPostById(widget.idUser!);
     if (mounted) {
-      setState(() {});
+      setState(() {
+        print(allPost);
+      });
     }
   }
 
@@ -103,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: (user != null)
           ? SafeArea(
               child: SingleChildScrollView(
-                child: Column(
+              child: Column(
                 children: [
                   Stack(
                     children: [
@@ -150,8 +152,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   for (final feed in allPost!)
                     CardFeed(feed: feed, CurrentUser: user!.id),
                 ],
-            ),
-              ))
+              ),
+            ))
           : MySkeletonLoadingWidget(),
     );
   }

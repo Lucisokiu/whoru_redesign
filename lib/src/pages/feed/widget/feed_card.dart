@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
@@ -67,42 +68,39 @@ class _CardFeedState extends State<CardFeed> {
                     width: 60,
                     height: 60,
                     child: GestureDetector(
-                        onTap: () {
-                          if (widget.CurrentUser != widget.feed.idUser) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (builder) => ProfilePage(
-                                          idUser: widget.feed.idUser,
-                                          isMy: widget.CurrentUser ==
-                                                  widget.feed.idUser
-                                              ? true
-                                              : false,
-                                        )));
-                          } else {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (builder) => ProfilePage(
-                                          idUser: widget.feed.idUser,
-                                          isMy: true,
-                                        )));
-                          }
-                        },
-                        child: CircleAvatar(
-                          radius: 30.0,
-                          // Set the radius based on your design
+                      onTap: () {
+                        if (widget.CurrentUser != widget.feed.idUser) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (builder) => ProfilePage(
+                                        idUser: widget.feed.idUser,
+                                        isMy: widget.CurrentUser ==
+                                                widget.feed.idUser
+                                            ? true
+                                            : false,
+                                      )));
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (builder) => ProfilePage(
+                                        idUser: widget.feed.idUser,
+                                        isMy: true,
+                                      )));
+                        }
+                      },
+                      child: CachedNetworkImage(
+                        imageUrl: widget.feed.avatar,
+                        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        imageBuilder: (context, imageProvider) => CircleAvatar(
                           backgroundColor: Colors.transparent,
-                          // Set background color to transparent
-                          child: ClipOval(
-                            child: Image.network(
-                              widget.feed.avatar,
-                              width: 45.0, // Set width based on your design
-                              height: 45.0, // Set height based on your design
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        )),
+                          backgroundImage: imageProvider,
+                          radius: 30,
+                        ),
+                      ),
+                    ),
                   ),
                   Text(
                     widget.feed.fullName,
@@ -189,9 +187,7 @@ class _CardFeedState extends State<CardFeed> {
 
                       // showCommentDialog(context, sampleComments,
                       //     widget.feed.idFeed, widget.CurrentUser!);
-                      Future.delayed(Duration(milliseconds: 800), () {
-
-                      });
+                      Future.delayed(Duration(milliseconds: 800), () {});
                     },
                     onLongPress: () {},
                   ),
