@@ -20,7 +20,9 @@ Face Recognition
 
 # **DEMO**
 
-<video src="video/demo.mp4" height="240" controls></video>
+<video width="320" height="240" controls>
+  <source src="video.mov" type="video/mp4">
+</video>
 
 ### Setup  
 Dart SDK version: 3.0.5  
