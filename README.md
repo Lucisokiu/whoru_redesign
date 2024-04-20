@@ -1,12 +1,14 @@
-**WHORU**
+# **WHORU**
 
-Hello, this is a first version, it will be updated in the future.
+A social networking platform, serves as a place to connect people with the features listed below. I draw inspiration from popular social networks such as Facebook, Instagram, Twitter, etc. This is an incomplete version and will undergo many upgrades in the future.
+Follow me to know newest update
 
-**FEATURE**  
+# **FEATURE**  
 Login/Register  
 Verify code  
 Create Feed  
 Like/Comment/Share  
+Apply Filter to Camera
 View list Like/Comment/Share  
 Search Users  
 User Location  
@@ -17,18 +19,8 @@ Video/Voice call
 
 
 # **DEMO**
-![Alt text](image/regis.png)
-![Alt text](image/login.png)
-![Alt text](image/feed-1.png)
-![Alt text](image/feed-2.png)
-![Alt text](image/search-1.png)
-![Alt text](image/search-2.png)
-![Project Demo](image/user.png)
-![Alt text](image/profile.png)
-![Project Demo](video/location.gif)
-![Project Demo](image/message.png)
-![Project Demo](image/video_call.png)
-![Project Demo](image/voice_call.png)
+
+![Project Demo](video/demo.mp4){: height="400px"}
 
 ### Setup  
 Dart SDK version: 3.0.5  
@@ -40,7 +32,7 @@ Flutter version: 3.10.5
 git clone https://github.com/Lucisokiu/whoru_redesign.git
 ```
 
-Open Android Studio
+Open Android Studio/ VS Code
 
 In terminal
 
@@ -50,10 +42,14 @@ flutter pub get
 
 Run project
 
+```sh
+flutter run
+```
+
 Link deloy: https://apkpure.net/p/com.example.whoru
 
 ## Develop
 
-Face Recognition
+Face Recognition ( complite )
 
-Virtual Background for video call
+Virtual Background for video call ( Updating )
