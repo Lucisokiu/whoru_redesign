@@ -32,11 +32,6 @@ migrate_working_dir/
 .pub/
 /build/
 
-# updating
-/lib/src/pages/face_detection/
-/blobs/
-/assets/facerecognition/
-
 # Symbolication related
 app.*.symbols
 
