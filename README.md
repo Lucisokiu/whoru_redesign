@@ -20,11 +20,7 @@ Face Recognition
 
 # **DEMO**
 
-```html
-<video width="320" height="240" controls>
-  <source src="video/demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+https://github.com/Lucisokiu/whoru_redesign/assets/95356357/c6fddf8e-626d-4e7f-b043-9683beb366a5
 
 ### Setup  
 Dart SDK version: 3.0.5  
