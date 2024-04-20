@@ -16,11 +16,15 @@ User Profile
 Update Avatar/Background/Info user  
 Realtime chat  
 Video/Voice call  
-
+Face Recognition
 
 # **DEMO**
 
-![Project Demo](video/demo.mp4){: height="400px"}
+```html
+<video width="320" height="240" controls>
+  <source src="video/demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ### Setup  
 Dart SDK version: 3.0.5  
