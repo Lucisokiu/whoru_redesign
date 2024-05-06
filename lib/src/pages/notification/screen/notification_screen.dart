@@ -109,7 +109,6 @@ class _NotificationScreenState extends State<NotificationScreen>
               child: const MyAppBar()),
           Expanded(
             child: ListView.builder(
-              addAutomaticKeepAlives: true,
               padding: EdgeInsets.only(top: 0, bottom: 11.h),
               itemCount: notifications.length,
               itemBuilder: (context, index) {

@@ -16,7 +16,7 @@ class FeedPage extends StatefulWidget {
   State<FeedPage> createState() => _FeedPageState();
 }
 
-class _FeedPageState extends State<FeedPage> {
+class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin {
   ScrollController _scrollController = ScrollController();
 
   List<FeedModel> listFeed = [];
@@ -67,6 +67,7 @@ class _FeedPageState extends State<FeedPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SafeArea(
       bottom: false,
       child: Scaffold(
@@ -118,13 +119,16 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   Widget _buildListFooter() {
-    print("_buildListFooter");
-    // getFeed();
+    getFeed();
     return Padding(
       padding: EdgeInsets.only(bottom: 10.h),
-      child: Center(
+      child: const Center(
         child: CircularProgressIndicator(),
       ),
     );
   }
+  
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
