@@ -18,18 +18,17 @@ class FeedPage extends StatefulWidget {
 
 class _FeedPageState extends State<FeedPage> {
   ScrollController _scrollController = ScrollController();
-  bool _isLoading = false;
 
   List<FeedModel> listFeed = [];
   int? CurrentUser;
 
   void getFeed() async {
+    print("get new feed");
     List<FeedModel>? result = await getAllPost();
     if (mounted) {
       if (result != null) {
         setState(() {
-          // listFeed = result;
-          listFeed.addAll(result); // Thêm dữ liệu mới vào cuối danh sách
+          listFeed.addAll(result);
         });
       } else {
         // Navigator.pushAndRemoveUntil(
@@ -60,7 +59,7 @@ class _FeedPageState extends State<FeedPage> {
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
-          0.8 * _scrollController.position.maxScrollExtent) {
+          _scrollController.position.maxScrollExtent * 0.8) {
         getFeed();
       }
     });
@@ -72,6 +71,7 @@ class _FeedPageState extends State<FeedPage> {
       bottom: false,
       child: Scaffold(
         body: CustomScrollView(
+          controller: _scrollController,
           slivers: [
             SliverAppBar(
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -84,10 +84,13 @@ class _FeedPageState extends State<FeedPage> {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
+                  if (listFeed.isEmpty) {
+                    return SizedBox(height: 1000,child: MySkeletonLoadingWidget());
+                  }
+
                   if (index == listFeed.length) {
                     return _buildListFooter();
-                  }
-                  if (index == 0) {
+                  } else if (index == 0) {
                     return Column(
                       children: [
                         storywidget(context),
@@ -105,7 +108,7 @@ class _FeedPageState extends State<FeedPage> {
                     );
                   }
                 },
-                childCount: listFeed.length,
+                childCount: listFeed.length + 1,
               ),
             ),
           ],
@@ -116,15 +119,12 @@ class _FeedPageState extends State<FeedPage> {
 
   Widget _buildListFooter() {
     print("_buildListFooter");
-    if (!_isLoading) {
-      return Container();
-    } else {
-      return Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.0),
-        child: Center(
-          child: CircularProgressIndicator(), // Hiển thị chỉ báo khi đang tải
-        ),
-      );
-    }
+    // getFeed();
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10.h),
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 }

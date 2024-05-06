@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/login/login_screen.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/pages/user/controller/theme/get_theme.dart';
@@ -108,14 +109,15 @@ class _UserPageState extends State<UserPage> {
               label: Row(
                 children: [
                   Text(
-                    'Change Theme',
+                    'Theme Mode',
                     style: TextStyle(fontSize: 18),
                   ),
                   Spacer(),
                   IconButton(
-                    icon: darkMode
-                        ? Icon(Icons.toggle_on)
-                        : Icon(Icons.toggle_off_outlined),
+                    icon: Icon(
+                      darkMode ? Icons.toggle_on : Icons.toggle_off_outlined,
+                      size: 25.sp,
+                    ),
                     onPressed: () {
                       setState(() {
                         darkMode = !darkMode;
@@ -210,7 +212,7 @@ class _UserPageState extends State<UserPage> {
               label: Row(
                 children: [
                   Text(
-                    'Face Dectection(Test)',
+                    'Face Dectection (Test)',
                     style: TextStyle(fontSize: 18),
                   ),
                   Spacer(),
