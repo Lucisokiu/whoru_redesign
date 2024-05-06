@@ -4,8 +4,13 @@ import 'package:whoru/src/api/userInfo.dart';
 import 'package:whoru/src/models/search_model.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:whoru/src/pages/search/widget/screen_results.dart';
 
 class CustomSearch extends SearchDelegate {
+  var currentIndex = 0;
+  bool showBottomNavigationBar = false;
+  late List<SearchModel> matchQuery;
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -28,6 +33,8 @@ class CustomSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    showBottomNavigationBar = false;
+
     return FutureBuilder<http.Response>(
         future: getInfoUserByName(query),
         builder: (contextFutureBuilder, snapshot) {
@@ -113,6 +120,8 @@ class CustomSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+    showBottomNavigationBar = true;
+
     return FutureBuilder<http.Response>(
       future: getInfoUserByName(query),
       builder: (contextFutureBuilder, snapshot) {
@@ -137,6 +146,7 @@ class CustomSearch extends SearchDelegate {
           );
         } else {
           List<SearchModel> matchQuery = [];
+
           if (query.isEmpty) {
             return Container(
               color: Theme.of(context).scaffoldBackgroundColor,
@@ -175,46 +185,65 @@ class CustomSearch extends SearchDelegate {
               ),
             );
           }
-
-          return Container(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: ListView.builder(
-              itemCount: matchQuery.length,
-              itemBuilder: (context, index) {
-                SearchModel result = matchQuery[index];
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(result.avatar),
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-
-                      Text(
-                        result.fullName,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      Icon(Icons.account_circle,color:Theme.of(context).textTheme.bodyMedium!.color)
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (builder) => ProfilePage(
-                          idUser: result.idUser,
-                          isMy: false,
-                        ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          );
+          List<Widget> tabs = [
+            AllResults(matchQuery: matchQuery),
+            AllResults(matchQuery: matchQuery),
+          ];
+          return tabs[currentIndex];
         }
       },
     );
+  }
+
+  @override
+  PreferredSizeWidget buildBottom(BuildContext context) {
+    if (showBottomNavigationBar) {
+      return PreferredSize(
+        preferredSize: const Size.fromHeight(50.0),
+        child: StatefulBuilder(
+          builder: (context, setState) => DefaultTabController(
+            initialIndex: currentIndex,
+            length: 3,
+            child: TabBar(
+              onTap: (index) {
+                setState(() {
+                  currentIndex = index;
+                });
+              },
+              indicatorColor: Colors.red,
+              tabs: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Text(
+                    "All",
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Text(
+                    "Users",
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Text(
+                    "Feed",
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    } else {
+      return PreferredSize(
+        preferredSize: Size.zero,
+        child: Container(),
+      );
+    }
   }
 
   @override
@@ -252,17 +281,4 @@ class CustomSearch extends SearchDelegate {
               titleLarge: TextStyle(color: theme.textTheme.bodyMedium!.color),
             ));
   }
-// @override
-// InputDecorationTheme? get searchFieldDecorationTheme => InputDecorationTheme(
-//   hintStyle: TextStyle(color: Colors.grey),
-//   contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0), // Điều chỉnh chiều cao và thụt vào
-//   border: OutlineInputBorder(
-//     borderRadius: BorderRadius.circular(24.0),
-//   ),
-// );
-// @override
-// // TODO: implement searchFieldStyle
-// TextStyle? get searchFieldStyle => TextStyle(
-//   color: Theme.of(_context).textTheme.bodyMedium!.color
-// );
 }
