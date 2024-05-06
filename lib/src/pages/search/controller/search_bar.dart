@@ -4,12 +4,15 @@ import 'package:whoru/src/api/userInfo.dart';
 import 'package:whoru/src/models/search_model.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:http/http.dart' as http;
-import 'package:whoru/src/pages/search/widget/screen_results.dart';
+import 'package:whoru/src/pages/search/widget/all_results.dart';
+import 'package:whoru/src/pages/search/widget/feed_results.dart';
+import 'package:whoru/src/pages/search/widget/user_results.dart';
 
 class CustomSearch extends SearchDelegate {
-  var currentIndex = 0;
+  int currentIndex = 0;
   bool showBottomNavigationBar = false;
-  late List<SearchModel> matchQuery;
+  List<SearchModel> matchQuery = [];
+  late TabController _controller;
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -50,7 +53,6 @@ class CustomSearch extends SearchDelegate {
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
-            List<SearchModel> matchQuery = [];
             if (query.isEmpty) {
               return Container(
                 color: Theme.of(context).scaffoldBackgroundColor,
@@ -121,129 +123,57 @@ class CustomSearch extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     showBottomNavigationBar = true;
-
-    return FutureBuilder<http.Response>(
-      future: getInfoUserByName(query),
-      builder: (contextFutureBuilder, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Theme.of(context).dividerColor,
-                  color: Colors.black,
-                ),
-              ));
-        } else if (snapshot.hasError) {
-          return Container(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: Center(
-              child: Text(
-                'Error: ${snapshot.error}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ),
-          );
-        } else {
-          List<SearchModel> matchQuery = [];
-
-          if (query.isEmpty) {
-            return Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: Center(
-                child: Text(
-                  'Enter information',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-            );
-          } else if (snapshot.data != null &&
-              snapshot.data!.statusCode == 200) {
-            List<dynamic> jsonList = jsonDecode(snapshot.data!.body);
-            matchQuery =
-                jsonList.map((item) => SearchModel.fromJson(item)).toList();
-          } else {
-            return Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: Center(
-                child: Text(
-                  'No results found.',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-            );
-          }
-
-          if (matchQuery.isEmpty) {
-            return Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: Center(
-                child: Text(
-                  'No results found.',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-            );
-          }
-          List<Widget> tabs = [
-            AllResults(matchQuery: matchQuery),
-            AllResults(matchQuery: matchQuery),
-          ];
-          return tabs[currentIndex];
-        }
-      },
-    );
-  }
-
-  @override
-  PreferredSizeWidget buildBottom(BuildContext context) {
-    if (showBottomNavigationBar) {
-      return PreferredSize(
-        preferredSize: const Size.fromHeight(50.0),
-        child: StatefulBuilder(
-          builder: (context, setState) => DefaultTabController(
-            initialIndex: currentIndex,
-            length: 3,
-            child: TabBar(
-              onTap: (index) {
-                setState(() {
-                  currentIndex = index;
-                });
-              },
-              indicatorColor: Colors.red,
-              tabs: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Text(
-                    "All",
-                    style: Theme.of(context).textTheme.headline6,
+    List<Widget> tabs = [
+      AllResults(query: query, contextparent: context),
+      UserResults(query: query, contextparent: context),
+      FeedResults(query: query, contextparent: context),
+    ];
+    return StatefulBuilder(
+      builder: (contextstf, setState) => DefaultTabController(
+        initialIndex: currentIndex,
+        length: 3,
+        child: Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: Column(
+            children: [
+              TabBar(
+                onTap: (index) {
+                  setState(() {
+                    currentIndex = index;
+                    print(currentIndex);
+                  });
+                },
+                indicatorColor: Colors.blueAccent,
+                tabs: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: Text("All",
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyMedium!.color,
+                        )),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Text(
-                    "Users",
-                    style: Theme.of(context).textTheme.headline6,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: Text("Users",
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyMedium!.color,
+                        )),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Text(
-                    "Feed",
-                    style: Theme.of(context).textTheme.headline6,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: Text("Feed",
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyMedium!.color,
+                        )),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+              Expanded(child: tabs[currentIndex]),
+            ],
           ),
         ),
-      );
-    } else {
-      return PreferredSize(
-        preferredSize: Size.zero,
-        child: Container(),
-      );
-    }
+      ),
+    );
   }
 
   @override
@@ -251,34 +181,34 @@ class CustomSearch extends SearchDelegate {
     final ThemeData theme = Theme.of(context);
 
     return ThemeData(
-        appBarTheme: AppBarTheme(
-          color: theme.scaffoldBackgroundColor,
+      appBarTheme: AppBarTheme(
+        color: theme.scaffoldBackgroundColor,
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        hintStyle: TextStyle(color: Colors.grey),
+        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(24.0),
         ),
-        inputDecorationTheme: InputDecorationTheme(
-          hintStyle: TextStyle(color: Colors.grey),
-          contentPadding:
-              EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24.0),
-            borderSide: BorderSide(
-              color: theme.focusColor, // Màu viền khi thanh tìm kiếm được focus
-              width: 3.0,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24.0),
-            borderSide: BorderSide(
-              color: theme.dividerColor,
-              // Màu viền khi thanh tìm kiếm không được focus
-              width: 1.0,
-            ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(24.0),
+          borderSide: BorderSide(
+            color: theme.focusColor, // Màu viền khi thanh tìm kiếm được focus
+            width: 3.0,
           ),
         ),
-        textTheme: Theme.of(context).textTheme.copyWith(
-              titleLarge: TextStyle(color: theme.textTheme.bodyMedium!.color),
-            ));
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(24.0),
+          borderSide: BorderSide(
+            color: theme.dividerColor,
+            // Màu viền khi thanh tìm kiếm không được focus
+            width: 1.0,
+          ),
+        ),
+      ),
+      textTheme: Theme.of(context).textTheme.copyWith(
+            titleLarge: TextStyle(color: theme.textTheme.bodyMedium!.color),
+          ),
+    );
   }
 }

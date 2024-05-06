@@ -20,7 +20,7 @@ class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin 
   ScrollController _scrollController = ScrollController();
 
   List<FeedModel> listFeed = [];
-  int? CurrentUser;
+  int? currentUser;
 
   void getFeed() async {
     print("get new feed");
@@ -46,7 +46,7 @@ class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin 
     int? id = await getIdUser();
     if (mounted) {
       setState(() {
-        CurrentUser = id;
+        currentUser = id;
       });
     }
   }
@@ -98,14 +98,14 @@ class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin 
                         SizedBox(height: 2.h),
                         CardFeed(
                           feed: listFeed[index],
-                          CurrentUser: CurrentUser!,
+                          CurrentUser: currentUser!,
                         ),
                       ],
                     );
                   } else {
                     return CardFeed(
                       feed: listFeed[index],
-                      CurrentUser: CurrentUser!,
+                      CurrentUser: currentUser!,
                     );
                   }
                 },

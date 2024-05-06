@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
-Future<void> getAll(idPost) async {
+Future<void> getAll() async {
   var url = Uri.https(baseUrl,'/api/v1/Users/GetAll');
   String? token = await getToken();
 
