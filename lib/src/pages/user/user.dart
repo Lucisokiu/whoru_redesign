@@ -236,7 +236,6 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-  bool get updateKeepAlive => true;
 
   List<DropdownMenuItem<String>> _buildDropdownMenuItems() {
     var list = <DropdownMenuItem<String>>[];

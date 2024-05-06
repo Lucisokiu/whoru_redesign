@@ -7,6 +7,7 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/chat.dart';
 import 'package:whoru/src/models/chat_model.dart';
 import 'package:whoru/src/pages/chat/screens/select_contact.dart';
+import 'package:whoru/src/pages/chat/screens/wait_list_message_screen.dart';
 import 'package:whoru/src/pages/chat/widget/custom_card.dart';
 import 'package:whoru/src/socket/WebSocketService.dart';
 import 'package:whoru/src/utils/url.dart';
@@ -26,7 +27,8 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatModel> chatmodels = [];
   WebSocketService webSocketService = WebSocketService(socketUrl);
   late StreamSubscription<dynamic> messageSubscription;
-  final NotificationController _notificationController = NotificationController();
+  // final NotificationController _notificationController =
+  //     NotificationController();
 
   Future<void> getUser() async {
     chatmodels = await getAllUserChat();
@@ -37,7 +39,6 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getUser();
     connected();
@@ -95,24 +96,31 @@ class _ChatPageState extends State<ChatPage> {
               color: Theme.of(context).iconTheme.color),
           title: Text("Waiting list message",
               style: Theme.of(context).textTheme.bodyMedium),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => WaitListChatPage(currentId: widget.currentId),
+              ),
+            );
+          },
         ),
         ListTile(
-          title: Text("Turn off notifications",
+          title: Text("Turn off notifications (Updating)",
               style: Theme.of(context).textTheme.bodyMedium),
-          leading: IconButton(
-            icon: Icon(
-              _notificationController.isEnabled
-                  ? Icons.toggle_on
-                  : Icons.toggle_off,
-              color: _notificationController.isEnabled
-                  ? Colors.green
-                  : Colors.red,
-            ),
-            onPressed: () {
-              _notificationController.toggleNotifications(context, getUser);
-            },
-          ),
+          // leading: IconButton(
+          //   icon: Icon(
+          //     _notificationController.isEnabled
+          //         ? Icons.toggle_on
+          //         : Icons.toggle_off,
+          //     color: _notificationController.isEnabled
+          //         ? Colors.green
+          //         : Colors.red,
+          //   ),
+          //   onPressed: () {
+          //     _notificationController.toggleNotifications(context, getUser);
+          //   },
+          // ),
         ),
       ])),
       floatingActionButton: FloatingActionButton(
