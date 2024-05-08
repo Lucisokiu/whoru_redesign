@@ -9,16 +9,28 @@ class WebSocketService {
   final String _url;
   late IOWebSocketChannel _channel;
   final StreamController<dynamic> _controller = StreamController.broadcast();
+  static WebSocketService? _instance;
 
-  WebSocketService(this._url);
+  // WebSocketService(this._url);
+
+  // Singleton pattern
+  // Constructor private
+  WebSocketService._internal(this._url);
+
+  // Factory constructor
+  factory WebSocketService(String url) {
+    _instance ??= WebSocketService._internal(url);
+    return _instance!;
+  }
 
   Future<void> connect() async {
     int? id = await getIdUser();
     _channel = IOWebSocketChannel.connect(_url);
     _channel.stream.listen(
       (dynamic message) {
-        print("WebSocketService $message");
-        _controller.add(message);
+        var receivedMessage = message.replaceAll(String.fromCharCode(0x1E), '');
+        print("receivedMessage $receivedMessage");
+        _controller.add(receivedMessage);
       },
       onError: (error) {
         print("WebSocketService Error: $error");
@@ -91,7 +103,7 @@ class WebSocketService {
                 children: [
                   IconButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (builder) => VideoCallScreen(
@@ -102,12 +114,12 @@ class WebSocketService {
                                   )));
                     },
                     icon: Icon(Icons.call),
-                    color: Colors.green, // Màu nền của nút xanh lá
+                    color: Colors.green,
                   ),
                   IconButton(
                     onPressed: () {
                       Navigator.pop(
-                          context); // Đóng hộp thoại khi kết thúc cuộc gọi
+                          context);
                     },
                     icon: Icon(Icons.call_end),
                     color: Colors.red, // Màu nền của nút đỏ

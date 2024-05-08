@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:whoru/src/pages/appbar/appbar.dart';
 import 'package:whoru/src/pages/location/widget/map_widget.dart';
 
-import '../user/controller/theme/get_theme.dart';
 
 class LocationPage extends StatefulWidget {
   const LocationPage({super.key});

@@ -92,8 +92,8 @@ class _CardFeedState extends State<CardFeed> {
                       },
                       child: CachedNetworkImage(
                         imageUrl: widget.feed.avatar,
-                        placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
                         imageBuilder: (context, imageProvider) => CircleAvatar(
                           backgroundColor: Colors.transparent,
                           backgroundImage: imageProvider,
@@ -127,7 +127,7 @@ class _CardFeedState extends State<CardFeed> {
                 height: 0.5.h,
               ),
               Container(
-                margin: EdgeInsets.only(
+                margin: const EdgeInsets.only(
                     top: 8,
                     left: 10,
                     right:
@@ -187,7 +187,7 @@ class _CardFeedState extends State<CardFeed> {
 
                       // showCommentDialog(context, sampleComments,
                       //     widget.feed.idFeed, widget.CurrentUser!);
-                      Future.delayed(Duration(milliseconds: 800), () {});
+                      Future.delayed(const Duration(milliseconds: 800), () {});
                     },
                     onLongPress: () {},
                   ),

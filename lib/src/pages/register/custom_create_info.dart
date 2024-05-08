@@ -11,7 +11,7 @@ Future<Object?> customCreateInfoDialog(
       context: contextScafford,
       transitionDuration: const Duration(milliseconds: 400),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
-        Tween<Offset> tween = Tween(begin: Offset(0, -1), end: Offset.zero);
+        Tween<Offset> tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
         return SlideTransition(
             position: tween.animate(
                 CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
@@ -54,9 +54,9 @@ class _CreateInfoState extends State<CreateInfo> {
                     clipBehavior: Clip.none,
                     children: [
                       Column(children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: const Text(
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
                             "Create Info",
                             style:
                                 TextStyle(fontSize: 34, fontFamily: "Poppins"),

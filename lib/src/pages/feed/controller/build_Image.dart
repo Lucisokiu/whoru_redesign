@@ -14,7 +14,7 @@ Widget buildSingleImage(BuildContext context, String urlImage) {
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -29,8 +29,8 @@ Widget buildSingleImage(BuildContext context, String urlImage) {
                   maxScale: PhotoViewComputedScale.covered * 2,
                 );
               },
-              scrollPhysics: BouncingScrollPhysics(),
-              backgroundDecoration: BoxDecoration(
+              scrollPhysics: const BouncingScrollPhysics(),
+              backgroundDecoration: const BoxDecoration(
                 color: Colors.black,
               ),
               pageController: PageController(),
@@ -60,8 +60,6 @@ Widget buildSingleImage(BuildContext context, String urlImage) {
 Widget buildDoubleImage(
     BuildContext context, String urlImage1, String urlImage2) {
   final size = MediaQuery.of(context).size;
-  print(urlImage1);
-  print(urlImage2);
 
   return ClipRRect(
     borderRadius: BorderRadius.circular(16.0),
@@ -83,8 +81,8 @@ Widget buildDoubleImage(
                         maxScale: PhotoViewComputedScale.covered * 2,
                       );
                     },
-                    scrollPhysics: BouncingScrollPhysics(),
-                    backgroundDecoration: BoxDecoration(
+                    scrollPhysics: const BouncingScrollPhysics(),
+                    backgroundDecoration: const BoxDecoration(
                       color: Colors.black,
                     ),
                     pageController: PageController(),
@@ -118,8 +116,8 @@ Widget buildDoubleImage(
                         maxScale: PhotoViewComputedScale.covered * 2,
                       );
                     },
-                    scrollPhysics: BouncingScrollPhysics(),
-                    backgroundDecoration: BoxDecoration(
+                    scrollPhysics: const BouncingScrollPhysics(),
+                    backgroundDecoration: const BoxDecoration(
                       color: Colors.black,
                     ),
                     pageController: PageController(initialPage: 1),
@@ -165,8 +163,8 @@ Widget buildTripleImage(BuildContext context, String urlImage1,
                         maxScale: PhotoViewComputedScale.covered * 2,
                       );
                     },
-                    scrollPhysics: BouncingScrollPhysics(),
-                    backgroundDecoration: BoxDecoration(
+                    scrollPhysics: const BouncingScrollPhysics(),
+                    backgroundDecoration: const BoxDecoration(
                       color: Colors.black,
                     ),
                     pageController: PageController(),
@@ -206,8 +204,8 @@ Widget buildTripleImage(BuildContext context, String urlImage1,
                                 maxScale: PhotoViewComputedScale.covered * 2,
                               );
                             },
-                            scrollPhysics: BouncingScrollPhysics(),
-                            backgroundDecoration: BoxDecoration(
+                            scrollPhysics: const BouncingScrollPhysics(),
+                            backgroundDecoration: const BoxDecoration(
                               color: Colors.black,
                             ),
                             pageController: PageController(),
@@ -291,8 +289,8 @@ Widget buildMultipleImage(BuildContext context, List<String> listImage) {
                         maxScale: PhotoViewComputedScale.covered * 2,
                       );
                     },
-                    scrollPhysics: BouncingScrollPhysics(),
-                    backgroundDecoration: BoxDecoration(
+                    scrollPhysics: const BouncingScrollPhysics(),
+                    backgroundDecoration: const BoxDecoration(
                       color: Colors.black,
                     ),
                     pageController: PageController(),
@@ -332,8 +330,8 @@ Widget buildMultipleImage(BuildContext context, List<String> listImage) {
                                 maxScale: PhotoViewComputedScale.covered * 2,
                               );
                             },
-                            scrollPhysics: BouncingScrollPhysics(),
-                            backgroundDecoration: BoxDecoration(
+                            scrollPhysics: const BouncingScrollPhysics(),
+                            backgroundDecoration: const BoxDecoration(
                               color: Colors.black,
                             ),
                             pageController: PageController(),
@@ -368,8 +366,8 @@ Widget buildMultipleImage(BuildContext context, List<String> listImage) {
                                 maxScale: PhotoViewComputedScale.covered * 2,
                               );
                             },
-                            scrollPhysics: BouncingScrollPhysics(),
-                            backgroundDecoration: BoxDecoration(
+                            scrollPhysics: const BouncingScrollPhysics(),
+                            backgroundDecoration: const BoxDecoration(
                               color: Colors.black,
                             ),
                             pageController: PageController(),

@@ -12,7 +12,6 @@ class CustomSearch extends SearchDelegate {
   int currentIndex = 0;
   bool showBottomNavigationBar = false;
   List<SearchModel> matchQuery = [];
-  late TabController _controller;
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -140,7 +139,6 @@ class CustomSearch extends SearchDelegate {
                 onTap: (index) {
                   setState(() {
                     currentIndex = index;
-                    print(currentIndex);
                   });
                 },
                 indicatorColor: Colors.blueAccent,
@@ -185,8 +183,8 @@ class CustomSearch extends SearchDelegate {
         color: theme.scaffoldBackgroundColor,
       ),
       inputDecorationTheme: InputDecorationTheme(
-        hintStyle: TextStyle(color: Colors.grey),
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+        hintStyle: const TextStyle(color: Colors.grey),
+        contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24.0),
         ),

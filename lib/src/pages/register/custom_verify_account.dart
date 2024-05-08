@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:whoru/src/pages/register/widget/FieldFormSignUp.dart';
-import 'package:whoru/src/pages/login/widget/field_form_signin.dart';
 import 'package:whoru/src/pages/register/widget/FieldFormVerify.dart';
 
 Future<Object?> customVerifyDialog(
@@ -13,7 +11,7 @@ Future<Object?> customVerifyDialog(
       context: contextScafford,
       transitionDuration: const Duration(milliseconds: 400),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
-        Tween<Offset> tween = Tween(begin: Offset(0, -1), end: Offset.zero);
+        Tween<Offset> tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
         return SlideTransition(
             position: tween.animate(
                 CurvedAnimation(parent: animation, curve: Curves.easeInOut)),

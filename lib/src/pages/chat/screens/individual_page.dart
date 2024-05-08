@@ -11,14 +11,12 @@ import 'package:whoru/src/pages/chat/widget/own_messenger_card.dart';
 import 'package:whoru/src/pages/chat/widget/reply_card.dart';
 import 'package:whoru/src/socket/WebSocketService.dart';
 
+import '../../../utils/url.dart';
+
 class IndividualPage extends StatefulWidget {
   const IndividualPage(
-      {super.key,
-      required this.webSocketService,
-      required this.user,
-      required this.currentId});
+      {super.key, required this.user, required this.currentId});
 
-  final WebSocketService webSocketService;
   final UserChat user;
   final int currentId;
 
@@ -34,6 +32,7 @@ class _IndividualPageState extends State<IndividualPage> {
   TextEditingController _controller = TextEditingController();
   ScrollController _scrollController = ScrollController();
   late StreamSubscription<dynamic> messageSubscription;
+  WebSocketService webSocketService = WebSocketService(socketUrl);
 
   @override
   void initState() {
@@ -72,7 +71,9 @@ class _IndividualPageState extends State<IndividualPage> {
   }
 
   void connect() {
-    messageSubscription = widget.webSocketService.onMessage.listen(
+
+
+    messageSubscription = webSocketService.onMessage.listen(
       (event) {
         var receivedMessage = event.replaceAll(String.fromCharCode(0x1E), '');
         Map<dynamic, dynamic> jsonData = jsonDecode(receivedMessage);
@@ -203,7 +204,7 @@ class _IndividualPageState extends State<IndividualPage> {
                       builder: (context) => VideoCallScreen(
                         idUser: widget.user.idUser,
                         currentId: widget.currentId,
-                        webSocketService: widget.webSocketService,
+                        webSocketService: webSocketService,
                       ),
                     ),
                   );
@@ -397,11 +398,8 @@ class _IndividualPageState extends State<IndividualPage> {
                           ),
                           onPressed: () {
                             if (sendButton) {
-                              sendMessage(
-                                  widget.webSocketService,
-                                  _controller.text,
-                                  widget.currentId,
-                                  widget.user.idUser);
+                              sendMessage(webSocketService, _controller.text,
+                                  widget.currentId, widget.user.idUser);
                               _scrolldown();
                               setState(() {
                                 sendButton = false;

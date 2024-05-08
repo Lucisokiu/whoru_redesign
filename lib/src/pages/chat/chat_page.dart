@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -9,10 +8,7 @@ import 'package:whoru/src/models/chat_model.dart';
 import 'package:whoru/src/pages/chat/screens/select_contact.dart';
 import 'package:whoru/src/pages/chat/screens/wait_list_message_screen.dart';
 import 'package:whoru/src/pages/chat/widget/custom_card.dart';
-import 'package:whoru/src/socket/WebSocketService.dart';
-import 'package:whoru/src/utils/url.dart';
 
-import 'controller/chat_notifications_controllers.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key, required this.currentId});
@@ -25,8 +21,6 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   List<ChatModel> chatmodels = [];
-  WebSocketService webSocketService = WebSocketService(socketUrl);
-  late StreamSubscription<dynamic> messageSubscription;
   // final NotificationController _notificationController =
   //     NotificationController();
 
@@ -36,46 +30,11 @@ class _ChatPageState extends State<ChatPage> {
       setState(() {});
     }
   }
-
   @override
   void initState() {
-    super.initState();
     getUser();
-    connected();
+    super.initState();
   }
-
-  void connected() {
-    webSocketService.connect();
-
-    messageSubscription = webSocketService.onMessage.listen((event) {
-      getUser();
-      var receivedMessage = event.replaceAll(String.fromCharCode(0x1E), '');
-
-      print("ChatPage $event");
-      Map<String, dynamic> message = jsonDecode(receivedMessage);
-
-      if (message['type'] == 1 && message['target'] == 'ReceiveSignal') {
-        List<dynamic> arguments = message['arguments'];
-        int idCaller = arguments[0];
-        String name = arguments[1];
-        String avt = arguments[2];
-        int idReceiver = arguments[3];
-        webSocketService.showCallDialog(
-            idCaller, name, avt, idReceiver, context, webSocketService);
-      }
-    });
-  }
-
-  void disconnected() {
-    messageSubscription.cancel();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    webSocketService.close();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,7 +88,7 @@ class _ChatPageState extends State<ChatPage> {
               context,
               MaterialPageRoute(
                   builder: (builder) =>
-                      SelectContact(webSocketService: webSocketService)));
+                      SelectContact()));
         },
         child: Icon(
           Icons.chat,
@@ -139,7 +98,6 @@ class _ChatPageState extends State<ChatPage> {
       body: ListView.builder(
         itemCount: chatmodels.length,
         itemBuilder: (contex, index) => CustomCard(
-          webSocketService: webSocketService,
           chatModel: chatmodels[index],
           currentId: widget.currentId,
         ),

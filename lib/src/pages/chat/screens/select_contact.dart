@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/io.dart';
 import 'package:whoru/src/pages/chat/widget/search_user.dart';
 import 'package:whoru/src/pages/chat/screens/create_group.dart';
 import 'package:whoru/src/pages/chat/widget/button_card.dart';
 import 'package:whoru/src/pages/chat/widget/contact_card.dart';
-import 'package:whoru/src/socket/WebSocketService.dart';
 
 import '../../../models/chat_model.dart';
 
 class SelectContact extends StatefulWidget {
-  WebSocketService webSocketService;
 
-  SelectContact({super.key, required this.webSocketService});
+  SelectContact({super.key});
 
   @override
   _SelectContactState createState() => _SelectContactState();
@@ -91,7 +88,7 @@ class _SelectContactState extends State<SelectContact> {
                 onPressed: () {
                   showSearch(
                     context: context,
-                    delegate: SearchUserChat(webSocketService: widget.webSocketService),
+                    delegate: SearchUserChat(),
                   );
                 }),
             PopupMenuButton<String>(

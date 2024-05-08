@@ -55,13 +55,13 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                   children: [
                     Text(
                       user.followerCount.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "Lato",
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
                       ),
                     ),
-                    Text(
+                    const Text(
                       "Followers",
                       style: TextStyle(
                         fontFamily: "Lobster",
@@ -85,13 +85,13 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                   children: [
                     Text(
                       user.followingCount.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "Lato",
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
                       ),
                     ),
-                    Text(
+                    const Text(
                       "Following",
                       style: TextStyle(
                         fontFamily: "Lobster",
@@ -119,7 +119,7 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                                 user.isFollow = !user.isFollow;
                               });
                             },
-                            child: Text('unFollow'),
+                            child: const Text('unFollow'),
                           ),
                         )
                       : Expanded(
@@ -131,10 +131,10 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                                 user.isFollow = !user.isFollow;
                               });
                             },
-                            child: Text('Follow'),
+                            child: const Text('Follow'),
                           ),
                         ),
-                  SizedBox(width: 16), // Khoảng cách giữa hai nút
+                  const SizedBox(width: 16), // Khoảng cách giữa hai nút
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
@@ -143,7 +143,7 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                         //     MaterialPageRoute(
                         //         builder: (contex) => ChatPage(currentId: widget.currentId)
                       },
-                      child: Text('Message'),
+                      child: const Text('Message'),
                     ),
                   ),
                 ],

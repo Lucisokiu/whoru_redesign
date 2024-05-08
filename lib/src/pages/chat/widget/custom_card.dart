@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:whoru/src/models/chat_model.dart';
 import 'package:whoru/src/models/user_chat.dart';
 import 'package:whoru/src/pages/chat/screens/individual_page.dart';
-import 'package:whoru/src/socket/WebSocketService.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard(
-      {super.key,required this.webSocketService, required this.chatModel, required this.currentId});
-  final WebSocketService webSocketService;
+      {super.key, required this.chatModel, required this.currentId});
   final ChatModel chatModel;
   final int currentId;
 
@@ -19,7 +17,6 @@ class CustomCard extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (contex) => IndividualPage(
-                  webSocketService: webSocketService,
                       user: UserChat.fromChatModel(chatModel),
                       currentId: currentId,
                     )));
@@ -46,13 +43,13 @@ class CustomCard extends StatelessWidget {
             ),
             subtitle: Row(
               children: [
-                Icon(Icons.done_all),
-                SizedBox(
+                const Icon(Icons.done_all),
+                const SizedBox(
                   width: 3,
                 ),
                 Text(
                   chatModel.currentMessage,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 13,
                   ),
                 ),
@@ -60,8 +57,8 @@ class CustomCard extends StatelessWidget {
             ),
             trailing: Text(chatModel.type),
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 20, left: 80),
+          const Padding(
+            padding: EdgeInsets.only(right: 20, left: 80),
             child: Divider(
               thickness: 1,
             ),
