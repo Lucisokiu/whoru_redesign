@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/follow.dart';
+import 'package:whoru/src/models/user_chat.dart';
 import 'package:whoru/src/pages/feed/widget/list_like_dialog.dart';
+import 'package:whoru/src/utils/token.dart';
 
 import '../../../models/user_model.dart';
+import '../../chat/screens/individual_page.dart';
 
 Widget info(BuildContext context, UserModel user, bool isMy) {
   final double screenHeight = MediaQuery.of(context).size.height;
@@ -39,7 +42,6 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
             fontSize: 24,
           ),
         ),
-
         Row(
           children: [
             Expanded(
@@ -137,11 +139,19 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                   const SizedBox(width: 16), // Khoảng cách giữa hai nút
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (contex) => ChatPage(currentId: widget.currentId)
+                      onPressed: () async {
+                        int? currentId = await getIdUser();
+                        UserChat userChat = UserChat(
+                            idUser: user.id,
+                            fullName: user.fullName,
+                            avatar: user.avt);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (contex) => IndividualPage(
+                                currentId: currentId!, user: userChat),
+                          ),
+                        );
                       },
                       child: const Text('Message'),
                     ),

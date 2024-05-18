@@ -21,10 +21,10 @@ class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin 
 
   List<FeedModel> listFeed = [];
   int? currentUser;
-
+  int page = 0;
   void getFeed() async {
     print("get new feed");
-    List<FeedModel>? result = await getAllPost();
+    List<FeedModel>? result = await getAllPost(++page);
     if (mounted) {
       if (result != null) {
         setState(() {

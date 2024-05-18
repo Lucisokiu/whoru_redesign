@@ -17,7 +17,28 @@ class _CreatePostState extends State<CreatePost> {
   final TextEditingController _titleController = TextEditingController();
   List<XFile> _selectedImages = [];
   bool isLoading = false;
+  final RegExp _sensitiveWordPattern = RegExp(r'\b(đụ má|đm|con cặc|cc|lồn)\b', caseSensitive: false);
 
+  @override
+  void initState() {
+    _titleController.addListener(_checkSensitiveWords);
+    super.initState();
+  }
+ void _checkSensitiveWords() {
+    final text = _titleController.text;
+    final sanitizedText = text.replaceAllMapped(_sensitiveWordPattern, (match) {
+      return '*' * match.group(0)!.length;
+    });
+
+    if (text != sanitizedText) {
+      _titleController.value = _titleController.value.copyWith(
+        text: sanitizedText,
+        selection: TextSelection.fromPosition(
+          TextPosition(offset: sanitizedText.length),
+        ),
+      );
+    }
+  }
   void _takePicture(XFile? image) {
     if (image != null) {
       setState(() {

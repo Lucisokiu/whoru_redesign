@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:whoru/src/pages/call/videocall/video_call_creen.dart';
 import 'package:whoru/src/utils/token.dart';
+import 'package:whoru/src/utils/url.dart';
 
 class WebSocketService {
   final String _url;
@@ -18,8 +19,8 @@ class WebSocketService {
   WebSocketService._internal(this._url);
 
   // Factory constructor
-  factory WebSocketService(String url) {
-    _instance ??= WebSocketService._internal(url);
+  factory WebSocketService() {
+    _instance ??= WebSocketService._internal(socketUrl);
     return _instance!;
   }
 
@@ -28,9 +29,13 @@ class WebSocketService {
     _channel = IOWebSocketChannel.connect(_url);
     _channel.stream.listen(
       (dynamic message) {
-        var receivedMessage = message.replaceAll(String.fromCharCode(0x1E), '');
-        print("receivedMessage $receivedMessage");
-        _controller.add(receivedMessage);
+        var receivedMessages = message.split(String.fromCharCode(0x1E));
+        receivedMessages.removeLast();
+
+        for (final receivedMessage in receivedMessages) {
+          Map<dynamic, dynamic> jsonData = jsonDecode(receivedMessage);
+          _controller.add(jsonData);
+        }
       },
       onError: (error) {
         print("WebSocketService Error: $error");
@@ -109,7 +114,6 @@ class WebSocketService {
                               builder: (builder) => VideoCallScreen(
                                     idUser: caller,
                                     currentId: receiver,
-                                    webSocketService: webSocketService,
                                     isJoinRoom: true,
                                   )));
                     },
@@ -118,8 +122,7 @@ class WebSocketService {
                   ),
                   IconButton(
                     onPressed: () {
-                      Navigator.pop(
-                          context);
+                      Navigator.pop(context);
                     },
                     icon: Icon(Icons.call_end),
                     color: Colors.red, // Màu nền của nút đỏ

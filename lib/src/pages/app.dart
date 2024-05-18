@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:whoru/src/utils/token.dart';
 
 import '../socket/WebSocketService.dart';
-import '../utils/url.dart';
+import 'call/videocall/screen/incoming_call.dart';
 import 'navigation/navigation.dart';
 
 class App extends StatefulWidget {
@@ -16,7 +15,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  WebSocketService webSocketService = WebSocketService(socketUrl);
+  WebSocketService webSocketService = WebSocketService();
   late StreamSubscription<dynamic> messageSubscription;
   int? _id;
   @override
@@ -32,16 +31,7 @@ class _AppState extends State<App> {
 
   void connected() {
     webSocketService.connect();
-
-    messageSubscription = webSocketService.onMessage.listen((event) {
-      var receivedMessage = event.replaceAll(String.fromCharCode(0x1E), '');
-      // String receivedMessage = event;
-      // if (receivedMessage.isNotEmpty) {
-      //   receivedMessage = receivedMessage.substring(0, receivedMessage.length - 1);
-      // }
-      print("ChatPage $receivedMessage");
-      Map<String, dynamic> message = jsonDecode(receivedMessage);
-
+    messageSubscription = webSocketService.onMessage.listen((message) {
       if (message['type'] == 1 && message['target'] == 'ReceiveSignal') {
         List<dynamic> arguments = message['arguments'];
         if (arguments[0] is int) {
@@ -51,22 +41,25 @@ class _AppState extends State<App> {
           int idReceiver = arguments[3];
 
           if (idReceiver == _id) {
-            webSocketService.showCallDialog(
-                idCaller, name, avt, idReceiver, context, webSocketService);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CallScreen(
+                          avatarUrl: avt,
+                          fullName: name,
+                          idCaller: idCaller,
+                          idReceiver: idReceiver,
+                        )));
           }
         }
       }
     });
   }
 
-  void disconnected() {
-    messageSubscription.cancel();
-  }
-
   @override
   void dispose() {
     super.dispose();
-    // webSocketService.close();
+    webSocketService.close();
   }
 
   @override

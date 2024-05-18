@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/app.dart';
+import 'package:whoru/src/pages/call/videocall/screen/incoming_call.dart';
 import 'package:whoru/src/services/locator.dart';
 
 import 'src/pages/user/controller/language/app_localization.dart';
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
           Locale('vi', 'VN'),
         ],
         home: const App(),
+
       );
     });
   }

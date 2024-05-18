@@ -7,7 +7,6 @@ import 'package:whoru/src/pages/chat/widget/custom_card.dart';
 import 'package:whoru/src/socket/WebSocketService.dart';
 import 'package:whoru/src/utils/url.dart';
 
-
 class WaitListChatPage extends StatefulWidget {
   const WaitListChatPage({super.key, required this.currentId});
 
@@ -19,8 +18,6 @@ class WaitListChatPage extends StatefulWidget {
 
 class _WaitListChatPageState extends State<WaitListChatPage> {
   List<ChatModel> chatmodels = [];
-  WebSocketService webSocketService = WebSocketService(socketUrl);
-  late StreamSubscription<dynamic> messageSubscription;
 
   Future<void> getUser() async {
     chatmodels = await getAllUserChat();
@@ -38,22 +35,22 @@ class _WaitListChatPageState extends State<WaitListChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Message"),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_sharp),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: ListView.builder(
-        itemCount: chatmodels.length,
-        itemBuilder: (contex, index) => CustomCard(
-          chatModel: chatmodels[index],
-          currentId: widget.currentId,
-        ),
-      ),
-    );
+        // appBar: AppBar(
+        //   title: const Text("Message"),
+        //   leading: IconButton(
+        //     icon: const Icon(Icons.arrow_back_ios_sharp),
+        //     onPressed: () {
+        //       Navigator.pop(context);
+        //     },
+        //   ),
+        // ),
+        // body: ListView.builder(
+        //   itemCount: chatmodels.length,
+        //   itemBuilder: (contex, index) => CustomCard(
+        //     chatModel: chatmodels[index],
+        //     currentId: widget.currentId,
+        //   ),
+        // ),
+        );
   }
 }

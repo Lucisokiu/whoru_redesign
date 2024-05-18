@@ -48,7 +48,7 @@ class _CustomCommentDialogState extends State<CustomCommentDialog> {
       child: Center(
         child: Container(
           height: MediaQuery.of(context).size.height / 1.5,
-          width: MediaQuery.of(context).size.width / 2,
+          width: MediaQuery.of(context).size.width * 0.9,
           margin: const EdgeInsets.symmetric(horizontal: 16),
           padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
           decoration: BoxDecoration(

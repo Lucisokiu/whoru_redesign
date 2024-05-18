@@ -9,6 +9,8 @@ import 'package:whoru/src/pages/chat/screens/select_contact.dart';
 import 'package:whoru/src/pages/chat/screens/wait_list_message_screen.dart';
 import 'package:whoru/src/pages/chat/widget/custom_card.dart';
 
+import '../../socket/WebSocketService.dart';
+import '../../utils/url.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key, required this.currentId});
@@ -23,18 +25,35 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatModel> chatmodels = [];
   // final NotificationController _notificationController =
   //     NotificationController();
-
+  WebSocketService webSocketService = WebSocketService();
+  late StreamSubscription<dynamic> messageSubscription;
   Future<void> getUser() async {
     chatmodels = await getAllUserChat();
     if (mounted) {
       setState(() {});
     }
   }
+
   @override
   void initState() {
     getUser();
     super.initState();
+    listenSocket();
   }
+
+  void listenSocket() {
+    messageSubscription = webSocketService.onMessage.listen((event) {
+      getUser();
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    messageSubscription.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +78,8 @@ class _ChatPageState extends State<ChatPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => WaitListChatPage(currentId: widget.currentId),
+                builder: (context) =>
+                    WaitListChatPage(currentId: widget.currentId),
               ),
             );
           },
@@ -84,11 +104,8 @@ class _ChatPageState extends State<ChatPage> {
       ])),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (builder) =>
-                      SelectContact()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (builder) => SelectContact()));
         },
         child: Icon(
           Icons.chat,

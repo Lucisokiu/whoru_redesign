@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => 
-          const App(),
+          const Navigation(),
           // token != null ? Navigation() : LoginScreen(),
         ),
       );

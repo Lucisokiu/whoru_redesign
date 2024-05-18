@@ -32,7 +32,7 @@ class _IndividualPageState extends State<IndividualPage> {
   TextEditingController _controller = TextEditingController();
   ScrollController _scrollController = ScrollController();
   late StreamSubscription<dynamic> messageSubscription;
-  WebSocketService webSocketService = WebSocketService(socketUrl);
+  WebSocketService webSocketService = WebSocketService();
 
   @override
   void initState() {
@@ -75,8 +75,7 @@ class _IndividualPageState extends State<IndividualPage> {
 
     messageSubscription = webSocketService.onMessage.listen(
       (event) {
-        var receivedMessage = event.replaceAll(String.fromCharCode(0x1E), '');
-        Map<dynamic, dynamic> jsonData = jsonDecode(receivedMessage);
+        Map<dynamic, dynamic> jsonData = event;
         print("jsonData $jsonData");
         int type = jsonData['type'];
         if (type == 1) {
@@ -85,6 +84,7 @@ class _IndividualPageState extends State<IndividualPage> {
             List<dynamic>? arguments = jsonData['arguments'];
             String message = arguments![0];
             int userSend = arguments[1];
+            print("jsonData userSend $userSend");
             if (userSend == widget.user.idUser) {
               setMessage(message, userSend, widget.currentId);
               _scrolldown();
@@ -126,6 +126,7 @@ class _IndividualPageState extends State<IndividualPage> {
 
     setState(() {
       messages.add(messageModel);
+      print("setState");
     });
   }
 
@@ -204,7 +205,6 @@ class _IndividualPageState extends State<IndividualPage> {
                       builder: (context) => VideoCallScreen(
                         idUser: widget.user.idUser,
                         currentId: widget.currentId,
-                        webSocketService: webSocketService,
                       ),
                     ),
                   );
@@ -402,6 +402,7 @@ class _IndividualPageState extends State<IndividualPage> {
                                   widget.currentId, widget.user.idUser);
                               _scrolldown();
                               setState(() {
+                                _controller.text = '';
                                 sendButton = false;
                               });
                             }
