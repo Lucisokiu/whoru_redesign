@@ -11,9 +11,9 @@ import '../../profile/profile_screen.dart';
 import 'package:http/http.dart' as http;
 
 class AllResults extends StatefulWidget {
-  AllResults({super.key, required this.query, required this.contextparent});
+  AllResults({super.key, required this.query, required this.parentContext});
   String query;
-  BuildContext contextparent;
+  final BuildContext parentContext;
   @override
   State<AllResults> createState() => _AllResultsState();
 }
@@ -41,116 +41,116 @@ class _AllResultsState extends State<AllResults> {
   Widget build(BuildContext context) {
     print("All Results");
     return FutureBuilder<http.Response>(
-      future: getInfoUserByName(widget.query),
-      builder: (contextFutureBuilder, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
-              color: Theme.of(widget.contextparent).scaffoldBackgroundColor,
-              child: Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Theme.of(widget.contextparent).dividerColor,
-                  color: Colors.black,
-                ),
-              ));
-        } else if (snapshot.hasError) {
-          return Container(
-            color: Theme.of(widget.contextparent).scaffoldBackgroundColor,
-            child: Center(
-              child: Text(
-                'Error: ${snapshot.error}',
-                style: Theme.of(widget.contextparent).textTheme.bodyMedium,
-              ),
-            ),
-          );
-        } else {
-          if (widget.query.isEmpty) {
+        future: getInfoUserByName(widget.query),
+        builder: (contextFutureBuilder, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(
-              color: Theme.of(widget.contextparent).scaffoldBackgroundColor,
+                color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Theme.of(widget.parentContext).dividerColor,
+                    color: Colors.black,
+                  ),
+                ));
+          } else if (snapshot.hasError) {
+            return Container(
+              color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
               child: Center(
                 child: Text(
-                  'Enter information',
-                  style: Theme.of(widget.contextparent).textTheme.bodyMedium,
+                  'Error: ${snapshot.error}',
+                  style: Theme.of(widget.parentContext).textTheme.bodyMedium,
                 ),
               ),
             );
-          } else if (snapshot.data != null &&
-              snapshot.data!.statusCode == 200) {
-            List<dynamic> jsonList = jsonDecode(snapshot.data!.body);
-            items =
-                jsonList.map((item) => SearchModel.fromJson(item)).toList();
           } else {
-            return Container(
-              color: Theme.of(widget.contextparent).scaffoldBackgroundColor,
-              child: Center(
-                child: Text(
-                  'No results found.',
-                  style: Theme.of(widget.contextparent).textTheme.bodyMedium,
+            if (widget.query.isEmpty) {
+              return Container(
+                color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
+                child: Center(
+                  child: Text(
+                    'Enter information',
+                    style: Theme.of(widget.parentContext).textTheme.bodyMedium,
+                  ),
                 ),
-              ),
-            );
-          }
-    
-          if (items.isEmpty) {
-            return Container(
-              color: Theme.of(widget.contextparent).scaffoldBackgroundColor,
-              child: Center(
-                child: Text(
-                  'No results found.',
-                  style: Theme.of(widget.contextparent).textTheme.bodyMedium,
+              );
+            } else if (snapshot.data != null &&
+                snapshot.data!.statusCode == 200) {
+              List<dynamic> jsonList = jsonDecode(snapshot.data!.body);
+              items =
+                  jsonList.map((item) => SearchModel.fromJson(item)).toList();
+            } else {
+              return Container(
+                color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
+                child: Center(
+                  child: Text(
+                    'No results found.',
+                    style: Theme.of(widget.parentContext).textTheme.bodyMedium,
+                  ),
                 ),
-              ),
-            );
-          }
-    
-          return Container(
-            color: Theme.of(widget.contextparent).scaffoldBackgroundColor,
-            child: ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                if (items[index] is SearchModel) {
-                  SearchModel result = items[index];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(result.avatar),
-                    ),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          result.fullName,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        Icon(Icons.account_circle,
-                            color:
-                                Theme.of(context).textTheme.bodyMedium!.color)
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (builder) => ProfilePage(
-                            idUser: result.idUser,
-                            isMy: false,
+              );
+            }
+
+            if (items.isEmpty) {
+              return Container(
+                color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
+                child: Center(
+                  child: Text(
+                    'No results found.',
+                    style: Theme.of(widget.parentContext).textTheme.bodyMedium,
+                  ),
+                ),
+              );
+            }
+
+            return Container(
+              color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
+              child: ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  if (items[index] is SearchModel) {
+                    SearchModel result = items[index];
+                    return ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(result.avatar),
+                      ),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            result.fullName,
+                            style: Theme.of(widget.parentContext).textTheme.bodyMedium,
                           ),
-                        ),
-                      );
-                    },
-                  );
-                }
-                if (items[index] is FeedModel) {
-                  FeedModel result = items[index];
-                  CardFeed(
-                    feed: result,
-                    CurrentUser: currentUser!,
-                  );
-                }
-    
-                return null;
-              },
-            ),
-          );
-        }
-      });
+                          Icon(Icons.account_circle,
+                              color:
+                                  Theme.of(widget.parentContext).textTheme.bodyMedium!.color)
+                        ],
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (builder) => ProfilePage(
+                              idUser: result.idUser,
+                              isMy: false,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                  if (items[index] is FeedModel) {
+                    FeedModel result = items[index];
+                    CardFeed(
+                      feed: result,
+                      CurrentUser: currentUser!,
+                    );
+                  }
+
+                  return null;
+                },
+              ),
+            );
+          }
+        });
   }
 }

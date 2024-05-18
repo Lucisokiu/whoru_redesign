@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/follow.dart';
+import 'package:whoru/src/models/user_chat.dart';
 import 'package:whoru/src/pages/feed/widget/list_like_dialog.dart';
+import 'package:whoru/src/utils/token.dart';
 
 import '../../../models/user_model.dart';
+import '../../chat/screens/individual_page.dart';
 
 Widget info(BuildContext context, UserModel user, bool isMy) {
   final double screenHeight = MediaQuery.of(context).size.height;
@@ -39,7 +42,6 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
             fontSize: 24,
           ),
         ),
-
         Row(
           children: [
             Expanded(
@@ -55,13 +57,13 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                   children: [
                     Text(
                       user.followerCount.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "Lato",
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
                       ),
                     ),
-                    Text(
+                    const Text(
                       "Followers",
                       style: TextStyle(
                         fontFamily: "Lobster",
@@ -85,13 +87,13 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                   children: [
                     Text(
                       user.followingCount.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: "Lato",
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
                       ),
                     ),
-                    Text(
+                    const Text(
                       "Following",
                       style: TextStyle(
                         fontFamily: "Lobster",
@@ -119,7 +121,7 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                                 user.isFollow = !user.isFollow;
                               });
                             },
-                            child: Text('unFollow'),
+                            child: const Text('unFollow'),
                           ),
                         )
                       : Expanded(
@@ -131,19 +133,27 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                                 user.isFollow = !user.isFollow;
                               });
                             },
-                            child: Text('Follow'),
+                            child: const Text('Follow'),
                           ),
                         ),
-                  SizedBox(width: 16), // Khoảng cách giữa hai nút
+                  const SizedBox(width: 16), // Khoảng cách giữa hai nút
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (contex) => ChatPage(currentId: widget.currentId)
+                      onPressed: () async {
+                        int? currentId = await getIdUser();
+                        UserChat userChat = UserChat(
+                            idUser: user.id,
+                            fullName: user.fullName,
+                            avatar: user.avt);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (contex) => IndividualPage(
+                                currentId: currentId!, user: userChat),
+                          ),
+                        );
                       },
-                      child: Text('Message'),
+                      child: const Text('Message'),
                     ),
                   ),
                 ],

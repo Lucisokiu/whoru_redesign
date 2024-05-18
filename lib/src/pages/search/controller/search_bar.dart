@@ -5,14 +5,16 @@ import 'package:whoru/src/models/search_model.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:whoru/src/pages/search/widget/all_results.dart';
+import 'package:whoru/src/pages/search/widget/buildResults.dart';
 import 'package:whoru/src/pages/search/widget/feed_results.dart';
 import 'package:whoru/src/pages/search/widget/user_results.dart';
+
+import '../../../services/shared_context.dart';
 
 class CustomSearch extends SearchDelegate {
   int currentIndex = 0;
   bool showBottomNavigationBar = false;
   List<SearchModel> matchQuery = [];
-  late TabController _controller;
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -122,58 +124,7 @@ class CustomSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    showBottomNavigationBar = true;
-    List<Widget> tabs = [
-      AllResults(query: query, contextparent: context),
-      UserResults(query: query, contextparent: context),
-      FeedResults(query: query, contextparent: context),
-    ];
-    return StatefulBuilder(
-      builder: (contextstf, setState) => DefaultTabController(
-        initialIndex: currentIndex,
-        length: 3,
-        child: Container(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          child: Column(
-            children: [
-              TabBar(
-                onTap: (index) {
-                  setState(() {
-                    currentIndex = index;
-                    print(currentIndex);
-                  });
-                },
-                indicatorColor: Colors.blueAccent,
-                tabs: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: Text("All",
-                        style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyMedium!.color,
-                        )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: Text("Users",
-                        style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyMedium!.color,
-                        )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: Text("Feed",
-                        style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyMedium!.color,
-                        )),
-                  ),
-                ],
-              ),
-              Expanded(child: tabs[currentIndex]),
-            ],
-          ),
-        ),
-      ),
-    );
+    return BuildResultsWidget(query: query, parentContext: context);
   }
 
   @override
@@ -185,8 +136,9 @@ class CustomSearch extends SearchDelegate {
         color: theme.scaffoldBackgroundColor,
       ),
       inputDecorationTheme: InputDecorationTheme(
-        hintStyle: TextStyle(color: Colors.grey),
-        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+        hintStyle: const TextStyle(color: Colors.grey),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24.0),
         ),

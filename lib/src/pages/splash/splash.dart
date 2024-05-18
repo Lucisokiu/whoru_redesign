@@ -5,6 +5,8 @@ import 'package:lottie/lottie.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/utils/token.dart';
 
+import '../app.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -35,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => 
-          Navigation(),
+          const Navigation(),
           // token != null ? Navigation() : LoginScreen(),
         ),
       );

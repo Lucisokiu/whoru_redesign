@@ -11,44 +11,39 @@ import 'package:whoru/src/pages/feed/controller/build_Image.dart';
 import 'package:whoru/src/pages/feed/widget/list_like_dialog.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 
-import 'comment_dialog_new.dart';
+import '../../feed/widget/comment_dialog_new.dart';
 
-class CardFeed extends StatefulWidget {
+class CardFeedSearch extends StatefulWidget {
   FeedModel feed;
   final int CurrentUser;
+  final BuildContext parentContext; // Thêm parentContext vào constructor
 
-  CardFeed({super.key, required this.feed, required this.CurrentUser});
+  CardFeedSearch({super.key, required this.feed, required this.CurrentUser,required this.parentContext});
 
   @override
-  State<CardFeed> createState() => _CardFeedState();
+  State<CardFeedSearch> createState() => _CardFeedSearchState();
 }
 
-class _CardFeedState extends State<CardFeed> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
+class _CardFeedSearchState extends State<CardFeedSearch> {
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(
           left: 16.0, right: 16.0, bottom: 10.0, top: 16.0),
-      color: Theme.of(context).scaffoldBackgroundColor,
+      color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).cardTheme.color,
+          color: Theme.of(widget.parentContext).cardTheme.color,
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).shadowColor,
+              color: Theme.of(widget.parentContext).shadowColor,
               spreadRadius: 1,
               blurRadius: 2,
               offset: const Offset(2.0, 2.0),
             ),
             BoxShadow(
-              color: Theme.of(context).shadowColor,
+              color: Theme.of(widget.parentContext).shadowColor,
               spreadRadius: 1,
               blurRadius: 5,
               offset: const Offset(-1.0, -1.0),
@@ -92,8 +87,10 @@ class _CardFeedState extends State<CardFeed> {
                       },
                       child: CachedNetworkImage(
                         imageUrl: widget.feed.avatar,
-                        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                         imageBuilder: (context, imageProvider) => CircleAvatar(
                           backgroundColor: Colors.transparent,
                           backgroundImage: imageProvider,
@@ -117,7 +114,7 @@ class _CardFeedState extends State<CardFeed> {
                       },
                       icon: Icon(
                         color:
-                            Theme.of(context).buttonTheme.colorScheme!.primary,
+                            Theme.of(widget.parentContext).buttonTheme.colorScheme!.primary,
                         PhosphorIconsFill.dotsThreeOutlineVertical,
                         size: 20.0,
                       )),
@@ -131,7 +128,7 @@ class _CardFeedState extends State<CardFeed> {
                     top: 8,
                     left: 10,
                     right:
-                        10), // Điều này sẽ tạo khoảng cách giữa Container và các widget trước đó
+                        10),
 
                 child: Align(
                     alignment: Alignment.topLeft,

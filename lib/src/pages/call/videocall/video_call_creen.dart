@@ -6,14 +6,12 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/socket/WebSocketService.dart';
 
 class VideoCallScreen extends StatefulWidget {
-  final WebSocketService webSocketService;
   bool isJoinRoom = false;
   final int idUser;
   final int currentId;
 
   VideoCallScreen(
       {super.key,
-      required this.webSocketService,
       bool? isJoinRoom,
       required this.idUser,
       required this.currentId})
@@ -38,6 +36,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   bool _isVideoOn = true;
   bool isShowButton = true;
   late StreamSubscription<dynamic> messageSubscription;
+  WebSocketService webSocketService = WebSocketService();
 
   @override
   void initState() {
@@ -47,6 +46,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
   @override
   void dispose() {
+    _peerConnection?.close();
+    _localStream?.getTracks().forEach((track) => track.stop());
     _localRenderer.dispose();
     _remoteRenderer.dispose();
     messageSubscription.cancel();
@@ -70,11 +71,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   }
 
   Future<void> _listenServer() async {
-    messageSubscription =
-        widget.webSocketService.onMessage.listen((event) async {
-      var receivedMessage = event.replaceAll(String.fromCharCode(0x1E), '');
-
-      Map<dynamic, dynamic> jsonData = jsonDecode(receivedMessage);
+    messageSubscription = webSocketService.onMessage.listen((event) async {
+      Map<dynamic, dynamic> jsonData = event;
 
       int type = jsonData['type'];
 
@@ -99,7 +97,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                 await _peerConnection!.createAnswer();
             await _peerConnection!.setLocalDescription(answer);
 
-            widget.webSocketService.sendMessageSocket("SendOffer", [
+            webSocketService.sendMessageSocket("SendOffer", [
               widget.currentId,
               widget.idUser,
               jsonEncode({"event": "answer", "data": answer.toMap()})
@@ -167,11 +165,10 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   }
 
   Future<void> registerListeners() async {
-    _peerConnection?.onIceGatheringState = (RTCIceGatheringState state) {
-    };
+    _peerConnection?.onIceGatheringState = (RTCIceGatheringState state) {};
 
     _peerConnection!.onIceCandidate = (RTCIceCandidate candidate) {
-      widget.webSocketService.sendMessageSocket("SendOffer", [
+      webSocketService.sendMessageSocket("SendOffer", [
         widget.currentId,
         widget.idUser,
         jsonEncode({"event": "ice", "data": candidate.toMap()})
@@ -205,7 +202,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     RTCSessionDescription offer = await _peerConnection!.createOffer();
     await _peerConnection!.setLocalDescription(offer);
     // Sending the offer
-    widget.webSocketService.sendMessageSocket("SendOffer", [
+    webSocketService.sendMessageSocket("SendOffer", [
       widget.currentId,
       widget.idUser,
       jsonEncode({"event": "offer", "data": offer.toMap()})
@@ -213,7 +210,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   }
 
   void sendNotif() {
-    widget.webSocketService.sendMessageSocket(
+    webSocketService.sendMessageSocket(
         "SendSignal", [widget.currentId, widget.idUser, "Video"]);
   }
 
@@ -246,7 +243,6 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     setState(() {
       _isVideoOn = !_isVideoOn;
       _localStream?.getVideoTracks()[0].enabled = _isVideoOn;
-      // _remoteStream?.getVideoTracks()[0].enabled = _isVideoOn;
     });
   }
 
@@ -320,7 +316,6 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                       ),
                       FloatingActionButton(
                         onPressed: () {
-                          _hangUp();
                           Navigator.pop(context);
                         },
                         child: Icon(Icons.call_end),

@@ -10,10 +10,9 @@ import 'package:http/http.dart' as http;
 import '../../profile/profile_screen.dart';
 
 class UserResults extends StatefulWidget {
-  UserResults({super.key, required this.query, required this.contextparent});
+  UserResults(      {super.key, required this.query, required this.parentContext});
   String query;
-  BuildContext contextparent;
-
+  final BuildContext parentContext;
   @override
   State<UserResults> createState() => _UserResultsState();
 }
@@ -44,32 +43,32 @@ class _UserResultsState extends State<UserResults> {
         builder: (contextFutureBuilder, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container(
-                color: Theme.of(widget.contextparent).scaffoldBackgroundColor,
+                color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
                 child: Center(
                   child: CircularProgressIndicator(
                     backgroundColor:
-                        Theme.of(widget.contextparent).dividerColor,
+                        Theme.of(widget.parentContext).dividerColor,
                     color: Colors.black,
                   ),
                 ));
           } else if (snapshot.hasError) {
             return Container(
-              color: Theme.of(widget.contextparent).scaffoldBackgroundColor,
+              color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
               child: Center(
                 child: Text(
                   'Error: ${snapshot.error}',
-                  style: Theme.of(widget.contextparent).textTheme.bodyMedium,
+                  style: Theme.of(widget.parentContext).textTheme.bodyMedium,
                 ),
               ),
             );
           } else {
             if (widget.query.isEmpty) {
               return Container(
-                color: Theme.of(widget.contextparent).scaffoldBackgroundColor,
+                color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
                 child: Center(
                   child: Text(
                     'Enter information',
-                    style: Theme.of(widget.contextparent).textTheme.bodyMedium,
+                    style: Theme.of(widget.parentContext).textTheme.bodyMedium,
                   ),
                 ),
               );
@@ -80,11 +79,11 @@ class _UserResultsState extends State<UserResults> {
                   jsonList.map((item) => SearchModel.fromJson(item)).toList();
             } else {
               return Container(
-                color: Theme.of(widget.contextparent).scaffoldBackgroundColor,
+                color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
                 child: Center(
                   child: Text(
                     'No results found.',
-                    style: Theme.of(widget.contextparent).textTheme.bodyMedium,
+                    style: Theme.of(widget.parentContext).textTheme.bodyMedium,
                   ),
                 ),
               );
@@ -92,18 +91,18 @@ class _UserResultsState extends State<UserResults> {
 
             if (items.isEmpty) {
               return Container(
-                color: Theme.of(widget.contextparent).scaffoldBackgroundColor,
+                color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
                 child: Center(
                   child: Text(
                     'No results found.',
-                    style: Theme.of(widget.contextparent).textTheme.bodyMedium,
+                    style: Theme.of(widget.parentContext).textTheme.bodyMedium,
                   ),
                 ),
               );
             }
 
             return Container(
-              color: Theme.of(widget.contextparent).scaffoldBackgroundColor,
+              color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
               child: ListView.builder(
                 addAutomaticKeepAlives: true,
                 itemCount: items.length,
@@ -119,11 +118,11 @@ class _UserResultsState extends State<UserResults> {
                       children: [
                         Text(
                           result.fullName,
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(widget.parentContext).textTheme.bodyMedium,
                         ),
                         Icon(Icons.account_circle,
                             color:
-                                Theme.of(context).textTheme.bodyMedium!.color)
+                                Theme.of(widget.parentContext).textTheme.bodyMedium!.color)
                       ],
                     ),
                     onTap: () {

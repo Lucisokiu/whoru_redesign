@@ -1,22 +1,26 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:whoru/src/models/feed_model.dart';
 import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
-Future<List<FeedModel>?> getAllPost() async {
+Future<List<FeedModel>?> getAllPost(int page) async {
   try {
     var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPost');
     String? token = await getToken();
     print(url);
-    var response = await http.get(
+    print("Page $page");
+
+    var response = await http.post(
       url,
       headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'bearer $token',
       },
+      body: page.toString(),
     );
 
     if (response.statusCode == 200) {
@@ -25,7 +29,7 @@ Future<List<FeedModel>?> getAllPost() async {
           decodedData.map((data) => FeedModel.fromJson(data)).toList();
       return feedList;
     } else {
-      print("fail call api getAllPost");
+      print("fail call api getAllPost with page $page");
       return null;
     }
   } catch (e) {
@@ -129,4 +133,32 @@ Future<List<FeedModel>?> getAllPostById(int id) async {
     print("Fail with StatusCode ${e}");
   }
   return [];
+}
+
+Future<Response> searchPost(String title) async {
+  var url = Uri.https(baseUrl, '/api/v1/Feeds/SearchPost');
+  String? token = await getToken();
+  print(url);
+  final formattedTitle = '"$title"';
+
+  var response = await http.post(
+    url,
+    headers: {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'bearer $token',
+    },
+    body: formattedTitle,
+  );
+
+  if (response.statusCode == 200) {
+    // List<dynamic> decodedData = jsonDecode(response.body);
+    // List<FeedModel> feedList =
+    //     decodedData.map((data) => FeedModel.fromJson(data)).toList();
+    // return feedList;
+    return response;
+  } else {
+    print("fail call api getAllPost with title ${response.statusCode}");
+    return response;
+  }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whoru/src/pages/login/widget/custom_signIn.dart';
 import 'package:whoru/src/pages/register/widget/FieldFormSignUp.dart';
-import 'package:whoru/src/pages/login/widget/field_form_signin.dart';
 
 Future<Object?> customRegisDialog(
   BuildContext contextScafford,
@@ -12,7 +11,7 @@ Future<Object?> customRegisDialog(
       context: contextScafford,
       transitionDuration: const Duration(milliseconds: 400),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
-        Tween<Offset> tween = Tween(begin: Offset(0, -1), end: Offset.zero);
+        Tween<Offset> tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
         return SlideTransition(
             position: tween.animate(
                 CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
@@ -64,17 +63,17 @@ class _RegisState extends State<Regis> {
                         SignUpForm(contextScafford: widget.contextScafford),
                         Row(
                           children: [
-                            Expanded(
+                            const Expanded(
                               child: Divider(),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
                               child: Text(
                                 "OR",
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                             ),
-                            Expanded(
+                            const Expanded(
                               child: Divider(),
                             ),
                           ],
@@ -83,7 +82,7 @@ class _RegisState extends State<Regis> {
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: TextButton(
                               onPressed: () {
-                                Future.delayed(Duration(milliseconds: 800), () {
+                                Future.delayed(const Duration(milliseconds: 800), () {
                                   Navigator.of(context).pop();
                                 }).then((isSignInDialogShown) =>
                                     customSigninDialog(widget.contextScafford,

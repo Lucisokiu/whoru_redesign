@@ -4,14 +4,9 @@ import 'package:whoru/src/api/userInfo.dart';
 import 'package:whoru/src/models/search_model.dart';
 import 'package:whoru/src/models/user_chat.dart';
 import 'package:whoru/src/pages/chat/screens/individual_page.dart';
-import 'package:whoru/src/socket/WebSocketService.dart';
 import 'package:whoru/src/utils/token.dart';
 
 class SearchUserChat extends SearchDelegate {
-  WebSocketService webSocketService;
-
-  SearchUserChat(
-      {required this.webSocketService}); // Constructor để nhận giá trị từ hàm gọi
 
   var res;
 
@@ -89,7 +84,6 @@ class SearchUserChat extends SearchDelegate {
                   context,
                   MaterialPageRoute(
                       builder: (builder) => IndividualPage(
-                        webSocketService: webSocketService,
                             user: UserChat.fromSearchModel(result),
                             currentId: id!,
                           )));
@@ -152,7 +146,6 @@ class SearchUserChat extends SearchDelegate {
                   context,
                   MaterialPageRoute(
                       builder: (builder) => IndividualPage(
-                        webSocketService: webSocketService,
                             user: UserChat.fromSearchModel(result),
                             currentId: id!,
                           )));
