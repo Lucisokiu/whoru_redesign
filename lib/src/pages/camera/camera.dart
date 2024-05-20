@@ -75,21 +75,20 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     _cameraController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Camera"),
+          title: const Text("Camera"),
         ),
-        body: image == null ? CameraView() : ImageView());
+        body: image == null ? cameraView() : imageView());
   }
 
-  Widget ImageView() {
+  Widget imageView() {
     return Column(
       children: [
         Expanded(
@@ -105,7 +104,7 @@ class _CameraScreenState extends State<CameraScreen> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                padding: EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.only(bottom: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -115,7 +114,7 @@ class _CameraScreenState extends State<CameraScreen> {
                           image = null;
                         });
                       },
-                      icon: Icon(Icons.close),
+                      icon: const Icon(Icons.close),
                       color: Colors.white,
                       iconSize: 48,
                     ),
@@ -123,7 +122,7 @@ class _CameraScreenState extends State<CameraScreen> {
                       onPressed: () async {
                         Navigator.pop(context, image);
                       },
-                      icon: Icon(Icons.check),
+                      icon: const Icon(Icons.check),
                       color: Colors.white,
                       iconSize: 48,
                     ),
@@ -137,7 +136,7 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 
-  Widget CameraView() {
+  Widget cameraView() {
     return Column(
       children: [
         Expanded(

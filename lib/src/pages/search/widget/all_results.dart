@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:whoru/src/models/feed_model.dart';
 
-import '../../../api/userInfo.dart';
+import '../../../api/user_info.dart';
 import '../../../models/search_model.dart';
 import '../../../utils/token.dart';
 import '../../feed/widget/feed_card.dart';
@@ -11,8 +11,8 @@ import '../../profile/profile_screen.dart';
 import 'package:http/http.dart' as http;
 
 class AllResults extends StatefulWidget {
-  AllResults({super.key, required this.query, required this.parentContext});
-  String query;
+  const AllResults({super.key, required this.query, required this.parentContext});
+  final String query;
   final BuildContext parentContext;
   @override
   State<AllResults> createState() => _AllResultsState();
@@ -142,7 +142,7 @@ class _AllResultsState extends State<AllResults> {
                     FeedModel result = items[index];
                     CardFeed(
                       feed: result,
-                      CurrentUser: currentUser!,
+                      currentUser: currentUser!,
                     );
                   }
 

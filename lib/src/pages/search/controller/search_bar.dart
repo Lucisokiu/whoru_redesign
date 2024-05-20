@@ -1,15 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:whoru/src/api/userInfo.dart';
+import 'package:whoru/src/api/user_info.dart';
 import 'package:whoru/src/models/search_model.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:http/http.dart' as http;
-import 'package:whoru/src/pages/search/widget/all_results.dart';
-import 'package:whoru/src/pages/search/widget/buildResults.dart';
-import 'package:whoru/src/pages/search/widget/feed_results.dart';
-import 'package:whoru/src/pages/search/widget/user_results.dart';
+import 'package:whoru/src/pages/search/widget/build_results.dart';
 
-import '../../../services/shared_context.dart';
 
 class CustomSearch extends SearchDelegate {
   int currentIndex = 0;

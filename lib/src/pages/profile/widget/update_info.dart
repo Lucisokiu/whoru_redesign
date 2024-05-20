@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whoru/src/api/userInfo.dart';
+import 'package:whoru/src/api/user_info.dart';
 
 class UpdateInfo extends StatefulWidget {
   const UpdateInfo({super.key});
@@ -33,24 +33,24 @@ class _UpdateInfoState extends State<UpdateInfo> {
           children: [
             TextField(
               controller: fullNameController,
-              decoration: InputDecoration(labelText: 'Full Name'),
+              decoration: const InputDecoration(labelText: 'Full Name'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: descriptionController,
-              decoration: InputDecoration(labelText: 'Description'),
+              decoration: const InputDecoration(labelText: 'Description'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: workController,
-              decoration: InputDecoration(labelText: 'Work'),
+              decoration: const InputDecoration(labelText: 'Work'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               controller: studyController,
-              decoration: InputDecoration(labelText: 'Study'),
+              decoration: const InputDecoration(labelText: 'Study'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Align(
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(
@@ -58,7 +58,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                       postApi();
                       Navigator.pop(context);
                 },
-                child: Text('Update Info'),
+                child: const Text('Update Info'),
               ),
             ),
           ],

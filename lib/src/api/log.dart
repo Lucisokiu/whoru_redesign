@@ -34,7 +34,7 @@ Future<http.Response> apiLogin(Map map) async {
 }
 }
 
-Future<int?> ForgotPassword(email) async {
+Future<int?> forgotPassword(email) async {
   var url = Uri.https(baseUrl, '/api/v1/Logs/ForgotPassword');
   String? token = await getToken();
   var response = await http.post(
@@ -128,7 +128,7 @@ Future<http.Response> verifyAccount(int idUser,String code) async {
 
 }
 
-void ChangePass(String pass) async {
+void changePass(String pass) async {
   var url = Uri.https(baseUrl, '/api/v1/Logs/ChangePassword');
   String? token = await getToken();
   var response = await http.post(

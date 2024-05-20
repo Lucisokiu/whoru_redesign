@@ -5,8 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/app.dart';
-import 'package:whoru/src/pages/call/videocall/screen/incoming_call.dart';
-import 'package:whoru/src/services/locator.dart';
 
 import 'src/pages/user/controller/language/app_localization.dart';
 import 'src/pages/user/controller/language/bloc/language_bloc.dart';
@@ -19,7 +17,6 @@ import 'src/matherial/themes.dart';
 late List<CameraDescription> cameras;
 
 void main() async {
-  setupServices();
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
   LocalizationService.getLocale();

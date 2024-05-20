@@ -33,9 +33,8 @@ class AppLocalization  {
 }
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {
-  final Locale? newLocale;
 
-  const _AppLocalizationDelegate([this.newLocale]);
+  const _AppLocalizationDelegate();
 
   @override
   bool isSupported(Locale locale) {

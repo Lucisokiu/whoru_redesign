@@ -39,7 +39,7 @@ Future<List<FeedModel>?> getAllPost(int page) async {
   }
 }
 
-Future<void> Delete(idPost) async {
+Future<void> delete(idPost) async {
   var url = Uri.https(baseUrl, '/api/Feed/Delete');
   String? token = await getToken();
 
@@ -130,7 +130,7 @@ Future<List<FeedModel>?> getAllPostById(int id) async {
       return null;
     }
   } catch (e) {
-    print("Fail with StatusCode ${e}");
+    print("Fail with StatusCode $e");
   }
   return [];
 }

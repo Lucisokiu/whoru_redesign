@@ -17,7 +17,7 @@ Widget storywidget(BuildContext context) {
               color: Theme.of(context).shadowColor,
               spreadRadius: 1,
               blurRadius: 2,
-              offset: Offset(2.0, 2.0),
+              offset: const Offset(2.0, 2.0),
             ),
           ]
           ),
@@ -79,7 +79,7 @@ Column yourStory(BuildContext context, urlImage, userName) {
         children: [
           Text(
             userName,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 11,
             ),
           ),

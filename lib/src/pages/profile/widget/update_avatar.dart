@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:whoru/src/api/userInfo.dart';
+import 'package:whoru/src/api/user_info.dart';
 
 class UpdateAvatar extends StatefulWidget {
   const UpdateAvatar({super.key});
@@ -12,7 +12,6 @@ class UpdateAvatar extends StatefulWidget {
 }
 
 class _UpdateAvatarState extends State<UpdateAvatar> {
-
   XFile? pickedImage;
   final picker = ImagePicker();
 
@@ -34,14 +33,14 @@ class _UpdateAvatarState extends State<UpdateAvatar> {
               await _pickImage();
               _updateUI();
             },
-            child: Text('Pick Image'),
+            child: const Text('Pick Image'),
           ),
           pickedImage != null
               ? Expanded(
                   child: Align(
                     alignment: Alignment.center,
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Image.file(
                         File(pickedImage!.path),
                         fit: BoxFit.cover,
@@ -49,17 +48,17 @@ class _UpdateAvatarState extends State<UpdateAvatar> {
                     ),
                   ),
                 )
-              : Spacer(),
+              : const Spacer(),
           Align(
             alignment: Alignment.bottomCenter,
             child: ElevatedButton(
-              onPressed: () async {
+              onPressed: () {
                 if (pickedImage != null) {
-                  await updateAvatar(imageFile: File(pickedImage!.path));
-                  Navigator.pop(context);
+                  updateAvatar(imageFile: File(pickedImage!.path))
+                      .then((value) => Navigator.pop(context));
                 }
               },
-              child: Text('Update'),
+              child: const Text('Update'),
             ),
           ),
         ],

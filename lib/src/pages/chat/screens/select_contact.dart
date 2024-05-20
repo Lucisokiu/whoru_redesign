@@ -8,10 +8,10 @@ import '../../../models/chat_model.dart';
 
 class SelectContact extends StatefulWidget {
 
-  SelectContact({super.key});
+  const SelectContact({super.key});
 
   @override
-  _SelectContactState createState() => _SelectContactState();
+  State<SelectContact> createState() => _SelectContactState();
 }
 
 class _SelectContactState extends State<SelectContact> {
@@ -60,7 +60,7 @@ class _SelectContactState extends State<SelectContact> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Column(
+          title: const Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -81,7 +81,7 @@ class _SelectContactState extends State<SelectContact> {
           ),
           actions: [
             IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.search,
                   size: 26,
                 ),
@@ -92,27 +92,27 @@ class _SelectContactState extends State<SelectContact> {
                   );
                 }),
             PopupMenuButton<String>(
-              padding: EdgeInsets.all(0),
+              padding: const EdgeInsets.all(0),
               onSelected: (value) {
                 print(value);
               },
               itemBuilder: (BuildContext contesxt) {
                 return [
-                  PopupMenuItem(
-                    child: Text("Invite a friend"),
+                  const PopupMenuItem(
                     value: "Invite a friend",
+                    child: Text("Invite a friend"),
                   ),
-                  PopupMenuItem(
-                    child: Text("Contacts"),
+                  const PopupMenuItem(
                     value: "Contacts",
+                    child: Text("Contacts"),
                   ),
-                  PopupMenuItem(
-                    child: Text("Refresh"),
+                  const PopupMenuItem(
                     value: "Refresh",
+                    child: Text("Refresh"),
                   ),
-                  PopupMenuItem(
-                    child: Text("Help"),
+                  const PopupMenuItem(
                     value: "Help",
+                    child: Text("Help"),
                   ),
                 ];
               },
@@ -126,15 +126,15 @@ class _SelectContactState extends State<SelectContact> {
                 return InkWell(
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (builder) => CreateGroup()));
+                        MaterialPageRoute(builder: (builder) => const CreateGroup()));
                   },
-                  child: ButtonCard(
+                  child: const ButtonCard(
                     icon: Icons.group,
                     name: "New group",
                   ),
                 );
               } else if (index == 1) {
-                return ButtonCard(
+                return const ButtonCard(
                   icon: Icons.person_add,
                   name: "New contact",
                 );

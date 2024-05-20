@@ -1,5 +1,5 @@
-import 'package:get_it/get_it.dart';
+// import 'package:get_it/get_it.dart';
 
-final locator = GetIt.instance;
+// final locator = GetIt.instance;
 
-void setupServices() {}
+// void setupServices() {}

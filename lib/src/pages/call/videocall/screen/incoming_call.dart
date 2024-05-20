@@ -9,8 +9,8 @@ class CallScreen extends StatelessWidget {
   final int idCaller;
   final int idReceiver;
 
-  CallScreen(
-      {required this.fullName,
+  const CallScreen(
+      {super.key, required this.fullName,
       required this.avatarUrl,
       required this.idCaller,
       required this.idReceiver});
@@ -19,7 +19,7 @@ class CallScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cuộc gọi'),
+        title: const Text('Cuộc gọi'),
       ),
       body: Center(
         child: Column(
@@ -29,12 +29,12 @@ class CallScreen extends StatelessWidget {
               radius: 50,
               backgroundImage: NetworkImage(avatarUrl),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               fullName,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:whoru/src/models/chat_model.dart';
 
 class CreateGroup extends StatefulWidget {
-  CreateGroup({super.key});
+  const CreateGroup({super.key});
 
   @override
-  _CreateGroupState createState() => _CreateGroupState();
+  State<CreateGroup> createState() => _CreateGroupState();
 }
 
 class _CreateGroupState extends State<CreateGroup> {
@@ -17,7 +17,7 @@ class _CreateGroupState extends State<CreateGroup> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Column(
+          title: const Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -38,7 +38,7 @@ class _CreateGroupState extends State<CreateGroup> {
           ),
           actions: [
             IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.search,
                   size: 26,
                 ),
@@ -46,10 +46,10 @@ class _CreateGroupState extends State<CreateGroup> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-            backgroundColor: Color(0xFF128C7E),
+            backgroundColor: const Color(0xFF128C7E),
             onPressed: () {},
-            child: Icon(Icons.arrow_forward)),
-        body: Stack(
+            child: const Icon(Icons.arrow_forward)),
+        body: const Stack(
           children: [
             // ListView.builder(
             //     itemCount: contacts.length + 1,

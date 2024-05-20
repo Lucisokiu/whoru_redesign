@@ -9,7 +9,5 @@ class LanguageState {
 
   LanguageState copyWith(Locale locale) => LanguageState(locale);
 
-  @override
-  // TODO: implement props
   List<Object> get props => [locale];
 }

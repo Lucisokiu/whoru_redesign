@@ -8,9 +8,9 @@ import 'package:whoru/src/api/log.dart';
 import 'package:whoru/src/pages/register/custom_create_info.dart';
 
 class VerifyForm extends StatefulWidget {
-  BuildContext contextScafford;
-  int userId;
-  VerifyForm({
+  final BuildContext contextScafford;
+  final int userId;
+  const VerifyForm({
     super.key,
     required this.userId,
     required this.contextScafford,
@@ -32,7 +32,7 @@ class _VerifyFormState extends State<VerifyForm> {
   late SMITrigger reset;
   late SMITrigger confetti;
 
-  var response;
+  dynamic response;
 
   StateMachineController getRiveController(Artboard artboard) {
     StateMachineController? controller =
@@ -41,14 +41,14 @@ class _VerifyFormState extends State<VerifyForm> {
     return controller;
   }
 
-  void verify(BuildContext context, String Code) {
+  void verify(BuildContext context, String code) {
     setState(() {
       isShowLoading = true;
       isShowConfetti = true;
     });
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
-        response = await verifyAccount(widget.userId,Code);
+        response = await verifyAccount(widget.userId,code);
         print(response.body);
         if (response.statusCode == 200) {
           check.fire();
@@ -67,7 +67,7 @@ class _VerifyFormState extends State<VerifyForm> {
           print("StatusCode ${response.statusCode}");
           error.fire();
 
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
             setState(() {
               isShowLoading = false;
             });
@@ -190,13 +190,13 @@ class CustomPositioned extends StatelessWidget {
     return Positioned.fill(
       child: Column(
         children: [
-          Spacer(),
+          const Spacer(),
           SizedBox(
             height: size,
             width: size,
             child: child,
           ),
-          Spacer(flex: 2),
+          const Spacer(flex: 2),
         ],
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/feed.dart';
-import 'package:whoru/src/api/userInfo.dart';
+import 'package:whoru/src/api/user_info.dart';
 import 'package:whoru/src/models/feed_model.dart';
 import 'package:whoru/src/pages/feed/widget/feed_card.dart';
 import 'package:whoru/src/pages/profile/widget/update_profile.dart';
@@ -12,10 +12,10 @@ import '../../models/user_model.dart';
 import '../feed/widget/skeleton_loading.dart';
 
 class ProfilePage extends StatefulWidget {
-  int? idUser;
-  bool isMy;
+  final int? idUser;
+  final bool isMy;
 
-  ProfilePage({super.key, this.idUser, required this.isMy});
+  const ProfilePage({super.key, this.idUser, required this.isMy});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -26,7 +26,8 @@ class _ProfilePageState extends State<ProfilePage> {
   List<FeedModel>? allPost;
 
   fetchData() async {
-    widget.idUser ??= await getIdUser();
+    int? idUser = widget.idUser;
+    idUser ??= await getIdUser();
     print(widget.idUser);
     user = await getInfoUserById(widget.idUser!);
     allPost = await getAllPostById(widget.idUser!);
@@ -46,12 +47,12 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
-    final double screenWidth = MediaQuery.of(context).size.width;
+    // final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text(user?.fullName ?? 'Loading...'),
         leading: IconButton(
-          icon: Icon(Icons
+          icon: const Icon(Icons
               .arrow_back_ios_new_rounded), // Replace with your default icon
           onPressed: () {
             Navigator.pop(context);
@@ -64,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: EdgeInsets.fromLTRB(0, 10.h, 0, 0),
                 children: [
                   ListTile(
-                    leading: Icon(Icons.person),
+                    leading: const Icon(Icons.person),
                     title: Text(user?.fullName ?? 'Loading...',
                         style: Theme.of(context).textTheme.bodyMedium),
                   ),
@@ -150,11 +151,11 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                   for (final feed in allPost!)
-                    CardFeed(feed: feed, CurrentUser: user!.id),
+                    CardFeed(feed: feed, currentUser: user!.id),
                 ],
               ),
             ))
-          : MySkeletonLoadingWidget(),
+          : const MySkeletonLoadingWidget(),
     );
   }
 }

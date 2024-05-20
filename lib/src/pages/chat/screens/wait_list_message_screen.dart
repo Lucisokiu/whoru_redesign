@@ -3,9 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:whoru/src/api/chat.dart';
 import 'package:whoru/src/models/chat_model.dart';
-import 'package:whoru/src/pages/chat/widget/custom_card.dart';
-import 'package:whoru/src/socket/WebSocketService.dart';
-import 'package:whoru/src/utils/url.dart';
 
 class WaitListChatPage extends StatefulWidget {
   const WaitListChatPage({super.key, required this.currentId});
@@ -13,7 +10,7 @@ class WaitListChatPage extends StatefulWidget {
   final int currentId;
 
   @override
-  _WaitListChatPageState createState() => _WaitListChatPageState();
+  State<WaitListChatPage> createState() => _WaitListChatPageState();
 }
 
 class _WaitListChatPageState extends State<WaitListChatPage> {
@@ -34,7 +31,7 @@ class _WaitListChatPageState extends State<WaitListChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         // appBar: AppBar(
         //   title: const Text("Message"),
         //   leading: IconButton(

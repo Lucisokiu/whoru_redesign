@@ -29,7 +29,7 @@ Future<void> getAll() async {
   }
 }
 
-Future<http.Response> CreateAccount(Map map) async {
+Future<http.Response> createAccount(Map map) async {
   var url = Uri.https(baseUrl, '/api/v1/Users/Create');
   String? token = await getToken();
 

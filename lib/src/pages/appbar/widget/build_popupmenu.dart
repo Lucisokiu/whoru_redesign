@@ -3,19 +3,19 @@
 void showPopupMenu(BuildContext context) async {
     await showMenu(
       context: context,
-      position: RelativeRect.fromLTRB(100, 100, 0, 0),
+      position: const RelativeRect.fromLTRB(100, 100, 0, 0),
       items: [
-        PopupMenuItem(
-          child: Text('Mục 1'),
+        const PopupMenuItem(
           value: 'item1',
+          child: Text('Mục 1'),
         ),
-        PopupMenuItem(
-          child: Text('Mục 2'),
+        const PopupMenuItem(
           value: 'item2',
+          child: Text('Mục 2'),
         ),
-        PopupMenuItem(
-          child: Text('Mục 3'),
+        const PopupMenuItem(
           value: 'item3',
+          child: Text('Mục 3'),
         ),
       ],
       elevation: 8.0,

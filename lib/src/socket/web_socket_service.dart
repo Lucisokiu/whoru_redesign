@@ -45,7 +45,7 @@ class WebSocketService {
       },
     );
     onConnected(_channel, {"protocol": "json", "version": 1});
-    Online(_channel, {
+    online(_channel, {
       "arguments": [id],
       "target": "Online",
       "type": 1
@@ -59,7 +59,7 @@ class WebSocketService {
     print(message);
   }
 
-  void Online(IOWebSocketChannel channel, Map<String, dynamic> messageData) {
+  void online(IOWebSocketChannel channel, Map<String, dynamic> messageData) {
     final message = jsonEncode(messageData) + String.fromCharCode(0x1E);
     channel.sink.add(message);
     print(message);
@@ -90,19 +90,19 @@ class WebSocketService {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Align(
+              const Align(
                 alignment: Alignment.topCenter,
                 child: Text(
                   'Incoming Call',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Align(
                 alignment: Alignment.topCenter,
                 child: Text('Call from $caller'),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -117,14 +117,14 @@ class WebSocketService {
                                     isJoinRoom: true,
                                   )));
                     },
-                    icon: Icon(Icons.call),
+                    icon: const Icon(Icons.call),
                     color: Colors.green,
                   ),
                   IconButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.call_end),
+                    icon: const Icon(Icons.call_end),
                     color: Colors.red, // Màu nền của nút đỏ
                   ),
                 ],

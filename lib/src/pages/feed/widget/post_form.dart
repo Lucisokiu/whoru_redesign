@@ -4,8 +4,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:whoru/src/api/feed.dart';
 
 class CreatePostForm extends StatefulWidget {
+  const CreatePostForm({super.key});
+
   @override
-  _CreatePostFormState createState() => _CreatePostFormState();
+  State<CreatePostForm> createState() => _CreatePostFormState();
 }
 
 class _CreatePostFormState extends State<CreatePostForm> {
@@ -35,7 +37,7 @@ class _CreatePostFormState extends State<CreatePostForm> {
             child: TextField(
               controller: contentController,
               style: Theme.of(context).textTheme.bodyMedium,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Enter your post content...',
                 border: OutlineInputBorder(),
               ),
@@ -47,7 +49,7 @@ class _CreatePostFormState extends State<CreatePostForm> {
               await _pickImage();
               _updateUI();
             },
-            child: Text('Pick Image'),
+            child: const Text('Pick Image'),
           ),
           pickedImage != null
               ? Expanded(
@@ -59,7 +61,8 @@ class _CreatePostFormState extends State<CreatePostForm> {
                         children: [
                           for (var imageFile in imageFiles)
                             Container(
-                              margin: EdgeInsets.symmetric(horizontal: 8.0),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Image.file(
                                 imageFile,
                                 fit: BoxFit.cover,
@@ -71,33 +74,32 @@ class _CreatePostFormState extends State<CreatePostForm> {
                   ),
                 )
               : Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(
-                      color: Theme.of(context).dividerColor, // Màu viền
-                      width: 2.0, // Độ rộng của viền
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: BorderRadius.circular(10.0),
+                        border: Border.all(
+                          color: Theme.of(context).dividerColor, // Màu viền
+                          width: 2.0, // Độ rộng của viền
+                        ),
+                      ),
                     ),
                   ),
-                    ),
                 ),
-              ),
           Align(
             alignment: Alignment.bottomCenter,
             child: ElevatedButton(
-              onPressed: () async {
+              onPressed: () {
                 if (imageFiles.isNotEmpty) {
-                  await postApiWithImages(
+                  postApiWithImages(
                     imageFiles: imageFiles,
                     content: contentController.text,
-                  );
-                  Navigator.pop(context);
+                  ).then((value) => Navigator.pop(context));
                 }
               },
-              child: Text('Create Post'),
+              child: const Text('Create Post'),
             ),
           ),
         ],

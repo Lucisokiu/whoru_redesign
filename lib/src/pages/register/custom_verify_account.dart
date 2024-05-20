@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whoru/src/pages/register/widget/FieldFormVerify.dart';
+import 'package:whoru/src/pages/register/widget/field_form_verify.dart';
 
 Future<Object?> customVerifyDialog(
     int userId,
@@ -21,10 +21,10 @@ Future<Object?> customVerifyDialog(
 }
 
 class Verify extends StatefulWidget {
-  int userId;
-  BuildContext contextScafford;
+  final int userId;
+  final BuildContext contextScafford;
 
-  Verify({super.key,required this.contextScafford,required this.userId});
+  const Verify({super.key,required this.contextScafford,required this.userId});
 
   @override
   State<Verify> createState() => _VerifyState();

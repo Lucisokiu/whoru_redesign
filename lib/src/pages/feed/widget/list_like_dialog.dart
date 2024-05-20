@@ -21,7 +21,7 @@ void showListDialog(BuildContext context, List<Map<String, dynamic>> list) {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.close),
+                        icon: const Icon(Icons.close),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },

@@ -378,7 +378,7 @@ Widget buildMultipleImage(BuildContext context, List<String> listImage) {
                     child: Stack(
                       children: [
                         Center(
-                          child: Container(
+                          child: SizedBox(
                             height: size.height * 0.20,
                             width: size.width * 0.35,
                             child: Image.network(
@@ -420,18 +420,18 @@ Widget buildMultipleImage(BuildContext context, List<String> listImage) {
 }
 
 class BuildButtonFeed extends StatefulWidget {
-  IconData icon;
-  int label;
-  VoidCallback onPressed;
-  VoidCallback onLongPress; // Add this line
-  bool? isLike;
+  final IconData icon;
+  final int label;
+  final VoidCallback onPressed;
+  final VoidCallback onLongPress;
+  final bool? isLike;
 
-  BuildButtonFeed({
+  const BuildButtonFeed({
     super.key,
     required this.icon,
     required this.label,
     required this.onPressed,
-    required this.onLongPress, // Add this line
+    required this.onLongPress,
     this.isLike,
   });
 
@@ -442,28 +442,31 @@ class BuildButtonFeed extends StatefulWidget {
 class _BuildButtonFeedState extends State<BuildButtonFeed> {
   @override
   Widget build(BuildContext context) {
+      int label = widget.label;
+      bool? isLike = widget.isLike;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        (widget.isLike != null)
+        (isLike != null)
             ? GestureDetector(
                 // Wrap IconButton with GestureDetector
                 onLongPress: widget.onLongPress, // Add this line
                 child: IconButton(
                   icon: Icon(widget.icon),
-                  color: widget.isLike! ? Colors.red : null,
+                  color: isLike ? Colors.red : null,
                   onPressed: () {
                     widget.onPressed();
 
                     setState(() {
-                      if (widget.isLike!) {
-                        widget.label--;
+                      if (isLike!) {
+                        label--;
                       } else {
-                        widget.label++;
+                        label++;
                       }
-                      widget.isLike = !widget.isLike!;
+                      isLike = !isLike!;
 
-                      print(widget.isLike);
+                      print(isLike);
                     });
                   },
                 ),
@@ -478,7 +481,7 @@ class _BuildButtonFeedState extends State<BuildButtonFeed> {
                 ),
               ),
         const SizedBox(width: 4),
-        Text(widget.label.toString()),
+        Text(label.toString()),
       ],
     );
   }

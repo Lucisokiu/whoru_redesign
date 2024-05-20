@@ -28,7 +28,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Spacer(),
+                const Spacer(),
                 // Centered CircleAvatar
                 Positioned(
                   top: MediaQuery.of(context).size.height * 0.35,
@@ -58,7 +58,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
                     ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 // Row of RoundedButtons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

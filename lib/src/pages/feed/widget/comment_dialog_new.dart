@@ -3,14 +3,14 @@ import '../../../api/comment.dart';
 import '../../../models/comment_model.dart';
 
 Future<Object?> customCommentDialog(BuildContext contextScafford,
-    List<CommentModel>? comments, int idFeed, int CurrentUser) {
+    List<CommentModel>? comments, int idFeed, int currentUser) {
   return showGeneralDialog(
       barrierDismissible: true,
       barrierLabel: "Sign up",
       context: contextScafford,
       transitionDuration: const Duration(milliseconds: 400),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
-        Tween<Offset> tween = Tween(begin: Offset(0, -1), end: Offset.zero);
+        Tween<Offset> tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
         return SlideTransition(
             position: tween.animate(
                 CurvedAnimation(parent: animation, curve: Curves.easeIn)),
@@ -20,7 +20,7 @@ Future<Object?> customCommentDialog(BuildContext contextScafford,
           contextScafford: contextScafford,
           comments: comments,
           idFeed: idFeed,
-          currentUser: CurrentUser)).then((value) => null);
+          currentUser: currentUser)).then((value) => null);
 }
 
 class CustomCommentDialog extends StatefulWidget {
@@ -29,7 +29,7 @@ class CustomCommentDialog extends StatefulWidget {
   final int idFeed;
   final int currentUser;
 
-  CustomCommentDialog(
+  const CustomCommentDialog(
       {super.key,
       required this.contextScafford,
       required this.comments,
@@ -41,7 +41,7 @@ class CustomCommentDialog extends StatefulWidget {
 }
 
 class _CustomCommentDialogState extends State<CustomCommentDialog> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -61,9 +61,9 @@ class _CustomCommentDialogState extends State<CustomCommentDialog> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Comment"),
+                  const Text("Comment"),
                   IconButton(
-                    icon: Icon(Icons.close),
+                    icon: const Icon(Icons.close),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -98,7 +98,7 @@ class _CustomCommentDialogState extends State<CustomCommentDialog> {
               ),
               Focus(
                 child: TextField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your comment...',
                   ),
                   style: Theme.of(context).textTheme.bodyMedium,
@@ -108,11 +108,11 @@ class _CustomCommentDialogState extends State<CustomCommentDialog> {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  PostComment(widget.idFeed, _controller.text);
+                  postComment(widget.idFeed, _controller.text);
                   print('New Comment: ${_controller.text}');
                   Navigator.pop(context);
                 },
-                child: Text('Submit'),
+                child: const Text('Submit'),
               ),
             ]),
           ),
@@ -141,7 +141,7 @@ void showCommentContextMenu(
       Offset.zero & MediaQuery.of(context).size,
     ),
     items: [
-      PopupMenuItem(
+      const PopupMenuItem(
         value: 'delete',
         child: Text('Delete'),
       ),
@@ -150,7 +150,7 @@ void showCommentContextMenu(
 
   // Handle the selected option
   if (result == 'delete') {
-    DeleteComment(comment.idComment);
+    deleteComment(comment.idComment);
     print('Deleting comment: ${comment.content}');
   }
 }

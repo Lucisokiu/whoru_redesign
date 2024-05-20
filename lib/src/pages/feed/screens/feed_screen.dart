@@ -17,7 +17,7 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   List<FeedModel> listFeed = [];
   int? currentUser;
@@ -86,7 +86,7 @@ class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin 
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
                   if (listFeed.isEmpty) {
-                    return SizedBox(height: 1000,child: MySkeletonLoadingWidget());
+                    return const SizedBox(height: 1000,child: MySkeletonLoadingWidget());
                   }
 
                   if (index == listFeed.length) {
@@ -98,14 +98,14 @@ class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin 
                         SizedBox(height: 2.h),
                         CardFeed(
                           feed: listFeed[index],
-                          CurrentUser: currentUser!,
+                          currentUser: currentUser!,
                         ),
                       ],
                     );
                   } else {
                     return CardFeed(
                       feed: listFeed[index],
-                      CurrentUser: currentUser!,
+                      currentUser: currentUser!,
                     );
                   }
                 },
@@ -129,6 +129,5 @@ class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin 
   }
   
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

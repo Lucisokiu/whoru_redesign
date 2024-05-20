@@ -7,7 +7,7 @@ import 'package:whoru/src/pages/camera/camera.dart';
 import '../../../api/feed.dart';
 
 class CreatePost extends StatefulWidget {
-  CreatePost({super.key});
+  const CreatePost({super.key});
 
   @override
   State<CreatePost> createState() => _CreatePostState();
@@ -15,16 +15,18 @@ class CreatePost extends StatefulWidget {
 
 class _CreatePostState extends State<CreatePost> {
   final TextEditingController _titleController = TextEditingController();
-  List<XFile> _selectedImages = [];
+  final List<XFile> _selectedImages = [];
   bool isLoading = false;
-  final RegExp _sensitiveWordPattern = RegExp(r'\b(đụ má|đm|con cặc|cc|lồn)\b', caseSensitive: false);
+  final RegExp _sensitiveWordPattern =
+      RegExp(r'\b(đụ má|đm|con cặc|cc|lồn)\b', caseSensitive: false);
 
   @override
   void initState() {
     _titleController.addListener(_checkSensitiveWords);
     super.initState();
   }
- void _checkSensitiveWords() {
+
+  void _checkSensitiveWords() {
     final text = _titleController.text;
     final sanitizedText = text.replaceAllMapped(_sensitiveWordPattern, (match) {
       return '*' * match.group(0)!.length;
@@ -39,6 +41,7 @@ class _CreatePostState extends State<CreatePost> {
       );
     }
   }
+
   void _takePicture(XFile? image) {
     if (image != null) {
       setState(() {
@@ -50,22 +53,20 @@ class _CreatePostState extends State<CreatePost> {
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
-    final List<XFile>? images = await picker.pickMultiImage();
+    final List<XFile> images = await picker.pickMultiImage();
 
-    if (images != null) {
-      setState(() {
-        _selectedImages.addAll(images);
-      });
-    }
+    setState(() {
+      _selectedImages.addAll(images);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Create Post'),
+          title: const Text('Create Post'),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new_rounded),
+            icon: const Icon(Icons.arrow_back_ios_new_rounded),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -85,10 +86,10 @@ class _CreatePostState extends State<CreatePost> {
                     maxLines: 5,
                     minLines: 1,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       labelText: 'Title',
                       hintText: "Type your feel",
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
                       contentPadding: EdgeInsets.all(2.w),
                     ),
                   ),
@@ -104,7 +105,7 @@ class _CreatePostState extends State<CreatePost> {
                                   builder: (builder) => const CameraScreen()));
                           _takePicture(file);
                         },
-                        child: Text('Take Picture'),
+                        child: const Text('Take Picture'),
                       ),
                       const SizedBox(
                         height: 20,
@@ -115,11 +116,11 @@ class _CreatePostState extends State<CreatePost> {
                       ),
                       ElevatedButton(
                         onPressed: _pickImage,
-                        child: Text('Pick Image'),
+                        child: const Text('Pick Image'),
                       ),
                     ],
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   Expanded(
                     child: ListView.builder(
                         itemCount: (_selectedImages.length / 2).ceil(),
@@ -161,17 +162,18 @@ class _CreatePostState extends State<CreatePost> {
                         List<File> files = _selectedImages
                             .map((xFile) => File(xFile.path))
                             .toList();
-                        await postApiWithImages(
+                        postApiWithImages(
                           imageFiles: files,
                           content: _titleController.text,
-                        );
-                        setState(() {
-                          isLoading = false;
+                        ).then((value) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          Navigator.pop(context);
                         });
-                        Navigator.pop(context);
                       }
                     },
-                    child: Text('Create Post'),
+                    child: const Text('Create Post'),
                   ),
                 ],
               ),
@@ -180,7 +182,7 @@ class _CreatePostState extends State<CreatePost> {
               Positioned.fill(
                 child: Container(
                   color: Colors.black.withOpacity(0.5),
-                  child: Center(
+                  child: const Center(
                     child: CircularProgressIndicator(),
                   ),
                 ),

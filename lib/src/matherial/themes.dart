@@ -32,12 +32,12 @@ class AppTheme {
         seedColor: Colors.grey.shade200,
         background: Colors.grey.shade200,
       ),
-      buttonTheme: ButtonThemeData().copyWith(
-        colorScheme: ColorScheme.light().copyWith(
+      buttonTheme: const ButtonThemeData().copyWith(
+        colorScheme: const ColorScheme.light().copyWith(
           primary: appColors.button,
         ),
       ),
-      iconTheme: IconThemeData().copyWith(color: appColors.icon),
+      iconTheme: const IconThemeData().copyWith(color: appColors.icon),
       textTheme: TextTheme(
         bodyMedium: TextStyle(
           color: appColors.text,
@@ -55,7 +55,7 @@ class AppTheme {
   }
 
   factory AppTheme.dark() {
-    final mode = ThemeMode.dark;
+    const mode = ThemeMode.dark;
     final appColors = AppColors.dark();
     final themeData = ThemeData.dark().copyWith(
       useMaterial3: true,
@@ -74,12 +74,12 @@ class AppTheme {
         brightness: Brightness.dark,
         background: Colors.black,
       ),
-      buttonTheme: ButtonThemeData().copyWith(
-        colorScheme: ColorScheme.light().copyWith(
+      buttonTheme: const ButtonThemeData().copyWith(
+        colorScheme: const ColorScheme.light().copyWith(
           primary: appColors.button,
         ),
       ),
-      iconTheme: IconThemeData().copyWith(color: appColors.icon),
+      iconTheme: const IconThemeData().copyWith(color: appColors.icon),
       shadowColor: appColors.shadow,
       textTheme: TextTheme(
         bodyMedium: TextStyle(

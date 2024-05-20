@@ -14,7 +14,7 @@ Widget buildActionHome(context, title, icon) {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CreatePost(),
+              builder: (context) => const CreatePost(),
             ),
           );
         }

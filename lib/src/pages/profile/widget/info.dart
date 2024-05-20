@@ -10,8 +10,7 @@ import '../../chat/screens/individual_page.dart';
 
 Widget info(BuildContext context, UserModel user, bool isMy) {
   final double screenHeight = MediaQuery.of(context).size.height;
-  final double screenWidth = MediaQuery.of(context).size.width;
-
+  // final double screenWidth = MediaQuery.of(context).size.width;
   return SingleChildScrollView(
     child: StatefulBuilder(builder: (context, StateSetter setState) {
       return Column(children: [
@@ -46,11 +45,10 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
           children: [
             Expanded(
               child: GestureDetector(
-                onTap: () async {
+                onTap: () {
                   if (isMy) {
-                    List<Map<String, dynamic>> listLike =
-                        await getAllFollower();
-                    showListDialog(context, listLike);
+                    getAllFollower()
+                        .then((listLike) => showListDialog(context, listLike));
                   }
                 },
                 child: Column(
@@ -76,11 +74,10 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
             ),
             Expanded(
               child: GestureDetector(
-                onTap: () async {
+                onTap: () {
                   if (isMy) {
-                    List<Map<String, dynamic>> listLike =
-                        await getAllFollowing();
-                    showListDialog(context, listLike);
+                    getAllFollowing()
+                        .then((listLike) => showListDialog(context, listLike));
                   }
                 },
                 child: Column(
@@ -139,19 +136,36 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                   const SizedBox(width: 16), // Khoảng cách giữa hai nút
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () async {
-                        int? currentId = await getIdUser();
-                        UserChat userChat = UserChat(
+                      onPressed: () {
+                        // int? currentId = await getIdUser();
+                        // UserChat userChat = UserChat(
+                        //     idUser: user.id,
+                        //     fullName: user.fullName,
+                        //     avatar: user.avt);
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (contex) => IndividualPage(
+                        //         currentId: currentId!, user: userChat),
+                        //   ),
+                        // );
+                        
+                        getIdUser().then((currentId) {
+                          UserChat userChat = UserChat(
                             idUser: user.id,
                             fullName: user.fullName,
-                            avatar: user.avt);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (contex) => IndividualPage(
-                                currentId: currentId!, user: userChat),
-                          ),
-                        );
+                            avatar: user.avt,
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (contex) => IndividualPage(
+                                currentId: currentId!,
+                                user: userChat,
+                              ),
+                            ),
+                          );
+                        });
                       },
                       child: const Text('Message'),
                     ),

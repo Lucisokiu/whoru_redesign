@@ -31,21 +31,21 @@ class _ChangePasswordState extends State<ChangePassword> {
         children: [
           TextField(
             controller: oldPass,
-            decoration: InputDecoration(labelText: 'Old Password'),
+            decoration: const InputDecoration(labelText: 'Old Password'),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
 
           TextField(
             controller: newPass,
-            decoration: InputDecoration(labelText: 'New Password'),
+            decoration: const InputDecoration(labelText: 'New Password'),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
 
           TextField(
             controller: confirmPass,
-            decoration: InputDecoration(labelText: 'Confirm Password'),
+            decoration: const InputDecoration(labelText: 'Confirm Password'),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
 
 
           // Button to post API
@@ -56,9 +56,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                 if(newPass.text == confirmPass.text){
                 postApi(newPass.text);
                 Navigator.pop(context);
-                };
+                }
               },
-              child: Text('Change Pass'),
+              child: const Text('Change Pass'),
             ),
           ),
         ],
@@ -66,6 +66,6 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
   }
   void postApi(newPass) {
-    ChangePass(newPass);
+    changePass(newPass);
   }
 }

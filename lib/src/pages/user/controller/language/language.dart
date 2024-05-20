@@ -16,8 +16,8 @@ class LocalizationService {
     'vi',
   ];
   static final locales = [
-    Locale('en', 'US'),
-    Locale('vi', 'VN'),
+    const Locale('en', 'US'),
+    const Locale('vi', 'VN'),
   ];
   static final langs = LinkedHashMap.from({
     'en': 'English',

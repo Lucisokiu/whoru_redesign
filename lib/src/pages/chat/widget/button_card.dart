@@ -10,16 +10,16 @@ class ButtonCard extends StatelessWidget {
     return ListTile(
       leading: CircleAvatar(
         radius: 23,
+        backgroundColor: const Color(0xFF25D366),
         child: Icon(
           icon,
           size: 26,
           color: Colors.white,
         ),
-        backgroundColor: Color(0xFF25D366),
       ),
       title: Text(
         name,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.bold,
         ),

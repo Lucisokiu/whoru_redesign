@@ -6,9 +6,9 @@ import 'package:sizer/sizer.dart';
 import '../../../models/user_model.dart';
 
 class CustomizeMarker extends StatelessWidget {
-  LatLng latLng;
-  UserModel user;
-  CustomizeMarker({super.key, required this.latLng, required this.user});
+  final LatLng latLng;
+  final UserModel user;
+  const CustomizeMarker({super.key, required this.latLng, required this.user});
 
   @override
   Widget build(BuildContext context) {

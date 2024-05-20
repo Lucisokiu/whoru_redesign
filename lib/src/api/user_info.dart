@@ -71,7 +71,7 @@ Future<http.Response> getInfoUserByName(String name) async {
       'Accept': 'application/json',
       'Authorization': 'bearer $token',
     },
-    body: "$name",
+    body: name,
   );
   print('getInfoUserByName ${json.encode(response.body)}');
   print('getInfoUserByName ${response.statusCode}');

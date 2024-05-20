@@ -28,7 +28,7 @@ class Recognizer {
   void loadRegisteredFaces() async {
     registered.clear();
 
-    for (final row in face_register) {
+    for (final row in faceRegister) {
       print(row.name);
       String name = row.name;
       String surname = row.surname;

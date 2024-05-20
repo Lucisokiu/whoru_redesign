@@ -32,7 +32,7 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
-        child:  Column(
+        child:  const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // MyAppBar(),

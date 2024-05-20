@@ -5,14 +5,13 @@ import 'package:whoru/src/models/feed_model.dart';
 
 import '../../../api/feed.dart';
 import '../../../utils/token.dart';
-import '../../feed/widget/feed_card.dart';
 import 'package:http/http.dart' as http;
 
 import 'card_feed_search.dart';
 
 class FeedResults extends StatefulWidget {
-  FeedResults({super.key, required this.query, required this.parentContext});
-  String query;
+  const FeedResults({super.key, required this.query, required this.parentContext});
+  final String query;
   final BuildContext parentContext;
 
   @override
@@ -109,7 +108,7 @@ class _FeedResultsState extends State<FeedResults> {
                 return CardFeedSearch(
                   parentContext: widget.parentContext,
                   feed: items[index],
-                  CurrentUser: currentUser!,
+                  currentUser: currentUser!,
                 );
               },
             );

@@ -29,7 +29,7 @@ Future<void> customCreatePostDialog(BuildContext context) async {
                       color: Theme.of(context).scaffoldBackgroundColor,
                       borderRadius:
                           const BorderRadius.all(Radius.circular(20))),
-                  child: Scaffold(
+                  child: const Scaffold(
                     backgroundColor: Colors.transparent,
                     resizeToAvoidBottomInset: false,
                     body: CreatePostForm(),

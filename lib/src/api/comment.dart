@@ -33,7 +33,7 @@ Future<List<CommentModel>?> getCommentByIdFeed(int idFeed) async {
   }
 }
 
-Future<void> PostComment(idFeed,content) async {
+Future<void> postComment(idFeed,content) async {
   var url = Uri.https(baseUrl, '/api/v1/Comments/Post');
   String? token = await getToken();
   var comment = createMapComment(idFeed, content);
@@ -55,7 +55,7 @@ Future<void> PostComment(idFeed,content) async {
 }
 
 
-Future<void> DeleteComment(idComment) async {
+Future<void> deleteComment(idComment) async {
   var url = Uri.https(baseUrl, '/api/v1/Comments/Delete');
   String? token = await getToken();
   var response = await http.delete(

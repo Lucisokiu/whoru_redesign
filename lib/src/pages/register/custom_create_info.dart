@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/pages/register/widget/FieldFormCreateInfo.dart';
+import 'package:whoru/src/pages/register/widget/field_form_create_info.dart';
 
 Future<Object?> customCreateInfoDialog(
   BuildContext contextScafford,
@@ -23,9 +23,9 @@ Future<Object?> customCreateInfoDialog(
 }
 
 class CreateInfo extends StatefulWidget {
-  BuildContext contextScafford;
+  final BuildContext contextScafford;
 
-  CreateInfo({required this.contextScafford, super.key});
+  const CreateInfo({required this.contextScafford, super.key});
 
   @override
   State<CreateInfo> createState() => _CreateInfoState();

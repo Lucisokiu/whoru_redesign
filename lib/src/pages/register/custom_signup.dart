@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:whoru/src/pages/login/widget/custom_signIn.dart';
-import 'package:whoru/src/pages/register/widget/FieldFormSignUp.dart';
+import 'package:whoru/src/pages/login/widget/custom_sign_in.dart';
+import 'package:whoru/src/pages/register/widget/field_form_sign_up.dart';
 
 Future<Object?> customRegisDialog(
   BuildContext contextScafford,
@@ -23,9 +23,9 @@ Future<Object?> customRegisDialog(
 }
 
 class Regis extends StatefulWidget {
-  BuildContext contextScafford;
+  final BuildContext contextScafford;
 
-  Regis({required this.contextScafford, super.key});
+  const Regis({required this.contextScafford, super.key});
 
   @override
   State<Regis> createState() => _RegisState();

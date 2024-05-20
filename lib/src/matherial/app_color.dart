@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-var colorBlack = Color(0xFF121212);
-var colorPrimaryBlack = Color(0xFF14171A);
-var colorDarkGrey = Color(0xFF657786);
-var colorPrimary = Color(0xFF1DA1F2);
-var colorTitle = Color(0xFF2C3D50);
+var colorBlack = const Color(0xFF121212);
+var colorPrimaryBlack = const Color(0xFF14171A);
+var colorDarkGrey = const Color(0xFF657786);
+var colorPrimary = const Color(0xFF1DA1F2);
+var colorTitle = const Color(0xFF2C3D50);
 
 var colorHigh = Colors.redAccent;
 var colorMedium = Colors.amber.shade700;
 var colorLow = colorPrimary;
 var colorCompleted = Colors.green;
 var colorFailed = colorDarkGrey;
-var colorActive = Color(0xFF00D72F);
+var colorActive = const Color(0xFF00D72F);
 
 Color mC = Colors.grey.shade100;
 Color mCL = Colors.white;
@@ -58,11 +58,11 @@ class AppColors {
         header: colorBlack,
         primary: mCM,
         background: mCM,
-        accent: Color(0xFF17c063),
+        accent: const Color(0xFF17c063),
         disabled: Colors.black12,
-        error: Color(0xFFFF7466),
+        error: const Color(0xFFFF7466),
         divider: Colors.black26,
-        button: Color(0xFF657786),
+        button: const Color(0xFF657786),
         contentText1: colorBlack,
         contentText2: colorPrimaryBlack,
         shadow: Colors.black38,
@@ -74,10 +74,10 @@ class AppColors {
     return AppColors(
         header: Colors.white,
         primary: Colors.grey.shade200,
-        background: Color(0xFF14171A),
-        accent: Color(0xFF17c063),
+        background: const Color(0xFF14171A),
+        accent: const Color(0xFF17c063),
         disabled: Colors.white12,
-        error: Color(0xFFFF5544),
+        error: const Color(0xFFFF5544),
         divider: Colors.white24,
         button: Colors.white24,
         contentText1: mCL,

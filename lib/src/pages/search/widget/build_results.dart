@@ -5,9 +5,9 @@ import 'all_results.dart';
 import 'feed_results.dart';
 
 class BuildResultsWidget extends StatefulWidget {
-  BuildResultsWidget(
+  const BuildResultsWidget(
       {super.key, required this.query, required this.parentContext});
-  String query;
+  final String query;
   final BuildContext parentContext;
 
   @override

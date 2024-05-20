@@ -9,8 +9,7 @@ import 'package:whoru/src/pages/chat/screens/select_contact.dart';
 import 'package:whoru/src/pages/chat/screens/wait_list_message_screen.dart';
 import 'package:whoru/src/pages/chat/widget/custom_card.dart';
 
-import '../../socket/WebSocketService.dart';
-import '../../utils/url.dart';
+import '../../socket/web_socket_service.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key, required this.currentId});
@@ -18,7 +17,7 @@ class ChatPage extends StatefulWidget {
   final int currentId;
 
   @override
-  _ChatPageState createState() => _ChatPageState();
+  State<ChatPage> createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
@@ -49,7 +48,6 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     messageSubscription.cancel();
   }
@@ -58,9 +56,9 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Message"),
+        title: const Text("Message"),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_sharp),
+          icon: const Icon(Icons.arrow_back_ios_sharp),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -105,9 +103,9 @@ class _ChatPageState extends State<ChatPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (builder) => SelectContact()));
+              MaterialPageRoute(builder: (builder) => const SelectContact()));
         },
-        child: Icon(
+        child: const Icon(
           Icons.chat,
           color: Colors.white,
         ),

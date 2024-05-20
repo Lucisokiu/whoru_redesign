@@ -6,7 +6,7 @@ abstract class Component extends StatelessWidget {
 
 class Leaf extends Component {
   final String name;
-  const Leaf(this.name);
+  const Leaf(this.name, {super.key});
   @override
   Widget build(BuildContext context) {
     return Text(name);
@@ -16,7 +16,7 @@ class Leaf extends Component {
 class Composite extends Component {
   final String name;
   final List<Component> children;
-  Composite(this.name, this.children);
+  const Composite(this.name, this.children, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +32,8 @@ class CommentTree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Comment tree demo")),
-      body: Composite('Composite 1', [
+      appBar: AppBar(title: const Text("Comment tree demo")),
+      body: const Composite('Composite 1', [
         Leaf('Leaf 1.1'),
         Leaf('Leaf 1.2'),
         Composite('Composite 2', [

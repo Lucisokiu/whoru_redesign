@@ -27,7 +27,7 @@ class NotificationsController{
         linux: initializationSettingsLinux);
     _flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: (detail) => null,
+      onDidReceiveNotificationResponse: (detail) {},
     );
   }
   static Future showSimpleNotification({

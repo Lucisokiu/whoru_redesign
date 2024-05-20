@@ -9,9 +9,9 @@ import 'package:whoru/src/pages/navigation/navigation.dart';
 
 
 class ForgotPassForm extends StatefulWidget {
-  BuildContext contextScafford;
+  final BuildContext contextScafford;
 
-  ForgotPassForm({
+  const ForgotPassForm({
     super.key,
     required this.contextScafford,
   });
@@ -34,7 +34,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
   bool _useEmail = true;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  var response;
+  dynamic response;
   int? id;
 
   StateMachineController getRiveController(Artboard artboard) {
@@ -44,7 +44,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
     return controller;
   }
 
-  void verify(BuildContext context, String Code) {
+  void verify(BuildContext context, String code) {
     setState(() {
       isShowLoading = true;
       isShowConfetti = true;
@@ -52,7 +52,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
         if (id != null) {
-          response = await verifyAccount(id!, Code);
+          response = await verifyAccount(id!, code);
           if (response.statusCode == 200) {
             check.fire();
             // show success
@@ -75,7 +75,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         } else {
           error.fire();
 
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
             setState(() {
               isShowLoading = false;
             });
@@ -178,17 +178,17 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                             print(_useEmail);
                           });
                         },
-                        icon: Icon(Icons.sync_alt),
+                        icon: const Icon(Icons.sync_alt),
                       ),
                     ],
                   ),
                 ),
                 TextButton(
                   onPressed: () async {
-                    id = await ForgotPassword(_emailController.text);
+                    id = await forgotPassword(_emailController.text);
                   },
                   style: TextButton.styleFrom(
-                    backgroundColor: Color(0xFFF77D8E),
+                    backgroundColor: const Color(0xFFF77D8E),
                   ),
                   child: Text("Send Code",
                       style: Theme
@@ -296,13 +296,13 @@ class CustomPositioned extends StatelessWidget {
     return Positioned.fill(
       child: Column(
         children: [
-          Spacer(),
+          const Spacer(),
           SizedBox(
             height: size,
             width: size,
             child: child,
           ),
-          Spacer(flex: 2),
+          const Spacer(flex: 2),
         ],
       ),
     );

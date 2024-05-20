@@ -20,9 +20,9 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInFormState extends State<SignInForm> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _userNameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool isShowLoading = false;
   bool isShowConfetti = false;
 
@@ -30,7 +30,7 @@ class _SignInFormState extends State<SignInForm> {
   late SMITrigger error;
   late SMITrigger reset;
   late SMITrigger confetti;
-  var response;
+  dynamic response;
   StateMachineController getRiveController(Artboard artboard) {
     StateMachineController? controller =
         StateMachineController.fromArtboard(artboard, "State Machine 1");
@@ -54,7 +54,7 @@ class _SignInFormState extends State<SignInForm> {
         int? idInfo = await getIdUser();
         if (response.statusCode == 200) {
           if(idInfo == -1) {
-            Future.delayed(Duration(milliseconds: 300), () {
+            Future.delayed(const Duration(milliseconds: 300), () {
               Navigator.of(context).pop();
             }).then((_) =>
             {
@@ -79,7 +79,7 @@ class _SignInFormState extends State<SignInForm> {
           });
         } else {
           error.fire();
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
             setState(() {
               isShowLoading = false;
             });
@@ -87,7 +87,7 @@ class _SignInFormState extends State<SignInForm> {
         }
       } else {
         error.fire();
-        Future.delayed(Duration(seconds: 2), () {
+        Future.delayed(const Duration(seconds: 2), () {
           setState(() {
             isShowLoading = false;
           });
@@ -238,13 +238,13 @@ class CustomPositioned extends StatelessWidget {
     return Positioned.fill(
       child: Column(
         children: [
-          Spacer(),
+          const Spacer(),
           SizedBox(
             height: size,
             width: size,
             child: child,
           ),
-          Spacer(flex: 2),
+          const Spacer(flex: 2),
         ],
       ),
     );

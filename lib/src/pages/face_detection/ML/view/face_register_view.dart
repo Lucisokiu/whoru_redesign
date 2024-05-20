@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 
-import '../../DB/FaceRegistrationInfo.dart';
+import '../../DB/face_registration_info.dart';
 import '../../constants/painter.dart';
 import '../viewmodel/face_match.dart';
 import '../viewmodel/face_register.dart';
@@ -13,7 +13,7 @@ import 'face_match_view.dart';
 
 
 
-List<FaceRegistrationInfo> face_register = [];
+List<FaceRegistrationInfo> faceRegister = [];
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -175,7 +175,7 @@ class _HomePageState extends State<RegistrationScreen> {
                       //     nameTextEditingController.text,
                       //     surnameTextEditingController.text,
                       //     recognition.embedding);
-                      face_register.add(FaceRegistrationInfo(
+                      faceRegister.add(FaceRegistrationInfo(
                         number: numberTextEditingController.text,
                         name: nameTextEditingController.text,
                         surname: surnameTextEditingController.text,
@@ -209,7 +209,7 @@ class _HomePageState extends State<RegistrationScreen> {
     );
   }
 
-  var image;
+  dynamic image;
 
   drawRectangleAroundFaces() async {
     print("${image.width}   ${image.height}");
@@ -228,12 +228,12 @@ class _HomePageState extends State<RegistrationScreen> {
           backgroundColor: Colors.amber,
           actions: [
             IconButton(
-              icon: Icon(Icons.arrow_forward),
+              icon: const Icon(Icons.arrow_forward),
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => RecognitionScreen()));
+                        builder: (context) => const RecognitionScreen()));
               },
             ),
           ],
@@ -266,7 +266,7 @@ class _HomePageState extends State<RegistrationScreen> {
                             child: Container(
                               margin: const EdgeInsets.only(
                                   top: 60, left: 30, right: 30, bottom: 0),
-                              child: SizedBox(
+                              child: const SizedBox(
                                 height: 300,
                                 width: 300,
                               ),
@@ -313,8 +313,8 @@ class _HomePageState extends State<RegistrationScreen> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {},
-          child: const Icon(Icons.face),
           backgroundColor: Colors.amber,
+          child: const Icon(Icons.face),
         ));
   }
 }

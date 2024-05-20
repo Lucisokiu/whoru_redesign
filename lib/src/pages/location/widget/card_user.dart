@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../models/user_model.dart';
 
-Future<Object?> CardUser(
+Future<Object?> cardUser(
   BuildContext contextScafford,
   UserModel user,
 ) {
@@ -15,7 +14,7 @@ Future<Object?> CardUser(
       context: contextScafford,
       transitionDuration: const Duration(milliseconds: 400),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
-        Tween<Offset> tween = Tween(begin: Offset(0, 1), end: Offset.zero);
+        Tween<Offset> tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
         return SlideTransition(
             position: tween.animate(
                 CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
@@ -28,9 +27,9 @@ Future<Object?> CardUser(
 }
 
 class CardUserMap extends StatefulWidget {
-  BuildContext contextScafford;
-  UserModel user;
-  CardUserMap({super.key, required this.contextScafford, required this.user});
+  final BuildContext contextScafford;
+  final UserModel user;
+  const CardUserMap({super.key, required this.contextScafford, required this.user});
 
   @override
   State<CardUserMap> createState() => _CardUserMapState();
@@ -96,11 +95,11 @@ class _CardUserMapState extends State<CardUserMap> {
                       onPressed: () {},
                       child: Row(
                         children: [
-                          Icon(Icons.person_add),
+                          const Icon(Icons.person_add),
                           SizedBox(
                             width: 1.w,
                           ),
-                          Text("Follow"),
+                          const Text("Follow"),
                         ],
                       ),
                     ),
@@ -114,7 +113,7 @@ class _CardUserMapState extends State<CardUserMap> {
                           SizedBox(
                             width: 1.w,
                           ),
-                          Text("Message"),
+                          const Text("Message"),
                         ],
                       ),
                     )

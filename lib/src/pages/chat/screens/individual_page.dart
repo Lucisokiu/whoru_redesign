@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:whoru/src/api/chat.dart';
@@ -9,9 +8,8 @@ import 'package:whoru/src/pages/call/audiocall/audio_call_screen.dart';
 import 'package:whoru/src/pages/call/videocall/video_call_creen.dart';
 import 'package:whoru/src/pages/chat/widget/own_messenger_card.dart';
 import 'package:whoru/src/pages/chat/widget/reply_card.dart';
-import 'package:whoru/src/socket/WebSocketService.dart';
+import 'package:whoru/src/socket/web_socket_service.dart';
 
-import '../../../utils/url.dart';
 
 class IndividualPage extends StatefulWidget {
   const IndividualPage(
@@ -21,7 +19,7 @@ class IndividualPage extends StatefulWidget {
   final int currentId;
 
   @override
-  _IndividualPageState createState() => _IndividualPageState();
+  State<IndividualPage> createState() => _IndividualPageState();
 }
 
 class _IndividualPageState extends State<IndividualPage> {
@@ -29,8 +27,8 @@ class _IndividualPageState extends State<IndividualPage> {
   FocusNode focusNode = FocusNode();
   bool sendButton = false;
   List<MessageModel> messages = [];
-  TextEditingController _controller = TextEditingController();
-  ScrollController _scrollController = ScrollController();
+  final TextEditingController _controller = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   late StreamSubscription<dynamic> messageSubscription;
   WebSocketService webSocketService = WebSocketService();
 
@@ -57,7 +55,7 @@ class _IndividualPageState extends State<IndividualPage> {
   void _scrolldown() {
     _scrollController.animateTo(
       _scrollController.position.maxScrollExtent,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.fastOutSlowIn,
     );
   }
@@ -141,7 +139,7 @@ class _IndividualPageState extends State<IndividualPage> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60),
+        preferredSize: const Size.fromHeight(60),
         child: AppBar(
           leadingWidth: 70,
           titleSpacing: 0,
@@ -152,11 +150,13 @@ class _IndividualPageState extends State<IndividualPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.arrow_back_ios_rounded,
                   size: 24,
                 ),
                 CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Colors.blueGrey,
                   child: ClipOval(
                     child: Image.network(
                       widget.user.avatar,
@@ -164,8 +164,6 @@ class _IndividualPageState extends State<IndividualPage> {
                       width: 36,
                     ),
                   ),
-                  radius: 20,
-                  backgroundColor: Colors.blueGrey,
                 ),
               ],
             ),
@@ -173,19 +171,19 @@ class _IndividualPageState extends State<IndividualPage> {
           title: InkWell(
             onTap: () {},
             child: Container(
-              margin: EdgeInsets.all(6),
+              margin: const EdgeInsets.all(6),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     widget.user.fullName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18.5,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
+                  const Text(
                     "Online",
                     style: TextStyle(
                       fontSize: 13,
@@ -197,7 +195,7 @@ class _IndividualPageState extends State<IndividualPage> {
           ),
           actions: [
             IconButton(
-                icon: Icon(Icons.videocam),
+                icon: const Icon(Icons.videocam),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -210,7 +208,7 @@ class _IndividualPageState extends State<IndividualPage> {
                   );
                 }),
             IconButton(
-                icon: Icon(Icons.call),
+                icon: const Icon(Icons.call),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -223,35 +221,35 @@ class _IndividualPageState extends State<IndividualPage> {
                   );
                 }),
             PopupMenuButton<String>(
-              padding: EdgeInsets.all(0),
+              padding: const EdgeInsets.all(0),
               onSelected: (value) {
                 print(value);
               },
               itemBuilder: (BuildContext contesxt) {
                 return [
-                  PopupMenuItem(
-                    child: Text("View Contact"),
+                  const PopupMenuItem(
                     value: "View Contact",
+                    child: Text("View Contact"),
                   ),
-                  PopupMenuItem(
-                    child: Text("Media, links, and docs"),
+                  const PopupMenuItem(
                     value: "Media, links, and docs",
+                    child: Text("Media, links, and docs"),
                   ),
-                  PopupMenuItem(
-                    child: Text("Whatsapp Web"),
+                  const PopupMenuItem(
                     value: "Whatsapp Web",
+                    child: Text("Whatsapp Web"),
                   ),
-                  PopupMenuItem(
-                    child: Text("Search"),
+                  const PopupMenuItem(
                     value: "Search",
+                    child: Text("Search"),
                   ),
-                  PopupMenuItem(
-                    child: Text("Mute Notification"),
+                  const PopupMenuItem(
                     value: "Mute Notification",
+                    child: Text("Mute Notification"),
                   ),
-                  PopupMenuItem(
-                    child: Text("Wallpaper"),
+                  const PopupMenuItem(
                     value: "Wallpaper",
+                    child: Text("Wallpaper"),
                   ),
                 ];
               },
@@ -272,7 +270,7 @@ class _IndividualPageState extends State<IndividualPage> {
                     onLongPress: () {
                       showMenu(
                         context: context,
-                        position: RelativeRect.fromLTRB(0, 0, 0, 0),
+                        position: const RelativeRect.fromLTRB(0, 0, 0, 0),
                         items: [
                           PopupMenuItem(
                             child: GestureDetector(
@@ -280,7 +278,7 @@ class _IndividualPageState extends State<IndividualPage> {
                                 // deleteCard(index);
                                 Navigator.pop(context); // Ẩn pop-up menu
                               },
-                              child: Text("Xóa"),
+                              child: const Text("Xóa"),
                             ),
                           ),
                         ],
@@ -298,20 +296,20 @@ class _IndividualPageState extends State<IndividualPage> {
                   );
                 }
               },
-              physics: BouncingScrollPhysics(), // Sử dụng BouncingScrollPhysics
+              physics: const BouncingScrollPhysics(), // Sử dụng BouncingScrollPhysics
             ),
           ),
-          Container(
+          SizedBox(
             height: 70,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width - 60,
                       child: Card(
-                        margin: EdgeInsets.only(left: 2, right: 2, bottom: 8),
+                        margin: const EdgeInsets.only(left: 2, right: 2, bottom: 8),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
@@ -323,7 +321,7 @@ class _IndividualPageState extends State<IndividualPage> {
                           maxLines: 5,
                           minLines: 1,
                           onChanged: (value) {
-                            if (value.length > 0) {
+                            if (value.isNotEmpty) {
                               setState(() {
                                 sendButton = true;
                               });
@@ -336,7 +334,7 @@ class _IndividualPageState extends State<IndividualPage> {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: "Type a message",
-                            hintStyle: TextStyle(color: Colors.grey),
+                            hintStyle: const TextStyle(color: Colors.grey),
                             prefixIcon: IconButton(
                               icon: Icon(
                                 show
@@ -357,7 +355,7 @@ class _IndividualPageState extends State<IndividualPage> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
-                                  icon: Icon(Icons.attach_file),
+                                  icon: const Icon(Icons.attach_file),
                                   onPressed: () {
                                     showModalBottomSheet(
                                         backgroundColor: Colors.transparent,
@@ -366,7 +364,7 @@ class _IndividualPageState extends State<IndividualPage> {
                                   },
                                 ),
                                 IconButton(
-                                  icon: Icon(Icons.camera_alt),
+                                  icon: const Icon(Icons.camera_alt),
                                   onPressed: () {
                                     // Navigator.push(
                                     //     context,
@@ -377,7 +375,7 @@ class _IndividualPageState extends State<IndividualPage> {
                                 ),
                               ],
                             ),
-                            contentPadding: EdgeInsets.all(5),
+                            contentPadding: const EdgeInsets.all(5),
                           ),
                         ),
                       ),
@@ -390,7 +388,7 @@ class _IndividualPageState extends State<IndividualPage> {
                       ),
                       child: CircleAvatar(
                         radius: 25,
-                        backgroundColor: Color(0xFF128C7E),
+                        backgroundColor: const Color(0xFF128C7E),
                         child: IconButton(
                           icon: Icon(
                             sendButton ? Icons.send : Icons.mic,
@@ -422,7 +420,7 @@ class _IndividualPageState extends State<IndividualPage> {
   }
 
   Widget bottomSheet() {
-    return Container(
+    return SizedBox(
       height: 278,
       width: MediaQuery.of(context).size.width,
       child: Card(
@@ -437,28 +435,28 @@ class _IndividualPageState extends State<IndividualPage> {
                 children: [
                   iconCreation(
                       Icons.insert_drive_file, Colors.indigo, "Document"),
-                  SizedBox(
+                  const SizedBox(
                     width: 40,
                   ),
                   iconCreation(Icons.camera_alt, Colors.pink, "Camera"),
-                  SizedBox(
+                  const SizedBox(
                     width: 40,
                   ),
                   iconCreation(Icons.insert_photo, Colors.purple, "Gallery"),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   iconCreation(Icons.headset, Colors.orange, "Audio"),
-                  SizedBox(
+                  const SizedBox(
                     width: 40,
                   ),
                   iconCreation(Icons.location_pin, Colors.teal, "Location"),
-                  SizedBox(
+                  const SizedBox(
                     width: 40,
                   ),
                   iconCreation(Icons.person, Colors.blue, "Contact"),
@@ -486,12 +484,12 @@ class _IndividualPageState extends State<IndividualPage> {
               color: Colors.white,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
               // fontWeight: FontWeight.w100,
             ),

@@ -7,15 +7,13 @@ import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/log.dart';
 import 'package:whoru/src/api/user.dart';
-import 'package:whoru/src/models/login_model.dart';
-import 'package:whoru/src/pages/navigation/navigation.dart';
-import 'package:whoru/src/pages/register/custom_signup.dart';
+
 import 'package:whoru/src/pages/register/custom_verify_account.dart';
 
 class SignUpForm extends StatefulWidget {
-  BuildContext contextScafford;
+  final BuildContext contextScafford;
 
-  SignUpForm({
+  const SignUpForm({
     super.key,
     required this.contextScafford,
   });
@@ -40,7 +38,7 @@ class _SignUpFormState extends State<SignUpForm> {
   late SMITrigger error;
   late SMITrigger reset;
   late SMITrigger confetti;
-  var response;
+  dynamic response;
 
   StateMachineController getRiveController(Artboard artboard) {
     StateMachineController? controller =
@@ -51,7 +49,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   void signup(BuildContext context, String userName, String password,
       String email, String phone) {
-    Map<dynamic, dynamic> SignUpData = {
+    Map<dynamic, dynamic> signUpData = {
       'userName': userName,
       'password': password,
       'email': email,
@@ -63,19 +61,19 @@ class _SignUpFormState extends State<SignUpForm> {
     });
     Future.delayed(const Duration(seconds: 1), () async {
       if (_formKey.currentState!.validate()) {
-        response = await CreateAccount(SignUpData);
+        response = await createAccount(signUpData);
         if (response.statusCode == 201) {
           Map<String, dynamic> jsonMap = jsonDecode(response.body);
           int userId = jsonMap['userId'];
           check.fire();
-          Future.delayed(Duration(milliseconds: 800), () {
+          Future.delayed(const Duration(milliseconds: 800), () {
             if (mounted) {
               setState(() {
                 isShowLoading = false;
               });
               confetti.fire();
               Future.delayed(const Duration(seconds: 2), () {
-                if(_emailController.text != null){
+                if(_emailController.text.isEmpty){
                   sendCodeByEmail(userId);
                 }else {
                   sendCodeBySMS(userId);
@@ -87,7 +85,7 @@ class _SignUpFormState extends State<SignUpForm> {
         } else {
           print("status code ${response.statusCode}");
           error.fire();
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
             setState(() {
               isShowLoading = false;
             });
@@ -95,7 +93,7 @@ class _SignUpFormState extends State<SignUpForm> {
         }
       } else {
         error.fire();
-        Future.delayed(Duration(seconds: 2), () {
+        Future.delayed(const Duration(seconds: 2), () {
           setState(() {
             isShowLoading = false;
           });
@@ -276,7 +274,7 @@ class _SignUpFormState extends State<SignUpForm> {
                             print(_useEmail);
                           });
                         },
-                        icon: Icon(Icons.sync_alt),
+                        icon: const Icon(Icons.sync_alt),
                       ),
                     ],
                   ),
@@ -353,13 +351,13 @@ class CustomPositioned extends StatelessWidget {
     return Positioned.fill(
       child: Column(
         children: [
-          Spacer(),
+          const Spacer(),
           SizedBox(
             height: size,
             width: size,
             child: child,
           ),
-          Spacer(flex: 2),
+          const Spacer(flex: 2),
         ],
       ),
     );

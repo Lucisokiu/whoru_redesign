@@ -10,7 +10,7 @@ Future<Object?> customForgotPassDialog(
       context: contextScafford,
       transitionDuration: const Duration(milliseconds: 400),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
-        Tween<Offset> tween = Tween(begin: Offset(0, -1), end: Offset.zero);
+        Tween<Offset> tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
         return SlideTransition(
             position: tween.animate(
                 CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
@@ -20,9 +20,9 @@ Future<Object?> customForgotPassDialog(
 }
 
 class Forgot extends StatefulWidget {
-  BuildContext contextScafford;
+  final BuildContext contextScafford;
 
-  Forgot({super.key,required this.contextScafford});
+  const Forgot({super.key,required this.contextScafford});
 
   @override
   State<Forgot> createState() => _ForgotState();
@@ -51,9 +51,9 @@ class _ForgotState extends State<Forgot> {
                     clipBehavior: Clip.none,
                     children: [
                       Column(children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: const Text(
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
                             "Forgot Password",
                             style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
                           ),

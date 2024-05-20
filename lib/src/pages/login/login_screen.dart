@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:whoru/src/pages/login/widget/animated_btn.dart';
-import 'package:whoru/src/pages/login/widget/custom_signIn.dart';
+import 'package:whoru/src/pages/login/widget/custom_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: const SizedBox(),
             )),
             AnimatedPositioned(
-              duration: Duration(milliseconds: 240),
+              duration: const Duration(milliseconds: 240),
               top: isSignInDialogShown ? -50 : 0,
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Spacer(),
+                        const Spacer(),
                         const SizedBox(
                           width: 260,
                           child: Column(
@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           btnAnimationController: _btnAnimationController,
                           press: () {
                             _btnAnimationController.isActive = true;
-                            Future.delayed(Duration(milliseconds: 800), () {
+                            Future.delayed(const Duration(milliseconds: 800), () {
                               setState(() {
                                 isSignInDialogShown = true;
                               });

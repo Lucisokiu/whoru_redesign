@@ -5,7 +5,6 @@ import 'package:lottie/lottie.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/utils/token.dart';
 
-import '../app.dart';
 
 
 class SplashScreen extends StatefulWidget {

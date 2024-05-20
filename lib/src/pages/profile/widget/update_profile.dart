@@ -12,7 +12,7 @@ Future<void> customUpdateProfileDialog(
       context: context,
       transitionDuration: const Duration(milliseconds: 400),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
-        Tween<Offset> tween = Tween(begin: Offset(0, -1), end: Offset.zero);
+        Tween<Offset> tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
         return SlideTransition(
           position: tween.animate(
             CurvedAnimation(parent: animation, curve: Curves.easeInOut),
@@ -37,12 +37,12 @@ Future<void> customUpdateProfileDialog(
                     backgroundColor: Colors.transparent,
                     resizeToAvoidBottomInset: false,
                     body: (title == 'avatar')
-                        ? UpdateAvatar()
+                        ? const UpdateAvatar()
                         : (title == 'background')
-                            ? UpdateBackground()
+                            ? const UpdateBackground()
                             : (title == 'changePass')
-                                ? ChangePassword()
-                                : UpdateInfo(),
+                                ? const ChangePassword()
+                                : const UpdateInfo(),
                   ),
                 ),
                 Positioned(

@@ -3,22 +3,23 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/socket/WebSocketService.dart';
+import 'package:whoru/src/socket/web_socket_service.dart';
 
 class VideoCallScreen extends StatefulWidget {
-  bool isJoinRoom = false;
-  final int idUser;
-  final int currentId;
 
-  VideoCallScreen(
+  const VideoCallScreen(
       {super.key,
       bool? isJoinRoom,
       required this.idUser,
       required this.currentId})
       : isJoinRoom = isJoinRoom ?? false;
+      
+  final bool isJoinRoom;
+  final int idUser;
+  final int currentId;
 
   @override
-  _VideoCallScreenState createState() => _VideoCallScreenState();
+  State<VideoCallScreen> createState() => _VideoCallScreenState();
 }
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
@@ -46,11 +47,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
   @override
   void dispose() {
-    _peerConnection?.close();
-    _localStream?.getTracks().forEach((track) => track.stop());
-    _localRenderer.dispose();
-    _remoteRenderer.dispose();
-    messageSubscription.cancel();
+    _hangUp();
     super.dispose();
   }
 
@@ -174,17 +171,11 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
         jsonEncode({"event": "ice", "data": candidate.toMap()})
       ]);
     };
-    _peerConnection?.onConnectionState = (RTCPeerConnectionState state) {
-      print('Connection state change: $state');
-    };
+    _peerConnection?.onConnectionState = (RTCPeerConnectionState state) {};
 
-    _peerConnection?.onSignalingState = (RTCSignalingState state) {
-      print('Signaling state change: $state');
-    };
+    _peerConnection?.onSignalingState = (RTCSignalingState state) {};
 
     _peerConnection?.onTrack = ((tracks) {
-      print('onTrack');
-
       tracks.streams[0].getTracks().forEach((track) {
         _remoteStream?.addTrack(track);
         setState(() {});
@@ -217,8 +208,6 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   void _hangUp() {
     _peerConnection?.close();
     _localStream?.getTracks().forEach((track) => track.stop());
-
-    // Giải phóng các đối tượng RTCVideoRenderer
     _localRenderer.dispose();
     _remoteRenderer.dispose();
     messageSubscription.cancel();
@@ -318,9 +307,9 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Icon(Icons.call_end),
                         backgroundColor: Colors.red,
                         elevation: 0,
+                        child: const Icon(Icons.call_end),
                       ),
                     ],
                   ),
@@ -339,6 +328,7 @@ class CircularButton extends StatelessWidget {
   final bool isToggled;
 
   const CircularButton({
+    super.key,
     required this.icon,
     required this.onPressed,
     required this.isToggled,
@@ -351,11 +341,12 @@ class CircularButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Ink(
-          padding: EdgeInsets.all(8.0), // Adjust the padding to increase size
+          padding:
+              const EdgeInsets.all(8.0), // Adjust the padding to increase size
 
           decoration: ShapeDecoration(
             color: isToggled ? Colors.green : Colors.red,
-            shape: CircleBorder(),
+            shape: const CircleBorder(),
           ),
           child: IconButton(
             iconSize: 30.0, // Adjust the icon size as needed

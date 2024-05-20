@@ -33,10 +33,10 @@ class MaterialAnimation extends StatelessWidget {
         );
       case "slideHorizontalFade":
         return SlideAnimation(
+          horizontalOffset: 50,
           child: FadeInAnimation(
             child: child,
           ),
-          horizontalOffset: 50,
         );
       case "slideFade":
         return SlideAnimation(

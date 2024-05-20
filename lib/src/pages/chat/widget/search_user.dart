@@ -1,15 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:whoru/src/api/userInfo.dart';
+import 'package:whoru/src/api/user_info.dart';
 import 'package:whoru/src/models/search_model.dart';
 import 'package:whoru/src/models/user_chat.dart';
 import 'package:whoru/src/pages/chat/screens/individual_page.dart';
 import 'package:whoru/src/utils/token.dart';
 
 class SearchUserChat extends SearchDelegate {
-
-  var res;
-
+  dynamic res;
+  int? id;
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -32,6 +31,7 @@ class SearchUserChat extends SearchDelegate {
 
   void getUser(String name) async {
     res = await getInfoUserByName(name);
+    id = await getIdUser();
   }
 
   @override
@@ -78,12 +78,11 @@ class SearchUserChat extends SearchDelegate {
               result.fullName,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            onTap: () async {
-              int? id = await getIdUser();
+            onTap: () {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (builder) => IndividualPage(
+                      builder: (context) => IndividualPage(
                             user: UserChat.fromSearchModel(result),
                             currentId: id!,
                           )));
@@ -137,15 +136,13 @@ class SearchUserChat extends SearchDelegate {
             ),
             title: Text(
               result.fullName,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
-            onTap: () async {
-              int? id = await getIdUser();
-
+            onTap: () {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (builder) => IndividualPage(
+                      builder: (context) => IndividualPage(
                             user: UserChat.fromSearchModel(result),
                             currentId: id!,
                           )));

@@ -9,20 +9,20 @@ class ContactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Container(
+      leading: SizedBox(
         width: 50,
         height: 53,
         child: Stack(
           children: [
             CircleAvatar(
               radius: 23,
+              backgroundColor: Colors.blueGrey[200],
               child: SvgPicture.asset(
                 "assets/person.svg",
-                color: Colors.white,
+                // color: Colors.white,
                 height: 30,
                 width: 30,
               ),
-              backgroundColor: Colors.blueGrey[200],
             ),
             // contact.select
             //     ? Positioned(
@@ -44,14 +44,14 @@ class ContactCard extends StatelessWidget {
       ),
       title: Text(
         contact.fullName,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.bold,
         ),
       ),
       subtitle: Text(
         contact.type,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 13,
         ),
       ),

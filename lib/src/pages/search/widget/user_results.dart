@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import '../../../api/userInfo.dart';
+import '../../../api/user_info.dart';
 import '../../../models/search_model.dart';
 import '../../../utils/token.dart';
 import 'package:http/http.dart' as http;
@@ -10,8 +10,9 @@ import 'package:http/http.dart' as http;
 import '../../profile/profile_screen.dart';
 
 class UserResults extends StatefulWidget {
-  UserResults(      {super.key, required this.query, required this.parentContext});
-  String query;
+  const UserResults(
+      {super.key, required this.query, required this.parentContext});
+  final String query;
   final BuildContext parentContext;
   @override
   State<UserResults> createState() => _UserResultsState();
@@ -118,11 +119,15 @@ class _UserResultsState extends State<UserResults> {
                       children: [
                         Text(
                           result.fullName,
-                          style: Theme.of(widget.parentContext).textTheme.bodyMedium,
+                          style: Theme.of(widget.parentContext)
+                              .textTheme
+                              .bodyMedium,
                         ),
                         Icon(Icons.account_circle,
-                            color:
-                                Theme.of(widget.parentContext).textTheme.bodyMedium!.color)
+                            color: Theme.of(widget.parentContext)
+                                .textTheme
+                                .bodyMedium!
+                                .color)
                       ],
                     ),
                     onTap: () {

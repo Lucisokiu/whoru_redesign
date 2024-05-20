@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 
-import '../../DB/FaceRegistrationInfo.dart';
+import '../../DB/face_registration_info.dart';
 import '../../constants/painter.dart';
 import '../viewmodel/face_match.dart';
 
@@ -69,7 +69,7 @@ class _HomePageState extends State<RecognitionScreen> {
 
     for (Face face in faces) {
       final Rect boundingBox = face.boundingBox;
-      print("RECTTTTT =" + boundingBox.toString());
+      // print("RECTTTTT =" + boundingBox.toString());
 
       num left = boundingBox.left < 0 ? 0 : boundingBox.left;
       num top = boundingBox.top < 0 ? 0 : boundingBox.top;
@@ -206,7 +206,7 @@ class _HomePageState extends State<RecognitionScreen> {
     return await File(_image!.path).writeAsBytes(img.encodeJpg(orientedImage));
   }
 
-  var image;
+  dynamic image;
   drawRectangleAroundFaces() async {
     print("${image.width}   ${image.height}");
     setState(() {
@@ -392,7 +392,7 @@ class _HomePageState extends State<RecognitionScreen> {
       // await databaseHelper.init();
       // List<Map<String, dynamic>> allRow = await databaseHelper.queryAllRows();
       // print('tum yuzler = $allRow');
-      for (FaceRegistrationInfo faceRegister in face_register) {
+      for (FaceRegistrationInfo faceRegister in faceRegister) {
         print('Number: ${faceRegister.number}');
         print('Name: ${faceRegister.name}');
         print('Surname: ${faceRegister.surname}');

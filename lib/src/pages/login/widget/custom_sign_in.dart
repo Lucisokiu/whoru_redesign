@@ -11,7 +11,7 @@ Future<Object?> customSigninDialog(BuildContext contextScafford,
       context: contextScafford,
       transitionDuration: const Duration(milliseconds: 400),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
-        Tween<Offset> tween = Tween(begin: Offset(0, -1), end: Offset.zero);
+        Tween<Offset> tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
         return SlideTransition(
             position: tween.animate(
                 CurvedAnimation(parent: animation, curve: Curves.easeInOut)),
@@ -25,7 +25,7 @@ Future<Object?> customSigninDialog(BuildContext contextScafford,
 class LoginDialog extends StatefulWidget {
   final BuildContext contextScafford;
 
-  LoginDialog({super.key, required this.contextScafford});
+  const LoginDialog({super.key, required this.contextScafford});
 
   @override
   State<LoginDialog> createState() => _LoginDialogState();
@@ -56,12 +56,12 @@ class _LoginDialogState extends State<LoginDialog> {
                       "Sign In",
                       style: TextStyle(fontSize: 34, fontFamily: "Poppins"),
                     ),
-                    SignInForm(),
+                    const SignInForm(),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 0.0),
                       child: TextButton(
                           onPressed: () {
-                            Future.delayed(Duration(milliseconds: 800), () {
+                            Future.delayed(const Duration(milliseconds: 800), () {
                               Navigator.of(context).pop();
                             }).then((_) => {
                                   customForgotPassDialog(
@@ -78,13 +78,13 @@ class _LoginDialogState extends State<LoginDialog> {
                           child: Divider(),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
                             "OR",
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
-                        Expanded(
+                        const Expanded(
                           child: Divider(),
                         ),
                       ],
@@ -93,7 +93,7 @@ class _LoginDialogState extends State<LoginDialog> {
                       padding: const EdgeInsets.symmetric(vertical: 20.0),
                       child: TextButton(
                           onPressed: () {
-                            Future.delayed(Duration(milliseconds: 800), () {
+                            Future.delayed(const Duration(milliseconds: 800), () {
                               Navigator.of(context).pop();
                             }).then((_) =>
                                 customRegisDialog(widget.contextScafford));

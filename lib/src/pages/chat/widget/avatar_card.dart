@@ -17,15 +17,15 @@ class AvatarCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 23,
+                backgroundColor: Colors.blueGrey[200],
                 child: SvgPicture.asset(
                   "assets/person.svg",
-                  color: Colors.white,
+                  // color: Colors.white,
                   height: 30,
                   width: 30,
                 ),
-                backgroundColor: Colors.blueGrey[200],
               ),
-              Positioned(
+              const Positioned(
                 bottom: 0,
                 right: 0,
                 child: CircleAvatar(
@@ -40,12 +40,12 @@ class AvatarCard extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 2,
           ),
           Text(
             chatModel.fullName,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
             ),
           ),

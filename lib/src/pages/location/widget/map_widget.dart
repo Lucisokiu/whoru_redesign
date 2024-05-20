@@ -34,7 +34,7 @@ class _MapWidgetState extends State<MapWidget> {
   LocationService? locationService;
   late LocationData userLocation;
 
-  void CurrentLocation() async {
+  void currentLocation() async {
     await locationService!.getLocation().then((value) {
       if (mounted) {
         setState(() {
@@ -58,7 +58,7 @@ class _MapWidgetState extends State<MapWidget> {
   @override
   void initState() {
     locationService = LocationService();
-    CurrentLocation();
+    currentLocation();
     super.initState();
   }
 
@@ -71,7 +71,7 @@ class _MapWidgetState extends State<MapWidget> {
   Widget build(BuildContext context) {
     return Container(
       child: _userLocation == null
-          ? Center(
+          ? const Center(
               child: Text("Loading"),
             )
           : Stack(
@@ -106,7 +106,7 @@ class _MapWidgetState extends State<MapWidget> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        CardUser(context, user);
+                        cardUser(context, user);
                       },
                       child: CustomizeMarker(
                         latLng: LatLng(_userLocation!.latitude!,

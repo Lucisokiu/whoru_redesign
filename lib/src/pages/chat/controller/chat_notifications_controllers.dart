@@ -40,12 +40,12 @@ class NotificationController {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Choose time'),
+          title: const Text('Choose time'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 ListTile(
-                  title: Text('15'),
+                  title: const Text('15'),
                   onTap: () {
                     saveSelectedTime(15);
                     getUserFunction();
@@ -53,7 +53,7 @@ class NotificationController {
                   },
                 ),
                 ListTile(
-                  title: Text('30'),
+                  title: const Text('30'),
                   onTap: () {
                     saveSelectedTime(30);
                     getUserFunction();

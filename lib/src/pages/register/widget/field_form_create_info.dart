@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:whoru/src/api/userInfo.dart';
+import 'package:whoru/src/api/user_info.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
 
 class CreateInfoForm extends StatefulWidget {
-  BuildContext contextScafford;
+  final BuildContext contextScafford;
 
-  CreateInfoForm({
+  const CreateInfoForm({
     super.key,
     required this.contextScafford,
 
@@ -36,7 +36,7 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
   late SMITrigger reset;
   late SMITrigger confetti;
 
-  var response;
+  dynamic response;
   StateMachineController getRiveController(Artboard artboard) {
     StateMachineController? controller =
     StateMachineController.fromArtboard(artboard, "State Machine 1");
@@ -79,7 +79,7 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
           });
         } else {
           error.fire();
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
             setState(() {
               isShowLoading = false;
 
@@ -295,13 +295,13 @@ class CustomPositioned extends StatelessWidget {
     return Positioned.fill(
       child: Column(
         children: [
-          Spacer(),
+          const Spacer(),
           SizedBox(
             height: size,
             width: size,
             child: child,
           ),
-          Spacer(flex: 2),
+          const Spacer(flex: 2),
         ],
       ),
     );

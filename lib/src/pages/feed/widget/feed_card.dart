@@ -5,31 +5,24 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/comment.dart';
 import 'package:whoru/src/api/like.dart';
 import 'package:whoru/src/api/share.dart';
-import 'package:whoru/src/models/comment_model.dart';
 import 'package:whoru/src/models/feed_model.dart';
-import 'package:whoru/src/pages/feed/controller/build_Image.dart';
+import 'package:whoru/src/pages/feed/controller/build_image.dart';
 import 'package:whoru/src/pages/feed/widget/list_like_dialog.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 
 import 'comment_dialog_new.dart';
 
 class CardFeed extends StatefulWidget {
-  FeedModel feed;
-  final int CurrentUser;
+  final FeedModel feed;
+  final int currentUser;
 
-  CardFeed({super.key, required this.feed, required this.CurrentUser});
+  const CardFeed({super.key, required this.feed, required this.currentUser});
 
   @override
   State<CardFeed> createState() => _CardFeedState();
 }
 
 class _CardFeedState extends State<CardFeed> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,13 +62,13 @@ class _CardFeedState extends State<CardFeed> {
                     height: 60,
                     child: GestureDetector(
                       onTap: () {
-                        if (widget.CurrentUser != widget.feed.idUser) {
+                        if (widget.currentUser != widget.feed.idUser) {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (builder) => ProfilePage(
                                         idUser: widget.feed.idUser,
-                                        isMy: widget.CurrentUser ==
+                                        isMy: widget.currentUser ==
                                                 widget.feed.idUser
                                             ? true
                                             : false,
@@ -92,8 +85,10 @@ class _CardFeedState extends State<CardFeed> {
                       },
                       child: CachedNetworkImage(
                         imageUrl: widget.feed.avatar,
-                        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                         imageBuilder: (context, imageProvider) => CircleAvatar(
                           backgroundColor: Colors.transparent,
                           backgroundImage: imageProvider,
@@ -113,7 +108,7 @@ class _CardFeedState extends State<CardFeed> {
                   const Spacer(),
                   IconButton(
                       onPressed: () {
-                        if (widget.CurrentUser == widget.feed.idUser) {}
+                        if (widget.currentUser == widget.feed.idUser) {}
                       },
                       icon: Icon(
                         color:
@@ -168,10 +163,13 @@ class _CardFeedState extends State<CardFeed> {
                     onPressed: () {
                       likePost(widget.feed.idFeed);
                     },
-                    onLongPress: () async {
-                      List<Map<String, dynamic>> listLike =
-                          await getListLike(widget.feed.idFeed);
-                      showListDialog(context, listLike);
+                    onLongPress: () {
+                      // List<Map<String, dynamic>> listLike =
+                      //     await getListLike(widget.feed.idFeed);
+                      // showListDialog(context, listLike);
+                      getListLike(widget.feed.idFeed).then((listLike) {
+                        showListDialog(context, listLike);
+                      });
                     },
                     isLike: widget.feed.isLike,
                   ),
@@ -179,15 +177,17 @@ class _CardFeedState extends State<CardFeed> {
                   BuildButtonFeed(
                     icon: PhosphorIconsFill.chatTeardrop,
                     label: widget.feed.commentCount,
-                    onPressed: () async {
-                      List<CommentModel>? sampleComments =
-                          await getCommentByIdFeed(widget.feed.idFeed);
-                      await customCommentDialog(context, sampleComments,
-                          widget.feed.idFeed, widget.CurrentUser);
+                    onPressed: () {
+                      // List<CommentModel>? sampleComments =
+                      //     await getCommentByIdFeed(widget.feed.idFeed);
+                      // await customCommentDialog(context, sampleComments,
+                      //     widget.feed.idFeed, widget.currentUser);
 
-                      // showCommentDialog(context, sampleComments,
-                      //     widget.feed.idFeed, widget.CurrentUser!);
-                      Future.delayed(const Duration(milliseconds: 800), () {});
+                      getCommentByIdFeed(widget.feed.idFeed)
+                          .then((sampleComments) {
+                        customCommentDialog(context, sampleComments,
+                            widget.feed.idFeed, widget.currentUser);
+                      });
                     },
                     onLongPress: () {},
                   ),
@@ -198,10 +198,12 @@ class _CardFeedState extends State<CardFeed> {
                     onPressed: () {
                       sharePost(widget.feed.idFeed);
                     },
-                    onLongPress: () async {
-                      List<Map<String, dynamic>> listShare =
-                          await getListShare(widget.feed.idFeed);
-                      showListDialog(context, listShare);
+                    onLongPress: () {
+                      // List<Map<String, dynamic>> listShare =
+                      //     await getListShare(widget.feed.idFeed);
+                      // showListDialog(context, listShare);
+
+                      getListShare(widget.feed.idFeed).then((listShare) => showListDialog(context, listShare));
                     },
                   ),
                 ],

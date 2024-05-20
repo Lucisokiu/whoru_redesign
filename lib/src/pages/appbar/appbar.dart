@@ -49,7 +49,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ),
-          Spacer(),
+          const Spacer(),
           buildActionHome(
             context,
             'Create',

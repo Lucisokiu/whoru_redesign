@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:whoru/src/api/userInfo.dart';
+import 'package:whoru/src/api/user_info.dart';
 
 class UpdateBackground extends StatefulWidget {
   const UpdateBackground({super.key});
@@ -33,14 +33,14 @@ class _UpdateBackgroundState extends State<UpdateBackground> {
               await _pickImage();
               _updateUI();
             },
-            child: Text('Pick Image'),
+            child: const Text('Pick Image'),
           ),
           pickedImage != null
               ? Expanded(
                   child: Align(
                     alignment: Alignment.center,
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 8.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Image.file(
                         File(pickedImage!.path),
                         fit: BoxFit.cover,
@@ -48,17 +48,17 @@ class _UpdateBackgroundState extends State<UpdateBackground> {
                     ),
                   ),
                 )
-              : Spacer(),
+              : const Spacer(),
           Align(
             alignment: Alignment.bottomCenter,
             child: ElevatedButton(
-              onPressed: () async {
+              onPressed: () {
                 if (pickedImage != null) {
-                  await updateBackground(imageFile: File(pickedImage!.path));
-                  Navigator.pop(context);
+                  updateBackground(imageFile: File(pickedImage!.path))
+                      .then((value) => Navigator.pop(context));
                 }
               },
-              child: Text('Update'),
+              child: const Text('Update'),
             ),
           ),
         ],

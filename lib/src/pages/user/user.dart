@@ -49,13 +49,13 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.all(16),
+            margin: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               boxShadow: [
@@ -63,7 +63,7 @@ class _UserPageState extends State<UserPage> {
                   color: Colors.grey.withOpacity(0.5),
                   spreadRadius: 2,
                   blurRadius: 7,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
@@ -76,21 +76,21 @@ class _UserPageState extends State<UserPage> {
                 ),
               ),
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'My account', // Add a label
                       style: TextStyle(fontSize: 18),
                     ),
                     IconButton(
-                      icon: Icon(Icons.arrow_forward_ios_outlined),
+                      icon: const Icon(Icons.arrow_forward_ios_outlined),
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (builder) => ProfilePage(isMy: true)));
+                                builder: (builder) => const ProfilePage(isMy: true)));
                       },
                     )
                   ],
@@ -99,20 +99,20 @@ class _UserPageState extends State<UserPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.all(16),
+            margin: const EdgeInsets.all(16),
             child: TextButton.icon(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.color_lens,
                 size: 24.0,
               ),
               label: Row(
                 children: [
-                  Text(
+                  const Text(
                     'Theme Mode',
                     style: TextStyle(fontSize: 18),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
                     icon: Icon(
                       darkMode ? Icons.toggle_on : Icons.toggle_off_outlined,
@@ -144,7 +144,7 @@ class _UserPageState extends State<UserPage> {
                     AppLocalization.of(context).getTranslatedValues('language'),
                     style: const TextStyle(fontSize: 18),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   DropdownButton<String>(
                     icon: const Icon(Icons.arrow_drop_down),
                     value: selectedLanguage,
@@ -155,7 +155,7 @@ class _UserPageState extends State<UserPage> {
                         selectedLanguage = newValue;
                         LocalizationService.changeLocale(newValue);
                         BlocProvider.of<LanguageBloc>(context)
-                            .add(LoadLanguage(Locale('$newValue')));
+                            .add(LoadLanguage(Locale(newValue)));
                       });
                     },
                   ),
@@ -164,36 +164,36 @@ class _UserPageState extends State<UserPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.all(16),
+            margin: const EdgeInsets.all(16),
             child: TextButton.icon(
               onPressed: () async {
                 deleteToken();
                 deleteIdUser();
                 Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (builder) => LoginScreen()),
+                    MaterialPageRoute(builder: (builder) => const LoginScreen()),
                     (route) => false);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.account_circle, // Choose an appropriate icon
                 size: 24.0,
               ),
               label: Row(
                 children: [
-                  Text(
+                  const Text(
                     'Log out',
                     style: TextStyle(fontSize: 18),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
-                    icon: Icon(Icons.logout_outlined),
+                    icon: const Icon(Icons.logout_outlined),
                     onPressed: () async {
                       deleteToken();
                       deleteIdUser();
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (builder) => LoginScreen()),
+                              builder: (builder) => const LoginScreen()),
                           (route) => false);
                     },
                   )
@@ -202,28 +202,28 @@ class _UserPageState extends State<UserPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.all(16),
+            margin: const EdgeInsets.all(16),
             child: TextButton.icon(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.color_lens,
                 size: 24.0,
               ),
               label: Row(
                 children: [
-                  Text(
+                  const Text(
                     'Face Dectection (Test)',
                     style: TextStyle(fontSize: 18),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
-                    icon: Icon(Icons.arrow_forward),
+                    icon: const Icon(Icons.arrow_forward),
                     onPressed: () {
                       setState(() {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (builder) => RegistrationScreen()));
+                                builder: (builder) => const RegistrationScreen()));
                       });
                     },
                   )
