@@ -6,7 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/app.dart';
 
-import 'src/pages/feed/screens/single_feed_screen.dart';
 import 'src/pages/user/controller/language/app_localization.dart';
 import 'src/pages/user/controller/language/bloc/language_bloc.dart';
 import 'src/services/no_over_scoll.dart';
@@ -70,7 +69,6 @@ class MyApp extends StatelessWidget {
           Locale('vi', 'VN'),
         ],
         home: const App(),
-        // home: const SingleFeedScreen(),
       );
     });
   }
