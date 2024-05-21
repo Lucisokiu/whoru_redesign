@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/log.dart';
@@ -188,7 +187,7 @@ class _SignInFormState extends State<SignInForm> {
                                   bottomRight: Radius.circular(25),
                                   bottomLeft: Radius.circular(25)))),
                       icon: const Icon(
-                        CupertinoIcons.arrow_right,
+                        Icons.arrow_forward,
                         color: Color(0xFFFE0037),
                       ),
                       label: const Text("Sign In")),

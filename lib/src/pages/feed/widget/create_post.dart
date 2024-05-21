@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
@@ -18,12 +19,29 @@ class _CreatePostState extends State<CreatePost> {
   final List<XFile> _selectedImages = [];
   bool isLoading = false;
   final RegExp _sensitiveWordPattern =
-      RegExp(r'\b(đụ má|đm|con cặc|cc|lồn)\b', caseSensitive: false);
-
+      RegExp(r'\b(đụ má|đm|con cặc|cc|lồn|cl|cái lồn)\b', caseSensitive: false);
   @override
   void initState() {
-    _titleController.addListener(_checkSensitiveWords);
+    // _titleController.addListener(_checkSensitiveWords);
+    // _titleController.addListener(checkMaxTitle);
+    _titleController.addListener(() {
+      _checkSensitiveWords();
+      checkMaxTitle();
+    });
     super.initState();
+  }
+
+  void checkMaxTitle() {
+    int maxWords = 2000;
+    print(_titleController.text);
+    if (_titleController.text.length > maxWords) {
+      setState(() {
+        int caretPosition = _titleController.selection.end;
+        _titleController.text = _titleController.text.substring(0, maxWords);
+        _titleController.selection = TextSelection.fromPosition(TextPosition(
+            offset: min(caretPosition, _titleController.text.length)));
+      });
+    }
   }
 
   void _checkSensitiveWords() {
@@ -88,10 +106,13 @@ class _CreatePostState extends State<CreatePost> {
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: 'Title',
-                      hintText: "Type your feel",
+                      hintText: "Type your feel (< 2000 words)",
                       hintStyle: const TextStyle(color: Colors.grey),
                       contentPadding: EdgeInsets.all(2.w),
                     ),
+                    onChanged: (value) {
+                      checkMaxTitle();
+                    },
                   ),
                   SizedBox(height: 2.h),
                   Row(

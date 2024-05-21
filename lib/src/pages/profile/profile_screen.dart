@@ -28,9 +28,9 @@ class _ProfilePageState extends State<ProfilePage> {
   fetchData() async {
     int? idUser = widget.idUser;
     idUser ??= await getIdUser();
-    print(widget.idUser);
-    user = await getInfoUserById(widget.idUser!);
-    allPost = await getAllPostById(widget.idUser!);
+    print(idUser);
+    user = await getInfoUserById(idUser!);
+    allPost = await getAllPostById(idUser);
     if (mounted) {
       setState(() {
         print(allPost);

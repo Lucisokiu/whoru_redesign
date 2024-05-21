@@ -7,6 +7,8 @@ Future<bool> setToken(String value) async {
 
 Future<bool> setIdUser(int value) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  print(value);
+
   return prefs.setInt('idUser', value);
 }
 Future<String?> getToken() async {
