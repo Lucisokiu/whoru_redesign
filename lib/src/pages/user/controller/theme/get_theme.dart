@@ -32,8 +32,8 @@ class ThemeController extends Bloc<ThemeState, ThemeMode> {
 
   void toggleDarkMode() {
     isDarkMode = !isDarkMode;
-    print(isDarkMode);
-    // emit(isDarkMode ? ThemeMode.dark : ThemeMode.light);
+    // ignore: invalid_use_of_visible_for_testing_member
+    emit(isDarkMode ? ThemeMode.dark : ThemeMode.light);
     _saveDarkMode();
   }
 }

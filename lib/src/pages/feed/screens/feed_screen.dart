@@ -7,6 +7,7 @@ import 'package:whoru/src/pages/feed/widget/feed_card.dart';
 import 'package:whoru/src/pages/story/story_widget.dart';
 import 'package:whoru/src/utils/token.dart';
 
+import '../../login/login_screen.dart';
 import '../widget/skeleton_loading.dart';
 
 class FeedPage extends StatefulWidget {
@@ -31,13 +32,13 @@ class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin 
           listFeed.addAll(result);
         });
       } else {
-        // Navigator.pushAndRemoveUntil(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => const LoginScreen(),
-        //   ),
-        //   (route) => false,
-        // );
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+          ),
+          (route) => false,
+        );
       }
     }
   }

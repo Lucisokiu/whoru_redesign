@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:whoru/src/models/feed_model.dart';
 
 import '../../../api/feed.dart';
@@ -10,7 +11,8 @@ import 'package:http/http.dart' as http;
 import 'card_feed_search.dart';
 
 class FeedResults extends StatefulWidget {
-  const FeedResults({super.key, required this.query, required this.parentContext});
+  const FeedResults(
+      {super.key, required this.query, required this.parentContext});
   final String query;
   final BuildContext parentContext;
 
@@ -21,6 +23,14 @@ class FeedResults extends StatefulWidget {
 class _FeedResultsState extends State<FeedResults> {
   List<FeedModel> items = [];
   int? currentUser;
+  int page = 0;
+
+  getResult(query) async {
+    Response result = await searchPost(query);
+
+    List<dynamic> jsonList = jsonDecode(result.body);
+    items = jsonList.map((item) => FeedModel.fromJson(item)).toList();
+  }
 
   void getCurentUser() async {
     int? id = await getIdUser();
@@ -49,7 +59,8 @@ class _FeedResultsState extends State<FeedResults> {
                 color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
                 child: Center(
                   child: CircularProgressIndicator(
-                    backgroundColor: Theme.of(widget.parentContext).dividerColor,
+                    backgroundColor:
+                        Theme.of(widget.parentContext).dividerColor,
                     color: Colors.black,
                   ),
                 ));

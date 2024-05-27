@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/follow.dart';
@@ -24,13 +25,15 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                 shape: BoxShape.circle,
                 // color: Colors.grey.shade200,
                 color: Colors.black),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(75),
-              child: Image.network(
-                user.avt,
-                fit: BoxFit.cover,
-              ),
-            ),
+            child: CachedNetworkImage(
+                imageUrl: user.avt,
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                imageBuilder: (context, imageProvider) => CircleAvatar(
+                      backgroundImage: imageProvider,
+                      backgroundColor: Colors.transparent,
+                    )),
           ),
         ),
         Text(
@@ -149,7 +152,7 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                         //         currentId: currentId!, user: userChat),
                         //   ),
                         // );
-                        
+
                         getIdUser().then((currentId) {
                           UserChat userChat = UserChat(
                             idUser: user.id,

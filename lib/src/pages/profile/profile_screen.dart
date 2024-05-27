@@ -1,14 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/api/user_info.dart';
-import 'package:whoru/src/models/feed_model.dart';
-import 'package:whoru/src/pages/feed/widget/feed_card.dart';
 import 'package:whoru/src/pages/profile/widget/update_profile.dart';
 import 'package:whoru/src/pages/profile/widget/info.dart';
 import 'package:whoru/src/utils/token.dart';
 
+import '../../models/feed_model.dart';
 import '../../models/user_model.dart';
 import '../feed/widget/skeleton_loading.dart';
 import 'widget/tabbar_profile.dart';
@@ -26,18 +25,22 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
   UserModel? user;
-  List<FeedModel>? allPost;
   late TabController _tabController;
-
+  List<FeedModel> allPost1 = [];
+  int page = 1;
   fetchData() async {
     int? idUser = widget.idUser;
     idUser ??= await getIdUser();
     print(idUser);
     user = await getInfoUserById(idUser!);
-    allPost = await getAllPostById(idUser);
+    // List<FeedModel>? result = await getAllPostById(idUser, page);
+
     if (mounted) {
       setState(() {
-        print(allPost);
+        // if (result != null) {
+        //   allPost1.addAll(result);
+        //   print(allPost1);
+        // }
       });
     }
   }
@@ -54,53 +57,58 @@ class _ProfilePageState extends State<ProfilePage>
     final double screenHeight = MediaQuery.of(context).size.height;
     // final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      endDrawer: (widget.isMy)
-          ? Drawer(
-              child: ListView(
-                padding: EdgeInsets.fromLTRB(0, 10.h, 0, 0),
-                children: [
-                  ListTile(
-                    leading: const Icon(Icons.person),
-                    title: Text(user?.fullName ?? 'Loading...',
-                        style: Theme.of(context).textTheme.bodyMedium),
-                  ),
-                  ListTile(
-                    title: Text('Update Avatar',
-                        style: Theme.of(context).textTheme.bodyMedium),
-                    onTap: () {
-                      customUpdateProfileDialog(context, 'avatar');
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Update background',
-                        style: Theme.of(context).textTheme.bodyMedium),
-                    onTap: () {
-                      customUpdateProfileDialog(context, 'background');
-                    },
-                  ),
-                  ListTile(
-                    title: Text(
-                      'Update Info',
-                      style: Theme.of(context).textTheme.bodyMedium,
+        endDrawer: (widget.isMy)
+            ? Drawer(
+                child: ListView(
+                  padding: EdgeInsets.fromLTRB(0, 10.h, 0, 0),
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.person),
+                      title: Text(user?.fullName ?? 'Loading...',
+                          style: Theme.of(context).textTheme.bodyMedium),
                     ),
-                    onTap: () {
-                      customUpdateProfileDialog(context, 'info');
-                    },
-                  ),
-                  ListTile(
-                    title: Text('Change Password',
-                        style: Theme.of(context).textTheme.bodyMedium),
-                    onTap: () {
-                      customUpdateProfileDialog(context, 'changePass');
-                    },
-                  ),
-                ],
-              ),
-            )
-          : null,
-      body: (user != null)
-          ? SafeArea(
-              child: NestedScrollView(
+                    ListTile(
+                      title: Text('Update Avatar',
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      onTap: () {
+                        customUpdateProfileDialog(context, 'avatar');
+                      },
+                    ),
+                    ListTile(
+                      title: Text('Update background',
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      onTap: () {
+                        customUpdateProfileDialog(context, 'background');
+                      },
+                    ),
+                    ListTile(
+                      title: Text(
+                        'Update Info',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      onTap: () {
+                        customUpdateProfileDialog(context, 'info');
+                      },
+                    ),
+                    ListTile(
+                      title: Text('Change Password',
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      onTap: () {
+                        customUpdateProfileDialog(context, 'changePass');
+                      },
+                    ),
+                  ],
+                ),
+              )
+            : null,
+        appBar: (user == null)
+            ? AppBar(
+                title: Text(user?.fullName ?? 'Loading...'),
+              )
+            : null,
+        body: (user != null)
+            ? SafeArea(
+                child: NestedScrollView(
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return [
@@ -117,47 +125,50 @@ class _ProfilePageState extends State<ProfilePage>
                         },
                       ),
                       flexibleSpace: FlexibleSpaceBar(
-                        background: Stack(
-                          children: [
-                            Container(
-                              color: Theme.of(context).cardColor,
-                              height: 40.h,
-                              child: ClipRRect(
-                                child: Image.network(
-                                  user!.background,
-                                  fit: BoxFit.fitHeight,
+                          background: Stack(
+                        children: [
+                          Container(
+                            color: Theme.of(context).cardColor,
+                            height: 40.h,
+                            child: CachedNetworkImage(
+                                imageUrl: user!.background,
+                                placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                                imageBuilder: (context, imageProvider) => Image(
+                                      image: imageProvider,
+                                      fit: BoxFit.fitHeight,
+                                    )),
+                          ),
+                          Positioned(
+                            top: screenHeight * 0.3,
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                // color: Colors.white,
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(40),
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: screenHeight * 0.3,
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              child: Container(
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  // color: Colors.white,
-                                  borderRadius: const BorderRadius.vertical(
-                                    top: Radius.circular(40),
-                                  ),
-                                ),
-                              ),
+                          ),
+                          Container(
+                            color: Colors.transparent,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                info(context, user!, widget.isMy),
+                              ],
                             ),
-                            Container(
-                              color: Colors.transparent,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  info(context, user!, widget.isMy),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                          )
+                        ],
+                      )),
                     ),
                     SliverPersistentHeader(
                       delegate: _SliverAppBarDelegate(
@@ -170,34 +181,29 @@ class _ProfilePageState extends State<ProfilePage>
                               icon: Icon(Icons.view_headline_sharp),
                             ),
                             Tab(
-                              icon: Icon(PhosphorIcons.addressBook()),
+                              icon: Icon(PhosphorIcons.share()),
                             ),
                             Tab(
-                              icon: Icon(PhosphorIcons.addressBook()),
+                              icon: Icon(PhosphorIcons.floppyDisk()),
                             ),
                           ],
                         ),
                       ),
                       pinned: true,
                       floating: false,
-                    ),
+                    )
                   ];
                 },
                 body: TabBarView(
                   controller: _tabController,
-                  children: [
-                    // Nội dung của tab thứ nhất
-                    photoProfile(context, allPost),
-                    // Nội dung của tab thứ hai
+                  children: const [
+                    PhotoProfile1(),
                     Text("view 2"),
-                    // Nội dung của tab thứ ba
                     Text("view 3"),
                   ],
                 ),
-              ),
-            )
-          : const MySkeletonLoadingWidget(),
-    );
+              ))
+            : const SafeArea(child: MySkeletonLoadingWidget()));
   }
 }
 

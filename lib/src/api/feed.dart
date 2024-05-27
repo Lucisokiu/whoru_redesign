@@ -101,11 +101,14 @@ Future<void> postApiWithImages({
   }
 }
 
-Future<List<FeedModel>?> getAllPostById(int id) async {
+Future<List<FeedModel>?> getAllPostById(int id,int page) async {
   try {
     var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPostById');
     String? token = await getToken();
-
+    final body = jsonEncode({
+      "id": id,
+      "page": page
+    });
     var response = await http.post(
       url,
       headers: {
@@ -113,7 +116,7 @@ Future<List<FeedModel>?> getAllPostById(int id) async {
         'Accept': 'application/json',
         'Authorization': 'bearer $token',
       },
-      body: id.toString(),
+      body: body,
     );
 
     if (response.statusCode == 200) {
