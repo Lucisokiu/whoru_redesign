@@ -101,14 +101,11 @@ Future<void> postApiWithImages({
   }
 }
 
-Future<List<FeedModel>?> getAllPostById(int id,int page) async {
+Future<List<FeedModel>?> getAllPostById(int id, int page) async {
   try {
     var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPostById');
     String? token = await getToken();
-    final body = jsonEncode({
-      "id": id,
-      "page": page
-    });
+    final body = jsonEncode({"id": id, "page": page});
     var response = await http.post(
       url,
       headers: {
@@ -164,4 +161,36 @@ Future<Response> searchPost(String title) async {
     print("fail call api getAllPost with title ${response.statusCode}");
     return response;
   }
+}
+
+Future<FeedModel?> getPostById(int id) async {
+  try {
+    var url = Uri.https(baseUrl, '/api/v1/Feeds/GetPostById');
+    String? token = await getToken();
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'bearer $token',
+      },
+      body: id,
+    );
+
+    if (response.statusCode == 200) {
+      FeedModel feed = jsonDecode(response.body);
+      return feed;
+    } else if (response.statusCode == 404) {
+      //push to login screen
+      return null;
+    } else {
+      // orther status
+      print("Fail with StatusCode ${response.statusCode}");
+
+      return null;
+    }
+  } catch (e) {
+    print("Fail with StatusCode $e");
+  }
+  return null;
 }

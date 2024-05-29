@@ -1,9 +1,27 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+import 'package:whoru/src/models/feed_model.dart';
 
+import '../../../api/feed.dart';
 import '../../../models/comment_model.dart';
+import '../controller/build_image.dart';
 
 class SingleFeedScreen extends StatefulWidget {
-  const SingleFeedScreen({Key? key}) : super(key: key);
+  late final FeedModel? feedModel;
+  final int? idPost;
+
+  SingleFeedScreen({super.key, this.feedModel, this.idPost}) {
+    if (feedModel == null) {
+      fetchData(idPost!);
+      print(feedModel!.idFeed);
+    }
+  }
+
+  Future<FeedModel?> fetchData(int id) async {
+    feedModel = await getPostById(id);
+    return feedModel;
+  }
 
   @override
   State<SingleFeedScreen> createState() => _SingleFeedScreenState();
@@ -78,14 +96,51 @@ class _SingleFeedScreenState extends State<SingleFeedScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // User information
-            ListTile(
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(userAvatarUrl),
+            CachedNetworkImage(
+              imageUrl: widget.feedModel!.avatar,
+              placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              imageBuilder: (context, imageProvider) => Padding(
+                padding: EdgeInsets.all(2.h),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: imageProvider,
+                    ),
+                    SizedBox(width: 2.h),
+                    Text(widget.feedModel!.fullName),
+                  ],
+                ),
               ),
-              title: Text(userName),
             ),
             // Post image
-            Image.network(postImageUrl),
+
+            Stack(
+                children: [
+                  (widget.feedModel!.imageUrls.length == 1)
+                      ? buildSingleImage(context, widget.feedModel!.imageUrls[0])
+                      : (widget.feedModel!.imageUrls.length == 2)
+                          ? buildDoubleImage(context, widget.feedModel!.imageUrls[0],
+                              widget.feedModel!.imageUrls[1])
+                          : (widget.feedModel!.imageUrls.length == 3)
+                              ? buildTripleImage(
+                                  context,
+                                  widget.feedModel!.imageUrls[0],
+                                  widget.feedModel!.imageUrls[1],
+                                  widget.feedModel!.imageUrls[2])
+                              : buildMultipleImage(
+                                  context, widget.feedModel!.imageUrls)
+                ],
+              ),
+            // CachedNetworkImage(
+            //   imageUrl: widget.feedModel!.imageUrls,
+            //   placeholder: (context, url) =>
+            //       const Center(child: CircularProgressIndicator()),
+            //   errorWidget: (context, url, error) => const Icon(Icons.error),
+            //   imageBuilder: (context, imageProvider) =>
+            //       Image.network(postImageUrl),
+            // ),
             // Like and comment count
             Padding(
               padding: const EdgeInsets.all(8.0),

@@ -82,16 +82,11 @@ class _PhotoProfile1State extends State<PhotoProfile1>
                   if (_isLoading) {
                     return const Center(child: CircularProgressIndicator());
                   } else {
-                    return TextButton(
+                    return IconButton(
                         onPressed: () {
                           fetchData();
                         },
-                        child: Row(
-                          children: [
-                            Icon(PhosphorIcons.plus()),
-                            const Text("Load More"),
-                          ],
-                        ));
+                        icon: Icon(PhosphorIcons.plus()));
                   }
                 }
               }
@@ -104,7 +99,8 @@ class _PhotoProfile1State extends State<PhotoProfile1>
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const SingleFeedScreen(),
+                          builder: (context) =>
+                              SingleFeedScreen(feedModel: allPost[index]),
                         ),
                       );
                     },
