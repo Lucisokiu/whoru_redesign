@@ -50,6 +50,4 @@ Link deloy: https://apkpure.net/p/com.example.whoru
 
 ## Develop
 
-Face Recognition ( complite )
-
 Virtual Background for video call ( Updating )

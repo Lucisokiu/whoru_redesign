@@ -5,7 +5,7 @@ import 'package:whoru/src/models/feed_model.dart';
 
 import '../../../api/user_info.dart';
 import '../../../models/search_model.dart';
-import '../../../utils/token.dart';
+import '../../../utils/shared_pref/iduser.dart';
 import '../../feed/widget/feed_card.dart';
 import '../../profile/profile_screen.dart';
 import 'package:http/http.dart' as http;

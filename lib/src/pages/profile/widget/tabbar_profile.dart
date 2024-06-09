@@ -6,7 +6,7 @@ import 'package:whoru/src/models/feed_model.dart';
 import 'package:whoru/src/pages/feed/screens/single_feed_screen.dart';
 
 import '../../../api/feed.dart';
-import '../../../utils/token.dart';
+import '../../../utils/shared_pref/iduser.dart';
 
 class PhotoProfile1 extends StatefulWidget {
   const PhotoProfile1({super.key});

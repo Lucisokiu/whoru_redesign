@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:whoru/src/utils/token.dart';
+import 'package:whoru/src/pages/splash/splash.dart';
 
 import '../socket/web_socket_service.dart';
-import 'call/videocall/screen/incoming_call.dart';
-import 'navigation/navigation.dart';
+import '../utils/shared_pref/iduser.dart';
+import 'notification/controller/notifications_controller.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -16,13 +14,15 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   WebSocketService webSocketService = WebSocketService();
-  late StreamSubscription<dynamic> messageSubscription;
+  // late StreamSubscription<dynamic> messageSubscription;
   int? _id;
+  bool? isNotifi = NotificationsController.noti;
+
   @override
   void initState() {
     super.initState();
-    connected();
     getUser();
+    connected();
   }
 
   getUser() async {
@@ -31,30 +31,37 @@ class _AppState extends State<App> {
 
   void connected() {
     webSocketService.connect();
-    messageSubscription = webSocketService.onMessage.listen((message) {
-      if (message['type'] == 1 && message['target'] == 'ReceiveSignal') {
-        List<dynamic> arguments = message['arguments'];
-        if (arguments[0] is int) {
-          int idCaller = arguments[0];
-          String name = arguments[1];
-          String avt = arguments[2];
-          int idReceiver = arguments[3];
-
-          if (idReceiver == _id) {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CallScreen(
-                          avatarUrl: avt,
-                          fullName: name,
-                          idCaller: idCaller,
-                          idReceiver: idReceiver,
-                        )));
-          }
-        }
-      }
-    });
+    webSocketService.listenCall(context, _id);
+    if (isNotifi == true) {
+      webSocketService.listenNotif();
+    }
   }
+
+  // void listenCall(StreamSubscription<dynamic> messageSubscription){
+  //   messageSubscription = webSocketService.onMessage.listen((message) {
+  //     if (message['type'] == 1 && message['target'] == 'ReceiveSignal') {
+  //       List<dynamic> arguments = message['arguments'];
+  //       if (arguments[0] is int) {
+  //         int idCaller = arguments[0];
+  //         String name = arguments[1];
+  //         String avt = arguments[2];
+  //         int idReceiver = arguments[3];
+
+  //         if (idReceiver == _id) {
+  //           Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                   builder: (context) => CallScreen(
+  //                         avatarUrl: avt,
+  //                         fullName: name,
+  //                         idCaller: idCaller,
+  //                         idReceiver: idReceiver,
+  //                       )));
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -64,6 +71,6 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return const Navigation();
+    return const SplashScreen();
   }
 }

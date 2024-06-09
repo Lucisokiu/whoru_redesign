@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:whoru/src/utils/token.dart';
+import 'package:whoru/src/utils/shared_pref/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 Future<void> getAll() async {

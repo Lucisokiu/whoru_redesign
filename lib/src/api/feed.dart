@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:whoru/src/models/feed_model.dart';
-import 'package:whoru/src/utils/token.dart';
+import 'package:whoru/src/utils/shared_pref/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 Future<List<FeedModel>?> getAllPost(int page) async {

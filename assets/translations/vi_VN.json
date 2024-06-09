@@ -1,4 +1,6 @@
 {
-    "language" : "Ngôn ngữ"
-
+    "language": "Ngôn ngữ",
+    "logout": "Đăng xuất",
+    "loading": "Đang tải...",
+    "thememode": "Chủ đề tối"
 }

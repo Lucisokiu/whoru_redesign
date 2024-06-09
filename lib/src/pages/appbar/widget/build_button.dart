@@ -3,7 +3,8 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/chat/chat_page.dart';
 import 'package:whoru/src/pages/feed/widget/create_post.dart';
 import 'package:whoru/src/pages/search/controller/search_bar.dart';
-import 'package:whoru/src/utils/token.dart';
+
+import '../../../utils/shared_pref/iduser.dart';
 
 Widget buildActionHome(context, title, icon) {
   return InkWell(

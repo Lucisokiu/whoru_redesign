@@ -113,21 +113,19 @@ class _NotificationScreenState extends State<NotificationScreen>
               itemCount: notifications.length,
               itemBuilder: (context, index) {
                 final notification = notifications[index];
-                //   Container(
-                //     child: Center(
-                //       child: ElevatedButton.icon(
-                //         icon: const Icon(Icons.notifications_outlined),
-                //         onPressed: () {
-                //           NotificationsController.showSimpleNotification(
-                //             title: "Simple Notification",
-                //             body: "This is a simple notification",
-                //             payload: "This is simple data",
-                //           );
-                //         },
-                //         label: const Text("Simple Notification"),
-                //       ),
-                //     ),
-                //   ),
+                Center(
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.notifications_outlined),
+                    onPressed: () {
+                      // NotificationsController.showSimpleNotification(
+                      //   title: "Simple Notification",
+                      //   body: "This is a simple notification",
+                      //   payload: "This is simple data",
+                      // );
+                    },
+                    label: const Text("Simple Notification"),
+                  ),
+                );
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(notification.avatarUrl),
@@ -149,7 +147,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                   onTap: () {},
                 );
               },
-              
             ),
           ),
         ],

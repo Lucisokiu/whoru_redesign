@@ -4,7 +4,8 @@ import 'package:whoru/src/api/user_info.dart';
 import 'package:whoru/src/models/search_model.dart';
 import 'package:whoru/src/models/user_chat.dart';
 import 'package:whoru/src/pages/chat/screens/individual_page.dart';
-import 'package:whoru/src/utils/token.dart';
+
+import '../../../utils/shared_pref/iduser.dart';
 
 class SearchUserChat extends SearchDelegate {
   dynamic res;

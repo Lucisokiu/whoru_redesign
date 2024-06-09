@@ -4,9 +4,9 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/follow.dart';
 import 'package:whoru/src/models/user_chat.dart';
 import 'package:whoru/src/pages/feed/widget/list_like_dialog.dart';
-import 'package:whoru/src/utils/token.dart';
 
 import '../../../models/user_model.dart';
+import '../../../utils/shared_pref/iduser.dart';
 import '../../chat/screens/individual_page.dart';
 
 Widget info(BuildContext context, UserModel user, bool isMy) {

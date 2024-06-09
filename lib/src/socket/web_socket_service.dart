@@ -3,15 +3,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:whoru/src/pages/call/videocall/video_call_creen.dart';
-import 'package:whoru/src/utils/token.dart';
 import 'package:whoru/src/utils/url.dart';
+
+import '../pages/call/videocall/screen/incoming_call.dart';
+import '../pages/notification/controller/notifications_controller.dart';
+import '../utils/shared_pref/iduser.dart';
 
 class WebSocketService {
   final String _url;
   late IOWebSocketChannel _channel;
   final StreamController<dynamic> _controller = StreamController.broadcast();
   static WebSocketService? _instance;
-
+  late StreamSubscription<dynamic> messageSubscription;
   // WebSocketService(this._url);
 
   // Singleton pattern
@@ -134,6 +137,45 @@ class WebSocketService {
         );
       },
     );
+  }
+
+  void listenCall(BuildContext context, int? id) {
+    messageSubscription = onMessage.listen((message) {
+      if (message['type'] == 1 && message['target'] == 'ReceiveSignal') {
+        List<dynamic> arguments = message['arguments'];
+        if (arguments[0] is int) {
+          int idCaller = arguments[0];
+          String name = arguments[1];
+          String avt = arguments[2];
+          int idReceiver = arguments[3];
+
+          if (idReceiver == id) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CallScreen(
+                          avatarUrl: avt,
+                          fullName: name,
+                          idCaller: idCaller,
+                          idReceiver: idReceiver,
+                        )));
+          }
+        }
+      }
+    });
+  }
+
+  void listenNotif() {
+    messageSubscription = onMessage.listen((message) {
+      if (message['type'] == 1 && message['target'] == 'ReceiveSignal') {
+        List<dynamic> arguments = message['arguments'];
+        NotificationsController.showSimpleNotification(
+          title: "Simple Notification",
+          body: "This is a simple notification",
+          payload: "This is simple data",
+        );
+      }
+    });
   }
 
   Stream<dynamic> get onMessage => _controller.stream;

@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:lottie/lottie.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
-import 'package:whoru/src/utils/token.dart';
+import 'package:whoru/src/utils/shared_pref/token.dart';
+
+import '../login/login_screen.dart';
 
 
 
@@ -36,8 +38,8 @@ class _SplashScreenState extends State<SplashScreen>
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => 
-          const Navigation(),
-          // token != null ? Navigation() : LoginScreen(),
+          // const Navigation(),
+          token != null ? const Navigation() : const LoginScreen(),
         ),
       );
     });

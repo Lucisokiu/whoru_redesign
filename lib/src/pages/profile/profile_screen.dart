@@ -5,11 +5,12 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/user_info.dart';
 import 'package:whoru/src/pages/profile/widget/update_profile.dart';
 import 'package:whoru/src/pages/profile/widget/info.dart';
-import 'package:whoru/src/utils/token.dart';
 
 import '../../models/feed_model.dart';
 import '../../models/user_model.dart';
+import '../../utils/shared_pref/iduser.dart';
 import '../feed/widget/skeleton_loading.dart';
+import '../user/controller/language/app_localization.dart';
 import 'widget/tabbar_profile.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -64,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage>
                   children: [
                     ListTile(
                       leading: const Icon(Icons.person),
-                      title: Text(user?.fullName ?? 'Loading...',
+                      title: Text(user?.fullName ?? AppLocalization.of(context).getTranslatedValues('loading'),
                           style: Theme.of(context).textTheme.bodyMedium),
                     ),
                     ListTile(
@@ -103,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage>
             : null,
         appBar: (user == null)
             ? AppBar(
-                title: Text(user?.fullName ?? 'Loading...'),
+                title: Text(user?.fullName ?? AppLocalization.of(context).getTranslatedValues('loading')),
               )
             : null,
         body: (user != null)
@@ -117,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage>
                       pinned: true,
                       floating: true,
                       centerTitle: true,
-                      title: Text(user?.fullName ?? 'Loading...'),
+                      title: Text(user?.fullName ?? AppLocalization.of(context).getTranslatedValues('loading')),
                       leading: IconButton(
                         icon: const Icon(Icons.arrow_back_ios_new_rounded),
                         onPressed: () {

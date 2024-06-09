@@ -1,3 +1,6 @@
 {
-    "language" : "Language"
+    "language": "Language",
+    "logout": "Log out",
+    "loading": "Loading...",
+    "thememode": "Dark Mode"
 }

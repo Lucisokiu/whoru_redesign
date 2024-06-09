@@ -7,7 +7,8 @@ import 'package:whoru/src/api/log.dart';
 import 'package:whoru/src/models/login_model.dart';
 import 'package:whoru/src/pages/register/custom_create_info.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
-import 'package:whoru/src/utils/token.dart';
+
+import '../../../utils/shared_pref/iduser.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({
