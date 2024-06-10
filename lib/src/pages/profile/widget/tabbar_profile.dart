@@ -99,8 +99,9 @@ class _PhotoProfile1State extends State<PhotoProfile1>
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              SingleFeedScreen(feedModel: allPost[index]),
+                          builder: (context) => SingleFeedScreen(
+                              feedModel: allPost[index],
+                              idPost: allPost[index].idFeed),
                         ),
                       );
                     },

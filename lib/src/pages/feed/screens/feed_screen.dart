@@ -16,7 +16,8 @@ class FeedPage extends StatefulWidget {
   State<FeedPage> createState() => _FeedPageState();
 }
 
-class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin {
+class _FeedPageState extends State<FeedPage>
+    with AutomaticKeepAliveClientMixin {
   final ScrollController _scrollController = ScrollController();
 
   List<FeedModel> listFeed = [];
@@ -77,23 +78,24 @@ class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin 
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  if (listFeed.isEmpty) {
-                    return const SizedBox(height: 1000,child: MySkeletonLoadingWidget());
-                  }
-
-                  if (index == listFeed.length) {
-                    return _buildListFooter();
-                  } else if (index == 0) {
+                  if (index == 0) {
                     return Column(
                       children: [
                         storywidget(context),
                         SizedBox(height: 2.h),
-                        CardFeed(
-                          feed: listFeed[index],
-                          currentUser: currentUser!,
-                        ),
+                        listFeed.isEmpty
+                            ? const SizedBox(
+                                height: 1000,
+                                child: MySkeletonLoadingWidget(),
+                              )
+                            : CardFeed(
+                                feed: listFeed[index],
+                                currentUser: currentUser!,
+                              )
                       ],
                     );
+                  } else if (index == listFeed.length) {
+                    return _buildListFooter();
                   } else {
                     return CardFeed(
                       feed: listFeed[index],
@@ -119,7 +121,7 @@ class _FeedPageState extends State<FeedPage> with AutomaticKeepAliveClientMixin 
       ),
     );
   }
-  
+
   @override
   bool get wantKeepAlive => true;
 }

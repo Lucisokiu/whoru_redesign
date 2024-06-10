@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/api/comment.dart';
 import 'package:whoru/src/api/like.dart';
 import 'package:whoru/src/api/share.dart';
 import 'package:whoru/src/models/feed_model.dart';
@@ -180,18 +179,8 @@ class _CardFeedSearchState extends State<CardFeedSearch> {
                     icon: PhosphorIconsFill.chatTeardrop,
                     label: widget.feed.commentCount,
                     onPressed: () {
-                      // List<CommentModel>? sampleComments =
-                      //     await getCommentByIdFeed(widget.feed.idFeed);
-                      // await customCommentDialog(context, sampleComments,
-                      //     widget.feed.idFeed, widget.currentUser);
-                      getCommentByIdFeed(widget.feed.idFeed).then(
-                          (sampleComments) => customCommentDialog(
-                              context,
-                              sampleComments,
-                              widget.feed.idFeed,
-                              widget.currentUser));
-
-                      Future.delayed(const Duration(milliseconds: 800), () {});
+                      customCommentDialog(
+                          context, widget.feed.idFeed, widget.currentUser);
                     },
                     onLongPress: () {},
                   ),

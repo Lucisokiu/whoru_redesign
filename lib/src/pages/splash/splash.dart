@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:lottie/lottie.dart';
-import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/utils/shared_pref/token.dart';
 
+import '../app.dart';
 import '../login/login_screen.dart';
 
 
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen>
         MaterialPageRoute(
           builder: (context) => 
           // const Navigation(),
-          token != null ? const Navigation() : const LoginScreen(),
+          token != null ? const App() : const LoginScreen(),
         ),
       );
     });

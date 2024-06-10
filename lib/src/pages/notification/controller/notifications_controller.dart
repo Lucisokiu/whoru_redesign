@@ -61,5 +61,5 @@ class NotificationsController {
     print("showSimpleNotification");
   }
 
-  static bool get noti => isNotification!;
+  static bool get noti => isNotification ?? false;
 }

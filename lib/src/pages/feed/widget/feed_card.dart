@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/api/comment.dart';
 import 'package:whoru/src/api/like.dart';
 import 'package:whoru/src/api/share.dart';
 import 'package:whoru/src/models/feed_model.dart';
@@ -178,16 +177,8 @@ class _CardFeedState extends State<CardFeed> {
                     icon: PhosphorIconsFill.chatTeardrop,
                     label: widget.feed.commentCount,
                     onPressed: () {
-                      // List<CommentModel>? sampleComments =
-                      //     await getCommentByIdFeed(widget.feed.idFeed);
-                      // await customCommentDialog(context, sampleComments,
-                      //     widget.feed.idFeed, widget.currentUser);
-
-                      getCommentByIdFeed(widget.feed.idFeed)
-                          .then((sampleComments) {
-                        customCommentDialog(context, sampleComments,
-                            widget.feed.idFeed, widget.currentUser);
-                      });
+                      customCommentDialog(
+                          context, widget.feed.idFeed, widget.currentUser);
                     },
                     onLongPress: () {},
                   ),
@@ -203,7 +194,8 @@ class _CardFeedState extends State<CardFeed> {
                       //     await getListShare(widget.feed.idFeed);
                       // showListDialog(context, listShare);
 
-                      getListShare(widget.feed.idFeed).then((listShare) => showListDialog(context, listShare));
+                      getListShare(widget.feed.idFeed).then(
+                          (listShare) => showListDialog(context, listShare));
                     },
                   ),
                 ],

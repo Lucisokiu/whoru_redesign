@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:whoru/src/pages/splash/splash.dart';
 
 import '../socket/web_socket_service.dart';
 import '../utils/shared_pref/iduser.dart';
+import 'navigation/navigation.dart';
 import 'notification/controller/notifications_controller.dart';
 
 class App extends StatefulWidget {
@@ -71,6 +71,6 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return const SplashScreen();
+    return const Navigation();
   }
 }

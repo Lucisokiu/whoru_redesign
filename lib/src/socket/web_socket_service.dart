@@ -15,7 +15,6 @@ class WebSocketService {
   final StreamController<dynamic> _controller = StreamController.broadcast();
   static WebSocketService? _instance;
   late StreamSubscription<dynamic> messageSubscription;
-  // WebSocketService(this._url);
 
   // Singleton pattern
   // Constructor private
@@ -168,7 +167,6 @@ class WebSocketService {
   void listenNotif() {
     messageSubscription = onMessage.listen((message) {
       if (message['type'] == 1 && message['target'] == 'ReceiveSignal') {
-        List<dynamic> arguments = message['arguments'];
         NotificationsController.showSimpleNotification(
           title: "Simple Notification",
           body: "This is a simple notification",

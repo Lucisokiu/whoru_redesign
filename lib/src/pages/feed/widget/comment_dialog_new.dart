@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import '../../../api/comment.dart';
 import '../../../models/comment_model.dart';
 
-Future<Object?> customCommentDialog(BuildContext contextScafford,
-    List<CommentModel>? comments, int idFeed, int currentUser) {
+Future<Object?> customCommentDialog(
+    BuildContext contextScafford, int idFeed, int currentUser) {
   return showGeneralDialog(
       barrierDismissible: true,
       barrierLabel: "Sign up",
       context: contextScafford,
       transitionDuration: const Duration(milliseconds: 400),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
-        Tween<Offset> tween = Tween(begin: const Offset(0, -1), end: Offset.zero);
+        Tween<Offset> tween =
+            Tween(begin: const Offset(0, -1), end: Offset.zero);
         return SlideTransition(
             position: tween.animate(
                 CurvedAnimation(parent: animation, curve: Curves.easeIn)),
@@ -18,21 +19,18 @@ Future<Object?> customCommentDialog(BuildContext contextScafford,
       },
       pageBuilder: (context, _, __) => CustomCommentDialog(
           contextScafford: contextScafford,
-          comments: comments,
           idFeed: idFeed,
           currentUser: currentUser)).then((value) => null);
 }
 
 class CustomCommentDialog extends StatefulWidget {
   final BuildContext contextScafford;
-  final List<CommentModel>? comments;
   final int idFeed;
   final int currentUser;
 
   const CustomCommentDialog(
       {super.key,
       required this.contextScafford,
-      required this.comments,
       required this.idFeed,
       required this.currentUser});
 
@@ -42,6 +40,24 @@ class CustomCommentDialog extends StatefulWidget {
 
 class _CustomCommentDialogState extends State<CustomCommentDialog> {
   final TextEditingController _controller = TextEditingController();
+  List<CommentModel> comments = [];
+  int page = 1;
+  bool isFull = false;
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  fetchData() async {
+    List<CommentModel> commentsPage =
+        (await getCommentByIdFeed(widget.idFeed, page++))!;
+    if (commentsPage.isEmpty) isFull = true;
+
+    comments.addAll(commentsPage);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -72,24 +88,26 @@ class _CustomCommentDialogState extends State<CustomCommentDialog> {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: widget.comments!.length,
+                  itemCount: comments.length,
                   itemBuilder: (context, index) {
                     GlobalKey commentKey = GlobalKey();
+                    if (isFull == false && index == comments.length) {
+                      fetchData();
+                      return const CircularProgressIndicator();
+                    }
                     return ListTile(
                       key: commentKey,
                       onLongPress: () {
-                        if (widget.comments![index].idUser ==
-                            widget.currentUser) {
+                        if (comments[index].idUser == widget.currentUser) {
                           showCommentContextMenu(
-                              context, widget.comments![index], commentKey);
+                              context, comments[index], commentKey);
                         }
                       },
                       leading: CircleAvatar(
-                        backgroundImage:
-                            NetworkImage(widget.comments![index].avatar),
+                        backgroundImage: NetworkImage(comments[index].avatar),
                       ),
                       title: Text(
-                        widget.comments![index].content,
+                        comments[index].content,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     );
@@ -121,8 +139,6 @@ class _CustomCommentDialogState extends State<CustomCommentDialog> {
     );
   }
 }
-
-
 
 void showCommentContextMenu(
     BuildContext context, CommentModel comment, GlobalKey commentKey) async {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sizer/sizer.dart';
-import 'package:whoru/src/pages/app.dart';
+import 'package:whoru/src/pages/splash/splash.dart';
 
 import 'src/pages/user/controller/language/app_localization.dart';
 import 'src/pages/user/controller/language/bloc/language_bloc.dart';
@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
           Locale('en', 'US'),
           Locale('vi', 'VN'),
         ],
-        home: const App(),
+        home: const SplashScreen(),
       );
     });
   }
