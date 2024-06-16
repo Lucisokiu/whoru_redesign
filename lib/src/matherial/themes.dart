@@ -29,9 +29,9 @@ class AppTheme {
       ),
       shadowColor: appColors.shadow,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: Colors.grey.shade200,
-        background: Colors.grey.shade200,
-      ),
+          seedColor: Colors.grey.shade200,
+          background: Colors.grey.shade200,
+          primary: appColors.background2),
       buttonTheme: const ButtonThemeData().copyWith(
         colorScheme: const ColorScheme.light().copyWith(
           primary: appColors.button,
@@ -70,10 +70,10 @@ class AppTheme {
         color: appColors.background,
       ),
       colorScheme: ColorScheme.fromSeed(
-        seedColor: Colors.black,
-        brightness: Brightness.dark,
-        background: Colors.black,
-      ),
+          seedColor: Colors.black,
+          brightness: Brightness.dark,
+          background: Colors.black,
+          primary: appColors.background2),
       buttonTheme: const ButtonThemeData().copyWith(
         colorScheme: const ColorScheme.light().copyWith(
           primary: appColors.button,
@@ -88,7 +88,8 @@ class AppTheme {
       ),
       listTileTheme: const ListTileThemeData(
         iconColor: Colors.red,
-      ),    );
+      ),
+    );
     return AppTheme(
       mode: mode,
       data: themeData,

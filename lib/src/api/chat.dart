@@ -5,18 +5,19 @@ import 'package:whoru/src/models/message_model.dart';
 import 'package:whoru/src/utils/shared_pref/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
-Future<List<ChatModel>> getAllUserChat() async {
+Future<List<ChatModel>> getAllUserChat(int page) async {
   try {
     var url = Uri.https(baseUrl, '/api/v1/Chats/GetAllChatUser');
     String? token = await getToken();
 
-    var response = await http.get(
+    var response = await http.post(
       url,
       headers: {
         'Content-type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'bearer $token',
       },
+      body: '$page',
     );
 
     if (response.statusCode == 200) {
@@ -36,10 +37,11 @@ Future<List<ChatModel>> getAllUserChat() async {
   }
 }
 
-Future<List<MessageModel>> getAllChat(int idUser) async {
+Future<List<MessageModel>> getAllChat(int idUser, int page) async {
   try {
     var url = Uri.https(baseUrl, '/api/v1/Chats/GetAllChat');
     String? token = await getToken();
+    final body = jsonEncode({"idUser": idUser, "page": page});
 
     var response = await http.post(
       url,
@@ -48,7 +50,7 @@ Future<List<MessageModel>> getAllChat(int idUser) async {
         'Accept': 'application/json',
         'Authorization': 'bearer $token',
       },
-      body: idUser.toString(),
+      body: body,
     );
 
     if (response.statusCode == 200) {

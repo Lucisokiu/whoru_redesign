@@ -7,6 +7,7 @@ import 'package:whoru/src/pages/notification/controller/notifications_controller
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/pages/user/controller/theme/get_theme.dart';
 import 'package:whoru/src/pages/user/controller/language/language.dart';
+import 'package:whoru/src/pages/user/widget/button_setting.dart';
 import 'package:whoru/src/utils/shared_pref/token.dart';
 
 import '../face_detection/ML/view/face_register_view.dart';
@@ -164,7 +165,6 @@ class _UserPageState extends State<UserPage> {
               ],
             ),
           ),
-
           Container(
             margin:
                 EdgeInsets.only(right: 6.w, left: 6.w, top: 2.w, bottom: 2.w),
@@ -197,7 +197,6 @@ class _UserPageState extends State<UserPage> {
               ],
             ),
           ),
-
           Container(
             margin:
                 EdgeInsets.only(right: 6.w, left: 6.w, top: 2.w, bottom: 2.w),
@@ -229,36 +228,71 @@ class _UserPageState extends State<UserPage> {
               ],
             ),
           ),
-          Container(
-            margin: const EdgeInsets.all(16),
-            child: TextButton.icon(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.color_lens,
-                size: 24.0,
-              ),
-              label: Row(
-                children: [
-                  const Text(
-                    'Face Dectection (Test)',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.arrow_forward),
-                    onPressed: () {
-                      setState(() {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) =>
-                                    const RegistrationScreen()));
-                      });
-                    },
-                  )
-                ],
-              ),
-            ),
+          // Container(
+          //   margin: const EdgeInsets.all(16),
+          //   child: TextButton.icon(
+          //     onPressed: () {},
+          //     icon: const Icon(
+          //       Icons.color_lens,
+          //       size: 24.0,
+          //     ),
+          //     label: Row(
+          //       children: [
+          //         const Text(
+          //           'Face Dectection (Test)',
+          //           style: TextStyle(fontSize: 18),
+          //         ),
+          //         const Spacer(),
+          //         IconButton(
+          //           icon: const Icon(Icons.arrow_forward),
+          //           onPressed: () {
+          //             setState(() {
+          //               Navigator.push(
+          //                   context,
+          //                   MaterialPageRoute(
+          //                       builder: (builder) =>
+          //                           const RegistrationScreen()));
+          //             });
+          //           },
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          IOSSettingsButton(
+            title: 'Wi-Fi',
+            onPressed: () {
+              print('Wi-Fi button pressed');
+            },
+            icon: const Icon(Icons.chevron_right),
+            isFirst: true,
+          ),
+          IOSSettingsButton(
+            title: 'Bluetooth',
+            onPressed: () {
+              print('Bluetooth button pressed');
+            },
+            icon: const Icon(Icons.chevron_right),
+          ),
+          IOSSettingsButton(
+            title: 'Bluetooth',
+            onPressed: () {
+              print('Bluetooth button pressed');
+            },
+            icon: const Icon(Icons.chevron_right),
+            isBottom: true,
+            isEnd: true,
+          ),
+
+                    IOSSettingsButton(
+            title: 'Bluetooth',
+            onPressed: () {
+              print('Bluetooth button pressed');
+            },
+            icon: const Icon(Icons.chevron_right),
+            isBottom: true,
+            isEnd: true,
+            isFirst: true,
           ),
         ],
       ),

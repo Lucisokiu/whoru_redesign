@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/appbar/appbar.dart';
+import '../../../api/notification.dart';
 import '../../../models/notification_model.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -12,92 +13,23 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen>
     with AutomaticKeepAliveClientMixin {
-  final List<NotificationModel> notifications = [
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'John Doe',
-      time: '2 hours ago',
-      content: 'You have a new friend request.',
-    ),
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'Jane Smith',
-      time: '5 hours ago',
-      content: 'Your post was liked by 3 people.',
-    ),
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'Alice Johnson',
-      time: 'Yesterday',
-      content: 'You have a new follower.',
-    ),
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'Alice Johnson',
-      time: 'Yesterday',
-      content: 'You have a new follower.',
-    ),
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'Alice Johnson',
-      time: 'Yesterday',
-      content: 'You have a new follower.',
-    ),
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'Alice Johnson',
-      time: 'Yesterday',
-      content: 'You have a new follower.',
-    ),
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'Alice Johnson',
-      time: 'Yesterday',
-      content: 'You have a new follower.',
-    ),
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'Alice Johnson',
-      time: 'Yesterday',
-      content: 'You have a new follower.',
-    ),
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'Alice Johnson',
-      time: 'Yesterday',
-      content: 'You have a new follower.',
-    ),
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'Alice Johnson',
-      time: 'Yesterday',
-      content: 'You have a new follower.',
-    ),
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'Alice Johnson',
-      time: 'Yesterday',
-      content: 'You have a new follower.',
-    ),
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'Alice Johnson',
-      time: 'Yesterday',
-      content: 'You have a new follower.',
-    ),
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'Alice Johnson',
-      time: 'Yesterday',
-      content: 'You have a new follower.',
-    ),
-    NotificationModel(
-      avatarUrl: 'https://via.placeholder.com/150',
-      name: 'Alice Johnson',
-      time: 'Yesterday',
-      content: 'You have a new follower.',
-    ),
-  ];
+  List<NotificationModel> notificationsList = [];
+
+  getNotif() async {
+    List<NotificationModel> result = await getAllNotification();
+    if (mounted) {
+      setState(() {
+        notificationsList.addAll(result);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getNotif();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -110,9 +42,9 @@ class _NotificationScreenState extends State<NotificationScreen>
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.only(top: 0, bottom: 11.h),
-              itemCount: notifications.length,
+              itemCount: notificationsList.length,
               itemBuilder: (context, index) {
-                final notification = notifications[index];
+                final notification = notificationsList[index];
                 Center(
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.notifications_outlined),

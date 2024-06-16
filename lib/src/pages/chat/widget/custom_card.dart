@@ -43,19 +43,21 @@ class CustomCard extends StatelessWidget {
             ),
             subtitle: Row(
               children: [
-                const Icon(Icons.done_all),
+                Icon(chatModel.isSeen ? Icons.done_all : Icons.done),
                 const SizedBox(
                   width: 3,
                 ),
                 Text(
-                  chatModel.currentMessage,
+                  chatModel.type == "Room" || chatModel.type == "Message" ? chatModel.currentMessage : "${chatModel.fullName} send a picture",
                   style: const TextStyle(
                     fontSize: 13,
                   ),
                 ),
               ],
             ),
-            trailing: Text(chatModel.type),
+            trailing: chatModel.type == "Room" || chatModel.type == "Message"
+                ? Text(chatModel.type)
+                : const Text("Image"),
           ),
           const Padding(
             padding: EdgeInsets.only(right: 20, left: 80),

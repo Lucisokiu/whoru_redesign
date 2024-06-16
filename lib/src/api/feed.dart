@@ -30,12 +30,12 @@ Future<List<FeedModel>?> getAllPost(int page) async {
       return feedList;
     } else {
       print("fail call api getAllPost with page $page");
-      return null;
+      return [];
     }
   } catch (e) {
     print("fail call api getAllPost $e");
 
-    return null;
+    return [];
   }
 }
 

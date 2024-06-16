@@ -22,7 +22,7 @@ class WebSocketService {
 
   // Factory constructor
   factory WebSocketService() {
-    _instance ??= WebSocketService._internal(socketUrl);
+    _instance ??= WebSocketService._internal(chatHubUrl);
     return _instance!;
   }
 
@@ -36,6 +36,7 @@ class WebSocketService {
 
         for (final receivedMessage in receivedMessages) {
           Map<dynamic, dynamic> jsonData = jsonDecode(receivedMessage);
+          print(jsonData);
           _controller.add(jsonData);
         }
       },

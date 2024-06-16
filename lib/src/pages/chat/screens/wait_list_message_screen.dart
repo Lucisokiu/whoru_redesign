@@ -15,9 +15,9 @@ class WaitListChatPage extends StatefulWidget {
 
 class _WaitListChatPageState extends State<WaitListChatPage> {
   List<ChatModel> chatmodels = [];
-
+  int page = 0;
   Future<void> getUser() async {
-    chatmodels = await getAllUserChat();
+    chatmodels = await getAllUserChat(++page);
     if (mounted) {
       setState(() {});
     }

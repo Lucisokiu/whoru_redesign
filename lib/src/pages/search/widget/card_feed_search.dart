@@ -183,6 +183,7 @@ class _CardFeedSearchState extends State<CardFeedSearch> {
                           context, widget.feed.idFeed, widget.currentUser);
                     },
                     onLongPress: () {},
+                    isLike: widget.feed.isLike,
                   ),
                   const Spacer(),
                   BuildButtonFeed(
@@ -195,6 +196,7 @@ class _CardFeedSearchState extends State<CardFeedSearch> {
                       getListShare(widget.feed.idFeed).then(
                           (listShare) => showListDialog(context, listShare));
                     },
+                    isLike: widget.feed.isLike,
                   ),
                 ],
               ),

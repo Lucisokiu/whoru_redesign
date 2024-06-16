@@ -24,10 +24,11 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatModel> chatmodels = [];
   // final NotificationController _notificationController =
   //     NotificationController();
+  int page = 0;
   WebSocketService webSocketService = WebSocketService();
   late StreamSubscription<dynamic> messageSubscription;
   Future<void> getUser() async {
-    chatmodels = await getAllUserChat();
+    chatmodels = await getAllUserChat(++page);
     if (mounted) {
       setState(() {});
     }

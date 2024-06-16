@@ -31,6 +31,7 @@ class _IndividualPageState extends State<IndividualPage> {
   final ScrollController _scrollController = ScrollController();
   late StreamSubscription<dynamic> messageSubscription;
   WebSocketService webSocketService = WebSocketService();
+  int page = 0;
 
   @override
   void initState() {
@@ -45,7 +46,7 @@ class _IndividualPageState extends State<IndividualPage> {
   }
 
   void getChat() async {
-    messages = await getAllChat(widget.user.idUser);
+    messages = await getAllChat(widget.user.idUser,++page);
     setState(() {
       _scrolldown();
       print("_scrolldown success");

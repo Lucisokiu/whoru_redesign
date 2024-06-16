@@ -1,42 +1,26 @@
 class Story {
-  String imageUrl;
+  int idUser;
   String userName;
+  String avatar;
+  String imageUrl;
+
+  String date;
 
   Story({
+    required this.idUser,
+    required this.date,
+    required this.avatar,
     required this.imageUrl,
     required this.userName,
   });
-}
 
-List<Story> storyList = [
-  Story(
-    imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiZ6vGLQBc9GIK_tpP4YFbIXzFWQ85BO7r5Q&usqp=CAU',
-    userName: 'Nhung Nguyễn',
-  ),
-  Story(
-    imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiZ6vGLQBc9GIK_tpP4YFbIXzFWQ85BO7r5Q&usqp=CAU',
-    userName: 'Hồng Thắm',
-  ),
-  Story(
-    imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiZ6vGLQBc9GIK_tpP4YFbIXzFWQ85BO7r5Q&usqp=CAU',
-    userName: 'Trương Thị Mỹ Linh',
-  ),
-  Story(
-    imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiZ6vGLQBc9GIK_tpP4YFbIXzFWQ85BO7r5Q&usqp=CAU',
-    userName: 'Tào Tháo',
-  ),
-  Story(
-    imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfManQ-2MM-sy2xTzCS_IIGxd63wGNCMzBug&usqp=CAU',
-    userName: 'Đổng Trác',
-  ),
-  Story(
-    imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiZ6vGLQBc9GIK_tpP4YFbIXzFWQ85BO7r5Q&usqp=CAU',
-    userName: 'Lưu Bị',
-  ),
-];
+  factory Story.fromJson(Map<String, dynamic> json) {
+    return Story(
+      idUser: json['id'],
+      userName: json['name'],
+      avatar: json['avatar'],
+      imageUrl: json['imageUrl'],
+      date: json['date'],
+    );
+  }
+}

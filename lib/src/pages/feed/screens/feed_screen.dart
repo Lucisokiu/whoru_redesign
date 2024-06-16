@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/models/feed_model.dart';
+import 'package:whoru/src/models/story_model.dart';
 import 'package:whoru/src/pages/appbar/appbar.dart';
 import 'package:whoru/src/pages/feed/widget/feed_card.dart';
-import 'package:whoru/src/pages/story/story_widget.dart';
+import 'package:whoru/src/pages/story/widget/story_widget.dart';
 import 'package:whoru/src/utils/shared_pref/iduser.dart';
 
+import '../../../api/story.dart';
 import '../widget/skeleton_loading.dart';
 
 class FeedPage extends StatefulWidget {
@@ -21,11 +23,15 @@ class _FeedPageState extends State<FeedPage>
   final ScrollController _scrollController = ScrollController();
 
   List<FeedModel> listFeed = [];
+  List<Story> storyList = [];
+
   int? currentUser;
-  int page = 0;
+  int pagefeed = 0;
+  int pageStory = 0;
+
   void getFeed() async {
     print("get new feed");
-    List<FeedModel>? result = await getAllPost(++page);
+    List<FeedModel>? result = await getAllPost(++pagefeed);
     if (mounted) {
       if (result != null) {
         setState(() {
@@ -44,11 +50,21 @@ class _FeedPageState extends State<FeedPage>
     }
   }
 
+  void getStory() async {
+    List<Story> result = await getStoryByUserId(++pageStory);
+    if (mounted) {
+      setState(() {
+        storyList.addAll(result);
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     getCurentUser();
     getFeed();
+    getStory();
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -81,7 +97,12 @@ class _FeedPageState extends State<FeedPage>
                   if (index == 0) {
                     return Column(
                       children: [
-                        storywidget(context),
+                        storyList.isEmpty
+                            ? const SizedBox(
+                                height: 1000,
+                                child: MySkeletonLoadingWidget(),
+                              )
+                            : storywidget(context,storyList),
                         SizedBox(height: 2.h),
                         listFeed.isEmpty
                             ? const SizedBox(

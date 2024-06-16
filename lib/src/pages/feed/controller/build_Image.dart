@@ -519,7 +519,7 @@ class BuildButtonFeed extends StatefulWidget {
   final int label;
   final VoidCallback onPressed;
   final VoidCallback onLongPress;
-  final bool? isLike;
+  final bool isLike;
 
   const BuildButtonFeed({
     super.key,
@@ -527,7 +527,7 @@ class BuildButtonFeed extends StatefulWidget {
     required this.label,
     required this.onPressed,
     required this.onLongPress,
-    this.isLike,
+    required this.isLike,
   });
 
   @override
@@ -535,46 +535,64 @@ class BuildButtonFeed extends StatefulWidget {
 }
 
 class _BuildButtonFeedState extends State<BuildButtonFeed> {
+  late bool isLike;
+  late int label;
+
+
+  @override
+  void initState() {
+    isLike = widget.isLike;
+    label = widget.label;
+    super.initState();
+  }
+
+  void toggleLike() {
+    setState(() {
+      isLike = !isLike;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    int label = widget.label;
-    bool? isLike = widget.isLike;
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        (isLike != null)
-            ? GestureDetector(
-                // Wrap IconButton with GestureDetector
-                onLongPress: widget.onLongPress,
-                child: IconButton(
-                  icon: Icon(widget.icon),
-                  color: isLike ? Colors.red : null,
-                  onPressed: () {
-                    widget.onPressed();
+        GestureDetector(
+          // Wrap IconButton with GestureDetector
+          onLongPress: widget.onLongPress,
+          onTap: () {
+            widget.onPressed;
 
-                    setState(() {
-                      if (isLike!) {
-                        label--;
-                      } else {
-                        label++;
-                      }
-                      isLike = !isLike!;
+            setState(() {
+              if (isLike) {
+                label--;
+              } else {
+                label++;
+              }
+              toggleLike();
+              print(isLike);
+            });
+          },
+          child: IconButton(
+            icon: Icon(widget.icon),
+            color: isLike ? Colors.red : null,
+            onPressed: () {
+              widget.onPressed;
 
-                      print(isLike);
-                    });
-                  },
-                ),
-              )
-            : GestureDetector(
-                onLongPress: widget.onLongPress,
-                child: IconButton(
-                  icon: Icon(widget.icon),
-                  onPressed: () {
-                    widget.onPressed();
-                  },
-                ),
-              ),
+              setState(() {
+                if (isLike) {
+                  label--;
+                } else {
+                  label++;
+                }
+                isLike = !isLike;
+
+                print(isLike);
+              });
+            },
+          ),
+        ),
+
         const SizedBox(width: 4),
         Text(label.toString()),
       ],

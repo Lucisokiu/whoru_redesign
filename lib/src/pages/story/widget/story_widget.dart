@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../models/story_model.dart';
+import '../../../models/story_model.dart';
+import 'add_story.dart';
 
-Widget storywidget(BuildContext context) {
+Widget storywidget(BuildContext context, List<Story> storyList) {
   return SingleChildScrollView(
     child: Container(
       height: 15.h,
@@ -77,35 +77,6 @@ Widget yourStory(BuildContext context, urlImage, userName) {
         Text(
           userName,
           style: const TextStyle(
-            fontSize: 11,
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-Widget addStory(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 24),
-    child: Column(
-      children: [
-        SizedBox(
-            width: 70,
-            height: 70,
-            child: FittedBox(
-              fit: BoxFit.cover,
-              child: Icon(
-                PhosphorIconsFill.plusCircle,
-                color: Theme.of(context).iconTheme.color
-              ),
-            )),
-        const SizedBox(
-          height: 6,
-        ),
-        const Text(
-          "Add story",
-          style: TextStyle(
             fontSize: 11,
           ),
         ),

@@ -36,6 +36,7 @@ class AppColors {
   final Color shadow;
   final Color text;
   final Color icon;
+  final Color background2;
 
   const AppColors({
     required this.header,
@@ -51,6 +52,7 @@ class AppColors {
     required this.shadow,
     required this.text,
     required this.icon,
+    required this.background2,
   });
 
   factory AppColors.light() {
@@ -67,7 +69,8 @@ class AppColors {
         contentText2: colorPrimaryBlack,
         shadow: Colors.black38,
         text: colorBlack,
-        icon: colorBlack);
+        icon: colorBlack,
+        background2: const Color(0xFFd3d3d3),);
   }
 
   factory AppColors.dark() {
@@ -84,6 +87,8 @@ class AppColors {
         contentText2: mCL,
         shadow: Colors.white38,
         text: mC,
-        icon: mCM);
+        icon: mCM,
+        background2: const Color.fromARGB(255, 108, 109, 110),
+        );
   }
 }
