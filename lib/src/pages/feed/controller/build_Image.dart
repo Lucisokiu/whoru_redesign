@@ -520,6 +520,9 @@ class BuildButtonFeed extends StatefulWidget {
   final VoidCallback onPressed;
   final VoidCallback onLongPress;
   final bool isLike;
+  final bool isShare;
+  final bool likeButton;
+  final bool shareButton;
 
   const BuildButtonFeed({
     super.key,
@@ -527,7 +530,10 @@ class BuildButtonFeed extends StatefulWidget {
     required this.label,
     required this.onPressed,
     required this.onLongPress,
-    required this.isLike,
+    this.isLike = false,
+    this.isShare = false,
+    this.likeButton = false,
+    this.shareButton = false,
   });
 
   @override
@@ -537,7 +543,6 @@ class BuildButtonFeed extends StatefulWidget {
 class _BuildButtonFeedState extends State<BuildButtonFeed> {
   late bool isLike;
   late int label;
-
 
   @override
   void initState() {
@@ -552,6 +557,23 @@ class _BuildButtonFeedState extends State<BuildButtonFeed> {
     });
   }
 
+  handleLikeButton() {
+    widget.onPressed();
+    print("oke onPress");
+    print("${widget.likeButton}");
+    if (widget.likeButton == true) {
+      print("??????");
+      setState(() {
+        if (isLike) {
+          label--;
+        } else {
+          label++;
+        }
+        toggleLike();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -560,39 +582,14 @@ class _BuildButtonFeedState extends State<BuildButtonFeed> {
         GestureDetector(
           // Wrap IconButton with GestureDetector
           onLongPress: widget.onLongPress,
-          onTap: () {
-            widget.onPressed;
-
-            setState(() {
-              if (isLike) {
-                label--;
-              } else {
-                label++;
-              }
-              toggleLike();
-              print(isLike);
-            });
-          },
           child: IconButton(
             icon: Icon(widget.icon),
             color: isLike ? Colors.red : null,
             onPressed: () {
-              widget.onPressed;
-
-              setState(() {
-                if (isLike) {
-                  label--;
-                } else {
-                  label++;
-                }
-                isLike = !isLike;
-
-                print(isLike);
-              });
+              handleLikeButton();
             },
           ),
         ),
-
         const SizedBox(width: 4),
         Text(label.toString()),
       ],

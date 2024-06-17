@@ -6,7 +6,7 @@ Future<Object?> customCommentDialog(
     BuildContext contextScafford, int idFeed, int currentUser) {
   return showGeneralDialog(
       barrierDismissible: true,
-      barrierLabel: "Sign up",
+      barrierLabel: "Comment",
       context: contextScafford,
       transitionDuration: const Duration(milliseconds: 400),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
@@ -20,7 +20,7 @@ Future<Object?> customCommentDialog(
       pageBuilder: (context, _, __) => CustomCommentDialog(
           contextScafford: contextScafford,
           idFeed: idFeed,
-          currentUser: currentUser)).then((value) => null);
+          currentUser: currentUser));
 }
 
 class CustomCommentDialog extends StatefulWidget {
@@ -55,7 +55,7 @@ class _CustomCommentDialogState extends State<CustomCommentDialog> {
     if (commentsPage.isEmpty) isFull = true;
 
     comments.addAll(commentsPage);
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override

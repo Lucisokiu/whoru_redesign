@@ -7,7 +7,7 @@ import 'package:whoru/src/utils/url.dart';
 Future<void> sharePost(idPost) async {
   var url = Uri.https(baseUrl, '/api/v1/Shares/SharePost');
   String? token = await getToken();
-
+  print(url);
   try {
     var response = await http.post(
       url,
