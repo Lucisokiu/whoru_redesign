@@ -44,7 +44,7 @@ class _UserPageState extends State<UserPage> {
     super.initState();
     getLanguage();
     getTheme();
-    print(darkMode);
+    print(isNoti);
   }
 
   var list = <DropdownMenuItem<String>>[];
@@ -186,12 +186,8 @@ class _UserPageState extends State<UserPage> {
                     size: 25.sp,
                   ),
                   onPressed: () async {
-                    setState(() {
-                      NotificationsController.updateNoti();
-                      isNoti = NotificationsController.noti;
-                      NotificationsController.showSimpleNotification(
-                          title: "1", body: "body", payload: "payload");
-                    });
+                    isNoti = await NotificationsController.updateNoti();
+                    if (mounted) setState(() {});
                   },
                 ),
               ],
@@ -284,7 +280,7 @@ class _UserPageState extends State<UserPage> {
             isEnd: true,
           ),
 
-                    IOSSettingsButton(
+          IOSSettingsButton(
             title: 'Bluetooth',
             onPressed: () {
               print('Bluetooth button pressed');

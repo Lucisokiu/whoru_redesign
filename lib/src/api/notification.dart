@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import '../models/notification_model.dart';
 import '../utils/shared_pref/token.dart';

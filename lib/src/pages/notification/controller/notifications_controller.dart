@@ -14,10 +14,12 @@ class NotificationsController {
             AndroidFlutterLocalNotificationsPlugin>()
         ?.requestNotificationsPermission();
   }
-    static void updateNoti() async {
-      await setNotif(!noti);
-      isNotification = await getNotif();
-    }
+
+  static Future<bool> updateNoti() async {
+    await setNotif(!noti);
+    isNotification = await getNotif();
+    return isNotification ?? true;
+  }
 
   static Future init() async {
     isNotification = await getNotif();
@@ -43,21 +45,29 @@ class NotificationsController {
   }
 
   static Future showSimpleNotification({
-    required String title,
-    required String body,
-    required String payload,
+    required int index, // UserID
+    required String title, //name
+    required String body, //title ( like )
+    required String payload, //avt
   }) async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('channel 1', 'your channel name',
-            channelDescription: 'your channel description',
+    String titleLike = "like your post";
+    String titleFollow = "follow you";
+    if (body == "Like") {
+      body = '$title $titleLike';
+    } else {
+      body = '$title $titleFollow';
+    }
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(index.toString(), title,
+            channelDescription: payload,
             playSound: true,
             importance: Importance.max,
             priority: Priority.high,
             ticker: 'ticker');
-    const NotificationDetails notificationDetails =
+    NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
     await _flutterLocalNotificationsPlugin
-        .show(0, title, body, notificationDetails, payload: payload);
+        .show(index, title, body, notificationDetails, payload: payload);
     print("showSimpleNotification");
   }
 

@@ -151,14 +151,16 @@ class WebSocketService {
 
           if (idReceiver == id) {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CallScreen(
-                          avatarUrl: avt,
-                          fullName: name,
-                          idCaller: idCaller,
-                          idReceiver: idReceiver,
-                        )));
+              context,
+              MaterialPageRoute(
+                builder: (context) => CallScreen(
+                  avatarUrl: avt,
+                  fullName: name,
+                  idCaller: idCaller,
+                  idReceiver: idReceiver,
+                ),
+              ),
+            );
           }
         }
       }
@@ -167,12 +169,22 @@ class WebSocketService {
 
   void listenNotif() {
     messageSubscription = onMessage.listen((message) {
-      if (message['type'] == 1 && message['target'] == 'ReceiveSignal') {
-        NotificationsController.showSimpleNotification(
-          title: "Simple Notification",
-          body: "This is a simple notification",
-          payload: "This is simple data",
-        );
+      bool? isNotifi = NotificationsController.noti;
+      if (isNotifi == true) {
+        if (message['type'] == 1 &&
+            message['target'] == 'ReceiveNotification') {
+          List<dynamic> arguments = message['arguments'];
+          int index = arguments[0];
+          String name = arguments[2];
+          String avt = arguments[3];
+          String title = arguments[4];
+          NotificationsController.showSimpleNotification(
+            index: index,
+            title: name,
+            body: title,
+            payload: avt,
+          );
+        }
       }
     });
   }

@@ -16,7 +16,6 @@ class _AppState extends State<App> {
   WebSocketService webSocketService = WebSocketService();
   // late StreamSubscription<dynamic> messageSubscription;
   int? _id;
-  bool? isNotifi = NotificationsController.noti;
 
   @override
   void initState() {
@@ -32,36 +31,8 @@ class _AppState extends State<App> {
   void connected() {
     webSocketService.connect();
     webSocketService.listenCall(context, _id);
-    if (isNotifi == true) {
-      webSocketService.listenNotif();
-    }
+    webSocketService.listenNotif();
   }
-
-  // void listenCall(StreamSubscription<dynamic> messageSubscription){
-  //   messageSubscription = webSocketService.onMessage.listen((message) {
-  //     if (message['type'] == 1 && message['target'] == 'ReceiveSignal') {
-  //       List<dynamic> arguments = message['arguments'];
-  //       if (arguments[0] is int) {
-  //         int idCaller = arguments[0];
-  //         String name = arguments[1];
-  //         String avt = arguments[2];
-  //         int idReceiver = arguments[3];
-
-  //         if (idReceiver == _id) {
-  //           Navigator.push(
-  //               context,
-  //               MaterialPageRoute(
-  //                   builder: (context) => CallScreen(
-  //                         avatarUrl: avt,
-  //                         fullName: name,
-  //                         idCaller: idCaller,
-  //                         idReceiver: idReceiver,
-  //                       )));
-  //         }
-  //       }
-  //     }
-  //   });
-  // }
 
   @override
   void dispose() {

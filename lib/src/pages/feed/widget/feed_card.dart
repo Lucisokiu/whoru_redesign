@@ -9,7 +9,6 @@ import 'package:whoru/src/pages/feed/controller/build_image.dart';
 import 'package:whoru/src/pages/feed/widget/list_like_dialog.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 
-import '../../../api/comment.dart';
 import 'comment_dialog_new.dart';
 
 class CardFeed extends StatefulWidget {
