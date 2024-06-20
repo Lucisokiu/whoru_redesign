@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ReplyCard extends StatelessWidget {
-  const ReplyCard({super.key, required this.message,required this.time});
+  const ReplyCard({super.key, required this.message, required this.time});
   final String message;
   final String time;
 
@@ -18,14 +18,15 @@ class ReplyCard extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           // color: Color(0xffdcf8c6),
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          child: Stack(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                  left: 8,
-                  right: 50,
-                  top: 5,
-                  bottom: 10,
+                  left: 10,
+                  right: 10,
+                  top: 10,
+                  bottom: 5,
                 ),
                 child: Text(
                   message,
@@ -34,9 +35,12 @@ class ReplyCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 4,
-                right: 10,
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  right: 10,
+                  bottom: 5,
+                ),
                 child: Text(
                   time,
                   style: TextStyle(
@@ -45,6 +49,17 @@ class ReplyCard extends StatelessWidget {
                   ),
                 ),
               ),
+              // Positioned(
+              //   bottom: 4,
+              //   right: 5,
+              //   child: Text(
+              //     time,
+              //     style: TextStyle(
+              //       fontSize: 13,
+              //       color: Colors.grey[600],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

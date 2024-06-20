@@ -18,14 +18,15 @@ class OwnMessageCard extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           // color: Color(0xffdcf8c6),
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          child: Stack(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Padding(
                 padding: const EdgeInsets.only(
                   left: 10,
-                  right: 30,
+                  right: 10,
                   top: 5,
-                  bottom: 20,
+                  bottom: 5,
                 ),
                 child: Text(
                   message,
@@ -34,28 +35,44 @@ class OwnMessageCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 4,
-                right: 10,
-                child: Row(
-                  children: [
-                    Text(
-                      time,
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    const Icon(
-                      Icons.done_all,
-                      size: 20,
-                    ),
-                  ],
+
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  right: 10,
+                  bottom: 5,
+                ),
+                child: Text(
+                  time,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey[600],
+                  ),
                 ),
               ),
+              // Positioned(
+              //   bottom: 4,
+              //   right: 10,
+              //   child: Row(
+              //     children: [
+
+              //       Text(
+              //         time,
+              //         style: TextStyle(
+              //           fontSize: 13,
+              //           color: Colors.grey[600],
+              //         ),
+              //       ),
+              //       // const SizedBox(
+              //       //   width: 5,
+              //       // ),
+              //       // const Icon(
+              //       //   Icons.done_all,
+              //       //   size: 20,
+              //       // ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),

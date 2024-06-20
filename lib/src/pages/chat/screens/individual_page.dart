@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:whoru/src/api/chat.dart';
 import 'package:whoru/src/models/message_model.dart';
 import 'package:whoru/src/models/user_chat.dart';
@@ -9,7 +11,6 @@ import 'package:whoru/src/pages/call/videocall/video_call_creen.dart';
 import 'package:whoru/src/pages/chat/widget/own_messenger_card.dart';
 import 'package:whoru/src/pages/chat/widget/reply_card.dart';
 import 'package:whoru/src/socket/web_socket_service.dart';
-
 
 class IndividualPage extends StatefulWidget {
   const IndividualPage(
@@ -32,7 +33,7 @@ class _IndividualPageState extends State<IndividualPage> {
   late StreamSubscription<dynamic> messageSubscription;
   WebSocketService webSocketService = WebSocketService();
   int page = 0;
-
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -40,13 +41,22 @@ class _IndividualPageState extends State<IndividualPage> {
     connect();
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
-        Future.delayed(const Duration(milliseconds: 500), () => _scrolldown());
+        Future.delayed(const Duration(milliseconds: 300), () => _scrolldown());
+      }
+    });
+    _scrollController.addListener(() {
+      print(_scrollController.offset);
+      if (_scrollController.offset < 0.0) {
+        setState(() {
+          isLoading = true;
+          print(isLoading);
+        });
       }
     });
   }
 
   void getChat() async {
-    messages = await getAllChat(widget.user.idUser,++page);
+    messages = await getAllChat(widget.user.idUser, ++page);
     setState(() {
       _scrolldown();
       print("_scrolldown success");
@@ -70,12 +80,11 @@ class _IndividualPageState extends State<IndividualPage> {
   }
 
   void connect() {
-
-
     messageSubscription = webSocketService.onMessage.listen(
       (event) {
+        print(event);
         Map<dynamic, dynamic> jsonData = event;
-        print("jsonData $jsonData");
+
         int type = jsonData['type'];
         if (type == 1) {
           String? target = jsonData['target'];
@@ -83,10 +92,9 @@ class _IndividualPageState extends State<IndividualPage> {
             List<dynamic>? arguments = jsonData['arguments'];
             String message = arguments![0];
             int userSend = arguments[1];
-            print("jsonData userSend $userSend");
             if (userSend == widget.user.idUser) {
               setMessage(message, userSend, widget.currentId);
-              _scrolldown();
+        Future.delayed(const Duration(milliseconds: 300), () => _scrolldown());
             }
           }
         }
@@ -110,22 +118,28 @@ class _IndividualPageState extends State<IndividualPage> {
     webSocketService
         .sendMessageSocket("SendMessage", [sourceId, targetId, message]);
     setMessage(message, widget.currentId, widget.user.idUser);
+    _scrolldown();
   }
 
   void setMessage(String message, int currentId, int idReceiver) {
-    TimeOfDay now = TimeOfDay.now();
-
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('HH:mm dd/MM/yyyy').format(now);
     MessageModel messageModel = MessageModel(
-      date: "${now.hour}:${now.minute}",
+      date: formattedDate,
       message: message,
       type: "Message",
       userSend: currentId,
       userReceive: idReceiver,
     );
 
+    if (mounted) {
+      setState(() {
+        messages.add(messageModel);
+        // messages.insert(0, messageModel);
+      });
+    }
     setState(() {
-      messages.add(messageModel);
-      print("setState");
+      _scrolldown();
     });
   }
 
@@ -262,10 +276,21 @@ class _IndividualPageState extends State<IndividualPage> {
         children: [
           Expanded(
             child: ListView.builder(
+              // reverse: true,
               shrinkWrap: true,
               controller: _scrollController,
               itemCount: messages.length,
               itemBuilder: (context, index) {
+                if (isLoading && index == 0) return CircularProgressIndicator();
+
+                List<String> parts = (messages[index].date.split(' '));
+                List<String> partsBefore = index == 0
+                    ? ['', '']
+                    : (messages[index - 1].date.split(' '));
+                String time = parts[0];
+                String day = parts[1];
+
+                String dayBefore = partsBefore[1];
                 if (messages[index].userSend == widget.currentId) {
                   return GestureDetector(
                     onLongPress: () {
@@ -285,19 +310,36 @@ class _IndividualPageState extends State<IndividualPage> {
                         ],
                       );
                     },
-                    child: OwnMessageCard(
-                      message: messages[index].message,
-                      time: messages[index].date,
+                    child: Column(
+                      children: [
+                        if (day != dayBefore)
+                          Center(
+                            child: Text(day),
+                          ),
+                        OwnMessageCard(
+                          message: messages[index].message,
+                          time: time,
+                        ),
+                      ],
                     ),
                   );
                 } else {
-                  return ReplyCard(
-                    message: messages[index].message,
-                    time: messages[index].date,
+                  return Column(
+                    children: [
+                      if (day != dayBefore)
+                        Center(
+                          child: Text(day),
+                        ),
+                      ReplyCard(
+                        message: messages[index].message,
+                        time: time,
+                      ),
+                    ],
                   );
                 }
               },
-              physics: const BouncingScrollPhysics(), // Sử dụng BouncingScrollPhysics
+              physics:
+                  const BouncingScrollPhysics(), // Sử dụng BouncingScrollPhysics
             ),
           ),
           SizedBox(
@@ -310,7 +352,8 @@ class _IndividualPageState extends State<IndividualPage> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width - 60,
                       child: Card(
-                        margin: const EdgeInsets.only(left: 2, right: 2, bottom: 8),
+                        margin:
+                            const EdgeInsets.only(left: 2, right: 2, bottom: 8),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
@@ -399,7 +442,10 @@ class _IndividualPageState extends State<IndividualPage> {
                             if (sendButton) {
                               sendMessage(webSocketService, _controller.text,
                                   widget.currentId, widget.user.idUser);
-                              _scrolldown();
+
+                              Future.delayed(const Duration(milliseconds: 300),
+                                  () => _scrolldown());
+
                               setState(() {
                                 _controller.text = '';
                                 sendButton = false;
@@ -411,7 +457,7 @@ class _IndividualPageState extends State<IndividualPage> {
                     ),
                   ],
                 ),
-                // show ? emojiSelect() : Container(),
+                show ? emojiSelect() : Container(),
               ],
             ),
           ),
@@ -500,14 +546,14 @@ class _IndividualPageState extends State<IndividualPage> {
     );
   }
 
-//   Widget emojiSelect() {
-//     return EmojiPicker(
-// textEditingController: _controller,
-//         onEmojiSelected: (emoji, category) {
-//           print(emoji);
-//           setState(() {
-//             _controller.text = _controller.text + emoji;
-//           });
-//         });
-//   }
+  Widget emojiSelect() {
+    return EmojiPicker(
+        textEditingController: _controller,
+        onEmojiSelected: (emoji, category) {
+          print(emoji);
+          setState(() {
+            _controller.text = _controller.text + category.emoji;
+          });
+        });
+  }
 }

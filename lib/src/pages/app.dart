@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../socket/web_socket_service.dart';
 import '../utils/shared_pref/iduser.dart';
 import 'navigation/navigation.dart';
-import 'notification/controller/notifications_controller.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -14,7 +13,6 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   WebSocketService webSocketService = WebSocketService();
-  // late StreamSubscription<dynamic> messageSubscription;
   int? _id;
 
   @override
