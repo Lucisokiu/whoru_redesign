@@ -36,9 +36,7 @@ class LocationService {
               );
             },
           );
-          _timer = Timer.periodic(Duration(seconds: 5), (timer) {
-            print("_timer ${_timer.toString()}");
-
+          _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
             webSocketService.sendMessageSocket("getNearestUsers", [idUser]);
           });
         }

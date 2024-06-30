@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'dart:ui';
 import 'package:image/image.dart' as img;
 import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:whoru/src/api/face_recog.dart';
+import 'package:whoru/src/pages/face_detection/DB/face_registration_info.dart';
 import '../view/face_register_view.dart';
 import 'face_register.dart';
 
@@ -10,9 +12,10 @@ class Recognizer {
   late Interpreter interpreter;
   late InterpreterOptions _interpreterOptions;
 
-  Map<String, Recognition> registered = {};
+  Map<int, Recognition> registered = {};
 
   List<Map<String, dynamic>> firebaseData = [];
+  List<FaceRegistrationInfo> faceRegisters = [];
 
   @override
   Recognizer({int? numThreads}) {
@@ -21,20 +24,33 @@ class Recognizer {
     if (numThreads != null) {
       _interpreterOptions.threads = numThreads;
     }
-    loadModel();
-    loadRegisteredFaces();
+    init();
   }
 
-  void loadRegisteredFaces() async {
+  init() async {
+    await loadModel();
+    await fetchData();
+    await loadRegisteredFaces();
+  }
+
+  Future<void> fetchData() async {
+    faceRegisters = await getAllEmbedding();
+
+    for (FaceRegistrationInfo faceRegister in faceRegisters) {
+      print('Length Embedding: ${faceRegister.embedding.length}');
+    }
+  }
+
+  Future<void> loadRegisteredFaces() async {
     registered.clear();
-
-    for (final row in faceRegister) {
-      print(row.name);
-      String name = row.name;
-      String surname = row.surname;
-      String fullName = '$name $surname';
-      print(row.embedding);
-
+    if (faceRegisters.isEmpty) {
+      print("Empty faceRegisters");
+    } else {
+      print("faceRegisters not Empty");
+    }
+    for (final row in faceRegisters) {
+      int id = row.id;
+      // print('row.embedding======= ${row.embedding}');
       List<double> embedding = row.embedding;
       // String cleanembedding = embedding0.substring(1, embedding0.length - 1);
 
@@ -48,11 +64,11 @@ class Recognizer {
       // print('doubleList======= $doubleList');
 
       // Recognition recognition = Recognition(name, Rect.zero, doubleList, 0);
-            print('doubleList======= $embedding');
+      // print('doubleList======= ${embedding.length}');
 
-            Recognition recognition = Recognition(name, Rect.zero, embedding, 0);
+      Recognition recognition = Recognition(id, Rect.zero, embedding, 0);
 
-      registered.putIfAbsent(fullName, () => recognition);
+      registered.putIfAbsent(id, () => recognition);
     }
   }
 
@@ -111,7 +127,7 @@ class Recognizer {
         .map((e) => double.parse(e))
         .toList()
         .cast<double>();
-    print('doubleListOutput=========== $doubleListOutput');
+    print('doubleListOutput=========== ${doubleListOutput.length}');
     Pair pair = findNearest(doubleListOutput);
     print("mesafe= ${pair.distance}");
 
@@ -223,18 +239,18 @@ class Recognizer {
   } */
   findNearest(List<double> embedding) {
     Pair pair = Pair(
-        "Khuôn mặt không được nhận dạng %",
+        -1,
         double
             .infinity); // Nếu không tìm thấy kết quả khớp, khoảng cách được đặt thành 5
 
-    for (MapEntry<String, Recognition> item in registered.entries) {
+    for (MapEntry<int, Recognition> item in registered.entries) {
       print("item.value: ${item.value}"); // In ra console
       if (registered.entries.isEmpty) {
         print('empty');
         continue; // Bỏ qua vòng lặp nếu không có mục nào được ghi lại
       }
 
-      final String number = item.key;
+      final int number = item.key;
       List<double> knownEmb = item.value.embedding;
 
       double distance =
@@ -265,7 +281,7 @@ class Recognizer {
 }
 
 class Pair {
-  String number;
+  int number;
   double distance;
   Pair(this.number, this.distance);
 }

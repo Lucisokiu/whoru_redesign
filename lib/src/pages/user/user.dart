@@ -259,41 +259,41 @@ class _UserPageState extends State<UserPage> {
 
 
           //cân nhắc đổi style
-          IOSSettingsButton(
-            title: 'Wi-Fi',
-            onPressed: () {
-              print('Wi-Fi button pressed');
-            },
-            icon: const Icon(Icons.chevron_right),
-            isFirst: true,
-          ),
-          IOSSettingsButton(
-            title: 'Bluetooth',
-            onPressed: () {
-              print('Bluetooth button pressed');
-            },
-            icon: const Icon(Icons.chevron_right),
-          ),
-          IOSSettingsButton(
-            title: 'Bluetooth',
-            onPressed: () {
-              print('Bluetooth button pressed');
-            },
-            icon: const Icon(Icons.chevron_right),
-            isBottom: true,
-            isEnd: true,
-          ),
+          // IOSSettingsButton(
+          //   title: 'Wi-Fi',
+          //   onPressed: () {
+          //     print('Wi-Fi button pressed');
+          //   },
+          //   icon: const Icon(Icons.chevron_right),
+          //   isFirst: true,
+          // ),
+          // IOSSettingsButton(
+          //   title: 'Bluetooth',
+          //   onPressed: () {
+          //     print('Bluetooth button pressed');
+          //   },
+          //   icon: const Icon(Icons.chevron_right),
+          // ),
+          // IOSSettingsButton(
+          //   title: 'Bluetooth',
+          //   onPressed: () {
+          //     print('Bluetooth button pressed');
+          //   },
+          //   icon: const Icon(Icons.chevron_right),
+          //   isBottom: true,
+          //   isEnd: true,
+          // ),
 
-          IOSSettingsButton(
-            title: 'Bluetooth',
-            onPressed: () {
-              print('Bluetooth button pressed');
-            },
-            icon: const Icon(Icons.chevron_right),
-            isBottom: true,
-            isEnd: true,
-            isFirst: true,
-          ),
+          // IOSSettingsButton(
+          //   title: 'Bluetooth',
+          //   onPressed: () {
+          //     print('Bluetooth button pressed');
+          //   },
+          //   icon: const Icon(Icons.chevron_right),
+          //   isBottom: true,
+          //   isEnd: true,
+          //   isFirst: true,
+          // ),
         ],
       ),
     );

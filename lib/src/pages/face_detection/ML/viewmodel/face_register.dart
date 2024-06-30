@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 class Recognition {
-  String number;
+  int number;
   Rect location;
   late List<double> embedding;
   double distance;

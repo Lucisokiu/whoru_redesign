@@ -4,6 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 
+import '../../../../api/face_recog.dart';
+import '../../../../api/suggestion_user.dart';
 import '../../DB/face_registration_info.dart';
 import '../../constants/painter.dart';
 import '../viewmodel/face_match.dart';
@@ -16,10 +18,10 @@ class RecognitionScreen extends StatefulWidget {
   const RecognitionScreen({Key? key}) : super(key: key);
 
   @override
-  State<RecognitionScreen> createState() => _HomePageState();
+  State<RecognitionScreen> createState() => _RecognitionScreen();
 }
 
-class _HomePageState extends State<RecognitionScreen> {
+class _RecognitionScreen extends State<RecognitionScreen> {
   late ImagePicker imagePicker;
   File? _image;
   late FaceDetector faceDetector;
@@ -29,12 +31,13 @@ class _HomePageState extends State<RecognitionScreen> {
   void initState() {
     super.initState();
     imagePicker = ImagePicker();
-
     final options =
         FaceDetectorOptions(performanceMode: FaceDetectorMode.accurate);
     faceDetector = FaceDetector(options: options);
     recognizer = Recognizer();
   }
+
+
 
   _imgFromCamera() async {
     XFile? pickedFile = await imagePicker.pickImage(source: ImageSource.camera);
@@ -59,7 +62,7 @@ class _HomePageState extends State<RecognitionScreen> {
 
   late List<Face> faces;
   List<Recognition> recognitions = [];
-
+  List<int> listUser = [];
   doFaceDetection() async {
     InputImage inputImage = InputImage.fromFile(_image!);
     recognitions.clear();
@@ -90,14 +93,16 @@ class _HomePageState extends State<RecognitionScreen> {
           height: height.toInt());
       Recognition recognition = recognizer.recognize(croppedFace, boundingBox);
       if (recognition.distance > 1.25) {
-        recognition.number = "Khuôn mặt không được nhận dạng";
+        recognition.number = -1;
       }
       recognitions.add(recognition);
-      print('ad = ${recognition.number}');
+      listUser.add(recognition.number);
+      print('id = ${recognition.number}');
       print('embedding = ${recognition.embedding}');
       print('rect = ${recognition.location}');
       print('distance = ${recognition.distance}');
     }
+    getListSuggestionsList(listUser);
     drawRectangleAroundFaces();
   }
 /*
@@ -290,7 +295,8 @@ class _HomePageState extends State<RecognitionScreen> {
                                 height: image.width.toDouble() * 1.2,
                                 child: CustomPaint(
                                   painter: FaceRecognitionPainter(
-                                      facesList: recognitions, imageFile: image),
+                                      facesList: recognitions,
+                                      imageFile: image),
                                 ),
                               ),
                             ),
@@ -389,15 +395,11 @@ class _HomePageState extends State<RecognitionScreen> {
   Future<void> showAllRow() async {
     // DatabaseHelper databaseHelper = DatabaseHelper();
     try {
-      // await databaseHelper.init();
-      // List<Map<String, dynamic>> allRow = await databaseHelper.queryAllRows();
-      // print('tum yuzler = $allRow');
-      for (FaceRegistrationInfo faceRegister in faceRegister) {
-        print('Number: ${faceRegister.number}');
-        print('Name: ${faceRegister.name}');
-        print('Surname: ${faceRegister.surname}');
-        print('Embedding: ${faceRegister.embedding}');
-      }
+
+      // for (FaceRegistrationInfo faceRegister1 in faceRegisters1) {
+      //   print('Number: ${faceRegister1.id}');
+      //   print('Embedding: ${faceRegister1.embedding}');
+      // }
     } catch (e) {
       print(e);
     }

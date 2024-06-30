@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -39,7 +36,6 @@ class _MapWidgetState extends State<MapWidget> {
   LocationData? _userLocation;
   LocationService locationService = LocationService();
   UserModel? user;
-  late Timer _timer;
 
   void getUser() async {
     int? id = await getIdUser();

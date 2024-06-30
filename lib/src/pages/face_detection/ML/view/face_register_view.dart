@@ -5,24 +5,23 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 
+import '../../../../api/face_recog.dart';
 import '../../DB/face_registration_info.dart';
 import '../../constants/painter.dart';
 import '../viewmodel/face_match.dart';
 import '../viewmodel/face_register.dart';
 import 'face_match_view.dart';
 
-
-
-List<FaceRegistrationInfo> faceRegister = [];
+// List<FaceRegistrationInfo> faceRegister = [];
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
 
   @override
-  State<RegistrationScreen> createState() => _HomePageState();
+  State<RegistrationScreen> createState() => _RegistrationScreen();
 }
 
-class _HomePageState extends State<RegistrationScreen> {
+class _RegistrationScreen extends State<RegistrationScreen> {
   late ImagePicker imagePicker;
   File? _image;
 
@@ -45,10 +44,9 @@ class _HomePageState extends State<RegistrationScreen> {
   _imgFromCamera() async {
     XFile? pickedFile = await imagePicker.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-        doFaceDetection();
-      });
+      _image = File(pickedFile.path);
+      await doFaceDetection();
+      setState(() {});
     }
   }
 
@@ -56,10 +54,9 @@ class _HomePageState extends State<RegistrationScreen> {
     XFile? pickedFile =
         await imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-        doFaceDetection();
-      });
+      _image = File(pickedFile.path);
+      await doFaceDetection();
+      setState(() {});
     }
   }
 
@@ -111,8 +108,6 @@ class _HomePageState extends State<RegistrationScreen> {
     return await File(_image!.path).writeAsBytes(img.encodeJpg(orientedImage));
   }
 
-  TextEditingController nameTextEditingController = TextEditingController();
-  TextEditingController surnameTextEditingController = TextEditingController();
   TextEditingController numberTextEditingController = TextEditingController();
 
   showFaceRegistrationDialogue(Uint8List cropedFace, Recognition recognition) {
@@ -146,45 +141,23 @@ class _HomePageState extends State<RegistrationScreen> {
                           filled: true,
                           hintText: "ID")),
                 ),
-                SizedBox(
-                  width: 200,
-                  child: TextField(
-                      controller: nameTextEditingController,
-                      decoration: const InputDecoration(
-                          fillColor: Colors.black,
-                          filled: true,
-                          hintText: "Tên")),
-                ),
-                SizedBox(
-                  width: 200,
-                  child: TextField(
-                      controller: surnameTextEditingController,
-                      decoration: const InputDecoration(
-                          fillColor: Colors.black,
-                          filled: true,
-                          hintText: "Họ")),
-                ),
                 const SizedBox(
                   height: 10,
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    try {
-                      // recognizer.registerFaceFirebase(
-                      //     numberTextEditingController.text,
-                      //     nameTextEditingController.text,
-                      //     surnameTextEditingController.text,
-                      //     recognition.embedding);
-                      faceRegister.add(FaceRegistrationInfo(
-                        number: numberTextEditingController.text,
-                        name: nameTextEditingController.text,
-                        surname: surnameTextEditingController.text,
-                        embedding: recognition.embedding,
-                      ));
-                    } catch (e) {
-                      print(e);
-                    }
-
+                    // recognizer.registerFaceFirebase(
+                    //     numberTextEditingController.text,
+                    //     nameTextEditingController.text,
+                    //     surnameTextEditingController.text,
+                    //     recognition.embedding);
+                    postEmbedding(recognition.embedding);
+                    print("AAAAAAAAAAAAAAAAAAAAA");
+                    // faceRegister.add(FaceRegistrationInfo(
+                    //   id: int.parse(numberTextEditingController.text),
+                    //   embedding: recognition.embedding,
+                    // ));
+                    print('Length: ${recognition.embedding.length}');
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       backgroundColor: Colors.amber,
