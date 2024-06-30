@@ -94,7 +94,8 @@ class _IndividualPageState extends State<IndividualPage> {
             int userSend = arguments[1];
             if (userSend == widget.user.idUser) {
               setMessage(message, userSend, widget.currentId);
-        Future.delayed(const Duration(milliseconds: 300), () => _scrolldown());
+              Future.delayed(
+                  const Duration(milliseconds: 300), () => _scrolldown());
             }
           }
         }
@@ -141,6 +142,13 @@ class _IndividualPageState extends State<IndividualPage> {
     setState(() {
       _scrolldown();
     });
+  }
+
+  List<String> getParamsDateTime(String date, int index) {
+    if (index >= 0) {
+      return date.split(' ');
+    }
+    return ['', ''];
   }
 
   @override
@@ -281,12 +289,13 @@ class _IndividualPageState extends State<IndividualPage> {
               controller: _scrollController,
               itemCount: messages.length,
               itemBuilder: (context, index) {
-                if (isLoading && index == 0) return CircularProgressIndicator();
-
-                List<String> parts = (messages[index].date.split(' '));
-                List<String> partsBefore = index == 0
-                    ? ['', '']
-                    : (messages[index - 1].date.split(' '));
+                if (isLoading && index == 0) {
+                  return const CircularProgressIndicator();
+                }
+                List<String> parts =
+                    getParamsDateTime(messages[index].date, index);
+                List<String> partsBefore = getParamsDateTime(
+                    messages[index == 0 ? 0 : index - 1].date, index - 1);
                 String time = parts[0];
                 String day = parts[1];
 
@@ -338,8 +347,7 @@ class _IndividualPageState extends State<IndividualPage> {
                   );
                 }
               },
-              physics:
-                  const BouncingScrollPhysics(), // Sử dụng BouncingScrollPhysics
+              physics: const BouncingScrollPhysics(),
             ),
           ),
           SizedBox(

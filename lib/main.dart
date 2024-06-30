@@ -3,6 +3,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/splash/splash.dart';
 
@@ -22,7 +24,8 @@ void main() async {
   LocalizationService.getLocale();
   ThemeController(ThemeMode.system);
   cameras = await availableCameras();
-
+  final appDocumentDirectory = await getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDirectory.path);
   runApp(
     MultiBlocProvider(
       providers: [
@@ -44,32 +47,34 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = context.select((ThemeController bloc) => bloc.state);
     final locale = context.select((LanguageBloc bloc) => bloc.state.locale);
-    return Sizer(builder: (context, orientation, deviceType) {
-      return MaterialApp(
-        builder: (context, child) {
-          return ScrollConfiguration(
-            behavior: MyBehavior(),
-            child: child!,
-          );
-        },
-        debugShowCheckedModeBanner: false,
-        title: 'Whoru',
-        theme: AppTheme.light().data,
-        darkTheme: AppTheme.dark().data,
-        themeMode: isDark,
-        locale: locale,
-        localizationsDelegates: const [
-          AppLocalization.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en', 'US'),
-          Locale('vi', 'VN'),
-        ],
-        home: const SplashScreen(),
-      );
-    });
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return MaterialApp(
+          builder: (context, child) {
+            return ScrollConfiguration(
+              behavior: MyBehavior(),
+              child: child!,
+            );
+          },
+          debugShowCheckedModeBanner: false,
+          title: 'Whoru',
+          theme: AppTheme.light().data,
+          darkTheme: AppTheme.dark().data,
+          themeMode: isDark,
+          locale: locale,
+          localizationsDelegates: const [
+            AppLocalization.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en', 'US'),
+            Locale('vi', 'VN'),
+          ],
+          home: const SplashScreen(),
+        );
+      },
+    );
   }
 }

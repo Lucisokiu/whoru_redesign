@@ -48,21 +48,11 @@ class WebSocketService {
       },
     );
     onConnected(_channel, {"protocol": "json", "version": 1});
-    online(_channel, {
-      "arguments": [id],
-      "target": "Online",
-      "type": 1
-    });
+    sendMessageSocket("Online", [id]);
   }
 
   void onConnected(
       IOWebSocketChannel channel, Map<String, dynamic> messageData) {
-    final message = jsonEncode(messageData) + String.fromCharCode(0x1E);
-    channel.sink.add(message);
-    print(message);
-  }
-
-  void online(IOWebSocketChannel channel, Map<String, dynamic> messageData) {
     final message = jsonEncode(messageData) + String.fromCharCode(0x1E);
     channel.sink.add(message);
     print(message);
@@ -128,7 +118,7 @@ class WebSocketService {
                       Navigator.pop(context);
                     },
                     icon: const Icon(Icons.call_end),
-                    color: Colors.red, // Màu nền của nút đỏ
+                    color: Colors.red,
                   ),
                 ],
               ),
@@ -187,6 +177,16 @@ class WebSocketService {
         }
       }
     });
+  }
+
+  List listenLocation(int id) {
+    messageSubscription = onMessage.listen((message) {
+      if (message['type'] == 1 && message['target'] == 'ReceiveNotification') {
+        List<dynamic> arguments = message['arguments'];
+        print(arguments);
+      }
+    });
+    return [];
   }
 
   Stream<dynamic> get onMessage => _controller.stream;

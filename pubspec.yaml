@@ -63,10 +63,11 @@ dependencies:
   flutter_staggered_animations: ^1.1.1
   flutter_svg: ^2.0.9
 
-  #Icon
+  #Icons
   phosphor_flutter: ^2.0.0
   lottie: ^2.4.0
   emoji_picker_flutter: ^1.6.3
+  flutter_launcher_icons: ^0.13.1
 
   #borders
   gradient_borders: ^1.0.0
@@ -74,6 +75,8 @@ dependencies:
   #skeleton
   image: ^4.0.17
   cached_network_image: ^3.3.1
+  hive: ^2.2.3
+
 
   rive: ^0.11.4
   photo_view: ^0.14.0
@@ -96,7 +99,6 @@ dependencies:
   google_mlkit_commons: ^0.6.1
   google_mlkit_face_detection: ^0.9.0
 
-  #LocalDB
 
 
 
@@ -123,6 +125,8 @@ flutter:
   generate: true
 
 
+
+
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/lottie/splash_cat.json
@@ -134,7 +138,24 @@ flutter:
     - assets/translations/
     - assets/facerecognition/
 
-
+#     #Flutter Launcher Icons
+# flutter_launcher_icons:
+#   android: "launcher_icon"
+#   ios: true
+#   image_path: "assets/icons/Icon User.svg"
+#   min_sdk_android: 21 # android min sdk min:16, default 21
+#   web:
+#     generate: true
+#     image_path: "assets/icons/Icon User.svg"
+#     background_color: "#hexcode"
+#     theme_color: "#hexcode"
+#   windows:
+#     generate: true
+#     image_path: "assets/icons/Icon User.svg"
+#     icon_size: 48 # min:48, max:256, default: 48
+#   macos:
+#     generate: true
+#     image_path: "assets/icons/Icon User.svg"
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

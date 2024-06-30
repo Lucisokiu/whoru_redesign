@@ -224,37 +224,41 @@ class _UserPageState extends State<UserPage> {
               ],
             ),
           ),
-          // Container(
-          //   margin: const EdgeInsets.all(16),
-          //   child: TextButton.icon(
-          //     onPressed: () {},
-          //     icon: const Icon(
-          //       Icons.color_lens,
-          //       size: 24.0,
-          //     ),
-          //     label: Row(
-          //       children: [
-          //         const Text(
-          //           'Face Dectection (Test)',
-          //           style: TextStyle(fontSize: 18),
-          //         ),
-          //         const Spacer(),
-          //         IconButton(
-          //           icon: const Icon(Icons.arrow_forward),
-          //           onPressed: () {
-          //             setState(() {
-          //               Navigator.push(
-          //                   context,
-          //                   MaterialPageRoute(
-          //                       builder: (builder) =>
-          //                           const RegistrationScreen()));
-          //             });
-          //           },
-          //         )
-          //       ],
-          //     ),
-          //   ),
-          // ),
+          Container(
+            margin: const EdgeInsets.all(16),
+            child: TextButton.icon(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.color_lens,
+                size: 24.0,
+              ),
+              label: Row(
+                children: [
+                  const Text(
+                    'Face Dectection (Test)',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.arrow_forward),
+                    onPressed: () {
+                      setState(() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) =>
+                                    const RegistrationScreen()));
+                      });
+                    },
+                  )
+                ],
+              ),
+            ),
+          ),
+
+
+
+          //cân nhắc đổi style
           IOSSettingsButton(
             title: 'Wi-Fi',
             onPressed: () {
