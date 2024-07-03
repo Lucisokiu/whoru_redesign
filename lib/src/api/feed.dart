@@ -63,6 +63,7 @@ Future<void> delete(idPost) async {
 Future<void> postApiWithImages({
   List<File>? imageFiles,
   required String content,
+  required int status,
 }) async {
   try {
     var url = Uri.https(baseUrl, '/api/v1/Feeds/Post');
@@ -79,6 +80,8 @@ Future<void> postApiWithImages({
     );
 
     request.fields['Status'] = content;
+        request.fields['State'] = status.toString();
+
     request.headers.addAll(headers);
     // Thêm ảnh vào FormData
     if (imageFiles != null) {

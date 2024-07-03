@@ -4,15 +4,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 
-import '../../../../api/face_recog.dart';
 import '../../../../api/suggestion_user.dart';
-import '../../DB/face_registration_info.dart';
 import '../../constants/painter.dart';
 import '../viewmodel/face_match.dart';
 
 import '../viewmodel/face_register.dart';
 import '../viewmodel/facedetector.dart';
-import 'face_register_view.dart';
 
 class RecognitionScreen extends StatefulWidget {
   const RecognitionScreen({Key? key}) : super(key: key);
@@ -102,7 +99,7 @@ class _RecognitionScreen extends State<RecognitionScreen> {
       print('rect = ${recognition.location}');
       print('distance = ${recognition.distance}');
     }
-    getListSuggestionsList(listUser);
+    // getListSuggestionsList(listUser);
     drawRectangleAroundFaces();
   }
 /*

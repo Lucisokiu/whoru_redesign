@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
+import 'package:whoru/src/pages/face_detection/DB/face_registration_info.dart';
 
 import '../../../../api/face_recog.dart';
-import '../../DB/face_registration_info.dart';
 import '../../constants/painter.dart';
 import '../viewmodel/face_match.dart';
 import '../viewmodel/face_register.dart';

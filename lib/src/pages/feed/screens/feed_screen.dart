@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/feed.dart';
+import 'package:whoru/src/api/suggestion_user.dart';
 import 'package:whoru/src/models/feed_model.dart';
 import 'package:whoru/src/models/story_model.dart';
+import 'package:whoru/src/models/suggestion.dart';
+import 'package:whoru/src/models/user_model.dart';
 import 'package:whoru/src/pages/appbar/appbar.dart';
 import 'package:whoru/src/pages/feed/widget/feed_card.dart';
+import 'package:whoru/src/pages/feed/widget/suggest_card.dart';
 import 'package:whoru/src/pages/story/widget/story_widget.dart';
 import 'package:whoru/src/utils/shared_pref/iduser.dart';
 
@@ -24,13 +28,13 @@ class _FeedPageState extends State<FeedPage>
 
   List<FeedModel> listFeed = [];
   List<Story> storyList = [];
+  List<Suggestion> suggestList = [];
 
   int? currentUser;
   int pagefeed = 0;
   int pageStory = 0;
 
   void getFeed() async {
-    print("get new feed");
     List<FeedModel>? result = await getAllPost(++pagefeed);
     if (mounted) {
       if (result != null) {
@@ -38,6 +42,15 @@ class _FeedPageState extends State<FeedPage>
           listFeed.addAll(result);
         });
       }
+    }
+  }
+
+  void getSuggestionList() async {
+    List<Suggestion> result = await getListSuggestionsList();
+    if (mounted) {
+      setState(() {
+        suggestList.addAll(result);
+      });
     }
   }
 
@@ -65,7 +78,7 @@ class _FeedPageState extends State<FeedPage>
     getCurentUser();
     getFeed();
     getStory();
-
+    getSuggestionList();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent * 0.8) {
@@ -102,8 +115,29 @@ class _FeedPageState extends State<FeedPage>
                                 height: 1000,
                                 child: MySkeletonLoadingWidget(),
                               )
-                            : storywidget(context,storyList),
-                        SizedBox(height: 2.h),
+                            : storywidget(context, storyList),
+                        SizedBox(height: 1.h),
+                        suggestList.isEmpty
+                            ? Container()
+                            : Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 170,
+                                  width: 200,
+                                  child: ListView.builder(
+                                      itemCount: suggestList.length,
+                                      itemBuilder: (context, index) {
+                                        return SuggestionCard(
+                                          id: suggestList[index].id,
+                                          name: suggestList[index].name,
+                                          avt: suggestList[index].avt,
+                                        );
+                                      }),
+                                ),
+                              ],
+                            ),
+                                
                         listFeed.isEmpty
                             ? const SizedBox(
                                 height: 1000,

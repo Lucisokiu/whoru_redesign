@@ -20,10 +20,10 @@ class _CreatePostState extends State<CreatePost> {
   bool isLoading = false;
   final RegExp _sensitiveWordPattern =
       RegExp(r'\b(đụ má|đm|con cặc|cc|lồn|cl|cái lồn)\b', caseSensitive: false);
+  int? selectedValue;
+
   @override
   void initState() {
-    // _titleController.addListener(_checkSensitiveWords);
-    // _titleController.addListener(checkMaxTitle);
     _titleController.addListener(() {
       _checkSensitiveWords();
       checkMaxTitle();
@@ -114,6 +114,37 @@ class _CreatePostState extends State<CreatePost> {
                       checkMaxTitle();
                     },
                   ),
+                  DropdownButton<int>(
+                    value: selectedValue,
+                    hint: Text('Select an item'),
+                    icon: Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (int? newValue) {
+                      // Đảm bảo rằng onChanged nhận giá trị int?
+                      setState(() {
+                        selectedValue = newValue;
+                      });
+                    },
+                    items: <int>[1, 2, 3, 4]
+                        .map<DropdownMenuItem<int>>((int value) {
+                      return DropdownMenuItem<int>(
+                        value: value,
+                        child: Row(
+                          children: [
+                            Icon(Icons.star, color: Colors.blue), // Icon đi kèm
+                            SizedBox(width: 10),
+                            Text('Item $value'),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
                   SizedBox(height: 2.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -179,13 +210,14 @@ class _CreatePostState extends State<CreatePost> {
                       setState(() {
                         isLoading = true;
                       });
-                      if (_selectedImages.isNotEmpty) {
+                      if (_selectedImages.isNotEmpty && selectedValue != null) {
                         List<File> files = _selectedImages
                             .map((xFile) => File(xFile.path))
                             .toList();
                         postApiWithImages(
                           imageFiles: files,
                           content: _titleController.text,
+                          status: selectedValue!,
                         ).then((value) {
                           setState(() {
                             isLoading = false;

@@ -7,7 +7,6 @@ import 'package:whoru/src/pages/notification/controller/notifications_controller
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/pages/user/controller/theme/get_theme.dart';
 import 'package:whoru/src/pages/user/controller/language/language.dart';
-import 'package:whoru/src/pages/user/widget/button_setting.dart';
 import 'package:whoru/src/utils/shared_pref/token.dart';
 
 import '../face_detection/ML/view/face_register_view.dart';

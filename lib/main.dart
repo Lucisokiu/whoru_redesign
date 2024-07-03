@@ -30,10 +30,14 @@ void main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => ThemeController(
-                ThemeController.isDark ? ThemeMode.dark : ThemeMode.light)),
+          create: (context) => ThemeController(
+              ThemeController.isDark ? ThemeMode.dark : ThemeMode.light),
+        ),
         BlocProvider(
-            create: (context) => LanguageBloc(LanguageState.initial())),
+          create: (context) => LanguageBloc(
+            LanguageState.initial(),
+          ),
+        ),
       ],
       child: const MyApp(),
     ),

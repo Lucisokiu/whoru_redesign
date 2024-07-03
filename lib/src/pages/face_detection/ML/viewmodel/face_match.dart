@@ -5,7 +5,7 @@ import 'package:image/image.dart' as img;
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:whoru/src/api/face_recog.dart';
 import 'package:whoru/src/pages/face_detection/DB/face_registration_info.dart';
-import '../view/face_register_view.dart';
+import 'package:whoru/src/pages/face_detection/ML/view/face_register_view.dart';
 import 'face_register.dart';
 
 class Recognizer {
@@ -14,7 +14,6 @@ class Recognizer {
 
   Map<int, Recognition> registered = {};
 
-  List<Map<String, dynamic>> firebaseData = [];
   List<FaceRegistrationInfo> faceRegisters = [];
 
   @override
@@ -39,7 +38,30 @@ class Recognizer {
     for (FaceRegistrationInfo faceRegister in faceRegisters) {
       print('Length Embedding: ${faceRegister.embedding.length}');
     }
+    // print(checkdata());
   }
+
+  // bool checkdata() {
+  //   if (faceRegisters.isNotEmpty && faceRegister.isNotEmpty) {
+  //     if (faceRegisters[0].embedding.length !=
+  //         faceRegister[0].embedding.length) {
+  //       print("khác length");
+  //       return false; // Hai danh sách có độ dài khác nhau
+  //     }
+  //     for (int i = 0; i < 512; i++) {
+  //       if (faceRegisters[0].embedding[i] != faceRegister[0].embedding[i]) {
+  //         print("Có phần tử không trùng nhau");
+  //         print(i);
+  //         print('server: ${faceRegisters[0].embedding[i]}'); // server
+  //         print('local: ${faceRegister[0].embedding[i]}'); // local
+
+  //         // return false;
+  //       }
+  //     }
+  //   }
+  //   print("Mọi thứ đều trùng");
+  //   return true;
+  // }
 
   Future<void> loadRegisteredFaces() async {
     registered.clear();
@@ -244,7 +266,6 @@ class Recognizer {
             .infinity); // Nếu không tìm thấy kết quả khớp, khoảng cách được đặt thành 5
 
     for (MapEntry<int, Recognition> item in registered.entries) {
-      print("item.value: ${item.value}"); // In ra console
       if (registered.entries.isEmpty) {
         print('empty');
         continue; // Bỏ qua vòng lặp nếu không có mục nào được ghi lại

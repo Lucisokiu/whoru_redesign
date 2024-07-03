@@ -1,30 +1,33 @@
 import 'dart:convert';
+import 'package:whoru/src/models/suggestion.dart';
 import 'package:whoru/src/utils/shared_pref/token.dart';
 import 'package:whoru/src/utils/url.dart';
 import 'package:http/http.dart' as http;
 
-Future<void> getListSuggestionsList(List<int> listUser) async {
+Future<List<Suggestion>> getListSuggestionsList() async {
   var url = Uri.https(baseUrl, '/api/v1/UserInfos/GetListSuggestions');
   String? token = await getToken();
 
-  var body = {
-    "listIdUser": listUser,
-  };
-  print('Body $body');
-  var response = await http.post(
+  var response = await http.get(
     url,
     headers: {
       'Content-type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     },
-    body: jsonEncode(body),
   );
-  print(response.statusCode);
+
+  print(response.body);
   if (response.statusCode == 200) {
     print('getListSuggestionsList request successful');
+    List<dynamic> decodedData = jsonDecode(response.body);
+    List<Suggestion> result =
+        decodedData.map((data) => Suggestion.fromJson(data)).toList();
+
+    return result;
   } else {
     print(
         'Failed to make getListSuggestionsList request. Status code: ${response.statusCode}');
+    return [];
   }
 }
