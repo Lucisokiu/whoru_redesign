@@ -4,6 +4,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/login/login_screen.dart';
 import 'package:whoru/src/pages/notification/controller/notifications_controller.dart';
+import 'package:whoru/src/pages/nude_detection/nude_screen.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/pages/user/controller/theme/get_theme.dart';
 import 'package:whoru/src/pages/user/controller/language/language.dart';
@@ -255,7 +256,35 @@ class _UserPageState extends State<UserPage> {
             ),
           ),
 
-
+Container(
+            margin: const EdgeInsets.all(16),
+            child: TextButton.icon(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.color_lens,
+                size: 24.0,
+              ),
+              label: Row(
+                children: [
+                  const Text(
+                    'Nude Dectection (Test)',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.arrow_forward),
+                    onPressed: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (builder) =>
+                        //             const NudeDetectScreen(),),);
+                    },
+                  )
+                ],
+              ),
+            ),
+          ),
 
           //cân nhắc đổi style
           // IOSSettingsButton(
