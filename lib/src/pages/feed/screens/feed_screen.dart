@@ -119,23 +119,53 @@ class _FeedPageState extends State<FeedPage>
                         SizedBox(height: 1.h),
                         suggestList.isEmpty
                             ? Container()
-                            : Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 170,
-                                  width: 200,
-                                  child: ListView.builder(
-                                      itemCount: suggestList.length,
-                                      itemBuilder: (context, index) {
-                                        return SuggestionCard(
-                                          id: suggestList[index].id,
-                                          name: suggestList[index].name,
-                                          avt: suggestList[index].avt,
-                                        );
-                                      }),
-                                ),
-                              ],
+                            : SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 25.h,
+                                    width: 50.w,
+                                    child: ListView.builder(
+                                        itemCount: suggestList.length,
+                                        itemBuilder: (context, index) {
+                                          return SuggestionCard(
+                                            id: suggestList[index].id,
+                                            name: suggestList[index].name,
+                                            avt: suggestList[index].avt,
+                                          );
+                                        }),
+                                  ),
+                                  // will delete
+                                  Container(
+                                    height: 25.h,
+                                    width: 50.w,
+                                    child: ListView.builder(
+                                        itemCount: suggestList.length,
+                                        itemBuilder: (context, index) {
+                                          return SuggestionCard(
+                                            id: suggestList[index].id,
+                                            name: suggestList[index].name,
+                                            avt: suggestList[index].avt,
+                                          );
+                                        }),
+                                  ),Container(
+                                    height: 25.h,
+                                    width: 50.w,
+                                    child: ListView.builder(
+                                        itemCount: suggestList.length,
+                                        itemBuilder: (context, index) {
+                                          return SuggestionCard(
+                                            id: suggestList[index].id,
+                                            name: suggestList[index].name,
+                                            avt: suggestList[index].avt,
+                                          );
+                                        }),
+                                  ),
+                                  //
+                                ],
+                              ),
                             ),
                                 
                         listFeed.isEmpty

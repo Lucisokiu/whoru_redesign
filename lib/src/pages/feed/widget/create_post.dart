@@ -20,7 +20,7 @@ class _CreatePostState extends State<CreatePost> {
   bool isLoading = false;
   final RegExp _sensitiveWordPattern =
       RegExp(r'\b(đụ má|đm|con cặc|cc|lồn|cl|cái lồn)\b', caseSensitive: false);
-  int? selectedValue;
+  int selectedValue = 1;
 
   @override
   void initState() {
@@ -80,167 +80,189 @@ class _CreatePostState extends State<CreatePost> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Create Post'),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_rounded),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
-        body: Stack(
-          children: [
-            Padding(
-              padding: EdgeInsets.all(10.sp),
-              child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  TextFormField(
-                    controller: _titleController,
-                    textAlignVertical: TextAlignVertical.center,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: 5,
-                    minLines: 1,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: 'Title',
-                      hintText: "Type your feel (< 2000 words)",
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      contentPadding: EdgeInsets.all(2.w),
-                    ),
-                    onChanged: (value) {
-                      checkMaxTitle();
-                    },
-                  ),
-                  DropdownButton<int>(
-                    value: selectedValue,
-                    hint: Text('Select an item'),
-                    icon: Icon(Icons.arrow_downward),
-                    iconSize: 24,
-                    elevation: 16,
-                    style: TextStyle(color: Colors.black, fontSize: 16),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
-                    onChanged: (int? newValue) {
-                      // Đảm bảo rằng onChanged nhận giá trị int?
-                      setState(() {
-                        selectedValue = newValue;
-                      });
-                    },
-                    items: <int>[1, 2, 3, 4]
-                        .map<DropdownMenuItem<int>>((int value) {
-                      return DropdownMenuItem<int>(
-                        value: value,
-                        child: Row(
-                          children: [
-                            Icon(Icons.star, color: Colors.blue), // Icon đi kèm
-                            SizedBox(width: 10),
-                            Text('Item $value'),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                  SizedBox(height: 2.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Stack(
+      children: [
+        Scaffold(
+            appBar: AppBar(
+              title: const Text('Create Post'),
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+            body: Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(10.sp),
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      ElevatedButton(
-                        onPressed: () async {
-                          XFile? file = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (builder) => const CameraScreen()));
-                          _takePicture(file);
-                        },
-                        child: const Text('Take Picture'),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                        child: VerticalDivider(
-                          thickness: 2,
-                          color: Colors.white,
+                      TextFormField(
+                        controller: _titleController,
+                        textAlignVertical: TextAlignVertical.center,
+                        keyboardType: TextInputType.multiline,
+                        maxLines: 5,
+                        minLines: 1,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          labelText: 'Title',
+                          hintText: "Type your feel (< 2000 words)",
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          contentPadding: EdgeInsets.all(2.w),
                         ),
+                        onChanged: (value) {
+                          checkMaxTitle();
+                        },
                       ),
-                      ElevatedButton(
-                        onPressed: _pickImage,
-                        child: const Text('Pick Image'),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16.0),
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: (_selectedImages.length / 2).ceil(),
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(4.0),
+                      DropdownButton<int>(
+                        value: selectedValue,
+                        hint: const Text('Select an item'),
+                        icon: const Icon(Icons.arrow_downward),
+                        iconSize: 24,
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.black, fontSize: 16),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                        onChanged: (int? newValue) {
+                          // Đảm bảo rằng onChanged nhận giá trị int?
+                          setState(() {
+                            selectedValue = newValue!;
+                            print(selectedValue);
+                          });
+                        },
+                        items: <int>[1, 2, 3, 4]
+                            .map<DropdownMenuItem<int>>((int value) {
+                          Map<int, String> valueToString = {
+                            1: 'Public',
+                            2: 'Only Follower',
+                            3: 'Only Friend',
+                            4: 'Private',
+                          };
+                          return DropdownMenuItem<int>(
+                            value: value,
                             child: Row(
                               children: [
-                                for (var i = index * 2;
-                                    i < (index + 1) * 2;
-                                    i++)
-                                  if (i < _selectedImages.length)
-                                    Expanded(
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 8.0),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: Image.file(
-                                            File(_selectedImages[i].path),
-                                            fit: BoxFit
-                                                .cover, // You can adjust the BoxFit based on your needs
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                const SizedBox(width: 10),
+                                Text(valueToString[value]!),
                               ],
                             ),
                           );
-                        }),
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      setState(() {
-                        isLoading = true;
-                      });
-                      if (_selectedImages.isNotEmpty && selectedValue != null) {
-                        List<File> files = _selectedImages
-                            .map((xFile) => File(xFile.path))
-                            .toList();
-                        postApiWithImages(
-                          imageFiles: files,
-                          content: _titleController.text,
-                          status: selectedValue!,
-                        ).then((value) {
-                          setState(() {
-                            isLoading = false;
-                          });
-                          Navigator.pop(context);
-                        });
-                      }
-                    },
-                    child: const Text('Create Post'),
-                  ),
-                ],
-              ),
-            ),
-            if (isLoading)
-              Positioned.fill(
-                child: Container(
-                  color: Colors.black.withOpacity(0.5),
-                  child: const Center(
-                    child: CircularProgressIndicator(),
+                        }).toList(),
+                      ),
+                      SizedBox(height: 2.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () async {
+                              XFile? file = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (builder) => const CameraScreen()));
+                              _takePicture(file);
+                            },
+                            child: const Text('Take Picture'),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                            child: VerticalDivider(
+                              thickness: 2,
+                              color: Colors.white,
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: _pickImage,
+                            child: const Text('Pick Image'),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16.0),
+                      Expanded(
+                        child: ListView.builder(
+                            itemCount: (_selectedImages.length / 2).ceil(),
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Row(
+                                  children: [
+                                    for (var i = index * 2;
+                                        i < (index + 1) * 2;
+                                        i++)
+                                      if (i < _selectedImages.length)
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(right: 8.0),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Image.file(
+                                                File(_selectedImages[i].path),
+                                                fit: BoxFit
+                                                    .cover, // You can adjust the BoxFit based on your needs
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
+                      Visibility(
+                        visible: checkValue(),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
+                              List<File> files = _selectedImages
+                                  .map((xFile) => File(xFile.path))
+                                  .toList();
+                              postApiWithImages(
+                                imageFiles: files,
+                                content: _titleController.text,
+                                status: selectedValue,
+                              ).then((value) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                Navigator.pop(context);
+                              });
+                          },
+                          child: const Text('Create Post'),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-          ],
-        ));
+
+              ],
+            )),
+        if (isLoading)
+          Positioned.fill(
+            child: Container(
+                color: Colors.black.withOpacity(0.5),
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+            ),
+          ),
+      ],
+
+
+
+    );
+  }
+  bool checkValue(){
+    if(_titleController.text.isNotEmpty && _selectedImages.length != 0){
+      return true;
+    }else{
+      return false;
+    }
   }
 }

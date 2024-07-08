@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../models/story_model.dart';
@@ -40,47 +43,85 @@ Widget storywidget(BuildContext context, List<Story> storyList) {
 }
 
 Widget yourStory(BuildContext context, urlImage, userName) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 24),
-    child: Column(
-      children: [
-        Container(
-          width: 70,
-          height: 70,
-          decoration: const BoxDecoration(
-            border: GradientBoxBorder(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xffFBAA47),
-                  Color(0xffD91A46),
-                  Color(0xffA60F93),
-                ],
-                begin: Alignment.bottomCenter,
-                end: Alignment.centerRight,
+  return
+    GestureDetector(
+      onTap: (){Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Scaffold(
+            appBar: AppBar(
+              backgroundColor:Colors.transparent,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-              width: 2,
             ),
-            shape: BoxShape.circle,
-          ),
-          padding: const EdgeInsets.all(2),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(70),
-            child: Image.network(
-              urlImage,
-              fit: BoxFit.cover,
+            body: PhotoViewGallery.builder(
+              itemCount: 1,
+              builder: (context, index) {
+                return PhotoViewGalleryPageOptions(
+                  imageProvider: CachedNetworkImageProvider(
+                    urlImage,
+                  ),
+                  minScale: PhotoViewComputedScale.contained * 0.8,
+                  maxScale: PhotoViewComputedScale.covered * 2,
+                );
+              },
+              scrollPhysics: const BouncingScrollPhysics(),
+              backgroundDecoration: BoxDecoration(
+                color:  Colors.transparent,
+              ),
+              pageController: PageController(),
             ),
           ),
         ),
-        const SizedBox(
-          height: 6,
+      );
+      },
+
+      child: Padding(
+        padding: const EdgeInsets.only(left: 24),
+        child: Column(
+          children: [
+            Container(
+              width: 70,
+              height: 70,
+              decoration: const BoxDecoration(
+                border: GradientBoxBorder(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xffFBAA47),
+                      Color(0xffD91A46),
+                      Color(0xffA60F93),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.centerRight,
+                  ),
+                  width: 2,
+                ),
+                shape: BoxShape.circle,
+              ),
+              padding: const EdgeInsets.all(2),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(70),
+                child: Image.network(
+                  urlImage,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+            Text(
+              userName,
+              style: const TextStyle(
+                fontSize: 11,
+              ),
+            ),
+          ],
         ),
-        Text(
-          userName,
-          style: const TextStyle(
-            fontSize: 11,
-          ),
-        ),
-      ],
-    ),
+      ),
   );
 }

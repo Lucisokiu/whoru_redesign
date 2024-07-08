@@ -17,6 +17,7 @@ Update Avatar/Background/Info user
 Realtime chat  
 Video/Voice call  
 Face Recognition
+Nude Detection
 
 # **DEMO**
 

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/chat.dart';
 import 'package:whoru/src/models/message_model.dart';
 import 'package:whoru/src/models/user_chat.dart';
@@ -39,35 +40,41 @@ class _IndividualPageState extends State<IndividualPage> {
     super.initState();
     getChat();
     connect();
+    Future.delayed(const Duration(milliseconds: 300), () => _scrolldown());
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
         Future.delayed(const Duration(milliseconds: 300), () => _scrolldown());
       }
     });
     _scrollController.addListener(() {
-      print(_scrollController.offset);
-      if (_scrollController.offset < 0.0) {
-        setState(() {
-          isLoading = true;
-          print(isLoading);
-        });
+      if (_scrollController.offset >
+          _scrollController.position.maxScrollExtent) {
+        if (isLoading == false) {
+          setState(() {
+            isLoading = true;
+            getChat();
+          });
+        }
       }
     });
   }
 
   void getChat() async {
-    messages = await getAllChat(widget.user.idUser, ++page);
-    setState(() {
-      _scrolldown();
-      print("_scrolldown success");
-    });
+    final results = await getAllChat(widget.user.idUser, ++page);
+    if (mounted) {
+      setState(() {
+        messages.addAll(results);
+        // Future.delayed(const Duration(milliseconds: 300), () => _scrolldown());
+        isLoading = false;
+      });
+    }
   }
 
   void _scrolldown() {
     _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.fastOutSlowIn,
+      _scrollController.position.minScrollExtent,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.bounceInOut,
     );
   }
 
@@ -82,21 +89,21 @@ class _IndividualPageState extends State<IndividualPage> {
   void connect() {
     messageSubscription = webSocketService.onMessage.listen(
       (event) {
-        print(event);
-        Map<dynamic, dynamic> jsonData = event;
+        print("individual $event");
 
+        Map<dynamic, dynamic> jsonData = event;
         int type = jsonData['type'];
         if (type == 1) {
           String? target = jsonData['target'];
           if (target == "ReceiveMessage") {
-            List<dynamic>? arguments = jsonData['arguments'];
-            String message = arguments![0];
-            int userSend = arguments[1];
-            if (userSend == widget.user.idUser) {
-              setMessage(message, userSend, widget.currentId);
-              Future.delayed(
-                  const Duration(milliseconds: 300), () => _scrolldown());
-            }
+            List<dynamic> arguments = jsonData['arguments'];
+            print(arguments);
+            int id = arguments[0];
+            String message = arguments[2];
+            int userSend = arguments[4];
+            setMessage(message, userSend, widget.currentId, id);
+            Future.delayed(
+                const Duration(milliseconds: 300), () => _scrolldown());
           }
         }
       },
@@ -110,7 +117,6 @@ class _IndividualPageState extends State<IndividualPage> {
   }
 
   void disconnect() {
-    print("disconnect IndividualScreen");
     messageSubscription.cancel();
   }
 
@@ -118,14 +124,16 @@ class _IndividualPageState extends State<IndividualPage> {
       int sourceId, int targetId) {
     webSocketService
         .sendMessageSocket("SendMessage", [sourceId, targetId, message]);
-    setMessage(message, widget.currentId, widget.user.idUser);
-    _scrolldown();
+    // setMessage(message, widget.currentId, widget.user.idUser);
+    // _scrolldown();
   }
 
-  void setMessage(String message, int currentId, int idReceiver) {
+  void setMessage(
+      String message, int currentId, int idReceiver, int idMessage) {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('HH:mm dd/MM/yyyy').format(now);
     MessageModel messageModel = MessageModel(
+      id: idMessage,
       date: formattedDate,
       message: message,
       type: "Message",
@@ -135,13 +143,11 @@ class _IndividualPageState extends State<IndividualPage> {
 
     if (mounted) {
       setState(() {
-        messages.add(messageModel);
-        // messages.insert(0, messageModel);
+        // messages.add(messageModel);
+        messages.insert(0, messageModel);
+        _scrolldown();
       });
     }
-    setState(() {
-      _scrolldown();
-    });
   }
 
   List<String> getParamsDateTime(String date, int index) {
@@ -284,53 +290,39 @@ class _IndividualPageState extends State<IndividualPage> {
         children: [
           Expanded(
             child: ListView.builder(
-              // reverse: true,
+              reverse: true,
               shrinkWrap: true,
               controller: _scrollController,
-              itemCount: messages.length,
+              itemCount: messages.length + (isLoading ? 1 : 0),
               itemBuilder: (context, index) {
-                if (isLoading && index == 0) {
-                  return const CircularProgressIndicator();
+                if (isLoading && index == messages.length) {
+                  return Padding(
+                    padding: EdgeInsets.all(2.sp),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
                 }
                 List<String> parts =
                     getParamsDateTime(messages[index].date, index);
-                List<String> partsBefore = getParamsDateTime(
-                    messages[index == 0 ? 0 : index - 1].date, index - 1);
+                List<String> partsNext = getParamsDateTime(
+                    messages[index == messages.length-1 ? messages.length-1 : index + 1].date, index + 1);
                 String time = parts[0];
                 String day = parts[1];
 
-                String dayBefore = partsBefore[1];
+                String dayBefore = partsNext[1];
                 if (messages[index].userSend == widget.currentId) {
-                  return GestureDetector(
-                    onLongPress: () {
-                      showMenu(
-                        context: context,
-                        position: const RelativeRect.fromLTRB(0, 0, 0, 0),
-                        items: [
-                          PopupMenuItem(
-                            child: GestureDetector(
-                              onTap: () {
-                                // deleteCard(index);
-                                Navigator.pop(context); // Ẩn pop-up menu
-                              },
-                              child: const Text("Xóa"),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                    child: Column(
-                      children: [
-                        if (day != dayBefore)
-                          Center(
-                            child: Text(day),
-                          ),
-                        OwnMessageCard(
-                          message: messages[index].message,
-                          time: time,
+                  return Column(
+                    children: [
+                      if (day != dayBefore)
+                        Center(
+                          child: Text(day),
                         ),
-                      ],
-                    ),
+                      OwnMessageCard(
+                        id: messages[index].id!,
+                        message: messages[index].message,
+                        time: time,
+                      ),
+                      
+                    ],
                   );
                 } else {
                   return Column(

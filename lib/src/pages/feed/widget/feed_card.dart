@@ -70,26 +70,16 @@ class _CardFeedState extends State<CardFeed> {
                         height: 60,
                         child: GestureDetector(
                           onTap: () {
-                            if (widget.currentUser != widget.feed.idUser) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (builder) => ProfilePage(
-                                            idUser: widget.feed.idUser,
-                                            isMy: widget.currentUser ==
-                                                    widget.feed.idUser
-                                                ? true
-                                                : false,
-                                          )));
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (builder) => ProfilePage(
-                                            idUser: widget.feed.idUser,
-                                            isMy: true,
-                                          )));
-                            }
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => ProfilePage(
+                                          idUser: widget.feed.idUser,
+                                          isMy: widget.currentUser ==
+                                                  widget.feed.idUser
+                                              ? true
+                                              : false,
+                                        )));
                           },
                           child: CachedNetworkImage(
                             imageUrl: widget.feed.avatar,
@@ -115,29 +105,45 @@ class _CardFeedState extends State<CardFeed> {
                         ),
                       ),
                       const Spacer(),
-                      IconButton(
-                          onPressed: () {
-                            if (widget.currentUser == widget.feed.idUser) {}
-                          },
-                          icon: Icon(
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme!
-                                .primary,
-                            PhosphorIconsFill.dotsThreeOutlineVertical,
-                            size: 20.0,
-                          )),
+                      widget.currentUser != widget.feed.idUser
+                          ? Container()
+                          : PopupMenuButton<String>(
+                              onSelected: (String value) {
+                                if (value == 'update') {
+                                  // Xử lý cập nhật
+                                } else if (value == 'delete') {
+                                  // Xử lý xóa
+                                }
+                              },
+                              itemBuilder: (BuildContext context) =>
+                                  <PopupMenuEntry<String>>[
+                                const PopupMenuItem<String>(
+                                  value: 'update',
+                                  child: Text('Update'),
+                                ),
+                                const PopupMenuItem<String>(
+                                  value: 'delete',
+                                  child: Text('Delete'),
+                                ),
+                              ],
+                              icon: Icon(
+                                PhosphorIconsFill.dotsThreeOutlineVertical,
+                                color: Theme.of(context)
+                                    .buttonTheme
+                                    .colorScheme!
+                                    .primary,
+                                size: 20.0,
+                              ),
+                              offset: Offset(-5.w, 5.h),
+                            )
                     ],
                   ),
                   SizedBox(
                     height: 0.5.h,
                   ),
                   Container(
-                    margin: const EdgeInsets.only(
-                        top: 8,
-                        left: 10,
-                        right:
-                            10), // Điều này sẽ tạo khoảng cách giữa Container và các widget trước đó
+                    margin: const EdgeInsets.only(top: 8, left: 10, right: 10),
+                    // Điều này sẽ tạo khoảng cách giữa Container và các widget trước đó
 
                     child: Align(
                         alignment: Alignment.topLeft,

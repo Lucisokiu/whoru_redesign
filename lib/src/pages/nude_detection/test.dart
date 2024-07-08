@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -23,7 +22,7 @@ class FlutterNudeDetectorTest {
   }) async {
     try {
       final inputImage = InputImage.fromFilePath(path);
-      final modelPath = await _getModel(modelAssetsPath);
+      final modelPath = await getModel(modelAssetsPath);
       final options = LocalLabelerOptions(
         modelPath: modelPath,
         confidenceThreshold: threshold,
@@ -52,7 +51,7 @@ class FlutterNudeDetectorTest {
   }
 
   /// Get path to model .tflite
-  static Future<String> _getModel(String assetPath) async {
+  static Future<String> getModel(String assetPath) async {
     if (Platform.isAndroid) return 'flutter_assets/$assetPath';
 
     final path = '${(await getApplicationSupportDirectory()).path}/$assetPath';

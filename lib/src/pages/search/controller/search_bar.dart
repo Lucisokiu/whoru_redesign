@@ -4,14 +4,10 @@ import 'package:whoru/src/api/user_info.dart';
 import 'package:whoru/src/models/search_model.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:whoru/src/pages/search/widget/buid_suggestions.dart';
 import 'package:whoru/src/pages/search/widget/build_results.dart';
 
-
 class CustomSearch extends SearchDelegate {
-  int currentIndex = 0;
-  bool showBottomNavigationBar = false;
-  List<SearchModel> matchQuery = [];
-
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -34,88 +30,7 @@ class CustomSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    showBottomNavigationBar = false;
-
-    return FutureBuilder<http.Response>(
-        future: getInfoUserByName(query),
-        builder: (contextFutureBuilder, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Theme.of(context).dividerColor,
-                    color: Colors.black,
-                  ),
-                ));
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            if (query.isEmpty) {
-              return Container(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: Center(
-                  child: Text(
-                    'Enter information',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
-              );
-            }
-            if (snapshot.data != null && snapshot.data!.statusCode == 200) {
-              List<dynamic> jsonList = jsonDecode(snapshot.data!.body);
-              matchQuery =
-                  jsonList.map((item) => SearchModel.fromJson(item)).toList();
-            } else {
-              return Container(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: Center(
-                  child: Text(
-                    'No results found.',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
-              );
-            }
-            if (matchQuery.isEmpty) {
-              return Container(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: Center(
-                  child: Text(
-                    'User not found',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ),
-              );
-            }
-
-            return Container(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: ListView.builder(
-                    itemCount: matchQuery.length,
-                    itemBuilder: (context, index) {
-                      SearchModel result = matchQuery[index];
-                      return ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(result.avatar),
-                        ),
-                        title: Text(
-                          result.fullName,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (builder) => ProfilePage(
-                                        idUser: result.idUser,
-                                        isMy: false,
-                                      )));
-                        },
-                      );
-                    }));
-          }
-        });
+    return BuildSuggestionsWidget(query: query, parentContext: context);
   }
 
   @override

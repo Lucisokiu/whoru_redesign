@@ -1,25 +1,23 @@
+buildscript {
+    ext.kotlin_version = '1.9.10' //'1.9.10'
+    repositories {
+        google()
+        mavenCentral()
+    }
 
-
-// buildscript {
-//     ext.kotlin_version = '1.9.10'
-//     repositories {
-//         google()
-//         mavenCentral()
-//     }
-
-//     dependencies {
-//         classpath 'com.android.tools.build:gradle:7.3.0'
-//         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-//         classpath 'com.google.gms:google-services:4.3.15'
-//     }
-// }
-
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.3.15'
+    }
+}
 
 allprojects {
     repositories {
         google()
         mavenCentral()
     }
+
     tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     }

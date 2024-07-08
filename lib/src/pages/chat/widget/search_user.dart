@@ -31,7 +31,7 @@ class SearchUserChat extends SearchDelegate {
   }
 
   void getUser(String name) async {
-    res = await getInfoUserByName(name);
+    res = await getInfoUserByName(name,1);
     id = await getIdUser();
   }
 

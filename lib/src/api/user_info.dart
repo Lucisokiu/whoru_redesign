@@ -11,30 +11,29 @@ import '../utils/shared_pref/iduser.dart';
 Future<bool> createInfoUser(Map map) async {
   var url = Uri.https(baseUrl, '/api/v1/UserInfos/Create');
   String? token = await getToken();
-    var response = await http.post(
-      url,
-      headers: {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'bearer $token',
-      },
-      body: jsonEncode(map),
-    );
-    print(jsonEncode(map));
-    if (response.statusCode == 201) {
-      print('createInfoUser request successful');
-      setIdUser(int.parse(response.body));
-      return true;
-    } else {
-      print(
-          'Failed to make createInfoUser request. Status code: ${response.statusCode}');
-      return false;
-
-    }
+  var response = await http.post(
+    url,
+    headers: {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'bearer $token',
+    },
+    body: jsonEncode(map),
+  );
+  print(jsonEncode(map));
+  if (response.statusCode == 201) {
+    print('createInfoUser request successful');
+    setIdUser(int.parse(response.body));
+    return true;
+  } else {
+    print(
+        'Failed to make createInfoUser request. Status code: ${response.statusCode}');
+    return false;
+  }
 }
 
 Future<void> updateInfoUser(Map map) async {
-  var url = Uri.https(baseUrl,'/api/v1/UserInfos/UpdateInfo');
+  var url = Uri.https(baseUrl, '/api/v1/UserInfos/UpdateInfo');
   String? token = await getToken();
 
   try {
@@ -59,12 +58,10 @@ Future<void> updateInfoUser(Map map) async {
   }
 }
 
-Future<http.Response> getInfoUserByName(String name) async {
+Future<http.Response> getInfoUserByName(String name, int page) async {
   var url = Uri.https(baseUrl, '/api/v1/UserInfos/SearchUser');
   String? token = await getToken();
-
-  name = '"$name"';
-  print("name $name");
+  final body = jsonEncode({"keyword": "$name", "page": page});
   var response = await http.post(
     url,
     headers: {
@@ -72,10 +69,8 @@ Future<http.Response> getInfoUserByName(String name) async {
       'Accept': 'application/json',
       'Authorization': 'bearer $token',
     },
-    body: name,
+    body: body,
   );
-  print('getInfoUserByName ${json.encode(response.body)}');
-  print('getInfoUserByName ${response.statusCode}');
   return response;
 }
 
@@ -96,11 +91,11 @@ Future<UserModel?> getInfoUserById(int id) async {
     Map<dynamic, dynamic> jsonData = jsonDecode(response.body);
     return UserModel.fromJson(jsonData);
   } else {
-    print('Failed to make getInfoUserById request. Status code: ${response.statusCode}');
+    print(
+        'Failed to make getInfoUserById request. Status code: ${response.statusCode}');
     return null;
   }
 }
-
 
 Future<void> updateAvatar({
   required File? imageFile,
@@ -123,11 +118,11 @@ Future<void> updateAvatar({
     request.headers.addAll(headers);
     // Thêm ảnh vào FormData
     if (imageFile != null) {
-        var file = await http.MultipartFile.fromPath(
-          'file',
-          imageFile.path,
-        );
-        request.files.add(file);
+      var file = await http.MultipartFile.fromPath(
+        'file',
+        imageFile.path,
+      );
+      request.files.add(file);
     }
 
     // Gửi request và nhận response
@@ -185,4 +180,3 @@ Future<void> updateBackground({
     print('Failed with status $e');
   }
 }
-

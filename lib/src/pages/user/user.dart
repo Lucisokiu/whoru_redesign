@@ -274,11 +274,11 @@ Container(
                   IconButton(
                     icon: const Icon(Icons.arrow_forward),
                     onPressed: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (builder) =>
-                        //             const NudeDetectScreen(),),);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) =>
+                                    const NudeDetectScreen(),),);
                     },
                   )
                 ],

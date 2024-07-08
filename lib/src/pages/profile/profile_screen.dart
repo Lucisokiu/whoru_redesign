@@ -114,7 +114,7 @@ class _ProfilePageState extends State<ProfilePage>
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return [
                     SliverAppBar(
-                      expandedHeight: 60.h,
+                      expandedHeight: 65.h,
                       pinned: true,
                       floating: true,
                       centerTitle: true,

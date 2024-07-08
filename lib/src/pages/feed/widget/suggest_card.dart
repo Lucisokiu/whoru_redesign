@@ -17,9 +17,10 @@ class _SuggestionCardState extends State<SuggestionCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 25.h,
       padding: const EdgeInsets.only(
           left: 16.0, right: 16.0, bottom: 10.0, top: 16.0),
-      color: Theme.of(context).scaffoldBackgroundColor,
+      // color: Theme.of(context).scaffoldBackgroundColor,
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).cardTheme.color,
@@ -42,6 +43,7 @@ class _SuggestionCardState extends State<SuggestionCard> {
         child: Padding(
           padding: const EdgeInsets.only(bottom: 14.0, left: 15.0, right: 15.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 margin: const EdgeInsets.only(top: 10.0, right: 5.0),

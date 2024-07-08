@@ -24,12 +24,26 @@ class _FeedResultsState extends State<FeedResults> {
   List<FeedModel> items = [];
   int? currentUser;
   int page = 0;
+  bool isLoading = true;
+  bool isNoResults = false;
 
-  getResult(query) async {
-    Response result = await searchPost(query);
+  void getResult(query) async {
+    isLoading = true;
+    print("page $page");
+    Response results = await searchPost(query, ++page);
+    List<dynamic> jsonList = jsonDecode(results.body);
 
-    List<dynamic> jsonList = jsonDecode(result.body);
-    items = jsonList.map((item) => FeedModel.fromJson(item)).toList();
+    final result = jsonList.map((item) => FeedModel.fromJson(item)).toList();
+
+    items.addAll(result);
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+        if (result.isEmpty) {
+          isNoResults = true;
+        }
+      });
+    }
   }
 
   void getCurentUser() async {
@@ -44,86 +58,77 @@ class _FeedResultsState extends State<FeedResults> {
   @override
   void initState() {
     getCurentUser();
+    if (widget.query.isNotEmpty) {
+      getResult(widget.query);
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print("Feed Results");
+    if (widget.query.isEmpty) {
+      return Container(
+        color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
+        child: Center(
+          child: Text(
+            'Enter information',
+            style: Theme.of(widget.parentContext).textTheme.bodyMedium,
+          ),
+        ),
+      );
+    } else if (isLoading) {
+      return Container(
+          color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
+          child: Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Theme.of(widget.parentContext).dividerColor,
+              color: Colors.black,
+            ),
+          ));
+    } else if (items.isEmpty) {
+      return Container(
+        color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
+        child: Center(
+          child: Text(
+            'No results found.',
+            style: Theme.of(widget.parentContext).textTheme.bodyMedium,
+          ),
+        ),
+      );
+    }
 
-    return FutureBuilder<http.Response>(
-        future: searchPost(widget.query), // search Post
-        builder: (contextFutureBuilder, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-                color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor:
-                        Theme.of(widget.parentContext).dividerColor,
-                    color: Colors.black,
-                  ),
-                ));
-          } else if (snapshot.hasError) {
-            return Container(
-              color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
-              child: Center(
-                child: Text(
-                  'Error: ${snapshot.error}',
-                  style: Theme.of(widget.parentContext).textTheme.bodyMedium,
-                ),
-              ),
-            );
-          } else {
-            if (widget.query.isEmpty) {
-              return Container(
-                color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
-                child: Center(
-                  child: Text(
-                    'Enter information',
-                    style: Theme.of(widget.parentContext).textTheme.bodyMedium,
-                  ),
-                ),
-              );
-            } else if (snapshot.data != null &&
-                snapshot.data!.statusCode == 200) {
-              List<dynamic> jsonList = jsonDecode(snapshot.data!.body);
-              items = jsonList.map((item) => FeedModel.fromJson(item)).toList();
-            } else {
-              return Container(
-                color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
-                child: Center(
-                  child: Text(
-                    'No results found.',
-                    style: Theme.of(widget.parentContext).textTheme.bodyMedium,
-                  ),
-                ),
-              );
+    return Container(
+      color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
+      child: ListView.builder(
+        addAutomaticKeepAlives: true,
+        itemCount: items.length + 1,
+        itemBuilder: (contextListView, index) {
+          if (index == items.length) {
+            if (!isNoResults) {
+              getResult(widget.query);
             }
 
-            if (items.isEmpty) {
-              return Container(
-                color: Theme.of(widget.parentContext).scaffoldBackgroundColor,
-                child: Center(
-                  child: Text(
-                    'No results found.',
-                    style: Theme.of(widget.parentContext).textTheme.bodyMedium,
-                  ),
-                ),
-              );
-            }
-
-            return ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return CardFeedSearch(
-                  parentContext: widget.parentContext,
-                  feed: items[index],
-                  currentUser: currentUser!,
-                );
-              },
-            );
+            return isNoResults
+                ? Container()
+                : Container(
+                    color:
+                        Theme.of(widget.parentContext).scaffoldBackgroundColor,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor:
+                            Theme.of(widget.parentContext).dividerColor,
+                        color: Colors.black,
+                      ),
+                    ));
           }
-        });
+
+          return CardFeedSearch(
+            parentContext: widget.parentContext,
+            feed: items[index],
+            currentUser: currentUser!,
+          );
+        },
+      ),
+    );
   }
 }

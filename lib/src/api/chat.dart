@@ -25,6 +25,7 @@ Future<List<ChatModel>> getAllUserChat(int page) async {
       List<dynamic> decodedData = jsonDecode(response.body);
       List<ChatModel> chatList =
           decodedData.map((data) => ChatModel.fromJson(data)).toList();
+      print(decodedData);
       return chatList;
     } else {
       print("Error ${response.statusCode}");
@@ -42,7 +43,7 @@ Future<List<MessageModel>> getAllChat(int idUser, int page) async {
     var url = Uri.https(baseUrl, '/api/v1/Chats/GetAllChat');
     String? token = await getToken();
     final body = jsonEncode({"idUser": idUser, "page": page});
-
+    print(page);
     var response = await http.post(
       url,
       headers: {
@@ -52,10 +53,11 @@ Future<List<MessageModel>> getAllChat(int idUser, int page) async {
       },
       body: body,
     );
-
     if (response.statusCode == 200) {
       // Decode JSON and map it to List<FeedModel>
       List<dynamic> decodedData = jsonDecode(response.body);
+      print(decodedData);
+
       List<MessageModel> chatList =
           decodedData.map((data) => MessageModel.fromJson(data)).toList();
       return chatList;

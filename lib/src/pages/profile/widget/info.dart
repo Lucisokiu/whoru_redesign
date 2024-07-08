@@ -18,8 +18,8 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
         Align(
           alignment: Alignment.topCenter,
           child: Container(
-            height: 150,
-            width: 150,
+            height: 15.h,
+            width: 40.w,
             margin: EdgeInsets.only(top: screenHeight * 0.22),
             decoration: const BoxDecoration(
                 shape: BoxShape.circle,

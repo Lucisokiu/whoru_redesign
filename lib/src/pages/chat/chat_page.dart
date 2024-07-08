@@ -8,6 +8,7 @@ import 'package:whoru/src/models/chat_model.dart';
 import 'package:whoru/src/pages/chat/screens/select_contact.dart';
 import 'package:whoru/src/pages/chat/screens/wait_list_message_screen.dart';
 import 'package:whoru/src/pages/chat/widget/custom_card.dart';
+import 'package:whoru/src/pages/feed/widget/skeleton_loading.dart';
 
 import '../../socket/web_socket_service.dart';
 
@@ -24,26 +25,37 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatModel> chatmodels = [];
   // final NotificationController _notificationController =
   //     NotificationController();
-  int page = 0;
+  int page = 1;
   WebSocketService webSocketService = WebSocketService();
   late StreamSubscription<dynamic> messageSubscription;
-  Future<void> getUser() async {
-    chatmodels = await getAllUserChat(++page);
+  Future<void> getUserChat() async {
+    print("calling api");
+    final result = await getAllUserChat(page);
     if (mounted) {
-      setState(() {});
+      setState(() {
+        chatmodels = result;
+      });
     }
   }
 
   @override
   void initState() {
-    getUser();
+    getUserChat();
     super.initState();
     listenSocket();
   }
 
   void listenSocket() {
     messageSubscription = webSocketService.onMessage.listen((event) {
-      getUser();
+      Map<dynamic, dynamic> jsonData = event;
+      print(event);
+      int type = jsonData['type'];
+      if (type == 1) {
+        String? target = jsonData['target'];
+        if (target == "ReceiveMessage" || target == 'UpdateMessage') {
+          getUserChat();
+        }
+      }
     });
   }
 
@@ -111,13 +123,15 @@ class _ChatPageState extends State<ChatPage> {
           color: Colors.white,
         ),
       ),
-      body: ListView.builder(
-        itemCount: chatmodels.length,
-        itemBuilder: (contex, index) => CustomCard(
-          chatModel: chatmodels[index],
-          currentId: widget.currentId,
-        ),
-      ),
+      body: chatmodels.isEmpty
+          ? const MySkeletonLoadingWidget()
+          : ListView.builder(
+              itemCount: chatmodels.length,
+              itemBuilder: (contex, index) => CustomCard(
+                chatModel: chatmodels[index],
+                currentId: widget.currentId,
+              ),
+            ),
     );
   }
 }

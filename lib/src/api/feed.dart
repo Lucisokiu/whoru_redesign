@@ -11,7 +11,6 @@ Future<List<FeedModel>?> getAllPost(int page) async {
     var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPost');
     String? token = await getToken();
     print(url);
-    print("Page $page");
 
     var response = await http.post(
       url,
@@ -80,7 +79,7 @@ Future<void> postApiWithImages({
     );
 
     request.fields['Status'] = content;
-        request.fields['State'] = status.toString();
+    request.fields['State'] = status.toString();
 
     request.headers.addAll(headers);
     // Thêm ảnh vào FormData
@@ -138,11 +137,11 @@ Future<List<FeedModel>?> getAllPostById(int id, int page) async {
   return [];
 }
 
-Future<Response> searchPost(String title) async {
+Future<Response> searchPost(String title, int page) async {
   var url = Uri.https(baseUrl, '/api/v1/Feeds/SearchPost');
   String? token = await getToken();
   print(url);
-  final formattedTitle = '"$title"';
+  final body = jsonEncode({"keyword": title, "page": page});
 
   var response = await http.post(
     url,
@@ -151,7 +150,7 @@ Future<Response> searchPost(String title) async {
       'Accept': 'application/json',
       'Authorization': 'bearer $token',
     },
-    body: formattedTitle,
+    body: body,
   );
 
   if (response.statusCode == 200) {

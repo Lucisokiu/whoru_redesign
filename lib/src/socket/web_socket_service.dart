@@ -64,9 +64,9 @@ class WebSocketService {
       "target": target,
       "arguments": arguments,
     };
-    print(messageData);
     final message = jsonEncode(messageData) + String.fromCharCode(0x1E);
     _channel.sink.add(message);
+    _controller.add({'type': 1, 'target': 'UpdateMessage'});
   }
 
   void close() {
@@ -131,6 +131,7 @@ class WebSocketService {
 
   void listenCall(BuildContext context, int? id) {
     messageSubscription = onMessage.listen((message) {
+
       if (message['type'] == 1 && message['target'] == 'ReceiveSignal') {
         List<dynamic> arguments = message['arguments'];
         if (arguments[0] is int) {
