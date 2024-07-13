@@ -27,11 +27,11 @@ class _NudeDetectScreenState extends State<NudeDetectScreen> {
     try {
       final XFile? image = await picker.pickImage(
           source: ImageSource
-              .gallery); // You can also use ImageSource.camera for the camera
+              .gallery);
       if (image != null) {
         _image = File(image.path);
         final hasNudity =
-            await FlutterNudeDetectorTest.detect(path: image.path);
+            await FlutterNudeDetector.detect(path: image.path);
         print(hasNudity);
         setState(() {
           isNude = hasNudity.toString();

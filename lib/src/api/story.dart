@@ -41,12 +41,9 @@ Future<void> postStory({
 }
 
 Future<List<Story>> getStoryByUserId(int page) async {
-    try {
     var url = Uri.https(baseUrl, '/api/v1/Storys/GetStoryByUserId');
     String? token = await getToken();
     print(url);
-    print("Page $page");
-
     var response = await http.post(
       url,
       headers: {
@@ -66,9 +63,4 @@ Future<List<Story>> getStoryByUserId(int page) async {
       print("fail call api getStory with page $page");
       return [];
     }
-  } catch (e) {
-    print("fail call api getStory $e");
-
-    return [];
-  }
 }

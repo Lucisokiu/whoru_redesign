@@ -4,6 +4,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/story.dart';
+import 'package:whoru/src/pages/navigation/navigation.dart';
+
+import '../../nude_detection/test.dart';
 
 class ImageUploadScreen extends StatefulWidget {
   const ImageUploadScreen({super.key});
@@ -15,6 +18,7 @@ class ImageUploadScreen extends StatefulWidget {
 class ImageUploadScreenState extends State<ImageUploadScreen> {
   File? _image;
   bool isPosting = false;
+
   Future<void> _pickImage(ImageSource source) async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: source);
@@ -59,9 +63,33 @@ class ImageUploadScreenState extends State<ImageUploadScreen> {
     );
   }
 
-  void _uploadImage() {
+  void _uploadImage() async {
     if (_image != null) {
-      postStory(imageFile: _image!).then((value) => Navigator.pop(context));
+      final hasNudity = await FlutterNudeDetector.detect(path: _image!.path);
+      if (!hasNudity) {
+        setState(() {
+          isPosting = true;
+        });
+        postStory(imageFile: _image!).then(
+          (value) => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (builder) => Navigation(),
+            ),
+          ),
+        );
+      } else {
+        setState(() {
+          isPosting = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+
+          const SnackBar(
+            content: Text(
+                'Selected images can be nudity. Please select different images.'),
+          ),
+        );
+      }
     } else {
       print('No image to upload.');
     }
@@ -73,14 +101,14 @@ class ImageUploadScreenState extends State<ImageUploadScreen> {
       appBar: AppBar(
         title: const Text('Upload Image'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.cloud_upload),
-            onPressed: () {
-              setState(() {
-                isPosting = true;
-              });
-              _uploadImage();
-            },
+          Visibility(
+            visible: _image != null,
+            child: IconButton(
+              icon: const Icon(Icons.cloud_upload),
+              onPressed: () {
+                _uploadImage();
+              },
+            ),
           ),
         ],
       ),
@@ -97,7 +125,13 @@ class ImageUploadScreenState extends State<ImageUploadScreen> {
                           PhosphorIconsThin.image,
                           size: 30.h,
                         ))
-                    : Image.file(_image!),
+                    : SizedBox(
+                        height: 50.h,
+                        width: 100.w,
+                        child: Image.file(
+                          _image!,
+                          fit: BoxFit.fill,
+                        )),
               ],
             ),
           ),

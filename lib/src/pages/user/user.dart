@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
+import 'package:whoru/src/pages/app.dart';
 import 'package:whoru/src/pages/login/login_screen.dart';
 import 'package:whoru/src/pages/notification/controller/notifications_controller.dart';
 import 'package:whoru/src/pages/nude_detection/nude_screen.dart';
@@ -80,59 +82,77 @@ class _UserPageState extends State<UserPage> {
                 ),
               ),
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'My account',
-                      style: TextStyle(fontSize: 18),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: IconButton(
+                    icon: Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CachedNetworkImage(
+                          imageUrl: localUser.avt,
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          imageBuilder: (context, imageProvider) => Padding(
+                            padding: EdgeInsets.only(right: 2.w),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  backgroundImage: imageProvider,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Text(
+                          localUser.fullName,
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        const Spacer(),
+                        const Icon(Icons.arrow_forward_ios_outlined),
+                      ],
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios_outlined),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) =>
-                                    const ProfilePage(isMy: true)));
-                      },
-                    )
-                  ],
-                ),
-              ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (builder) => const ProfilePage(isMy: true),
+                        ),
+                      );
+                    },
+                  )),
             ),
           ),
           Container(
             margin:
                 EdgeInsets.only(right: 6.w, left: 6.w, top: 2.w, bottom: 2.w),
-            child: Row(
-              children: [
-                Text(
-                  AppLocalization.of(context).getTranslatedValues('thememode'),
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontFamily: "Inter",
-                      fontWeight: FontWeight.w500),
-                ),
-                const Spacer(),
-                IconButton(
-                  icon: Icon(
+            child: IconButton(
+              icon: Row(
+                children: [
+                  Text(
+                    AppLocalization.of(context)
+                        .getTranslatedValues('thememode'),
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: "Inter",
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const Spacer(),
+                  Icon(
                     darkMode
                         ? PhosphorIconsFill.moonStars
                         : PhosphorIconsFill.sunDim,
                     size: 25.sp,
                     color: darkMode ? Colors.blue : Colors.amber,
                   ),
-                  onPressed: () {
-                    setState(() {
-                      darkMode = !darkMode;
-                      BlocProvider.of<ThemeController>(context)
-                          .toggleDarkMode();
-                    });
-                  },
-                ),
-              ],
+                ],
+              ),
+              onPressed: () {
+                setState(() {
+                  darkMode = !darkMode;
+                  BlocProvider.of<ThemeController>(context).toggleDarkMode();
+                });
+              },
             ),
           ),
           Container(
@@ -140,12 +160,15 @@ class _UserPageState extends State<UserPage> {
                 EdgeInsets.only(right: 6.w, left: 6.w, top: 2.w, bottom: 2.w),
             child: Row(
               children: [
-                Text(
-                  AppLocalization.of(context).getTranslatedValues('language'),
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontFamily: "Inter",
-                      fontWeight: FontWeight.w500),
+                IconButton(
+                  icon: Text(
+                    AppLocalization.of(context).getTranslatedValues('language'),
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: "Inter",
+                        fontWeight: FontWeight.w500),
+                  ),
+                  onPressed: (){},
                 ),
                 const Spacer(),
                 DropdownButton<String>(
@@ -168,123 +191,124 @@ class _UserPageState extends State<UserPage> {
           Container(
             margin:
                 EdgeInsets.only(right: 6.w, left: 6.w, top: 2.w, bottom: 2.w),
-            child: Row(
-              children: [
-                const Text(
-                  "Notification",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: "Inter",
-                      fontWeight: FontWeight.w500),
-                ),
-                const Spacer(),
-                IconButton(
-                  icon: Icon(
+            child: IconButton(
+              icon: Row(
+                children: [
+                  const Text(
+                    "Notification",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontFamily: "Inter",
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const Spacer(),
+                  Icon(
                     isNoti
                         ? PhosphorIconsFill.bellSimpleRinging
                         : PhosphorIconsFill.bellZ,
                     size: 25.sp,
                   ),
-                  onPressed: () async {
-                    isNoti = await NotificationsController.updateNoti();
-                    if (mounted) setState(() {});
-                  },
-                ),
-              ],
+                ],
+              ),
+              onPressed: () async {
+                isNoti = await NotificationsController.updateNoti();
+                if (mounted) setState(() {});
+              },
             ),
           ),
           Container(
             margin:
                 EdgeInsets.only(right: 6.w, left: 6.w, top: 2.w, bottom: 2.w),
-            child: Row(
-              children: [
-                Text(
-                  AppLocalization.of(context).getTranslatedValues('logout'),
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontFamily: "Inter",
-                      fontWeight: FontWeight.w500),
-                ),
-                const Spacer(),
-                IconButton(
-                  icon: Icon(
+            child: IconButton(
+              icon: Row(
+                children: [
+                  Text(
+                    AppLocalization.of(context).getTranslatedValues('logout'),
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontFamily: "Inter",
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const Spacer(),
+                  Icon(
                     Icons.logout_outlined,
                     size: 25.sp,
                   ),
-                  onPressed: () async {
-                    deleteToken();
-                    deleteIdUser();
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (builder) => const LoginScreen()),
-                        (route) => false);
-                  },
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(16),
-            child: TextButton.icon(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.color_lens,
-                size: 24.0,
-              ),
-              label: Row(
-                children: [
-                  const Text(
-                    'Face Dectection (Test)',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.arrow_forward),
-                    onPressed: () {
-                      setState(() {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) =>
-                                    const RegistrationScreen()));
-                      });
-                    },
-                  )
                 ],
               ),
+              onPressed: () async {
+                deleteToken();
+                deleteIdUser();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (builder) => const LoginScreen()),
+                    (route) => false);
+              },
             ),
           ),
+          // Container(
+          //   margin: const EdgeInsets.all(16),
+          //   child: TextButton.icon(
+          //     onPressed: () {},
+          //     icon: const Icon(
+          //       Icons.color_lens,
+          //       size: 24.0,
+          //     ),
+          //     label: Row(
+          //       children: [
+          //         const Text(
+          //           'Face Dectection (Test)',
+          //           style: TextStyle(fontSize: 18),
+          //         ),
+          //         const Spacer(),
+          //         IconButton(
+          //           icon: const Icon(Icons.arrow_forward),
+          //           onPressed: () {
+          //             setState(() {
+          //               Navigator.push(
+          //                   context,
+          //                   MaterialPageRoute(
+          //                       builder: (builder) =>
+          //                           const RegistrationScreen()));
+          //             });
+          //           },
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
 
-Container(
-            margin: const EdgeInsets.all(16),
-            child: TextButton.icon(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.color_lens,
-                size: 24.0,
-              ),
-              label: Row(
-                children: [
-                  const Text(
-                    'Nude Dectection (Test)',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.arrow_forward),
-                    onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) =>
-                                    const NudeDetectScreen(),),);
-                    },
-                  )
-                ],
-              ),
-            ),
-          ),
+          // Container(
+          //   margin: const EdgeInsets.all(16),
+          //   child: TextButton.icon(
+          //     onPressed: () {},
+          //     icon: const Icon(
+          //       Icons.color_lens,
+          //       size: 24.0,
+          //     ),
+          //     label: Row(
+          //       children: [
+          //         const Text(
+          //           'Nude Dectection (Test)',
+          //           style: TextStyle(fontSize: 18),
+          //         ),
+          //         const Spacer(),
+          //         IconButton(
+          //           icon: const Icon(Icons.arrow_forward),
+          //           onPressed: () {
+          //             Navigator.push(
+          //               context,
+          //               MaterialPageRoute(
+          //                 builder: (builder) => const NudeDetectScreen(),
+          //               ),
+          //             );
+          //           },
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
 
           //cân nhắc đổi style
           // IOSSettingsButton(

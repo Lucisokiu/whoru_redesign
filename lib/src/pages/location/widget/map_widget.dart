@@ -1,14 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:whoru/src/api/user_info.dart';
 import 'package:whoru/src/pages/app.dart';
 import 'package:whoru/src/pages/location/widget/customize_marker.dart';
 import 'package:whoru/src/services/location_service.dart';
 import 'package:whoru/src/utils/shared_pref/iduser.dart';
 
+import '../../../models/location_models.dart';
 import '../../../models/user_model.dart';
+import '../../../socket/web_socket_service.dart';
 import 'card_user.dart';
 
 class MapWidget extends StatefulWidget {
@@ -21,21 +26,14 @@ class MapWidget extends StatefulWidget {
 }
 
 class _MapWidgetState extends State<MapWidget> {
-  // UserModel user = UserModel(
-  //   id: 1,
-  //   fullName: 'LuciSoKiu',
-  //   avt: 'https://avatars.githubusercontent.com/u/95356357?v=4',
-  //   background: 'https://avatars.githubusercontent.com/u/95356357?v=4',
-  //   description: 'A software developer',
-  //   work: 'Software Company',
-  //   study: 'University XYZ',
-  //   followerCount: 1,
-  //   followingCount: 1,
-  //   isFollow: true,
-  // );
   LocationData? _userLocation;
   LocationService locationService = LocationService();
   UserModel? user;
+  List<UserLocation> listLocation = [];
+  late StreamSubscription<dynamic> messageSubscription;
+  WebSocketService webSocketService = WebSocketService();
+  String? note;
+
 
   void getUser() async {
     int? id = await getIdUser();
@@ -66,11 +64,45 @@ class _MapWidgetState extends State<MapWidget> {
   void initialize() async {
     await locationService.getID();
     locationService.sendLocation();
-    locationService.receivedLocation();
+    print("listLocation.length ${listLocation.length}");
     currentLocation();
     getUser();
+    getListUser();
+    note = await _loadNote();
+    print(note);
+    setState(() {
+
+    });
   }
 
+  void getListUser() {
+    messageSubscription = webSocketService.onMessage.listen((message) {
+      if (message['type'] == 1 && message['target'] == 'Return_List_User') {
+        List<dynamic> arguments = message['arguments'];
+        listLocation.clear();
+        if (arguments[0] == null) {
+          return;
+        } else {
+          for (var argument in arguments) {
+            for (var arg in argument) {
+              print(arg);
+              UserLocation location = UserLocation.fromJson(arg);
+              print(location.note);
+              if (mounted) {
+                setState(() {
+                  listLocation.add(location);
+                });
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+  Future<String?> _loadNote() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+     return prefs.getString('note');
+  }
   @override
   void initState() {
     initialize();
@@ -84,6 +116,7 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print("listLocation.length ${listLocation.length}");
     return Container(
       child: _userLocation == null && user == null
           ? const Center(
@@ -109,24 +142,28 @@ class _MapWidgetState extends State<MapWidget> {
                         'id': 'mapbox.satellite'
                       },
                     ),
-                    // CustomizeMarker(
-                    //   latLng:
-                    //       const LatLng(10.849577683349953, 106.77095389939772),
-                    //   user: user!,
-                    // ),
-                    // CustomizeMarker(
-                    //   latLng:
-                    //       const LatLng(10.851011968630182, 106.76874281365166),
-                    //   user: user!,
-                    // ),
+                    for (var list in listLocation)
+                      GestureDetector(
+                        onTap: () {
+                          cardUser(context, null, list);
+                        },
+                        child: CustomizeMarker(
+                          latLng: LatLng(list.latitude, list.longitude),
+                          userId: list.userId,
+                          avt: list.avt,
+                          note: list.note,
+                        ),
+                      ),
                     GestureDetector(
                       onTap: () {
-                        cardUser(context, localUser);
+                        cardUser(context, localUser,null);
                       },
                       child: CustomizeMarker(
                         latLng: LatLng(_userLocation!.latitude!,
                             _userLocation!.longitude!),
-                        user: localUser,
+                        userId: localUser.id,
+                        avt: localUser.avt,
+                        note: note,
                       ),
                     ),
                   ],

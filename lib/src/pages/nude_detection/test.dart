@@ -7,7 +7,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 /// Detect nudity in images
-class FlutterNudeDetectorTest {
+class FlutterNudeDetector {
   static const _threshold = 0.7;
   static const _modelPath = 'assets/ml_models/nude.tflite';
 
@@ -31,13 +31,18 @@ class FlutterNudeDetectorTest {
       final imageLabeler = ImageLabeler(options: options);
       final imageLabels = await imageLabeler.processImage(inputImage);
       if (imageLabels.isEmpty) return false;
-
       final label = imageLabels.first;
       switch (label.index) {
         case 0:
+          print("check0 : ${label.confidence}");
+          print("check : ${label.confidence < threshold}");
           return label.confidence < threshold;
         case 1:
+          print("check1 : ${label.confidence}");
+          print("check : ${label.confidence > threshold}");
+
           return label.confidence > threshold;
+
         default:
           return false;
       }
@@ -67,6 +72,7 @@ class FlutterNudeDetectorTest {
         ),
       );
     }
+    print("check");
 
     return file.path;
   }

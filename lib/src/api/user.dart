@@ -62,7 +62,7 @@ Future<void> updateAccount(Map map) async {
     );
 
     if (response.statusCode == 200) {
-      print('Follow request successful');
+      print('updateAccount request successful');
     } else {
       print(
           'Failed to make updateAccount request. Status code: ${response.statusCode}');

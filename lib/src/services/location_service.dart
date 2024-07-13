@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:location/location.dart';
 import 'package:whoru/src/models/location_models.dart';
+import 'package:whoru/src/pages/app.dart';
 import 'package:whoru/src/utils/shared_pref/iduser.dart';
 
 import '../socket/web_socket_service.dart';
@@ -24,14 +25,16 @@ class LocationService {
         if (permissionStatus == PermissionStatus.granted) {
           location.onLocationChanged.listen(
             (locationData) {
-              // webSocketService.sendMessageSocket("SendLocation",
-              //     [idUser, locationData.longitude!, locationData.latitude!]);
+              webSocketService.sendMessageSocket("SendLocation",
+                  [idUser, locationData.longitude!, locationData.latitude!]);
 
               _locationController.add(
                 UserLocation(
                   latitude: locationData.latitude!,
                   longitude: locationData.longitude!,
-                  userId: idUser,
+                  userId: localIdUser,
+                  avt: localUser.avt,
+                    name: localUser.fullName
                 ),
               );
             },
@@ -44,9 +47,9 @@ class LocationService {
     );
   }
 
-  void receivedLocation() {
-    List a = webSocketService.listenLocation(idUser!);
-    print(a);
+  List<UserLocation> receivedListLocation() {
+    final a =webSocketService.listenLocation();
+    return webSocketService.listenLocation();
   }
 
   getID() async {

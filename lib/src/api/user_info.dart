@@ -48,10 +48,10 @@ Future<void> updateInfoUser(Map map) async {
     );
 
     if (response.statusCode == 200) {
-      print('Follow request successful');
+      print('updateInfoUser request successful');
     } else {
       print(
-          'Failed to make Follow request. Status code: ${response.statusCode}');
+          'Failed to make updateInfoUser request. Status code: ${response.statusCode}');
     }
   } catch (e) {
     print('Error during API call: $e');

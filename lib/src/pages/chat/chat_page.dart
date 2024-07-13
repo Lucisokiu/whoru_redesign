@@ -25,15 +25,14 @@ class _ChatPageState extends State<ChatPage> {
   List<ChatModel> chatmodels = [];
   // final NotificationController _notificationController =
   //     NotificationController();
-  int page = 1;
+  int page = 0;
   WebSocketService webSocketService = WebSocketService();
   late StreamSubscription<dynamic> messageSubscription;
   Future<void> getUserChat() async {
-    print("calling api");
-    final result = await getAllUserChat(page);
+    final result = await getAllUserChat(++page);
     if (mounted) {
       setState(() {
-        chatmodels = result;
+        chatmodels.addAll(result);
       });
     }
   }
@@ -49,10 +48,9 @@ class _ChatPageState extends State<ChatPage> {
     messageSubscription = webSocketService.onMessage.listen((event) {
       Map<dynamic, dynamic> jsonData = event;
       print(event);
-      int type = jsonData['type'];
-      if (type == 1) {
+      if (jsonData['type'] == 1) {
         String? target = jsonData['target'];
-        if (target == "ReceiveMessage" || target == 'UpdateMessage') {
+        if (target == "ReceiveMessage" || target == 'SendMessage') {
           getUserChat();
         }
       }

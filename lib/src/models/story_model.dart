@@ -1,23 +1,25 @@
 class Story {
   int idUser;
-  String userName;
+  int idStory;
+  String name;
   String avatar;
   String imageUrl;
-
   String date;
 
   Story({
     required this.idUser,
+    required this.idStory,
     required this.date,
     required this.avatar,
     required this.imageUrl,
-    required this.userName,
+    required this.name,
   });
 
   factory Story.fromJson(Map<String, dynamic> json) {
     return Story(
-      idUser: json['id'],
-      userName: json['name'],
+      idUser: json['idUser'],
+      idStory: json['idStory'],
+      name: json['name'],
       avatar: json['avatar'],
       imageUrl: json['imageUrl'],
       date: json['date'],

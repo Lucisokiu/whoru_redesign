@@ -17,7 +17,6 @@ Future<List<Suggestion>> getListSuggestionsList() async {
     },
   );
 
-  print(response.body);
   if (response.statusCode == 200) {
     print('getListSuggestionsList request successful');
     List<dynamic> decodedData = jsonDecode(response.body);

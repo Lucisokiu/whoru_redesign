@@ -4,7 +4,7 @@ import 'package:whoru/src/utils/shared_pref/token.dart';
 import 'package:whoru/src/utils/url.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<CommentModel>?> getCommentByIdFeed(int idFeed, int page) async {
+Future<List<CommentModel>> getCommentByIdFeed(int idFeed, int page) async {
   try {
     var url = Uri.https(baseUrl, '/api/v1/Comments/GetAllCommentByFeedId');
     print(url);
@@ -35,7 +35,7 @@ Future<List<CommentModel>?> getCommentByIdFeed(int idFeed, int page) async {
   } catch (e) {
     print("false to call API: $e");
   }
-  return null;
+  return [];
 }
 
 Future<void> postComment(idFeed, content) async {

@@ -68,3 +68,36 @@ Future<List<MessageModel>> getAllChat(int idUser, int page) async {
     return [];
   }
 }
+
+Future<List<ChatModel>> getAllWaitingUser(int page) async {
+  try {
+    var url = Uri.https(baseUrl, '/api/v1/Chats/GetAllWaitingUser');
+    String? token = await getToken();
+
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'bearer $token',
+      },
+      body: '$page',
+    );
+
+    if (response.statusCode == 200) {
+      // Decode JSON and map it to List<FeedModel>
+      List<dynamic> decodedData = jsonDecode(response.body);
+      List<ChatModel> chatList =
+          decodedData.map((data) => ChatModel.fromJson(data)).toList();
+      print(decodedData);
+      return chatList;
+    } else {
+      print("Error ${response.statusCode}");
+
+      return [];
+    }
+  } catch (e) {
+    print("Error $e");
+    return [];
+  }
+}

@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:whoru/src/pages/navigation/navigation.dart';
+import 'package:whoru/src/pages/profile/profile_screen.dart';
+
+import '../../../api/follow.dart';
 
 class SuggestionCard extends StatefulWidget {
   final int id;
@@ -14,10 +18,11 @@ class SuggestionCard extends StatefulWidget {
 }
 
 class _SuggestionCardState extends State<SuggestionCard> {
+  bool isFollow = false;
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 25.h,
+      height: 22.h,
       padding: const EdgeInsets.only(
           left: 16.0, right: 16.0, bottom: 10.0, top: 16.0),
       // color: Theme.of(context).scaffoldBackgroundColor,
@@ -51,7 +56,15 @@ class _SuggestionCardState extends State<SuggestionCard> {
                 width: 60,
                 height: 60,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (builder) => ProfilePage(
+                                  isMy: false,
+                                  idUser: widget.id,
+                                )));
+                  },
                   child: CachedNetworkImage(
                     imageUrl: widget.avt,
                     placeholder: (context, url) =>
@@ -76,18 +89,31 @@ class _SuggestionCardState extends State<SuggestionCard> {
               ),
               ElevatedButton(
                 style: Theme.of(context).iconButtonTheme.style,
-                onPressed: () {},
+                onPressed: () {
+                  if (isFollow) {
+                    unFollowUser(widget.id);
+                    setState(() {
+                      isFollow = !isFollow;
+                    });
+                  } else {
+                    followUser(widget.id);
+                    setState(() {
+                      isFollow = !isFollow;
+                    });
+                  }
+                },
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
-                      Icons.person_add,
+                      isFollow ? Icons.person_off : Icons.person_add,
                       color: Theme.of(context).iconTheme.color,
                     ),
                     SizedBox(
                       width: 1.w,
                     ),
                     Text(
-                      "Follow",
+                      isFollow ? "Unfollow" : "Follow",
                       style:
                           TextStyle(color: Theme.of(context).iconTheme.color),
                     ),

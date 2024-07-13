@@ -178,43 +178,49 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
         SizedBox(
           height: 2.h,
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Work at: ${user.work}',
-                style: const TextStyle(
-                    fontFamily: "Lato",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.grey),
-              ),
+        Align(
+          alignment: Alignment.topLeft,
+          child: Padding(
+            padding: EdgeInsets.only(left: 5.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  // alignment: Alignment.topLeft,
+                  child: Text(
+                    'Work at: ${user.work}',
+                    style: const TextStyle(
+                        fontFamily: "Lato",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.grey),
+                  ),
+                ),
+                Container(
+                  // alignment: Alignment.topLeft,
+                  child: Text(
+                    'Study at: ${user.study}',
+                    style: const TextStyle(
+                        fontFamily: "Lato",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.grey),
+                  ),
+                ),
+                Container(
+                  // alignment: Alignment.topLeft,
+                  child: Text(
+                    'Description: ${user.description}',
+                    style: const TextStyle(
+                        fontFamily: "Lato",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.grey),
+                  ),
+                ),
+              ],
             ),
-            Container(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Study at: ${user.study}',
-                style: const TextStyle(
-                    fontFamily: "Lato",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.grey),
-              ),
-            ),
-            Container(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Description: ${user.description}',
-                style: const TextStyle(
-                    fontFamily: "Lato",
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.grey),
-              ),
-            ),
-          ],
+          ),
         )
       ]);
     }),

@@ -24,6 +24,7 @@ Future<List<FeedModel>?> getAllPost(int page) async {
 
     if (response.statusCode == 200) {
       List<dynamic> decodedData = jsonDecode(response.body);
+      print('GetAllPost $decodedData');
       List<FeedModel> feedList =
           decodedData.map((data) => FeedModel.fromJson(data)).toList();
       return feedList;
@@ -39,10 +40,10 @@ Future<List<FeedModel>?> getAllPost(int page) async {
 }
 
 Future<void> delete(idPost) async {
-  var url = Uri.https(baseUrl, '/api/Feed/Delete');
+  var url = Uri.https(baseUrl, '/api/v1/Feeds/Delete');
   String? token = await getToken();
 
-  var response = await http.post(
+  var response = await http.delete(
     url,
     headers: {
       'Content-type': 'application/json',
@@ -53,9 +54,9 @@ Future<void> delete(idPost) async {
   );
 
   if (response.statusCode == 200) {
-    print('POST request successful');
+    print('DELETE request successful');
   } else {
-    print('Failed to make POST request. Status code: ${response.statusCode}');
+    print('Failed to make DELETE request. Status code: ${response.statusCode}');
   }
 }
 
@@ -94,6 +95,50 @@ Future<void> postApiWithImages({
     }
     var response = await request.send();
     if (response.statusCode == 201) {
+      print('Success with status ${response.statusCode}');
+    } else {
+      print('Failed with status ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Failed with status $e');
+  }
+}
+
+Future<void> updateApiWithImages({
+  required int id,
+  required List<File> imageFiles,
+  required String content,
+  required int status,
+}) async {
+  try {
+    print("imageFiles ${imageFiles.length}");
+    var url = Uri.https(baseUrl, '/api/v1/Feeds/UpdateFeed');
+    String? token = await getToken();
+    Map<String, String> headers = <String, String>{
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'bearer $token',
+    };
+    // Tạo request
+    var request = http.MultipartRequest(
+      'PUT',
+      url,
+    );
+    request.fields['Id'] = id.toString();
+    request.fields['Status'] = content;
+    request.fields['State'] = status.toString();
+
+    request.headers.addAll(headers);
+    // Thêm ảnh vào FormData
+    for (var imageFile in imageFiles) {
+      var file = await http.MultipartFile.fromPath(
+        'Files',
+        imageFile.path,
+      );
+      request.files.add(file);
+    }
+    var response = await request.send();
+    if (response.statusCode == 200) {
       print('Success with status ${response.statusCode}');
     } else {
       print('Failed with status ${response.statusCode}');
@@ -195,4 +240,38 @@ Future<FeedModel?> getPostById(int id) async {
     print("Fail with StatusCode $e");
   }
   return null;
+}
+
+Future<List<FeedModel>?> getAllSavePost(int id, int page) async {
+  try {
+    var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllSavePost');
+    String? token = await getToken();
+    final body = jsonEncode({"id": id, "page": page});
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'bearer $token',
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> decodedData = jsonDecode(response.body);
+      List<FeedModel> feedList =
+          decodedData.map((data) => FeedModel.fromJson(data)).toList();
+
+      return feedList;
+    } else if (response.statusCode == 404) {
+      return [];
+    } else {
+      print("Fail with StatusCode ${response.statusCode}");
+
+      return null;
+    }
+  } catch (e) {
+    print("Fail with StatusCode $e");
+  }
+  return [];
 }

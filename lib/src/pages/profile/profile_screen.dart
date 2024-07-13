@@ -30,18 +30,12 @@ class _ProfilePageState extends State<ProfilePage>
   List<FeedModel> allPost1 = [];
   int page = 1;
   fetchData() async {
-    int? idUser = widget.idUser;
-    idUser ??= await getIdUser();
+    int? idUser = widget.idUser ?? await getIdUser();
     print(idUser);
     user = await getInfoUserById(idUser!);
-    // List<FeedModel>? result = await getAllPostById(idUser, page);
 
     if (mounted) {
       setState(() {
-        // if (result != null) {
-        //   allPost1.addAll(result);
-        //   print(allPost1);
-        // }
       });
     }
   }
@@ -137,10 +131,14 @@ class _ProfilePageState extends State<ProfilePage>
                                     child: CircularProgressIndicator()),
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
-                                imageBuilder: (context, imageProvider) => Image(
-                                      image: imageProvider,
-                                      fit: BoxFit.fitHeight,
-                                    )),
+                                imageBuilder: (context, imageProvider) => SizedBox(
+                                  width: 100.w,
+                                  height: 50.h,
+                                  child: Image(
+                                        image: imageProvider,
+                                        fit: BoxFit.fill,
+                                      ),
+                                )),
                           ),
                           Positioned(
                             top: screenHeight * 0.3,
@@ -197,10 +195,10 @@ class _ProfilePageState extends State<ProfilePage>
                 },
                 body: TabBarView(
                   controller: _tabController,
-                  children: const [
-                    PhotoProfile1(),
-                    Text("view 2"),
-                    Text("view 3"),
+                  children: [
+                    PhotoProfile1(idUser : widget.idUser),
+                    PhotoProfile2(idUser : widget.idUser),
+                    PhotoProfile3(idUser : widget.idUser),
                   ],
                 ),
               ))

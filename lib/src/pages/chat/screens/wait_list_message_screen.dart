@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:whoru/src/api/chat.dart';
 import 'package:whoru/src/models/chat_model.dart';
+import 'package:whoru/src/pages/feed/widget/skeleton_loading.dart';
+
+import '../widget/custom_card.dart';
 
 class WaitListChatPage extends StatefulWidget {
   const WaitListChatPage({super.key, required this.currentId});
@@ -17,9 +20,11 @@ class _WaitListChatPageState extends State<WaitListChatPage> {
   List<ChatModel> chatmodels = [];
   int page = 0;
   Future<void> getUser() async {
-    chatmodels = await getAllUserChat(++page);
+    final result = await getAllWaitingUser(++page);
     if (mounted) {
-      setState(() {});
+      setState(() {
+        chatmodels.addAll(result);
+      });
     }
   }
 
@@ -31,23 +36,25 @@ class _WaitListChatPageState extends State<WaitListChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-        // appBar: AppBar(
-        //   title: const Text("Message"),
-        //   leading: IconButton(
-        //     icon: const Icon(Icons.arrow_back_ios_sharp),
-        //     onPressed: () {
-        //       Navigator.pop(context);
-        //     },
-        //   ),
-        // ),
-        // body: ListView.builder(
-        //   itemCount: chatmodels.length,
-        //   itemBuilder: (contex, index) => CustomCard(
-        //     chatModel: chatmodels[index],
-        //     currentId: widget.currentId,
-        //   ),
-        // ),
-        );
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Wait List"),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_sharp),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: chatmodels.isEmpty
+          ? MySkeletonLoadingWidget()
+          : ListView.builder(
+              itemCount: chatmodels.length,
+              itemBuilder: (contex, index) => CustomCard(
+                chatModel: chatmodels[index],
+                currentId: widget.currentId,
+              ),
+            ),
+    );
   }
 }

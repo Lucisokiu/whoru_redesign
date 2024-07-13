@@ -29,13 +29,12 @@ class _FeedPageState extends State<FeedPage>
   List<FeedModel> listFeed = [];
   List<Story> storyList = [];
   List<Suggestion> suggestList = [];
+  bool isLoadingStory = true;
 
-  int? currentUser;
-  int pagefeed = 0;
+  int pageFeed = 0;
   int pageStory = 0;
-
   void getFeed() async {
-    List<FeedModel>? result = await getAllPost(++pagefeed);
+    List<FeedModel>? result = await getAllPost(++pageFeed);
     if (mounted) {
       if (result != null) {
         setState(() {
@@ -54,20 +53,13 @@ class _FeedPageState extends State<FeedPage>
     }
   }
 
-  void getCurentUser() async {
-    int? id = await getIdUser();
-    if (mounted) {
-      setState(() {
-        currentUser = id;
-      });
-    }
-  }
-
   void getStory() async {
     List<Story> result = await getStoryByUserId(++pageStory);
+    print(result);
     if (mounted) {
       setState(() {
         storyList.addAll(result);
+        isLoadingStory = false;
       });
     }
   }
@@ -75,7 +67,6 @@ class _FeedPageState extends State<FeedPage>
   @override
   void initState() {
     super.initState();
-    getCurentUser();
     getFeed();
     getStory();
     getSuggestionList();
@@ -110,64 +101,33 @@ class _FeedPageState extends State<FeedPage>
                   if (index == 0) {
                     return Column(
                       children: [
-                        storyList.isEmpty
-                            ? const SizedBox(
-                                height: 1000,
-                                child: MySkeletonLoadingWidget(),
-                              )
-                            : storywidget(context, storyList),
-                        SizedBox(height: 1.h),
+                        storywidget(context, storyList, isLoadingStory),
+                        SizedBox(height: 0.5.h),
                         suggestList.isEmpty
                             ? Container()
                             : SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 25.h,
-                                    width: 50.w,
-                                    child: ListView.builder(
-                                        itemCount: suggestList.length,
-                                        itemBuilder: (context, index) {
-                                          return SuggestionCard(
-                                            id: suggestList[index].id,
-                                            name: suggestList[index].name,
-                                            avt: suggestList[index].avt,
-                                          );
-                                        }),
-                                  ),
-                                  // will delete
-                                  Container(
-                                    height: 25.h,
-                                    width: 50.w,
-                                    child: ListView.builder(
-                                        itemCount: suggestList.length,
-                                        itemBuilder: (context, index) {
-                                          return SuggestionCard(
-                                            id: suggestList[index].id,
-                                            name: suggestList[index].name,
-                                            avt: suggestList[index].avt,
-                                          );
-                                        }),
-                                  ),Container(
-                                    height: 25.h,
-                                    width: 50.w,
-                                    child: ListView.builder(
-                                        itemCount: suggestList.length,
-                                        itemBuilder: (context, index) {
-                                          return SuggestionCard(
-                                            id: suggestList[index].id,
-                                            name: suggestList[index].name,
-                                            avt: suggestList[index].avt,
-                                          );
-                                        }),
-                                  ),
-                                  //
-                                ],
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 22.h,
+                                      width: 50.w,
+                                      child: ListView.builder(
+                                          itemCount: suggestList.length,
+                                          itemBuilder: (context, index) {
+                                            return SuggestionCard(
+                                              id: suggestList[index].id,
+                                              name: suggestList[index].name,
+                                              avt: suggestList[index].avt,
+                                            );
+                                          }),
+                                    ),
+
+                                  ],
+                                ),
                               ),
-                            ),
-                                
+
                         listFeed.isEmpty
                             ? const SizedBox(
                                 height: 1000,
@@ -175,7 +135,6 @@ class _FeedPageState extends State<FeedPage>
                               )
                             : CardFeed(
                                 feed: listFeed[index],
-                                currentUser: currentUser!,
                               )
                       ],
                     );
@@ -184,7 +143,6 @@ class _FeedPageState extends State<FeedPage>
                   } else {
                     return CardFeed(
                       feed: listFeed[index],
-                      currentUser: currentUser!,
                     );
                   }
                 },

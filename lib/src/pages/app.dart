@@ -6,11 +6,17 @@ import 'package:whoru/src/utils/hive/box_user.dart';
 
 import '../models/user_model.dart';
 import '../socket/web_socket_service.dart';
+import '../utils/sensitive_words.dart';
 import '../utils/shared_pref/iduser.dart';
 import 'navigation/navigation.dart';
 
 late int localIdUser;
 late UserModel localUser;
+
+final RegExp sensitiveWordPattern = RegExp(
+  '\\b(${sensitiveWords.join('|')})\\b',
+  caseSensitive: false,
+);
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -46,12 +52,13 @@ class _AppState extends State<App> {
     _user = await getInfoUserById(_id!);
     localIdUser = _id!;
     localUser = _user!;
+    print(localIdUser);
+    print(localUser);
   }
 
   void connected() {
     webSocketService.connect();
-    webSocketService.listenCall(context, _id);
-    webSocketService.listenNotif();
+    webSocketService.listenSocket(context);
   }
 
   @override

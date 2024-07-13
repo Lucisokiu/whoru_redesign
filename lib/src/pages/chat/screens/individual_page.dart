@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -40,15 +39,14 @@ class _IndividualPageState extends State<IndividualPage> {
     super.initState();
     getChat();
     connect();
-    Future.delayed(const Duration(milliseconds: 300), () => _scrolldown());
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
         Future.delayed(const Duration(milliseconds: 300), () => _scrolldown());
       }
     });
     _scrollController.addListener(() {
-      if (_scrollController.offset >
-          _scrollController.position.maxScrollExtent) {
+      if (_scrollController.offset <
+          _scrollController.position.minScrollExtent) {
         if (isLoading == false) {
           setState(() {
             isLoading = true;
@@ -63,19 +61,22 @@ class _IndividualPageState extends State<IndividualPage> {
     final results = await getAllChat(widget.user.idUser, ++page);
     if (mounted) {
       setState(() {
-        messages.addAll(results);
-        // Future.delayed(const Duration(milliseconds: 300), () => _scrolldown());
+        // messages.addAll(results);
+        messages.insertAll(0, results);
+        Future.delayed(const Duration(milliseconds: 300), () => _scrolldown());
         isLoading = false;
       });
     }
   }
 
   void _scrolldown() {
-    _scrollController.animateTo(
-      _scrollController.position.minScrollExtent,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.bounceInOut,
-    );
+    Future.delayed(const Duration(milliseconds: 300), () {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.bounceInOut,
+      );
+    });
   }
 
   @override
@@ -89,21 +90,18 @@ class _IndividualPageState extends State<IndividualPage> {
   void connect() {
     messageSubscription = webSocketService.onMessage.listen(
       (event) {
-        print("individual $event");
-
         Map<dynamic, dynamic> jsonData = event;
+        print("individual_page $jsonData");
         int type = jsonData['type'];
         if (type == 1) {
           String? target = jsonData['target'];
           if (target == "ReceiveMessage") {
             List<dynamic> arguments = jsonData['arguments'];
-            print(arguments);
-            int id = arguments[0];
-            String message = arguments[2];
-            int userSend = arguments[4];
-            setMessage(message, userSend, widget.currentId, id);
-            Future.delayed(
-                const Duration(milliseconds: 300), () => _scrolldown());
+            receiveMessage(arguments);
+          }
+          if (target == "SendMessage") {
+            List<dynamic> arguments = jsonData['arguments'];
+            receiveSendMessage(arguments);
           }
         }
       },
@@ -116,6 +114,23 @@ class _IndividualPageState extends State<IndividualPage> {
     );
   }
 
+  void receiveMessage(List<dynamic> arguments) {
+    int id = arguments[0];
+    String message = arguments[1];
+    int userSend = arguments[2];
+    setMessage(message, userSend, widget.currentId, id);
+    Future.delayed(const Duration(milliseconds: 300), () => _scrolldown());
+  }
+
+  void receiveSendMessage(List<dynamic> arguments) {
+    int id = arguments[0];
+    String message = arguments[1];
+    int userSend = arguments[2];
+    setMessage(message, userSend, widget.currentId, id);
+    Future.delayed(const Duration(milliseconds: 300), () => _scrolldown());
+
+  }
+  
   void disconnect() {
     messageSubscription.cancel();
   }
@@ -125,11 +140,11 @@ class _IndividualPageState extends State<IndividualPage> {
     webSocketService
         .sendMessageSocket("SendMessage", [sourceId, targetId, message]);
     // setMessage(message, widget.currentId, widget.user.idUser);
-    // _scrolldown();
+    _scrolldown();
   }
 
   void setMessage(
-      String message, int currentId, int idReceiver, int idMessage) {
+      String message, int idSend, int idReceiver, int idMessage) {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('HH:mm dd/MM/yyyy').format(now);
     MessageModel messageModel = MessageModel(
@@ -137,21 +152,22 @@ class _IndividualPageState extends State<IndividualPage> {
       date: formattedDate,
       message: message,
       type: "Message",
-      userSend: currentId,
+      userSend: idSend,
       userReceive: idReceiver,
     );
 
     if (mounted) {
       setState(() {
-        // messages.add(messageModel);
-        messages.insert(0, messageModel);
+        print("----------------------");
+        messages.add(messageModel);
+        // messages.insert(0, messageModel);
         _scrolldown();
       });
     }
   }
 
   List<String> getParamsDateTime(String date, int index) {
-    if (index >= 0) {
+    if (index > 0) {
       return date.split(' ');
     }
     return ['', ''];
@@ -290,12 +306,12 @@ class _IndividualPageState extends State<IndividualPage> {
         children: [
           Expanded(
             child: ListView.builder(
-              reverse: true,
+              // reverse: true,
               shrinkWrap: true,
               controller: _scrollController,
-              itemCount: messages.length + (isLoading ? 1 : 0),
+              itemCount: messages.length,
               itemBuilder: (context, index) {
-                if (isLoading && index == messages.length) {
+                if (isLoading && index == 0) {
                   return Padding(
                     padding: EdgeInsets.all(2.sp),
                     child: Center(child: CircularProgressIndicator()),
@@ -303,12 +319,12 @@ class _IndividualPageState extends State<IndividualPage> {
                 }
                 List<String> parts =
                     getParamsDateTime(messages[index].date, index);
-                List<String> partsNext = getParamsDateTime(
-                    messages[index == messages.length-1 ? messages.length-1 : index + 1].date, index + 1);
+                List<String> partsBefore = getParamsDateTime(
+                    messages[index == 0 ? 0 : index - 1].date, index - 1);
                 String time = parts[0];
                 String day = parts[1];
 
-                String dayBefore = partsNext[1];
+                String dayBefore = partsBefore[1];
                 if (messages[index].userSend == widget.currentId) {
                   return Column(
                     children: [
@@ -321,7 +337,6 @@ class _IndividualPageState extends State<IndividualPage> {
                         message: messages[index].message,
                         time: time,
                       ),
-                      
                     ],
                   );
                 } else {

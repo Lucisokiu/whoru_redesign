@@ -73,7 +73,7 @@ class _SignUpFormState extends State<SignUpForm> {
               });
               confetti.fire();
               Future.delayed(const Duration(seconds: 2), () {
-                if(_emailController.text.isEmpty){
+                if(_emailController.text.isNotEmpty){
                   sendCodeByEmail(userId);
                 }else {
                   sendCodeBySMS(userId);

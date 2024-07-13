@@ -1,4 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+import 'package:whoru/src/pages/app.dart';
+import 'package:whoru/src/pages/profile/profile_screen.dart';
 import '../../../api/comment.dart';
 import '../../../models/comment_model.dart';
 
@@ -43,15 +48,49 @@ class _CustomCommentDialogState extends State<CustomCommentDialog> {
   List<CommentModel> comments = [];
   int page = 1;
   bool isFull = false;
+  bool sendButton = false;
   @override
   void initState() {
     super.initState();
     fetchData();
+    _controller.addListener(() {
+      _checkSensitiveWords();
+      checkMaxTitle();
+    });
+  }
+
+  void _checkSensitiveWords() {
+    final text = _controller.text;
+    final sanitizedText = text.replaceAllMapped(sensitiveWordPattern, (match) {
+      return '*' * match.group(0)!.length;
+    });
+
+    if (text != sanitizedText) {
+      _controller.value = _controller.value.copyWith(
+        text: sanitizedText,
+        selection: TextSelection.fromPosition(
+          TextPosition(offset: sanitizedText.length),
+        ),
+      );
+    }
+  }
+
+  void checkMaxTitle() {
+    int maxWords = 2000;
+    print(_controller.text);
+    if (_controller.text.length > maxWords) {
+      setState(() {
+        int caretPosition = _controller.selection.end;
+        _controller.text = _controller.text.substring(0, maxWords);
+        _controller.selection = TextSelection.fromPosition(
+            TextPosition(offset: min(caretPosition, _controller.text.length)));
+      });
+    }
   }
 
   fetchData() async {
     List<CommentModel> commentsPage =
-        (await getCommentByIdFeed(widget.idFeed, page++))!;
+        (await getCommentByIdFeed(widget.idFeed, page++));
     if (commentsPage.isEmpty) isFull = true;
 
     comments.addAll(commentsPage);
@@ -103,6 +142,18 @@ class _CustomCommentDialogState extends State<CustomCommentDialog> {
                               context, comments[index], commentKey);
                         }
                       },
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (builder) => ProfilePage(
+                              isMy:
+                                  comments[index].idUser == widget.currentUser,
+                              idUser: comments[index].idUser,
+                            ),
+                          ),
+                        );
+                      },
                       leading: CircleAvatar(
                         backgroundImage: NetworkImage(comments[index].avatar),
                       ),
@@ -114,24 +165,73 @@ class _CustomCommentDialogState extends State<CustomCommentDialog> {
                   },
                 ),
               ),
-              Focus(
-                child: TextField(
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your comment...',
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width - 32.w,
+                    child: Card(
+                      margin:
+                          const EdgeInsets.only(left: 2, right: 2, bottom: 8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 0, top: 0, left: 20.0),
+                        child: TextFormField(
+                          controller: _controller,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 5,
+                          minLines: 1,
+                          onChanged: (value) {
+                            if (value.isNotEmpty) {
+                              setState(() {
+                                sendButton = true;
+                              });
+                            } else {
+                              setState(() {
+                                sendButton = false;
+                              });
+                            }
+                          },
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Type a message",
+                            hintStyle: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  controller: _controller,
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  postComment(widget.idFeed, _controller.text);
-                  print('New Comment: ${_controller.text}');
-                  Navigator.pop(context);
-                },
-                child: const Text('Submit'),
-              ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 8,
+                      right: 2,
+                      left: 2,
+                    ),
+                    child: CircleAvatar(
+                      radius: 25,
+                      backgroundColor: const Color(0xFF128C7E),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.send,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          postComment(widget.idFeed, _controller.text);
+
+                          if (sendButton) {
+                            setState(() {
+                              _controller.text = '';
+                              sendButton = false;
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ]),
           ),
         ),

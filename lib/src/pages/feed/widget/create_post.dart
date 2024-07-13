@@ -6,6 +6,8 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/camera/camera.dart';
 
 import '../../../api/feed.dart';
+import '../../../utils/sensitive_words.dart';
+import '../../nude_detection/test.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -18,8 +20,10 @@ class _CreatePostState extends State<CreatePost> {
   final TextEditingController _titleController = TextEditingController();
   final List<XFile> _selectedImages = [];
   bool isLoading = false;
-  final RegExp _sensitiveWordPattern =
-      RegExp(r'\b(đụ má|đm|con cặc|cc|lồn|cl|cái lồn)\b', caseSensitive: false);
+  final RegExp _sensitiveWordPattern = RegExp(
+    '\\b(${sensitiveWords.join('|')})\\b',
+    caseSensitive: false,
+  );
   int selectedValue = 1;
 
   @override
@@ -29,6 +33,47 @@ class _CreatePostState extends State<CreatePost> {
       checkMaxTitle();
     });
     super.initState();
+  }
+
+  Future<void> postFeed() async {
+    setState(() {
+      isLoading = true;
+    });
+    List<File> files =
+        _selectedImages.map((xFile) => File(xFile.path)).toList();
+    bool hasAnyUnSafeImage = false;
+
+    for (File image in files) {
+      final hasNudity = await FlutterNudeDetector.detect(path: image.path);
+      if (hasNudity) {
+        hasAnyUnSafeImage = true;
+        break; // Exit the loop as we found a safe image
+      }
+    }
+    if (hasAnyUnSafeImage) {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+                'Selected images can be nudity. Please select different images.'),
+          ),
+        );
+      }
+    } else {
+      postApiWithImages(
+        imageFiles: files,
+        content: _titleController.text,
+        status: selectedValue,
+      ).then((value) {
+        setState(() {
+          isLoading = false;
+        });
+        Navigator.pop(context);
+      });
+    }
   }
 
   void checkMaxTitle() {
@@ -43,6 +88,48 @@ class _CreatePostState extends State<CreatePost> {
       });
     }
   }
+
+  // Future<File> blurImage(File imageFile) async {
+  //   // Read the image from the file
+  //   final Uint8List bytes = await imageFile.readAsBytes();
+  //   img.Image image = img.decodeImage(bytes)!;
+
+  //   // Apply the blur effect
+  //   img.Image blurredImage = img.gaussianBlur(image, radius: 10);
+
+  //   // Get the temporary directory to save the blurred image
+  //   final Directory tempDir = await getTemporaryDirectory();
+  //   final String tempPath = tempDir.path;
+  //   final File blurredImageFile =
+  //       File('$tempPath/blurred_${imageFile.path.split('/').last}');
+
+  //   // Save the blurred image
+  //   blurredImageFile.writeAsBytesSync(img.encodePng(blurredImage));
+
+  //   return blurredImageFile;
+  // }
+
+  //  Future<File> _blurSensitiveAreas(File imageFile) async {
+  //   // Read the image from file
+  //   final Uint8List bytes = await imageFile.readAsBytes();
+  //   final tempDir = await getTemporaryDirectory();
+  //   final tempPath = tempDir.path;
+  //   final String tempImagePath = '$tempPath/blurred_${imageFile.path.split('/').last}';
+  //   File tempImageFile = File(tempImagePath);
+
+  //   try {
+  //     // Apply face detection and blur sensitive areas
+  //     await FlutterImageProcessing.detectAndBlurFaces(
+  //       inputImagePath: imageFile.path,
+  //       outputImagePath: tempImagePath,
+  //       blurRadius: 10, // Adjust blur radius as needed
+  //     );
+  //     return tempImageFile;
+  //   } catch (e) {
+  //     print('Error blurring image: $e');
+  //     return imageFile; // Return original image if an error occurs
+  //   }
+  // }
 
   void _checkSensitiveWords() {
     final text = _titleController.text;
@@ -122,7 +209,8 @@ class _CreatePostState extends State<CreatePost> {
                         icon: const Icon(Icons.arrow_downward),
                         iconSize: 24,
                         elevation: 16,
-                        style: const TextStyle(color: Colors.black, fontSize: 16),
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 16),
                         underline: Container(
                           height: 2,
                           color: Colors.deepPurpleAccent,
@@ -147,7 +235,12 @@ class _CreatePostState extends State<CreatePost> {
                             child: Row(
                               children: [
                                 const SizedBox(width: 10),
-                                Text(valueToString[value]!),
+                                Text(
+                                  valueToString[value]!,
+                                  style:
+                                      // style:TextStyle(color: Colors.red)
+                                      Theme.of(context).textTheme.bodyLarge,
+                                )
                               ],
                             ),
                           );
@@ -162,7 +255,8 @@ class _CreatePostState extends State<CreatePost> {
                               XFile? file = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (builder) => const CameraScreen()));
+                                      builder: (builder) =>
+                                          const CameraScreen()));
                               _takePicture(file);
                             },
                             child: const Text('Take Picture'),
@@ -195,15 +289,44 @@ class _CreatePostState extends State<CreatePost> {
                                       if (i < _selectedImages.length)
                                         Expanded(
                                           child: Padding(
-                                            padding:
-                                                const EdgeInsets.only(right: 8.0),
+                                            padding: const EdgeInsets.only(
+                                                right: 8.0),
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              child: Image.file(
-                                                File(_selectedImages[i].path),
-                                                fit: BoxFit
-                                                    .cover, // You can adjust the BoxFit based on your needs
+                                              child: Stack(
+                                                children: [
+                                                  Image.file(
+                                                    File(_selectedImages[i]
+                                                        .path),
+                                                    fit: BoxFit
+                                                        .cover, // You can adjust the BoxFit based on your needs
+                                                  ),
+                                                  Positioned(
+                                                    top: 8.0,
+                                                    right: 8.0,
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          _selectedImages
+                                                              .removeAt(i);
+                                                        });
+                                                      },
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.black54,
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                        child: Icon(
+                                                          Icons.close,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),
@@ -216,23 +339,8 @@ class _CreatePostState extends State<CreatePost> {
                       Visibility(
                         visible: checkValue(),
                         child: ElevatedButton(
-                          onPressed: () async {
-                            setState(() {
-                              isLoading = true;
-                            });
-                              List<File> files = _selectedImages
-                                  .map((xFile) => File(xFile.path))
-                                  .toList();
-                              postApiWithImages(
-                                imageFiles: files,
-                                content: _titleController.text,
-                                status: selectedValue,
-                              ).then((value) {
-                                setState(() {
-                                  isLoading = false;
-                                });
-                                Navigator.pop(context);
-                              });
+                          onPressed: () {
+                            postFeed();
                           },
                           child: const Text('Create Post'),
                         ),
@@ -240,28 +348,25 @@ class _CreatePostState extends State<CreatePost> {
                     ],
                   ),
                 ),
-
               ],
             )),
         if (isLoading)
           Positioned.fill(
             child: Container(
-                color: Colors.black.withOpacity(0.5),
-                child: const Center(
-                  child: CircularProgressIndicator(),
-                ),
+              color: Colors.black.withOpacity(0.5),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
           ),
       ],
-
-
-
     );
   }
-  bool checkValue(){
-    if(_titleController.text.isNotEmpty && _selectedImages.length != 0){
+
+  bool checkValue() {
+    if (_titleController.text.isNotEmpty && _selectedImages.length != 0) {
       return true;
-    }else{
+    } else {
       return false;
     }
   }

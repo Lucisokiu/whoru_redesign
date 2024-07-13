@@ -7,15 +7,18 @@ import 'package:whoru/src/api/share.dart';
 import 'package:whoru/src/models/feed_model.dart';
 import 'package:whoru/src/pages/feed/controller/build_image.dart';
 import 'package:whoru/src/pages/feed/widget/list_like_dialog.dart';
+import 'package:whoru/src/pages/feed/widget/update_post.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 
+import '../../../api/feed.dart';
+import '../../../api/follow.dart';
+import '../../app.dart';
 import 'comment_dialog_new.dart';
 
 class CardFeed extends StatefulWidget {
   final FeedModel feed;
-  final int currentUser;
 
-  const CardFeed({super.key, required this.feed, required this.currentUser});
+  const CardFeed({super.key, required this.feed});
 
   @override
   State<CardFeed> createState() => _CardFeedState();
@@ -23,9 +26,16 @@ class CardFeed extends StatefulWidget {
 
 class _CardFeedState extends State<CardFeed> {
   bool isLoading = false;
+  bool isFollow = false;
 
   void callAPI() {
-    customCommentDialog(context, widget.feed.idFeed, widget.currentUser);
+    customCommentDialog(context, widget.feed.idFeed, localIdUser);
+  }
+
+  @override
+  void initState() {
+    isFollow = widget.feed.isFollow;
+    super.initState();
   }
 
   @override
@@ -57,7 +67,7 @@ class _CardFeedState extends State<CardFeed> {
             ),
             child: Padding(
               padding:
-                  const EdgeInsets.only(bottom: 14.0, left: 15.0, right: 15.0),
+                  const EdgeInsets.only(bottom: 5.0, left: 15.0, right: 15.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -75,10 +85,10 @@ class _CardFeedState extends State<CardFeed> {
                                 MaterialPageRoute(
                                     builder: (builder) => ProfilePage(
                                           idUser: widget.feed.idUser,
-                                          isMy: widget.currentUser ==
-                                                  widget.feed.idUser
-                                              ? true
-                                              : false,
+                                          isMy:
+                                              localIdUser == widget.feed.idUser
+                                                  ? true
+                                                  : false,
                                         )));
                           },
                           child: CachedNetworkImage(
@@ -105,14 +115,38 @@ class _CardFeedState extends State<CardFeed> {
                         ),
                       ),
                       const Spacer(),
-                      widget.currentUser != widget.feed.idUser
-                          ? Container()
+                      localIdUser != widget.feed.idUser
+                          ? ElevatedButton(
+                              onPressed: () {
+                                if (isFollow) {
+                                  unFollowUser(widget.feed.idUser);
+                                  setState(() {
+                                    isFollow = !isFollow;
+                                  });
+                                } else {
+                                  followUser(widget.feed.idUser);
+                                  setState(() {
+                                    isFollow = !isFollow;
+                                  });
+                                }
+                              },
+                              child: Icon(
+                                isFollow ? Icons.person_off : Icons.person_add,
+                                color: Theme.of(context).iconTheme.color,
+                              ),
+                            )
                           : PopupMenuButton<String>(
                               onSelected: (String value) {
                                 if (value == 'update') {
-                                  // Xử lý cập nhật
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (builder) =>
+                                          UpdatePost(feedModel: widget.feed),
+                                    ),
+                                  );
                                 } else if (value == 'delete') {
-                                  // Xử lý xóa
+                                  delete(widget.feed.idFeed);
                                 }
                               },
                               itemBuilder: (BuildContext context) =>
@@ -173,10 +207,10 @@ class _CardFeedState extends State<CardFeed> {
                                       context, widget.feed.imageUrls)
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 8),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const SizedBox(width: 5.0),
                       BuildButtonFeed(
                         icon: PhosphorIconsFill.heart,
                         label: widget.feed.likeCount,
@@ -197,18 +231,16 @@ class _CardFeedState extends State<CardFeed> {
                         isLike: widget.feed.isLike,
                         likeButton: true,
                       ),
-                      const SizedBox(width: 5.0),
                       BuildButtonFeed(
                         icon: PhosphorIconsFill.chatTeardrop,
                         label: widget.feed.commentCount,
                         onPressed: () {
                           customCommentDialog(
-                              context, widget.feed.idFeed, widget.currentUser);
+                              context, widget.feed.idFeed, localIdUser);
                         },
                         onLongPress: () {},
                         isLike: false,
                       ),
-                      const Spacer(),
                       BuildButtonFeed(
                         icon: PhosphorIconsFill.shareFat,
                         label: widget.feed.shareCount,

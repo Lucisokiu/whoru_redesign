@@ -8,49 +8,56 @@ import 'package:sizer/sizer.dart';
 import '../../../models/story_model.dart';
 import 'add_story.dart';
 
-Widget storywidget(BuildContext context, List<Story> storyList) {
-  return SingleChildScrollView(
-    child: Container(
-      height: 15.h,
-      decoration: BoxDecoration(
-          borderRadius:
-              const BorderRadius.vertical(bottom: Radius.circular(24)),
-          color: Theme.of(context).scaffoldBackgroundColor,
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).shadowColor,
-              spreadRadius: 1,
-              blurRadius: 2,
-              offset: const Offset(2.0, 2.0),
-            ),
-          ]),
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            addStory(context),
+Widget storywidget(BuildContext context, List<Story> storyList,bool isLoading) {
+  return Container(
+    height: 13.h,
+    width: 100.w,
+    decoration: BoxDecoration(
+        borderRadius:
+            const BorderRadius.vertical(bottom: Radius.circular(24)),
+        color: Theme.of(context).scaffoldBackgroundColor,
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).shadowColor,
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: const Offset(2.0, 2.0),
+          ),
+        ]),
+    padding: EdgeInsets.symmetric(vertical: 0.5.h),
+    child: SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          addStory(context),
+          if (storyList.isNotEmpty)
             for (int i = 0; i < storyList.length; i++)
-              yourStory(context, storyList[i].imageUrl, storyList[i].userName),
-            SizedBox(
-              width: 2.w,
-            )
-          ],
-        ),
+              yourStory(
+                  context, storyList[i].imageUrl, storyList[i].name),
+          SizedBox(width: 10.w),
+          if(isLoading)
+              Padding(
+                padding: EdgeInsets.only(bottom: 3.h),
+                child: CircularProgressIndicator(),
+              ),
+          SizedBox(
+            width: 2.w,
+          )
+        ],
       ),
     ),
   );
 }
 
 Widget yourStory(BuildContext context, urlImage, userName) {
-  return
-    GestureDetector(
-      onTap: (){Navigator.push(
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => Scaffold(
             appBar: AppBar(
-              backgroundColor:Colors.transparent,
+              backgroundColor: Colors.transparent,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
@@ -71,57 +78,56 @@ Widget yourStory(BuildContext context, urlImage, userName) {
               },
               scrollPhysics: const BouncingScrollPhysics(),
               backgroundDecoration: BoxDecoration(
-                color:  Colors.transparent,
+                color: Colors.transparent,
               ),
               pageController: PageController(),
             ),
           ),
         ),
       );
-      },
-
-      child: Padding(
-        padding: const EdgeInsets.only(left: 24),
-        child: Column(
-          children: [
-            Container(
-              width: 70,
-              height: 70,
-              decoration: const BoxDecoration(
-                border: GradientBoxBorder(
-                  gradient: LinearGradient(
-                    colors: [
-                      Color(0xffFBAA47),
-                      Color(0xffD91A46),
-                      Color(0xffA60F93),
-                    ],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.centerRight,
-                  ),
-                  width: 2,
+    },
+    child: Padding(
+      padding: const EdgeInsets.only(left: 24),
+      child: Column(
+        children: [
+          Container(
+            width: 70,
+            height: 70,
+            decoration: const BoxDecoration(
+              border: GradientBoxBorder(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xffFBAA47),
+                    Color(0xffD91A46),
+                    Color(0xffA60F93),
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.centerRight,
                 ),
-                shape: BoxShape.circle,
+                width: 2,
               ),
-              padding: const EdgeInsets.all(2),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(70),
-                child: Image.network(
-                  urlImage,
-                  fit: BoxFit.cover,
-                ),
-              ),
+              shape: BoxShape.circle,
             ),
-            const SizedBox(
-              height: 6,
-            ),
-            Text(
-              userName,
-              style: const TextStyle(
-                fontSize: 11,
+            padding: const EdgeInsets.all(2),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(70),
+              child: Image.network(
+                urlImage,
+                fit: BoxFit.cover,
               ),
             ),
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 6,
+          ),
+          Text(
+            userName,
+            style: const TextStyle(
+              fontSize: 11,
+            ),
+          ),
+        ],
       ),
+    ),
   );
 }

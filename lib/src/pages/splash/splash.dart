@@ -34,6 +34,7 @@ class _SplashScreenState extends State<SplashScreen>
     _loadToken();
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
