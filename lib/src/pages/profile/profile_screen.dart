@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/user_info.dart';
@@ -35,8 +36,7 @@ class _ProfilePageState extends State<ProfilePage>
     user = await getInfoUserById(idUser!);
 
     if (mounted) {
-      setState(() {
-      });
+      setState(() {});
     }
   }
 
@@ -59,8 +59,11 @@ class _ProfilePageState extends State<ProfilePage>
                   children: [
                     ListTile(
                       leading: const Icon(Icons.person),
-                      title: Text(user?.fullName ?? AppLocalization.of(context).getTranslatedValues('loading'),
-                          style: Theme.of(context).textTheme.bodyMedium),
+                      title: Text(
+                          user?.fullName ??
+                              AppLocalization.of(context)
+                                  .getTranslatedValues('loading'),
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 30)),
                     ),
                     ListTile(
                       title: Text('Update Avatar',
@@ -92,13 +95,41 @@ class _ProfilePageState extends State<ProfilePage>
                         customUpdateProfileDialog(context, 'changePass');
                       },
                     ),
+                    SizedBox(
+                      height: 20.h,
+                      width: 20.w,
+                      child: Lottie.asset('assets/lottie/stranger_cat.json'),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                      width: 20.w,
+                    ),
+                    const Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Align(
+                              alignment: Alignment.topCenter,
+                              child: Text("Created By: ")),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("20110534 Nguyễn Minh Nhựt"),
+                              Text("20110312 Nguyễn Minh Cường")
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               )
             : null,
         appBar: (user == null)
             ? AppBar(
-                title: Text(user?.fullName ?? AppLocalization.of(context).getTranslatedValues('loading')),
+                title: Text(user?.fullName ??
+                    AppLocalization.of(context).getTranslatedValues('loading')),
               )
             : null,
         body: (user != null)
@@ -112,7 +143,9 @@ class _ProfilePageState extends State<ProfilePage>
                       pinned: true,
                       floating: true,
                       centerTitle: true,
-                      title: Text(user?.fullName ?? AppLocalization.of(context).getTranslatedValues('loading')),
+                      title: Text(user?.fullName ??
+                          AppLocalization.of(context)
+                              .getTranslatedValues('loading')),
                       leading: IconButton(
                         icon: const Icon(Icons.arrow_back_ios_new_rounded),
                         onPressed: () {
@@ -131,14 +164,15 @@ class _ProfilePageState extends State<ProfilePage>
                                     child: CircularProgressIndicator()),
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
-                                imageBuilder: (context, imageProvider) => SizedBox(
-                                  width: 100.w,
-                                  height: 50.h,
-                                  child: Image(
+                                imageBuilder: (context, imageProvider) =>
+                                    SizedBox(
+                                      width: 100.w,
+                                      height: 50.h,
+                                      child: Image(
                                         image: imageProvider,
                                         fit: BoxFit.fill,
                                       ),
-                                )),
+                                    )),
                           ),
                           Positioned(
                             top: screenHeight * 0.3,
@@ -196,9 +230,9 @@ class _ProfilePageState extends State<ProfilePage>
                 body: TabBarView(
                   controller: _tabController,
                   children: [
-                    PhotoProfile1(idUser : widget.idUser),
-                    PhotoProfile2(idUser : widget.idUser),
-                    PhotoProfile3(idUser : widget.idUser),
+                    PhotoProfile1(idUser: widget.idUser),
+                    PhotoProfile2(idUser: widget.idUser),
+                    PhotoProfile3(idUser: widget.idUser),
                   ],
                 ),
               ))

@@ -56,16 +56,17 @@ Future<void> unFollowUser(idUser) async {
   }
 }
 
-Future<List<Map<String, dynamic>>> getAllFollower() async {
+Future<List<Map<String, dynamic>>> getAllFollower(int page) async {
   var url = Uri.https(baseUrl, '/api/v1/Follows/GetAllFollower');
   String? token = await getToken();
-  var response = await http.get(
+  var response = await http.post(
     url,
     headers: {
       'Content-type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'bearer $token',
     },
+    body: page.toString(),
   );
 
   if (response.statusCode == 200) {
@@ -78,17 +79,19 @@ Future<List<Map<String, dynamic>>> getAllFollower() async {
   }
 }
 
-Future<List<Map<String, dynamic>>> getAllFollowing() async {
+Future<List<Map<String, dynamic>>> getAllFollowing(int page) async {
   var url = Uri.https(baseUrl, '/api/v1/Follows/GetAllFollowing');
   String? token = await getToken();
 
-  var response = await http.get(
+  var response = await http.post(
     url,
     headers: {
       'Content-type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'bearer $token',
+
     },
+    body: page.toString(),
   );
 
   if (response.statusCode == 200) {

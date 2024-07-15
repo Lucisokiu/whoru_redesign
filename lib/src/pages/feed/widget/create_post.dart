@@ -5,8 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/camera/camera.dart';
 
+import '../../../api/face_recog.dart';
 import '../../../api/feed.dart';
 import '../../../utils/sensitive_words.dart';
+import '../../face_detection/DB/face_registration_info.dart';
 import '../../nude_detection/test.dart';
 
 class CreatePost extends StatefulWidget {
@@ -25,6 +27,7 @@ class _CreatePostState extends State<CreatePost> {
     caseSensitive: false,
   );
   int selectedValue = 1;
+  List<FaceRegistrationInfo> faceRegisters = [];
 
   @override
   void initState() {
@@ -34,7 +37,13 @@ class _CreatePostState extends State<CreatePost> {
     });
     super.initState();
   }
+  Future<void> fetchData() async {
+    faceRegisters = await getAllEmbedding();
 
+    for (FaceRegistrationInfo faceRegister in faceRegisters) {
+      print('Length Embedding: ${faceRegister.embedding.length}');
+    }
+  }
   Future<void> postFeed() async {
     setState(() {
       isLoading = true;
@@ -63,6 +72,9 @@ class _CreatePostState extends State<CreatePost> {
         );
       }
     } else {
+    // await loadModel();
+
+      
       postApiWithImages(
         imageFiles: files,
         content: _titleController.text,

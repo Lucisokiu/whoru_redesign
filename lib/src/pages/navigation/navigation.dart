@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/feed/screens/feed_screen.dart';
@@ -27,6 +28,7 @@ class _NavigationState extends State<Navigation> {
     await NotificationsController.init();
     await NotificationsController.requestPermission();
   }
+
   @override
   void initState() {
     super.initState();
@@ -36,72 +38,90 @@ class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        extendBody: true,
-        body: _screens[currentPage],
-        bottomNavigationBar: Container(
-          margin: EdgeInsets.fromLTRB(7.w, 0, 7.w, 2.h),
-          decoration: BoxDecoration(
-            color: Colors.black87.withOpacity(0.8),
-            borderRadius: const BorderRadius.all(Radius.circular(45)),
+      resizeToAvoidBottomInset: false,
+      extendBody: true,
+      body: Stack(
+        children: [
+          _screens[currentPage],
+          Positioned(
+            bottom: 8.30.h,
+            right: 6.w,
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: SizedBox(
+                height: 10.h,
+                width: 20.w,
+                child:
+                    Lottie.asset('assets/lottie/head_cat.json', reverse: true),
+              ),
+            ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                iconSize: 36,
-                icon: Icon(currentPage == 0
-                    ? PhosphorIconsFill.house
-                    : PhosphorIconsThin.house),
-                color: Colors.white,
-                onPressed: () {
-                  print("Home");
-                  setState(() {
-                    currentPage = 0;
-                  });
-                },
-              ),
-              IconButton(
-                iconSize: 36,
-                icon: Icon(currentPage == 1
-                    ? PhosphorIconsFill.bellSimpleRinging
-                    : PhosphorIconsThin.bellSimpleRinging),
-                color: Colors.white,
-                onPressed: () {
-                  print("Notifications");
-                  setState(() {
-                    currentPage = 1;
-                  });
-                },
-              ),
-              IconButton(
-                iconSize: 36,
-                icon: Icon(currentPage == 2
-                    ? PhosphorIconsFill.mapPinLine
-                    : PhosphorIconsLight.mapPinLine),
-                color: Colors.white,
-                onPressed: () {
-                  print("Location");
-                  setState(() {
-                    currentPage = 2;
-                  });
-                },
-              ),
-              IconButton(
-                iconSize: 36,
-                icon: Icon(currentPage == 3
-                    ? PhosphorIconsFill.userCircle
-                    : PhosphorIconsThin.userCircle),
-                color: Colors.white,
-                onPressed: () {
-                  print("Profile");
-                  setState(() {
-                    currentPage = 3;
-                  });
-                },
-              ),
-            ],
-          ),
-        ));
+        ],
+      ),
+      bottomNavigationBar: Container(
+        margin: EdgeInsets.fromLTRB(7.w, 0, 7.w, 2.h),
+        decoration: BoxDecoration(
+          color: Colors.black87.withOpacity(0.8),
+          borderRadius: const BorderRadius.all(Radius.circular(45)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              iconSize: 36,
+              icon: Icon(currentPage == 0
+                  ? PhosphorIconsFill.house
+                  : PhosphorIconsThin.house),
+              color: Colors.white,
+              onPressed: () {
+                print("Home");
+                setState(() {
+                  currentPage = 0;
+                });
+              },
+            ),
+            IconButton(
+              iconSize: 36,
+              icon: Icon(currentPage == 1
+                  ? PhosphorIconsFill.bellSimpleRinging
+                  : PhosphorIconsThin.bellSimpleRinging),
+              color: Colors.white,
+              onPressed: () {
+                print("Notifications");
+                setState(() {
+                  currentPage = 1;
+                });
+              },
+            ),
+            IconButton(
+              iconSize: 36,
+              icon: Icon(currentPage == 2
+                  ? PhosphorIconsFill.mapPinLine
+                  : PhosphorIconsLight.mapPinLine),
+              color: Colors.white,
+              onPressed: () {
+                print("Location");
+                setState(() {
+                  currentPage = 2;
+                });
+              },
+            ),
+            IconButton(
+              iconSize: 36,
+              icon: Icon(currentPage == 3
+                  ? PhosphorIconsFill.userCircle
+                  : PhosphorIconsThin.userCircle),
+              color: Colors.white,
+              onPressed: () {
+                print("Profile");
+                setState(() {
+                  currentPage = 3;
+                });
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

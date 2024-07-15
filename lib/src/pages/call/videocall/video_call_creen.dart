@@ -6,14 +6,13 @@ import 'package:sizer/sizer.dart';
 import 'package:whoru/src/socket/web_socket_service.dart';
 
 class VideoCallScreen extends StatefulWidget {
-
   const VideoCallScreen(
       {super.key,
       bool? isJoinRoom,
       required this.idUser, // idCaller
       required this.currentId}) // idReceiver
       : isJoinRoom = isJoinRoom ?? false;
-      
+
   final bool isJoinRoom;
   final int idUser;
   final int currentId;
@@ -75,6 +74,11 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
       if (type == 1) {
         String target = jsonData["target"];
+        print("target---------------------------: $target");
+        if (target == 'DisconnectCalling') {
+          webSocketService.endCall(widget.currentId, widget.idUser);
+          Navigator.pop(context);
+        }
         if (target == "ReceiveOffer") {
           List<dynamic> arguments = jsonData["arguments"];
           dynamic offerData = arguments[2];

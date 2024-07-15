@@ -2,8 +2,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> setIdUser(int value) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  print(value);
-
   return prefs.setInt('idUser', value);
 }
 

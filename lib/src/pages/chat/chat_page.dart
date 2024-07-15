@@ -8,6 +8,7 @@ import 'package:whoru/src/models/chat_model.dart';
 import 'package:whoru/src/pages/chat/screens/select_contact.dart';
 import 'package:whoru/src/pages/chat/screens/wait_list_message_screen.dart';
 import 'package:whoru/src/pages/chat/widget/custom_card.dart';
+import 'package:whoru/src/pages/chat/widget/search_user.dart';
 import 'package:whoru/src/pages/feed/widget/skeleton_loading.dart';
 
 import '../../socket/web_socket_service.dart';
@@ -113,8 +114,12 @@ class _ChatPageState extends State<ChatPage> {
       ])),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (builder) => const SelectContact()));
+          showSearch(
+                    context: context,
+                    delegate: SearchUserChat(),
+                  );
+          // Navigator.push(context,
+          //     MaterialPageRoute(builder: (builder) => const SelectContact()));
         },
         child: const Icon(
           Icons.chat,

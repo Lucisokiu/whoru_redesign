@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:lottie/lottie.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:sizer/sizer.dart';
@@ -8,44 +9,57 @@ import 'package:sizer/sizer.dart';
 import '../../../models/story_model.dart';
 import 'add_story.dart';
 
-Widget storywidget(BuildContext context, List<Story> storyList,bool isLoading) {
+Widget storywidget(
+    BuildContext context, List<Story> storyList, bool isLoading) {
   return Container(
     height: 13.h,
     width: 100.w,
     decoration: BoxDecoration(
-        borderRadius:
-            const BorderRadius.vertical(bottom: Radius.circular(24)),
-        color: Theme.of(context).scaffoldBackgroundColor,
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).shadowColor,
-            spreadRadius: 1,
-            blurRadius: 2,
-            offset: const Offset(2.0, 2.0),
-          ),
-        ]),
+      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(24)),
+      color: Theme.of(context).scaffoldBackgroundColor,
+      boxShadow: [
+        BoxShadow(
+          color: Theme.of(context).shadowColor,
+          spreadRadius: 1,
+          blurRadius: 2,
+          offset: const Offset(2.0, 2.0),
+        ),
+      ],
+    ),
     padding: EdgeInsets.symmetric(vertical: 0.5.h),
-    child: SingleChildScrollView(
+    child:
+    storyList.isEmpty?
+    Row(
+      children: [
+        addStory(context),
+        Container(
+          height: 10.h,
+          child: Lottie.asset('assets/lottie/playing_cat.json'),
+        ),
+      ],
+    )
+    :SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           addStory(context),
           if (storyList.isNotEmpty)
             for (int i = 0; i < storyList.length; i++)
-              yourStory(
-                  context, storyList[i].imageUrl, storyList[i].name),
+              yourStory(context, storyList[i].imageUrl, storyList[i].name),
+
           SizedBox(width: 10.w),
-          if(isLoading)
-              Padding(
-                padding: EdgeInsets.only(bottom: 3.h),
-                child: CircularProgressIndicator(),
-              ),
+          if (isLoading)
+            Padding(
+              padding: EdgeInsets.only(bottom: 3.h),
+              child: CircularProgressIndicator(),
+            ),
           SizedBox(
             width: 2.w,
           )
         ],
       ),
-    ),
+    )
   );
 }
 
@@ -77,7 +91,7 @@ Widget yourStory(BuildContext context, urlImage, userName) {
                 );
               },
               scrollPhysics: const BouncingScrollPhysics(),
-              backgroundDecoration: BoxDecoration(
+              backgroundDecoration: const BoxDecoration(
                 color: Colors.transparent,
               ),
               pageController: PageController(),

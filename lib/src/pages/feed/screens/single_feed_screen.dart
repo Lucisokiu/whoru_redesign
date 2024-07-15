@@ -10,6 +10,7 @@ import '../../../api/comment.dart';
 import '../../../api/like.dart';
 import '../../../models/comment_model.dart';
 import '../../profile/profile_screen.dart';
+import '../../splash/splash.dart';
 import '../controller/build_image.dart';
 import '../widget/comment_dialog_new.dart';
 
@@ -143,6 +144,7 @@ class _SingleFeedScreenState extends State<SingleFeedScreen> {
                               likePost(feed.idFeed);
                               setState(() {
                                 feed.isLike = !feed.isLike;
+                                feed.likeCount + (feed.isLike ? 1 : -1);
                               });
                             }),
                         const SizedBox(width: 5),
@@ -213,6 +215,7 @@ class _SingleFeedScreenState extends State<SingleFeedScreen> {
                       if (value.isNotEmpty) {
                         setState(() {
                           sendButton = true;
+                          ++feed.commentCount;
                         });
                       } else {
                         setState(() {

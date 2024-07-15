@@ -17,10 +17,10 @@ class UserLocation {
 
   factory UserLocation.fromJson(Map<String, dynamic> json) {
     return UserLocation(
-      latitude: json['latitude'],
-      longitude: json['longitude'],
-      userId: json['userId'],
-      avt: json['avt'],
+      latitude: json['lang'], // <180>
+      longitude: json['long'], // <90>
+      userId: json['id'],
+      avt: json['avatar'],
       name: json['name'],
       note: json['note'],
     );

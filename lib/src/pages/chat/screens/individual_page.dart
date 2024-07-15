@@ -70,13 +70,15 @@ class _IndividualPageState extends State<IndividualPage> {
   }
 
   void _scrolldown() {
-    Future.delayed(const Duration(milliseconds: 300), () {
-      _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.bounceInOut,
-      );
-    });
+    if (mounted) {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.bounceInOut,
+        );
+      });
+    }
   }
 
   @override
@@ -91,7 +93,6 @@ class _IndividualPageState extends State<IndividualPage> {
     messageSubscription = webSocketService.onMessage.listen(
       (event) {
         Map<dynamic, dynamic> jsonData = event;
-        print("individual_page $jsonData");
         int type = jsonData['type'];
         if (type == 1) {
           String? target = jsonData['target'];
@@ -128,9 +129,8 @@ class _IndividualPageState extends State<IndividualPage> {
     int userSend = arguments[2];
     setMessage(message, userSend, widget.currentId, id);
     Future.delayed(const Duration(milliseconds: 300), () => _scrolldown());
-
   }
-  
+
   void disconnect() {
     messageSubscription.cancel();
   }
@@ -143,8 +143,7 @@ class _IndividualPageState extends State<IndividualPage> {
     _scrolldown();
   }
 
-  void setMessage(
-      String message, int idSend, int idReceiver, int idMessage) {
+  void setMessage(String message, int idSend, int idReceiver, int idMessage) {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('HH:mm dd/MM/yyyy').format(now);
     MessageModel messageModel = MessageModel(
@@ -158,7 +157,6 @@ class _IndividualPageState extends State<IndividualPage> {
 
     if (mounted) {
       setState(() {
-        print("----------------------");
         messages.add(messageModel);
         // messages.insert(0, messageModel);
         _scrolldown();
@@ -259,6 +257,8 @@ class _IndividualPageState extends State<IndividualPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => AudioCallScreen(
+                        idUser: widget.user.idUser,
+                        currentId: widget.currentId,
                         avatar: widget.user.avatar,
                         fullName: widget.user.fullName,
                       ),

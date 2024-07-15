@@ -170,7 +170,7 @@ class _CardFeedSearchState extends State<CardFeedSearch> {
                       // showListDialog(context, listLike);
 
                       getListLike(widget.feed.idFeed).then(
-                          (listLike) => showListDialog(context, listLike));
+                          (listLike) => showListDialog(context, listLike,"List Like"));
                     },
                     isLike: widget.feed.isLike,
                   ),
@@ -194,7 +194,7 @@ class _CardFeedSearchState extends State<CardFeedSearch> {
                     },
                     onLongPress: () {
                       getListShare(widget.feed.idFeed).then(
-                          (listShare) => showListDialog(context, listShare));
+                          (listShare) => showListDialog(context, listShare,"List Share"));
                     },
                     isLike: widget.feed.isLike,
                   ),

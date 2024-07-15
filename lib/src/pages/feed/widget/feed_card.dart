@@ -9,6 +9,7 @@ import 'package:whoru/src/pages/feed/controller/build_image.dart';
 import 'package:whoru/src/pages/feed/widget/list_like_dialog.dart';
 import 'package:whoru/src/pages/feed/widget/update_post.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
+import 'package:whoru/src/pages/splash/splash.dart';
 
 import '../../../api/feed.dart';
 import '../../../api/follow.dart';
@@ -34,7 +35,9 @@ class _CardFeedState extends State<CardFeed> {
 
   @override
   void initState() {
-    isFollow = widget.feed.isFollow;
+    setState(() {
+      isFollow = widget.feed.isFollow;
+    });
     super.initState();
   }
 
@@ -225,7 +228,7 @@ class _CardFeedState extends State<CardFeed> {
                             setState(() {
                               isLoading = false;
                             });
-                            showListDialog(context, listLike);
+                            showListDialog(context, listLike, "Like List");
                           });
                         },
                         isLike: widget.feed.isLike,
@@ -256,7 +259,8 @@ class _CardFeedState extends State<CardFeed> {
                           });
                           getListShare(widget.feed.idFeed)
                               .then((listShare) => () {
-                                    showListDialog(context, listShare);
+                                    showListDialog(
+                                        context, listShare, "Share List");
                                     setState(() {
                                       isLoading = true;
                                     });

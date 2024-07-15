@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:location/location.dart';
 import 'package:whoru/src/models/location_models.dart';
 import 'package:whoru/src/pages/app.dart';
+import 'package:whoru/src/pages/splash/splash.dart';
 import 'package:whoru/src/utils/shared_pref/iduser.dart';
 
 import '../socket/web_socket_service.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class OwnMessageCard extends StatelessWidget {
   const OwnMessageCard({super.key, required this.message, required this.time,required this.id});

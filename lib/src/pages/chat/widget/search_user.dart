@@ -4,6 +4,7 @@ import 'package:whoru/src/api/user_info.dart';
 import 'package:whoru/src/models/search_model.dart';
 import 'package:whoru/src/models/user_chat.dart';
 import 'package:whoru/src/pages/chat/screens/individual_page.dart';
+import 'package:whoru/src/pages/chat/widget/search_widget.dart';
 
 import '../../../utils/shared_pref/iduser.dart';
 
@@ -31,127 +32,18 @@ class SearchUserChat extends SearchDelegate {
   }
 
   void getUser(String name) async {
-    res = await getInfoUserByName(name,1);
+    res = await getInfoUserByName(name, 1);
     id = await getIdUser();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    getUser(query);
-    List<SearchModel> matchQuery = [];
-    if (res != null && res.statusCode == 200) {
-      List<dynamic> jsonList = jsonDecode(res.body);
-      // Convert each item in the JSON array to a UserModel
-      matchQuery = jsonList.map((item) => SearchModel.fromJson(item)).toList();
-    } else {
-      return Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: Center(
-          child: Text(
-            'No results found.',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        ),
-      );
-    }
-    if (matchQuery.isEmpty) {
-      return Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: Center(
-          child: Text(
-            'No results found.',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        ),
-      );
-    }
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: ListView.builder(
-        itemCount: matchQuery.length,
-        itemBuilder: (context, index) {
-          SearchModel result = matchQuery[index];
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(result.avatar),
-            ),
-            title: Text(
-              result.fullName,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            onTap: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => IndividualPage(
-                            user: UserChat.fromSearchModel(result),
-                            currentId: id!,
-                          )));
-            },
-          );
-        },
-      ),
-    );
+    return BuildSearchWidget(query: query, parentContext: context);
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    getUser(query);
-
-    List<SearchModel> matchQuery = [];
-    if (res != null && res.statusCode == 200) {
-      List<dynamic> jsonList = jsonDecode(res.body);
-      // Convert each item in the JSON array to a UserModel
-      matchQuery = jsonList.map((item) => SearchModel.fromJson(item)).toList();
-    } else {
-      return Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: Center(
-          child: Text(
-            'No results found.',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        ),
-      );
-    }
-    if (matchQuery.isEmpty) {
-      return Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: Center(
-          child: Text(
-            'No results found.',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        ),
-      );
-    }
-    return Container(
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: ListView.builder(
-        itemCount: matchQuery.length,
-        itemBuilder: (context, index) {
-          SearchModel result = matchQuery[index];
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(result.avatar),
-            ),
-            title: Text(
-              result.fullName,
-              style: const TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => IndividualPage(
-                            user: UserChat.fromSearchModel(result),
-                            currentId: id!,
-                          )));
-            },
-          );
-        },
-      ),
-    );
+    return BuildSearchWidget(query: query, parentContext: context);
   }
 
   @override

@@ -15,7 +15,3 @@ Future<void> deleteToken() async {
   await prefs.remove('token');
 }
 
-Future<void> deleteIdUser() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.remove('idUser');
-}

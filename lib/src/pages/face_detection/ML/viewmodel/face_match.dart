@@ -28,8 +28,8 @@ class Recognizer {
 
   init() async {
     await loadModel();
-    await fetchData();
-    await loadRegisteredFaces();
+    // await fetchData();
+    // await loadRegisteredFaces();
   }
 
   Future<void> fetchData() async {
@@ -38,7 +38,6 @@ class Recognizer {
     for (FaceRegistrationInfo faceRegister in faceRegisters) {
       print('Length Embedding: ${faceRegister.embedding.length}');
     }
-    // print(checkdata());
   }
 
   // bool checkdata() {
@@ -64,6 +63,8 @@ class Recognizer {
   // }
 
   Future<void> loadRegisteredFaces() async {
+    List<FaceRegistrationInfo> faceRegisters = [];
+    await fetchData();
     registered.clear();
     if (faceRegisters.isEmpty) {
       print("Empty faceRegisters");
@@ -72,21 +73,7 @@ class Recognizer {
     }
     for (final row in faceRegisters) {
       int id = row.id;
-      // print('row.embedding======= ${row.embedding}');
       List<double> embedding = row.embedding;
-      // String cleanembedding = embedding0.substring(1, embedding0.length - 1);
-
-      // List<double> doubleList = cleanembedding
-      //     .split(',')
-      //     .map((e) => double.parse(e))
-      //     .toList()
-      //     .cast<double>();
-      // print('list embedding0======= $embedding0');
-      // print('cleanembedding======= $cleanembedding');
-      // print('doubleList======= $doubleList');
-
-      // Recognition recognition = Recognition(name, Rect.zero, doubleList, 0);
-      // print('doubleList======= ${embedding.length}');
 
       Recognition recognition = Recognition(id, Rect.zero, embedding, 0);
 

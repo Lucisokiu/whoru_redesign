@@ -152,7 +152,6 @@ class _RegistrationScreen extends State<RegistrationScreen> {
                     //     surnameTextEditingController.text,
                     //     recognition.embedding);
                     postEmbedding(recognition.embedding);
-                    print("AAAAAAAAAAAAAAAAAAAAA");
                     // faceRegister.add(FaceRegistrationInfo(
                     //   id: int.parse(numberTextEditingController.text),
                     //   embedding: recognition.embedding,

@@ -8,9 +8,11 @@ import 'package:whoru/src/models/location_models.dart';
 
 import '../../../models/user_model.dart';
 import '../../../socket/web_socket_service.dart';
+import '../../../utils/shared_pref/location_note.dart';
 import '../../app.dart';
+import '../../splash/splash.dart';
 
-class CustomizeMarker extends StatelessWidget {
+class CustomizeMarker extends StatefulWidget {
   final LatLng latLng;
   final int userId;
   final String avt;
@@ -23,10 +25,22 @@ class CustomizeMarker extends StatelessWidget {
       required this.avt,
       this.note});
 
+  @override
+  State<CustomizeMarker> createState() => _CustomizeMarkerState();
+}
+
+class _CustomizeMarkerState extends State<CustomizeMarker> {
+  late String note;
+
   void showMenu(BuildContext context) {
     WebSocketService webSocketService = WebSocketService();
 
     final TextEditingController titleController = TextEditingController();
+    // Function to load the note and set the controller's text
+    Future<void> loadNote() async {
+      titleController.text = note;
+    }
+
     void checkSensitiveWords() {
       final text = titleController.text;
       final sanitizedText =
@@ -43,10 +57,8 @@ class CustomizeMarker extends StatelessWidget {
         );
       }
     }
-    Future<void> _saveNote(text) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('note',text);
-    }
+
+    loadNote();
     showDialog(
       context: context,
       builder: (BuildContext contextDialog) {
@@ -60,12 +72,22 @@ class CustomizeMarker extends StatelessWidget {
             },
           ),
           actions: [
+            if (note.isNotEmpty)
+              TextButton(
+                onPressed: () {
+                  deleteNote().then((value) => fetchNote());
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Delete'),
+              ),
             TextButton(
               onPressed: () {
                 if (titleController.text.isNotEmpty) {
                   webSocketService.sendMessageSocket(
                       "SendNote", [localIdUser, titleController.text]);
-                  _saveNote(titleController.text);
+                  saveNote(titleController.text).then((value) => setState(() {
+                        fetchNote();
+                      }));
                   Navigator.of(context).pop();
                 } else {
                   ScaffoldMessenger.of(contextDialog).showSnackBar(
@@ -90,6 +112,20 @@ class CustomizeMarker extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    note = widget.note ?? '';
+    super.initState();
+  }
+
+  fetchNote() async {
+    final result = await getNote();
+    setState(() {
+      note = result;
+      print("Note: $note");
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
@@ -97,7 +133,7 @@ class CustomizeMarker extends StatelessWidget {
           markers: [
             Marker(
               rotate: true,
-              point: latLng,
+              point: widget.latLng,
               width: 45.w,
               height: 18.h,
               builder: (context) {
@@ -105,7 +141,7 @@ class CustomizeMarker extends StatelessWidget {
                   children: [
                     Center(
                       child: CachedNetworkImage(
-                        imageUrl: avt,
+                        imageUrl: widget.avt,
                         placeholder: (context, url) =>
                             const Center(child: CircularProgressIndicator()),
                         errorWidget: (context, url, error) =>
@@ -114,15 +150,14 @@ class CustomizeMarker extends StatelessWidget {
                             CircleAvatar(backgroundImage: imageProvider),
                       ),
                     ),
-                    note == null
-                        ? userId == localIdUser
+                    note.isEmpty
+                        ? widget.userId == localIdUser
                             ? Positioned(
                                 left: 23.w,
                                 bottom: 10.h,
                                 child: GestureDetector(
                                   onTap: () {
                                     showMenu(context);
-                                    print(note);
                                   },
                                   child: const Icon(
                                     Icons.add_circle,
@@ -152,14 +187,19 @@ class CustomizeMarker extends StatelessWidget {
                                   bottomLeft: Radius.circular(0),
                                 ),
                               ),
-                              child: Text(
-                                note!,
-                                style: const TextStyle(
-                                  color: Colors.white,
+                              child: GestureDetector(
+                                onTap: () {
+                                  showMenu(context);
+                                },
+                                child: Text(
+                                  note!,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  softWrap: true,
+                                  overflow: TextOverflow.visible,
                                 ),
-                                textAlign: TextAlign.center,
-                                softWrap: true,
-                                overflow: TextOverflow.visible,
                               ),
                             ),
                           ),

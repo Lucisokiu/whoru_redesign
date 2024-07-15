@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/feed.dart';
 import 'package:whoru/src/api/suggestion_user.dart';
@@ -33,6 +34,7 @@ class _FeedPageState extends State<FeedPage>
 
   int pageFeed = 0;
   int pageStory = 0;
+
   void getFeed() async {
     List<FeedModel>? result = await getAllPost(++pageFeed);
     if (mounted) {
@@ -105,29 +107,22 @@ class _FeedPageState extends State<FeedPage>
                         SizedBox(height: 0.5.h),
                         suggestList.isEmpty
                             ? Container()
-                            : SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: 22.h,
-                                      width: 50.w,
-                                      child: ListView.builder(
-                                          itemCount: suggestList.length,
-                                          itemBuilder: (context, index) {
-                                            return SuggestionCard(
-                                              id: suggestList[index].id,
-                                              name: suggestList[index].name,
-                                              avt: suggestList[index].avt,
-                                            );
-                                          }),
-                                    ),
-
-                                  ],
+                            : Align(
+                          alignment: Alignment.topLeft,
+                              child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: suggestList
+                                        .map((suggest) => SuggestionCard(
+                                              id: suggest.id,
+                                              name: suggest.name,
+                                              avt: suggest.avt,
+                                            ))
+                                        .toList(),
+                                  ),
                                 ),
-                              ),
-
+                            ),
                         listFeed.isEmpty
                             ? const SizedBox(
                                 height: 1000,

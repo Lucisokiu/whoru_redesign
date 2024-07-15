@@ -5,6 +5,7 @@ import 'package:location/location.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:whoru/src/pages/app.dart';
 import 'package:whoru/src/pages/call/videocall/video_call_creen.dart';
+import 'package:whoru/src/pages/splash/splash.dart';
 import 'package:whoru/src/utils/url.dart';
 
 import '../models/location_models.dart';
@@ -31,6 +32,7 @@ class WebSocketService {
 
   Future<void> connect() async {
     int? id = await getIdUser();
+    
     _channel = IOWebSocketChannel.connect(_url);
     _channel.stream.listen(
       (dynamic message) {
@@ -76,61 +78,6 @@ class WebSocketService {
   void close() {
     _channel.sink.close();
     print("channel.sink.close();");
-  }
-
-  void showCallDialog(int caller, String name, String avt, int receiver,
-      BuildContext context, WebSocketService webSocketService) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Align(
-                alignment: Alignment.topCenter,
-                child: Text(
-                  'Incoming Call',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.topCenter,
-                child: Text('Call from $caller'),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (builder) => VideoCallScreen(
-                                    idUser: caller,
-                                    currentId: receiver,
-                                    isJoinRoom: true,
-                                  )));
-                    },
-                    icon: const Icon(Icons.call),
-                    color: Colors.green,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.call_end),
-                    color: Colors.red,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
   }
 
   void listenCall(BuildContext context, List<dynamic> arguments) async {

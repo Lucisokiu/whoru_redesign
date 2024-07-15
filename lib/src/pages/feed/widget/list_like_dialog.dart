@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-void showListDialog(BuildContext context, List<Map<String, dynamic>> list) {
-
+void showListDialog(
+    BuildContext context, List<Map<String, dynamic>> list, String title) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -11,7 +11,6 @@ void showListDialog(BuildContext context, List<Map<String, dynamic>> list) {
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.5,
-
             child: Container(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -20,6 +19,10 @@ void showListDialog(BuildContext context, List<Map<String, dynamic>> list) {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      Text(
+                        title,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
                       IconButton(
                         icon: const Icon(Icons.close),
                         onPressed: () {
@@ -33,12 +36,11 @@ void showListDialog(BuildContext context, List<Map<String, dynamic>> list) {
                       itemCount: list.length,
                       itemBuilder: (context, index) {
                         GlobalKey commentKey = GlobalKey();
-                        // if()
                         return ListTile(
                           key: commentKey,
                           leading: CircleAvatar(
                             backgroundImage:
-                            NetworkImage(list[index]['avatar']),
+                                NetworkImage(list[index]['avatar']),
                           ),
                           title: Text(
                             list[index]['fullName'],
@@ -56,5 +58,4 @@ void showListDialog(BuildContext context, List<Map<String, dynamic>> list) {
       });
     },
   );
-
 }

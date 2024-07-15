@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/app.dart';
@@ -8,10 +9,12 @@ import 'package:whoru/src/pages/login/login_screen.dart';
 import 'package:whoru/src/pages/notification/controller/notifications_controller.dart';
 import 'package:whoru/src/pages/nude_detection/nude_screen.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
+import 'package:whoru/src/pages/splash/splash.dart';
 import 'package:whoru/src/pages/user/controller/theme/get_theme.dart';
 import 'package:whoru/src/pages/user/controller/language/language.dart';
 import 'package:whoru/src/utils/shared_pref/token.dart';
 
+import '../../utils/shared_pref/iduser.dart';
 import '../face_detection/ML/view/face_register_view.dart';
 import 'controller/language/app_localization.dart';
 import 'controller/language/bloc/language_bloc.dart';
@@ -81,7 +84,8 @@ class _UserPageState extends State<UserPage> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: Container(
+              child: 
+              Container(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: IconButton(
                     icon: Row(
@@ -247,6 +251,12 @@ class _UserPageState extends State<UserPage> {
               },
             ),
           ),
+           SizedBox(
+                height: 30.h,
+                width: 60.w,
+                child:
+                    Lottie.asset('assets/lottie/hello_panda.json',reverse: true),
+           )
           // Container(
           //   margin: const EdgeInsets.all(16),
           //   child: TextButton.icon(

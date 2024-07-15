@@ -6,8 +6,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:whoru/src/api/user_info.dart';
-import 'package:whoru/src/pages/app.dart';
 import 'package:whoru/src/pages/location/widget/customize_marker.dart';
+import 'package:whoru/src/pages/splash/splash.dart';
 import 'package:whoru/src/services/location_service.dart';
 import 'package:whoru/src/utils/shared_pref/iduser.dart';
 
@@ -116,7 +116,6 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("listLocation.length ${listLocation.length}");
     return Container(
       child: _userLocation == null && user == null
           ? const Center(

@@ -9,6 +9,7 @@ import 'package:whoru/src/pages/feed/screens/single_feed_screen.dart';
 import '../../../api/feed.dart';
 import '../../../api/share.dart';
 import '../../../utils/shared_pref/iduser.dart';
+import '../../splash/splash.dart';
 
 class PhotoProfile1 extends StatefulWidget {
   final int? idUser;

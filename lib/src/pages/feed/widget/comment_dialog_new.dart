@@ -120,7 +120,7 @@ class _CustomCommentDialogState extends State<CustomCommentDialog> {
                   IconButton(
                     icon: const Icon(Icons.close),
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.pop(context);
                     },
                   ),
                 ],

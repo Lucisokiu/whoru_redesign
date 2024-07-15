@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/follow.dart';
 import 'package:whoru/src/models/user_chat.dart';
@@ -50,8 +51,8 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
               child: GestureDetector(
                 onTap: () {
                   if (isMy) {
-                    getAllFollower()
-                        .then((listLike) => showListDialog(context, listLike));
+                    getAllFollower(1).then((listFollower) =>
+                        showListDialog(context, listFollower, "List Follower"));
                   }
                 },
                 child: Column(
@@ -79,8 +80,8 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
               child: GestureDetector(
                 onTap: () {
                   if (isMy) {
-                    getAllFollowing()
-                        .then((listLike) => showListDialog(context, listLike));
+                    getAllFollowing(1).then((listFollowing) => showListDialog(
+                        context, listFollowing, "List Following"));
                   }
                 },
                 child: Column(
@@ -175,49 +176,55 @@ Widget info(BuildContext context, UserModel user, bool isMy) {
                   ),
                 ],
               ),
-        SizedBox(
-          height: 2.h,
-        ),
+
         Align(
           alignment: Alignment.topLeft,
           child: Padding(
-            padding: EdgeInsets.only(left: 5.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            padding: EdgeInsets.only(left: 5.w,bottom: 1.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  // alignment: Alignment.topLeft,
-                  child: Text(
-                    'Work at: ${user.work}',
-                    style: const TextStyle(
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.grey),
-                  ),
+                
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Text(
+                        'Work at: ${user.work}',
+                        style: const TextStyle(
+                            fontFamily: "Lato",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.grey),
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        'Study at: ${user.study}',
+                        style: const TextStyle(
+                            fontFamily: "Lato",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.grey),
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        'Description: ${user.description}',
+                        style: const TextStyle(
+                            fontFamily: "Lato",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.grey),
+                      ),
+                    ),
+                  ],
                 ),
                 Container(
-                  // alignment: Alignment.topLeft,
-                  child: Text(
-                    'Study at: ${user.study}',
-                    style: const TextStyle(
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.grey),
-                  ),
-                ),
-                Container(
-                  // alignment: Alignment.topLeft,
-                  child: Text(
-                    'Description: ${user.description}',
-                    style: const TextStyle(
-                        fontFamily: "Lato",
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.grey),
-                  ),
-                ),
+                      height: 10.h,
+                      width: 20.w,
+                      child: Lottie.asset('assets/lottie/fishing_cat.json'),
+                    ),
               ],
             ),
           ),

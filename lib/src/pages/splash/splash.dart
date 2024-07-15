@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:lottie/lottie.dart';
+import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/utils/shared_pref/token.dart';
 
+import '../../api/user_info.dart';
+import '../../models/user_model.dart';
+import '../../utils/shared_pref/iduser.dart';
 import '../app.dart';
 import '../login/login_screen.dart';
 
-
+late int localIdUser;
+late UserModel localUser;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -19,6 +24,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   String? token;
+  int? _id;
 
   Future<void> _loadToken() async {
     final String? result = await getToken();
@@ -27,21 +33,49 @@ class _SplashScreenState extends State<SplashScreen>
     });
   }
 
+  Future<bool> getUser() async {
+    _id = await getIdUser();
+    print('Print: $_id');
+    if(_id == null){
+      return false;
+    }
+    return await getInfoUserById(_id!).then((value) {
+      if (value == null) {
+        deleteToken();
+        deleteIdUser();
+        return false;
+      } else {
+        localIdUser = value.id;
+        localUser = value;
+        return true;
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     _loadToken();
 
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => 
-          token != null ? const App() : const LoginScreen(),
-        ),
-      );
+    getUser().then((value) {
+      if (value) {
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) =>
+                  token != null ? const App() : const LoginScreen(),
+            ),
+          );
+        });
+      } else {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoginScreen(),
+            ),
+            (route) => false);
+      }
     });
   }
 

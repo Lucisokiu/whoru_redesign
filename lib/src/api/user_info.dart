@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:whoru/src/pages/app.dart';
+import 'package:whoru/src/pages/login/login_screen.dart';
 import 'package:whoru/src/utils/shared_pref/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
 import '../models/user_model.dart';
+import '../pages/splash/splash.dart';
 import '../utils/shared_pref/iduser.dart';
 
 Future<bool> createInfoUser(Map map) async {

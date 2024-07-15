@@ -7,13 +7,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/user_info.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
 
+import '../../camera/camera_regis_face.dart';
+
 class CreateInfoForm extends StatefulWidget {
   final BuildContext contextScafford;
 
   const CreateInfoForm({
     super.key,
     required this.contextScafford,
-
   });
 
   @override
@@ -37,15 +38,16 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
   late SMITrigger confetti;
 
   dynamic response;
+
   StateMachineController getRiveController(Artboard artboard) {
     StateMachineController? controller =
-    StateMachineController.fromArtboard(artboard, "State Machine 1");
+        StateMachineController.fromArtboard(artboard, "State Machine 1");
     artboard.addController(controller!);
     return controller;
   }
 
-  void createInfo(BuildContext context,String fullName, String description, String work, String study) {
-
+  void createInfo(BuildContext context, String fullName, String description,
+      String work, String study) {
     setState(() {
       isShowLoading = true;
       isShowConfetti = true;
@@ -67,12 +69,15 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
             if (mounted) {
               setState(() {
                 isShowLoading = false;
-
               });
               Future.delayed(const Duration(seconds: 2), () {
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const Navigation()),
-                      (Route<dynamic> route) => false,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                    CameraScreenFaceRegis(),
+                    // const Navigation(),
+                  ),
+                  (Route<dynamic> route) => false,
                 );
               });
             }
@@ -82,7 +87,6 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
           Future.delayed(const Duration(seconds: 2), () {
             setState(() {
               isShowLoading = false;
-
             });
           });
         }
@@ -124,14 +128,12 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
                     },
                     onSaved: (code) {},
                     style: TextStyle(
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .color), // Màu văn bản nhập vào
+                        color: Theme.of(context).textTheme.bodyMedium!.color),
+                    // Màu văn bản nhập vào
                     decoration: InputDecoration(
                         hintStyle: TextStyle(
                             color:
-                            Theme.of(context).textTheme.bodyMedium!.color),
+                                Theme.of(context).textTheme.bodyMedium!.color),
                         prefixIcon: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: SvgPicture.asset("assets/icons/password.svg"),
@@ -154,14 +156,12 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
                     },
                     onSaved: (code) {},
                     style: TextStyle(
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .color), // Màu văn bản nhập vào
+                        color: Theme.of(context).textTheme.bodyMedium!.color),
+                    // Màu văn bản nhập vào
                     decoration: InputDecoration(
                         hintStyle: TextStyle(
                             color:
-                            Theme.of(context).textTheme.bodyMedium!.color),
+                                Theme.of(context).textTheme.bodyMedium!.color),
                         prefixIcon: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: SvgPicture.asset("assets/icons/password.svg"),
@@ -184,14 +184,12 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
                     },
                     onSaved: (code) {},
                     style: TextStyle(
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .color), // Màu văn bản nhập vào
+                        color: Theme.of(context).textTheme.bodyMedium!.color),
+                    // Màu văn bản nhập vào
                     decoration: InputDecoration(
                         hintStyle: TextStyle(
                             color:
-                            Theme.of(context).textTheme.bodyMedium!.color),
+                                Theme.of(context).textTheme.bodyMedium!.color),
                         prefixIcon: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: SvgPicture.asset("assets/icons/password.svg"),
@@ -214,14 +212,12 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
                     },
                     onSaved: (code) {},
                     style: TextStyle(
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .color), // Màu văn bản nhập vào
+                        color: Theme.of(context).textTheme.bodyMedium!.color),
+                    // Màu văn bản nhập vào
                     decoration: InputDecoration(
                         hintStyle: TextStyle(
                             color:
-                            Theme.of(context).textTheme.bodyMedium!.color),
+                                Theme.of(context).textTheme.bodyMedium!.color),
                         prefixIcon: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: SvgPicture.asset("assets/icons/password.svg"),
@@ -232,7 +228,12 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
                   padding: const EdgeInsets.only(top: 8.0, bottom: 24),
                   child: ElevatedButton.icon(
                       onPressed: () {
-                        createInfo(context, _fullNameController.text,_desController.text,_workController.text,_studyController.text);
+                        createInfo(
+                            context,
+                            _fullNameController.text,
+                            _desController.text,
+                            _workController.text,
+                            _studyController.text);
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFF77D8E),
@@ -251,34 +252,33 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
                 )
               ],
             )),
-
         isShowLoading
             ? CustomPositioned(
-            child: RiveAnimation.asset(
-              "assets/RiveAssets/check.riv",
-              onInit: (artboard) {
-                StateMachineController controller =
-                getRiveController(artboard);
-                check = controller.findSMI("Check") as SMITrigger;
-                error = controller.findSMI("Error") as SMITrigger;
-                reset = controller.findSMI("Reset") as SMITrigger;
-              },
-            ))
+                child: RiveAnimation.asset(
+                "assets/RiveAssets/check.riv",
+                onInit: (artboard) {
+                  StateMachineController controller =
+                      getRiveController(artboard);
+                  check = controller.findSMI("Check") as SMITrigger;
+                  error = controller.findSMI("Error") as SMITrigger;
+                  reset = controller.findSMI("Reset") as SMITrigger;
+                },
+              ))
             : Container(),
         isShowConfetti
             ? CustomPositioned(
-            child: Transform.scale(
-              scale: 6,
-              child: RiveAnimation.asset(
-                "assets/RiveAssets/confetti.riv",
-                onInit: (artboard) {
-                  StateMachineController controller =
-                  getRiveController(artboard);
-                  confetti =
-                  controller.findSMI("Trigger explosion") as SMITrigger;
-                },
-              ),
-            ))
+                child: Transform.scale(
+                scale: 6,
+                child: RiveAnimation.asset(
+                  "assets/RiveAssets/confetti.riv",
+                  onInit: (artboard) {
+                    StateMachineController controller =
+                        getRiveController(artboard);
+                    confetti =
+                        controller.findSMI("Trigger explosion") as SMITrigger;
+                  },
+                ),
+              ))
             : const SizedBox()
       ],
     );
@@ -287,6 +287,7 @@ class _CreateInfoFormState extends State<CreateInfoForm> {
 
 class CustomPositioned extends StatelessWidget {
   const CustomPositioned({super.key, required this.child, this.size = 100});
+
   final Widget child;
   final double size;
 
