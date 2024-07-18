@@ -1,7 +1,7 @@
 class Suggestion{
-  int id;
-  String name;
-  String avt;
+  final int id;
+  final String name;
+  final String avt;
     Suggestion({
     required this.id,
     required this.name,

@@ -100,7 +100,7 @@ class _RecognitionScreen extends State<RecognitionScreen> {
       print('distance = ${recognition.distance}');
     }
     // getListSuggestionsList(listUser);
-    drawRectangleAroundFaces();
+    // drawRectangleAroundFaces();
   }
 /*
   Future<void> showRegisteredFacesDialog(BuildContext context) async {

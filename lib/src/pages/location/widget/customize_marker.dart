@@ -63,8 +63,11 @@ class _CustomizeMarkerState extends State<CustomizeMarker> {
       context: context,
       builder: (BuildContext contextDialog) {
         return AlertDialog(
-          title: const Text('Show your feelings'),
+          title: Text('Show your feelings',
+              style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyMedium?.color)),
           content: TextField(
+            style: Theme.of(context).textTheme.bodyMedium,
             controller: titleController,
             decoration: const InputDecoration(hintText: "Enter your text here"),
             onChanged: (value) {
@@ -97,13 +100,17 @@ class _CustomizeMarkerState extends State<CustomizeMarker> {
                   );
                 }
               },
-              child: const Text('POST'),
+              child: Text('POST',
+                  style: TextStyle(
+                      color: Theme.of(context).textTheme.bodyMedium?.color)),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('CANCEL'),
+              child: Text('CANCEL',
+                  style: TextStyle(
+                      color: Theme.of(context).textTheme.bodyMedium?.color)),
             ),
           ],
         );
@@ -192,7 +199,7 @@ class _CustomizeMarkerState extends State<CustomizeMarker> {
                                   showMenu(context);
                                 },
                                 child: Text(
-                                  note!,
+                                  note,
                                   style: const TextStyle(
                                     color: Colors.white,
                                   ),

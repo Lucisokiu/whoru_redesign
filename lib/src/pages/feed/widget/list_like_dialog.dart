@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 void showListDialog(
@@ -17,11 +18,11 @@ void showListDialog(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         title,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 18),
                       ),
                       IconButton(
                         icon: const Icon(Icons.close),
@@ -35,13 +36,19 @@ void showListDialog(
                     child: ListView.builder(
                       itemCount: list.length,
                       itemBuilder: (context, index) {
-                        GlobalKey commentKey = GlobalKey();
                         return ListTile(
-                          key: commentKey,
-                          leading: CircleAvatar(
-                            backgroundImage:
-                                NetworkImage(list[index]['avatar']),
+                          leading: CachedNetworkImage(
+                            imageUrl: list[index]['avatar'],
+                            placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            imageBuilder: (context, imageProvider) =>
+                                CircleAvatar(
+                              backgroundImage: imageProvider,
+                            ),
                           ),
+
                           title: Text(
                             list[index]['fullName'],
                             style: Theme.of(context).textTheme.bodyMedium,

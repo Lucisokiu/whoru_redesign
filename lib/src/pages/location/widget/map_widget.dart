@@ -64,7 +64,6 @@ class _MapWidgetState extends State<MapWidget> {
   void initialize() async {
     await locationService.getID();
     locationService.sendLocation();
-    print("listLocation.length ${listLocation.length}");
     currentLocation();
     getUser();
     getListUser();
@@ -91,6 +90,7 @@ class _MapWidgetState extends State<MapWidget> {
               if (mounted) {
                 setState(() {
                   listLocation.add(location);
+                  print("listLocation.length ${listLocation.length}");
                 });
               }
             }
@@ -111,6 +111,7 @@ class _MapWidgetState extends State<MapWidget> {
 
   @override
   void dispose() {
+    locationService.closeLocation();
     super.dispose();
   }
 
@@ -128,7 +129,7 @@ class _MapWidgetState extends State<MapWidget> {
                       maxZoom: 18,
                       minZoom: 16,
                       center: LatLng(
-                          _userLocation!.latitude!, _userLocation!.longitude!),
+                          _userLocation?.latitude! ?? 0.0, _userLocation?.longitude! ?? 0.0),
                       zoom: 17),
                   children: [
                     TileLayer(

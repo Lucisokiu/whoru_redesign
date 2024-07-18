@@ -28,6 +28,8 @@ class CardFeed extends StatefulWidget {
 class _CardFeedState extends State<CardFeed> {
   bool isLoading = false;
   bool isFollow = false;
+  bool isShare = false;
+  bool isSave = false;
 
   void callAPI() {
     customCommentDialog(context, widget.feed.idFeed, localIdUser);
@@ -37,6 +39,8 @@ class _CardFeedState extends State<CardFeed> {
   void initState() {
     setState(() {
       isFollow = widget.feed.isFollow;
+      isShare = widget.feed.isShare;
+      isSave = widget.feed.isSave;
     });
     super.initState();
   }
@@ -224,7 +228,7 @@ class _CardFeedState extends State<CardFeed> {
                           setState(() {
                             isLoading = true;
                           });
-                          getListLike(widget.feed.idFeed).then((listLike) {
+                          getListLike(widget.feed.idFeed, 1).then((listLike) {
                             setState(() {
                               isLoading = false;
                             });
@@ -242,32 +246,40 @@ class _CardFeedState extends State<CardFeed> {
                               context, widget.feed.idFeed, localIdUser);
                         },
                         onLongPress: () {},
-                        isLike: false,
+                        commentButton: true,
                       ),
                       BuildButtonFeed(
                         icon: PhosphorIconsFill.shareFat,
                         label: widget.feed.shareCount,
                         onPressed: () {
-                          sharePost(widget.feed.idFeed);
+                          if (localIdUser != widget.feed.idUser) {
+                            if (isShare) {
+                              unSharePost(widget.feed.idFeed);
+                              setState(() {
+                                isShare = !isShare;
+                              });
+                            } else {
+                              sharePost(widget.feed.idFeed);
+                              setState(() {
+                                isShare = !isShare;
+                              });
+                            }
+                          }
                         },
                         onLongPress: () {
-                          // List<Map<String, dynamic>> listShare =
-                          //     await getListShare(widget.feed.idFeed);
-                          // showListDialog(context, listShare);
                           setState(() {
                             isLoading = true;
                           });
-                          getListShare(widget.feed.idFeed)
-                              .then((listShare) => () {
-                                    showListDialog(
-                                        context, listShare, "Share List");
-                                    setState(() {
-                                      isLoading = true;
-                                    });
-                                  });
+                          getListShare(widget.feed.idFeed, 1).then((listShare) {
+                            showListDialog(context, listShare, "Share List");
+                            setState(() {
+                              isLoading = false;
+                            });
+                          });
                         },
-                        isShare: widget.feed.isLike,
+                        isShare: isShare,
                         shareButton: true,
+                        isMy: localIdUser == widget.feed.idUser,
                       ),
                     ],
                   ),

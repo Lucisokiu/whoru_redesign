@@ -47,10 +47,13 @@ Future<void> unLikePost(idPost) async {
 }
 
 
-Future<List<Map<String, dynamic>>> getListLike(idPost) async {
+Future<List<Map<String, dynamic>>> getListLike(idPost,int page) async {
   var url = Uri.https(baseUrl, '/api/v1/Likes/GetAllLikedUser');
   String? token = await getToken();
-
+  Map<String, dynamic> map = {
+    "idPost": idPost,
+    "page": page,
+  };
   try {
     var response = await http.post(
       url,
@@ -59,7 +62,7 @@ Future<List<Map<String, dynamic>>> getListLike(idPost) async {
         'Accept': 'application/json',
         'Authorization': 'bearer $token',
       },
-      body: idPost.toString(), // Sending the idPost as JSON
+      body: jsonEncode(map), // Sending the idPost as JSON
     );
     if (response.statusCode == 200) {
       // Parse the response and extract the list of users as a list of maps

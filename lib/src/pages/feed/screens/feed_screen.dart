@@ -31,18 +31,22 @@ class _FeedPageState extends State<FeedPage>
   List<Story> storyList = [];
   List<Suggestion> suggestList = [];
   bool isLoadingStory = true;
+  bool isFull = false;
 
   int pageFeed = 0;
   int pageStory = 0;
 
   void getFeed() async {
-    List<FeedModel>? result = await getAllPost(++pageFeed);
+    List<FeedModel> result = await getAllPost(++pageFeed);
+    if (result.isEmpty) {
+      setState(() {
+        isFull = true;
+      });
+    }
     if (mounted) {
-      if (result != null) {
-        setState(() {
-          listFeed.addAll(result);
-        });
-      }
+      setState(() {
+        listFeed.addAll(result);
+      });
     }
   }
 
@@ -108,11 +112,12 @@ class _FeedPageState extends State<FeedPage>
                         suggestList.isEmpty
                             ? Container()
                             : Align(
-                          alignment: Alignment.topLeft,
-                              child: SingleChildScrollView(
+                                alignment: Alignment.topLeft,
+                                child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: suggestList
                                         .map((suggest) => SuggestionCard(
                                               id: suggest.id,
@@ -122,7 +127,7 @@ class _FeedPageState extends State<FeedPage>
                                         .toList(),
                                   ),
                                 ),
-                            ),
+                              ),
                         listFeed.isEmpty
                             ? const SizedBox(
                                 height: 1000,
@@ -133,8 +138,12 @@ class _FeedPageState extends State<FeedPage>
                               )
                       ],
                     );
-                  } else if (index == listFeed.length) {
+                  } else if (index == listFeed.length && !isFull) {
                     return _buildListFooter();
+                  } else if (index == listFeed.length && isFull) {
+                    return Container(
+                      height: 10.h,
+                    );
                   } else {
                     return CardFeed(
                       feed: listFeed[index],

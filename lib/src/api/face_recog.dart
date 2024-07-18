@@ -49,9 +49,7 @@ Future<List<FaceRegistrationInfo>> getAllEmbedding() async {
       jsonList.map((json) => FaceRegistrationInfo.fromJson(json)).toList();
 
   for (var info in faceRegistrationInfos) {
-    print('ID: ${info.id}');
-    print('Embedding: ${info.embedding}');
-    print('List Embedding: ${info.embedding.length}');
+    print('ID from API: ${info.id}');
   }
   if (response.statusCode == 200) {
     print('embeddeding request successful');

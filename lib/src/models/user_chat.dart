@@ -1,5 +1,6 @@
 import 'package:whoru/src/models/chat_model.dart';
 import 'package:whoru/src/models/search_model.dart';
+import 'package:whoru/src/models/user_model.dart';
 
 class UserChat {
   int idUser;
@@ -32,6 +33,13 @@ class UserChat {
       idUser: chatModel.idUser,
       fullName: chatModel.fullName,
       avatar: chatModel.avatar,
+    );
+  }
+  factory UserChat.fromUserModel(UserModel userModel) {
+    return UserChat(
+      idUser: userModel.id,
+      fullName: userModel.fullName,
+      avatar: userModel.avt,
     );
   }
 }

@@ -12,55 +12,53 @@ import 'add_story.dart';
 Widget storywidget(
     BuildContext context, List<Story> storyList, bool isLoading) {
   return Container(
-    height: 13.h,
-    width: 100.w,
-    decoration: BoxDecoration(
-      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(24)),
-      color: Theme.of(context).scaffoldBackgroundColor,
-      boxShadow: [
-        BoxShadow(
-          color: Theme.of(context).shadowColor,
-          spreadRadius: 1,
-          blurRadius: 2,
-          offset: const Offset(2.0, 2.0),
-        ),
-      ],
-    ),
-    padding: EdgeInsets.symmetric(vertical: 0.5.h),
-    child:
-    storyList.isEmpty?
-    Row(
-      children: [
-        addStory(context),
-        Container(
-          height: 10.h,
-          child: Lottie.asset('assets/lottie/playing_cat.json'),
-        ),
-      ],
-    )
-    :SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          addStory(context),
-          if (storyList.isNotEmpty)
-            for (int i = 0; i < storyList.length; i++)
-              yourStory(context, storyList[i].imageUrl, storyList[i].name),
-
-          SizedBox(width: 10.w),
-          if (isLoading)
-            Padding(
-              padding: EdgeInsets.only(bottom: 3.h),
-              child: CircularProgressIndicator(),
-            ),
-          SizedBox(
-            width: 2.w,
-          )
+      height: 13.h,
+      width: 100.w,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(24)),
+        color: Theme.of(context).scaffoldBackgroundColor,
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).shadowColor,
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: const Offset(2.0, 2.0),
+          ),
         ],
       ),
-    )
-  );
+      padding: EdgeInsets.symmetric(vertical: 0.5.h),
+      child: storyList.isEmpty
+          ? Row(
+              children: [
+                addStory(context),
+                Container(
+                  height: 10.h,
+                  child: Lottie.asset('assets/lottie/playing_cat.json'),
+                ),
+              ],
+            )
+          : SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  addStory(context),
+                  if (storyList.isNotEmpty)
+                    for (int i = 0; i < storyList.length; i++)
+                      yourStory(
+                          context, storyList[i].imageUrl, storyList[i].name),
+                  SizedBox(width: 10.w),
+                  if (isLoading)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 3.h),
+                      child: CircularProgressIndicator(),
+                    ),
+                  SizedBox(
+                    width: 2.w,
+                  )
+                ],
+              ),
+            ));
 }
 
 Widget yourStory(BuildContext context, urlImage, userName) {
@@ -123,11 +121,17 @@ Widget yourStory(BuildContext context, urlImage, userName) {
               shape: BoxShape.circle,
             ),
             padding: const EdgeInsets.all(2),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(70),
-              child: Image.network(
-                urlImage,
-                fit: BoxFit.cover,
+            child: CachedNetworkImage(
+              imageUrl: urlImage,
+              placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              imageBuilder: (context, imageProvider) => ClipRRect(
+                borderRadius: BorderRadius.circular(70),
+                child: Image.network(
+                  urlImage,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

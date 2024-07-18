@@ -6,6 +6,7 @@ import 'package:whoru/src/pages/app.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 import '../../../api/comment.dart';
 import '../../../models/comment_model.dart';
+import '../../splash/splash.dart';
 
 Future<Object?> customCommentDialog(
     BuildContext contextScafford, int idFeed, int currentUser) {
@@ -49,6 +50,7 @@ class _CustomCommentDialogState extends State<CustomCommentDialog> {
   int page = 1;
   bool isFull = false;
   bool sendButton = false;
+
   @override
   void initState() {
     super.initState();
@@ -99,140 +101,187 @@ class _CustomCommentDialogState extends State<CustomCommentDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Center(
-        child: Container(
-          height: MediaQuery.of(context).size.height / 1.5,
-          width: MediaQuery.of(context).size.width * 0.9,
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-          decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              borderRadius: const BorderRadius.all(Radius.circular(20))),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            resizeToAvoidBottomInset: false,
-            body: Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Comment"),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () {
-                      Navigator.pop(context);
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: Center(
+          child: Container(
+            height: MediaQuery.of(context).size.height / 1.5,
+            width: MediaQuery.of(context).size.width * 0.9,
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+            decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: const BorderRadius.all(Radius.circular(20))),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              resizeToAvoidBottomInset: false,
+              body: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Comment",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontSize: 24),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: comments.length,
+                    itemBuilder: (context, index) {
+                      GlobalKey commentKey = GlobalKey();
+                      if (isFull == false && index == comments.length) {
+                        fetchData();
+                        return const CircularProgressIndicator();
+                      }
+                      return ListTile(
+                        key: commentKey,
+                        onLongPress: () {
+                          if (comments[index].idUser == widget.currentUser) {
+                            showCommentContextMenu(
+                                context, comments[index], commentKey);
+                          }
+                        },
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (builder) => ProfilePage(
+                                isMy: comments[index].idUser ==
+                                    widget.currentUser,
+                                idUser: comments[index].idUser,
+                              ),
+                            ),
+                          );
+                        },
+                        leading: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (builder) => ProfilePage(
+                                  isMy: comments[index].idUser == localIdUser,
+                                  idUser: comments[index].idUser,
+                                ),
+                              ),
+                            );
+                          },
+                          child: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(comments[index].avatar),
+                          ),
+                        ),
+                        title: Align(
+                          alignment: Alignment.topLeft,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                comments[index].fullName,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(fontSize: 18),
+                              ),
+                              SizedBox(
+                                height: 1.h,
+                              ),
+                              Text(
+                                comments[index].content,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
                     },
                   ),
-                ],
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: comments.length,
-                  itemBuilder: (context, index) {
-                    GlobalKey commentKey = GlobalKey();
-                    if (isFull == false && index == comments.length) {
-                      fetchData();
-                      return const CircularProgressIndicator();
-                    }
-                    return ListTile(
-                      key: commentKey,
-                      onLongPress: () {
-                        if (comments[index].idUser == widget.currentUser) {
-                          showCommentContextMenu(
-                              context, comments[index], commentKey);
-                        }
-                      },
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (builder) => ProfilePage(
-                              isMy:
-                                  comments[index].idUser == widget.currentUser,
-                              idUser: comments[index].idUser,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 32.w,
+                      child: Card(
+                        margin:
+                            const EdgeInsets.only(left: 2, right: 2, bottom: 8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 0, top: 0, left: 20.0),
+                          child: TextFormField(
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            controller: _controller,
+                            keyboardType: TextInputType.multiline,
+                            maxLines: 5,
+                            minLines: 1,
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                setState(() {
+                                  sendButton = true;
+                                });
+                              } else {
+                                setState(() {
+                                  sendButton = false;
+                                });
+                              }
+                            },
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Type a message",
+                              hintStyle: TextStyle(color: Colors.grey),
                             ),
                           ),
-                        );
-                      },
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(comments[index].avatar),
+                        ),
                       ),
-                      title: Text(
-                        comments[index].content,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 8,
+                        right: 2,
+                        left: 2,
                       ),
-                    );
-                  },
-                ),
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width - 32.w,
-                    child: Card(
-                      margin:
-                          const EdgeInsets.only(left: 2, right: 2, bottom: 8),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 0, top: 0, left: 20.0),
-                        child: TextFormField(
-                          controller: _controller,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: 5,
-                          minLines: 1,
-                          onChanged: (value) {
-                            if (value.isNotEmpty) {
+                      child: CircleAvatar(
+                        radius: 25,
+                        backgroundColor: const Color(0xFF128C7E),
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.send,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            postComment(widget.idFeed, _controller.text);
+
+                            if (sendButton) {
                               setState(() {
-                                sendButton = true;
-                              });
-                            } else {
-                              setState(() {
+                                _controller.text = '';
                                 sendButton = false;
                               });
                             }
                           },
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Type a message",
-                            hintStyle: TextStyle(color: Colors.grey),
-                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 8,
-                      right: 2,
-                      left: 2,
-                    ),
-                    child: CircleAvatar(
-                      radius: 25,
-                      backgroundColor: const Color(0xFF128C7E),
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.send,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          postComment(widget.idFeed, _controller.text);
-
-                          if (sendButton) {
-                            setState(() {
-                              _controller.text = '';
-                              sendButton = false;
-                            });
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ]),
+                  ],
+                )
+              ]),
+            ),
           ),
         ),
       ),

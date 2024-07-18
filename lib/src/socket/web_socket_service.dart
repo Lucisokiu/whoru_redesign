@@ -32,7 +32,7 @@ class WebSocketService {
 
   Future<void> connect() async {
     int? id = await getIdUser();
-    
+
     _channel = IOWebSocketChannel.connect(_url);
     _channel.stream.listen(
       (dynamic message) {
@@ -86,7 +86,7 @@ class WebSocketService {
       String name = arguments[1];
       String avt = arguments[2];
       int idReceiver = arguments[3];
-
+      String type = arguments[4];
       if (idReceiver == localIdUser) {
         print(localIdUser);
         Navigator.push(
@@ -97,6 +97,7 @@ class WebSocketService {
               fullName: name,
               idCaller: idCaller,
               idReceiver: idReceiver,
+              isVideoCall: type == "Video",
             ),
           ),
         );
@@ -139,7 +140,6 @@ class WebSocketService {
           }
         }
       }
-
     });
 
     return locationDataList;

@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/api/story.dart';
+import 'package:whoru/src/pages/app.dart';
 import 'package:whoru/src/pages/navigation/navigation.dart';
 
 import '../../nude_detection/test.dart';
@@ -70,20 +71,22 @@ class ImageUploadScreenState extends State<ImageUploadScreen> {
         setState(() {
           isPosting = true;
         });
-        postStory(imageFile: _image!).then(
-          (value) => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (builder) => Navigation(),
-            ),
-          ),
-        );
+        Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const Navigation()),
+              ModalRoute.withName('/app'), // Giữ lại màn hình có tên là '/app'
+            );
+        // postStory(imageFile: _image!).then((value) =>
+        //     Navigator.pushAndRemoveUntil(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => const Navigation()),
+        //       ModalRoute.withName('/app'), // Giữ lại màn hình có tên là '/app'
+        //     ));
       } else {
         setState(() {
           isPosting = false;
         });
         ScaffoldMessenger.of(context).showSnackBar(
-
           const SnackBar(
             content: Text(
                 'Selected images can be nudity. Please select different images.'),

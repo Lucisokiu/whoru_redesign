@@ -5,7 +5,6 @@ import 'package:image/image.dart' as img;
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:whoru/src/api/face_recog.dart';
 import 'package:whoru/src/pages/face_detection/DB/face_registration_info.dart';
-import 'package:whoru/src/pages/face_detection/ML/view/face_register_view.dart';
 import 'face_register.dart';
 
 class Recognizer {
@@ -63,7 +62,6 @@ class Recognizer {
   // }
 
   Future<void> loadRegisteredFaces() async {
-    List<FaceRegistrationInfo> faceRegisters = [];
     await fetchData();
     registered.clear();
     if (faceRegisters.isEmpty) {
@@ -138,7 +136,7 @@ class Recognizer {
         .cast<double>();
     print('doubleListOutput=========== ${doubleListOutput.length}');
     Pair pair = findNearest(doubleListOutput);
-    print("mesafe= ${pair.distance}");
+    print("Khoảng cách ${pair.distance}");
 
     return Recognition(pair.number, location, doubleListOutput, pair.distance);
   }

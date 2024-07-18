@@ -2,5 +2,6 @@
     "language": "Language",
     "logout": "Log out",
     "loading": "Loading...",
-    "thememode": "Dark Mode"
+    "thememode": "Dark Mode",
+    "notification": "Notification"
 }

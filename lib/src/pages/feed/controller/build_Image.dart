@@ -523,6 +523,8 @@ class BuildButtonFeed extends StatefulWidget {
   final bool isShare;
   final bool likeButton;
   final bool shareButton;
+  final bool commentButton;
+  final bool isMy;
 
   const BuildButtonFeed({
     super.key,
@@ -534,6 +536,8 @@ class BuildButtonFeed extends StatefulWidget {
     this.isShare = false,
     this.likeButton = false,
     this.shareButton = false,
+    this.commentButton = false,
+    this.isMy = false,
   });
 
   @override
@@ -543,10 +547,12 @@ class BuildButtonFeed extends StatefulWidget {
 class _BuildButtonFeedState extends State<BuildButtonFeed> {
   late bool isLike;
   late int label;
+  late bool isShare;
 
   @override
   void initState() {
     isLike = widget.isLike;
+    isShare = widget.isShare;
     label = widget.label;
     super.initState();
   }
@@ -557,21 +563,30 @@ class _BuildButtonFeedState extends State<BuildButtonFeed> {
     });
   }
 
+  void toggleShare() {
+    setState(() {
+      isShare = !isShare;
+    });
+  }
+
   handleLikeButton() {
     widget.onPressed();
-    print("oke onPress");
-    print("${widget.likeButton}");
-    if (widget.likeButton == true) {
-      print("??????");
-      setState(() {
-        if (isLike) {
-          label--;
-        } else {
-          label++;
-        }
-        toggleLike();
-      });
+    if (isLike) {
+      label--;
+    } else {
+      label++;
     }
+    toggleLike();
+  }
+
+  handleShareButton() {
+    widget.onPressed();
+    if (isShare) {
+      label--;
+    } else {
+      label++;
+    }
+    toggleShare();
   }
 
   @override
@@ -579,17 +594,40 @@ class _BuildButtonFeedState extends State<BuildButtonFeed> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        GestureDetector(
-          // Wrap IconButton with GestureDetector
-          onLongPress: widget.onLongPress,
-          child: IconButton(
-            icon: Icon(widget.icon),
-            color: isLike ? Colors.red : null,
-            onPressed: () {
-              handleLikeButton();
-            },
-          ),
-        ),
+        if (widget.likeButton)
+          GestureDetector(
+              // Wrap IconButton with GestureDetector
+              onLongPress: widget.onLongPress,
+              child: IconButton(
+                icon: Icon(widget.icon),
+                color: isLike ? Colors.red : null,
+                onPressed: () {
+                  handleLikeButton();
+                },
+              )),
+        if (widget.shareButton)
+          GestureDetector(
+              // Wrap IconButton with GestureDetector
+              onLongPress: widget.onLongPress,
+              child: IconButton(
+                icon: Icon(widget.icon),
+                color: isShare ? Colors.blue : null,
+                onPressed: () {
+                  if (!widget.isMy) {
+                    handleShareButton();
+                  }
+                },
+              )),
+        if (widget.commentButton)
+          GestureDetector(
+              // Wrap IconButton with GestureDetector
+              onLongPress: widget.onLongPress,
+              child: IconButton(
+                icon: Icon(widget.icon),
+                onPressed: () {
+                  widget.onPressed();
+                },
+              )),
         const SizedBox(width: 4),
         Text(label.toString()),
       ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/appbar/appbar.dart';
+import 'package:whoru/src/pages/profile/profile_screen.dart';
 import '../../../api/notification.dart';
 import '../../../models/notification_model.dart';
 
@@ -59,10 +61,29 @@ class _NotificationScreenState extends State<NotificationScreen>
                   ),
                 );
                 return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(notification.avatarUrl),
+                  leading: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (builder) => ProfilePage(
+                            isMy: false,
+                            idUser: notificationsList[index].idUser,
+                          ),
+                        ),
+                      );
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(notification.avatarUrl),
+                    ),
                   ),
-                  title: Text(notification.name),
+                  title: Text(
+                    notification.name,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontSize: 18),
+                  ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -70,12 +91,8 @@ class _NotificationScreenState extends State<NotificationScreen>
                       Text(notification.content),
                     ],
                   ),
-                  trailing: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(notification.time),
-                    ],
-                  ),
+                  trailing: Text(notification.time,
+                      style: Theme.of(context).textTheme.bodyMedium),
                   onTap: () {},
                 );
               },

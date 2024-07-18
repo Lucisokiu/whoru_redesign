@@ -12,6 +12,7 @@ import 'package:whoru/src/pages/profile/profile_screen.dart';
 import 'package:whoru/src/pages/splash/splash.dart';
 import 'package:whoru/src/pages/user/controller/theme/get_theme.dart';
 import 'package:whoru/src/pages/user/controller/language/language.dart';
+import 'package:whoru/src/utils/shared_pref/location_note.dart';
 import 'package:whoru/src/utils/shared_pref/token.dart';
 
 import '../../utils/shared_pref/iduser.dart';
@@ -84,8 +85,7 @@ class _UserPageState extends State<UserPage> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: 
-              Container(
+              child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: IconButton(
                     icon: Row(
@@ -172,7 +172,7 @@ class _UserPageState extends State<UserPage> {
                         fontFamily: "Inter",
                         fontWeight: FontWeight.w500),
                   ),
-                  onPressed: (){},
+                  onPressed: () {},
                 ),
                 const Spacer(),
                 DropdownButton<String>(
@@ -198,9 +198,10 @@ class _UserPageState extends State<UserPage> {
             child: IconButton(
               icon: Row(
                 children: [
-                  const Text(
-                    "Notification",
-                    style: TextStyle(
+                  Text(
+                    AppLocalization.of(context)
+                        .getTranslatedValues('notification'),
+                    style: const TextStyle(
                         fontSize: 18,
                         fontFamily: "Inter",
                         fontWeight: FontWeight.w500),
@@ -243,20 +244,20 @@ class _UserPageState extends State<UserPage> {
               onPressed: () async {
                 deleteToken();
                 deleteIdUser();
-                Navigator.pushAndRemoveUntil(
+                deleteNote();
+                Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (builder) => const LoginScreen()),
-                    (route) => false);
+                        builder: (builder) => const LoginScreen()));
               },
             ),
           ),
-           SizedBox(
-                height: 30.h,
-                width: 60.w,
-                child:
-                    Lottie.asset('assets/lottie/hello_panda.json',reverse: true),
-           )
+          SizedBox(
+            height: 30.h,
+            width: 60.w,
+            child:
+                Lottie.asset('assets/lottie/hello_panda.json', reverse: true),
+          )
           // Container(
           //   margin: const EdgeInsets.all(16),
           //   child: TextButton.icon(

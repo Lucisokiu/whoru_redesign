@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:whoru/src/models/chat_model.dart';
 import 'package:whoru/src/models/user_chat.dart';
 import 'package:whoru/src/pages/chat/screens/individual_page.dart';
@@ -24,14 +25,9 @@ class CustomCard extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            leading: ClipOval(
-              child: Image.network(
-                chatModel.avatar,
-                // color : Colors.white,
-                height: 40,
-                width: 40,
-                fit: BoxFit.cover,
-              ),
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(chatModel.avatar),
+              radius: 4.h,
             ),
             title: Text(
               chatModel.fullName,
@@ -48,16 +44,16 @@ class CustomCard extends StatelessWidget {
                   width: 3,
                 ),
                 Text(
-                  chatModel.type == "Room" || chatModel.type == "Message" ? chatModel.currentMessage : "${chatModel.fullName} send a picture",
-                  style: const TextStyle(
-                    fontSize: 13,
-                  ),
-                ),
+                    chatModel.type == "Room" || chatModel.type == "Message"
+                        ? chatModel.currentMessage
+                        : "${chatModel.fullName} send a picture",
+                    style: Theme.of(context).textTheme.bodyMedium),
               ],
             ),
             trailing: chatModel.type == "Room" || chatModel.type == "Message"
-                ? Text(chatModel.type)
-                : const Text("Image"),
+                ? Text(chatModel.type,
+                    style: Theme.of(context).textTheme.bodyMedium)
+                : Text("Image", style: Theme.of(context).textTheme.bodyMedium),
           ),
           const Padding(
             padding: EdgeInsets.only(right: 20, left: 80),

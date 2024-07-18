@@ -1,15 +1,22 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 import 'package:whoru/src/pages/camera/camera.dart';
+import 'package:whoru/src/pages/navigation/navigation.dart';
 
 import '../../../api/face_recog.dart';
 import '../../../api/feed.dart';
 import '../../../utils/sensitive_words.dart';
 import '../../face_detection/DB/face_registration_info.dart';
+import '../../face_detection/ML/viewmodel/face_match.dart';
+import '../../face_detection/ML/viewmodel/face_register.dart';
 import '../../nude_detection/test.dart';
+import 'package:image/image.dart' as img;
+
+import '../controller/controller_faces_match.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -22,6 +29,8 @@ class _CreatePostState extends State<CreatePost> {
   final TextEditingController _titleController = TextEditingController();
   final List<XFile> _selectedImages = [];
   bool isLoading = false;
+  late RecognizerFaceMatch recognizerFaceMatch;
+
   final RegExp _sensitiveWordPattern = RegExp(
     '\\b(${sensitiveWords.join('|')})\\b',
     caseSensitive: false,
@@ -31,19 +40,14 @@ class _CreatePostState extends State<CreatePost> {
 
   @override
   void initState() {
+    recognizerFaceMatch = RecognizerFaceMatch();
     _titleController.addListener(() {
       _checkSensitiveWords();
       checkMaxTitle();
     });
     super.initState();
   }
-  Future<void> fetchData() async {
-    faceRegisters = await getAllEmbedding();
 
-    for (FaceRegistrationInfo faceRegister in faceRegisters) {
-      print('Length Embedding: ${faceRegister.embedding.length}');
-    }
-  }
   Future<void> postFeed() async {
     setState(() {
       isLoading = true;
@@ -72,9 +76,9 @@ class _CreatePostState extends State<CreatePost> {
         );
       }
     } else {
-    // await loadModel();
-
-      
+      for (File image in files) {
+        await recognizerFaceMatch.doFaceDetection(image);
+      }
       postApiWithImages(
         imageFiles: files,
         content: _titleController.text,
@@ -83,7 +87,11 @@ class _CreatePostState extends State<CreatePost> {
         setState(() {
           isLoading = false;
         });
-        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const Navigation()),
+              ModalRoute.withName('/app'), // Giữ lại màn hình có tên là '/app'
+            );
       });
     }
   }

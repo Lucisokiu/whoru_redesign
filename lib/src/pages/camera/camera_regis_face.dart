@@ -12,6 +12,8 @@ import '../face_detection/ML/view/face_match_view.dart';
 import '../face_detection/ML/viewmodel/face_match.dart';
 import '../face_detection/ML/viewmodel/face_register.dart';
 import '../face_detection/constants/painter.dart';
+import '../splash/splash.dart';
+import 'controller/controller_regis_face.dart';
 
 class CameraScreenFaceRegis extends StatefulWidget {
   const CameraScreenFaceRegis({super.key});
@@ -23,21 +25,19 @@ class CameraScreenFaceRegis extends StatefulWidget {
 class _CameraScreenFaceRegisState extends State<CameraScreenFaceRegis> {
   late ImagePicker imagePicker;
   File? _image;
-
   late FaceDetector faceDetector;
-  late Recognizer recognizer;
+  late RecognizerRegister recognizerRegister;
+
 
   @override
   void initState() {
     super.initState();
     imagePicker = ImagePicker();
 
-    final options =
-        FaceDetectorOptions(performanceMode: FaceDetectorMode.accurate);
-    faceDetector = FaceDetector(options: options);
-    recognizer = Recognizer();
+    recognizerRegister = RecognizerRegister();
     _imgFromCamera(context);
   }
+
 
   _imgFromCamera(BuildContext context) async {
     XFile? pickedFile = await imagePicker.pickImage(source: ImageSource.camera);
@@ -49,7 +49,7 @@ class _CameraScreenFaceRegisState extends State<CameraScreenFaceRegis> {
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (builder) => const App(),
+                builder: (builder) => const SplashScreen(),
               ),
               (route) => false);
         });
@@ -92,8 +92,8 @@ class _CameraScreenFaceRegisState extends State<CameraScreenFaceRegis> {
           y: top.toInt(),
           width: width.toInt(),
           height: height.toInt());
-      Recognition recognition = recognizer.recognize(croppedFace, boundingBox);
-      postEmbedding(recognition.embedding);
+      List<double> recognition = recognizerRegister.recognize(croppedFace, boundingBox);
+      postEmbedding(recognition);
     }
   }
 

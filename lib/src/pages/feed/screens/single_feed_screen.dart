@@ -30,6 +30,8 @@ class _SingleFeedScreenState extends State<SingleFeedScreen> {
   bool isLoadingComment = true;
   final TextEditingController _controller = TextEditingController();
   bool sendButton = false;
+  int likeCount = 0;
+  int commentCount = 0;
 
   void _checkSensitiveWords() {
     final text = _controller.text;
@@ -73,6 +75,8 @@ class _SingleFeedScreenState extends State<SingleFeedScreen> {
 
   @override
   void initState() {
+    likeCount = widget.feedModel.likeCount;
+    commentCount = widget.feedModel.commentCount;
     fetchData(widget.feedModel.idFeed);
     _controller.addListener(() {
       _checkSensitiveWords();
@@ -116,7 +120,7 @@ class _SingleFeedScreenState extends State<SingleFeedScreen> {
                 children: [
                   Padding(
                     padding: EdgeInsets.all(7.sp),
-                    child: Text(feed.content),
+                    child: Text(feed.content,style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 20),),
                   ),
                   Stack(
                     children: [
@@ -138,13 +142,14 @@ class _SingleFeedScreenState extends State<SingleFeedScreen> {
                         IconButton(
                             icon: Icon(
                               Icons.thumb_up,
-                              color: feed.isLike ? Colors.blue : Colors.white,
+                              color: feed.isLike ? Colors.red : null,
                             ),
                             onPressed: () {
                               likePost(feed.idFeed);
                               setState(() {
                                 feed.isLike = !feed.isLike;
-                                feed.likeCount + (feed.isLike ? 1 : -1);
+                                feed.likeCount += (feed.isLike ? 1 : -1);
+                                print(feed.likeCount);
                               });
                             }),
                         const SizedBox(width: 5),
@@ -187,7 +192,10 @@ class _SingleFeedScreenState extends State<SingleFeedScreen> {
                                 backgroundImage:
                                     NetworkImage(commentList[index].avatar),
                               ),
-                              title: Text(commentList[index].fullName),
+                              title: Text(
+                                commentList[index].fullName,
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 18),
+                              ),
                               subtitle: Text(commentList[index].content),
                             );
                           },
@@ -206,6 +214,7 @@ class _SingleFeedScreenState extends State<SingleFeedScreen> {
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: TextFormField(
+                    style: Theme.of(context).textTheme.bodyMedium,
                     controller: _controller,
                     textAlignVertical: TextAlignVertical.center,
                     keyboardType: TextInputType.multiline,
@@ -215,7 +224,6 @@ class _SingleFeedScreenState extends State<SingleFeedScreen> {
                       if (value.isNotEmpty) {
                         setState(() {
                           sendButton = true;
-                          ++feed.commentCount;
                         });
                       } else {
                         setState(() {
@@ -252,15 +260,16 @@ class _SingleFeedScreenState extends State<SingleFeedScreen> {
                       ),
                       onPressed: () {
                         if (sendButton) {
-                          //xử lý comment
+                          postComment(feed.idFeed,_controller.text);
                           CommentModel comment = CommentModel(
-                              idComment: 0,
+                              idComment: -1,
                               content: _controller.text,
                               idUser: localUser.id,
                               fullName: localUser.fullName,
                               avatar: localUser.avt);
                           commentList.add(comment);
                           setState(() {
+                            ++feed.commentCount;
                             _controller.text = '';
                             sendButton = false;
                           });

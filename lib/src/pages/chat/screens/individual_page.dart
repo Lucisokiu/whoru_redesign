@@ -199,14 +199,7 @@ class _IndividualPageState extends State<IndividualPage> {
                 ),
                 CircleAvatar(
                   radius: 20,
-                  backgroundColor: Colors.blueGrey,
-                  child: ClipOval(
-                    child: Image.network(
-                      widget.user.avatar,
-                      height: 36,
-                      width: 36,
-                    ),
-                  ),
+                  backgroundImage: NetworkImage(widget.user.avatar),
                 ),
               ],
             ),
@@ -373,6 +366,7 @@ class _IndividualPageState extends State<IndividualPage> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                         child: TextFormField(
+                          style: Theme.of(context).textTheme.bodyMedium,
                           controller: _controller,
                           focusNode: focusNode,
                           textAlignVertical: TextAlignVertical.center,
@@ -396,16 +390,11 @@ class _IndividualPageState extends State<IndividualPage> {
                             hintStyle: const TextStyle(color: Colors.grey),
                             prefixIcon: IconButton(
                               icon: Icon(
-                                show
-                                    ? Icons.keyboard
-                                    : Icons.emoji_emotions_outlined,
-                              ),
+                                  show ? Icons.keyboard : Icons.emoji_emotions),
                               onPressed: () {
-                                if (!show) {
+                                setState(() {
                                   focusNode.unfocus();
                                   focusNode.canRequestFocus = false;
-                                }
-                                setState(() {
                                   show = !show;
                                 });
                               },
@@ -423,8 +412,16 @@ class _IndividualPageState extends State<IndividualPage> {
                                   },
                                 ),
                                 IconButton(
-                                  icon: const Icon(Icons.camera_alt),
+                                  icon: Icon(sendButton
+                                      ? Icons.highlight_remove_outlined
+                                      : Icons.camera_alt),
                                   onPressed: () {
+                                    setState(() {
+                                      if (sendButton) {
+                                        _controller.text = '';
+                                        sendButton = !sendButton;
+                                      }
+                                    });
                                     // Navigator.push(
                                     //     context,
                                     //     MaterialPageRoute(
@@ -472,10 +469,10 @@ class _IndividualPageState extends State<IndividualPage> {
                     ),
                   ],
                 ),
-                show ? emojiSelect() : Container(),
               ],
             ),
           ),
+          show ? Container(height: 30.h, child: emojiSelect()) : Container(),
         ],
       ),
     );

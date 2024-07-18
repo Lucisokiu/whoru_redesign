@@ -300,7 +300,7 @@ class _SignUpFormState extends State<SignUpForm> {
                                   bottomRight: Radius.circular(25),
                                   bottomLeft: Radius.circular(25)))),
                       icon: const Icon(
-                        CupertinoIcons.arrow_right,
+                        Icons.arrow_forward,
                         color: Color(0xFFFE0037),
                       ),
                       label: const Text("Register")),

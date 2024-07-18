@@ -6,7 +6,7 @@ import 'package:whoru/src/models/feed_model.dart';
 import 'package:whoru/src/utils/shared_pref/token.dart';
 import 'package:whoru/src/utils/url.dart';
 
-Future<List<FeedModel>?> getAllPost(int page) async {
+Future<List<FeedModel>> getAllPost(int page) async {
   try {
     var url = Uri.https(baseUrl, '/api/v1/Feeds/GetAllPost');
     String? token = await getToken();
@@ -30,6 +30,8 @@ Future<List<FeedModel>?> getAllPost(int page) async {
       return feedList;
     } else {
       print("fail call api getAllPost with page $page");
+      print("fail call api getAllPost with response.statusCode ${response.statusCode}");
+
       return [];
     }
   } catch (e) {
@@ -205,7 +207,7 @@ Future<Response> searchPost(String title, int page) async {
     // return feedList;
     return response;
   } else {
-    print("fail call api getAllPost with title ${response.statusCode}");
+    print("fail call api searchPost with title ${response.statusCode}");
     return response;
   }
 }

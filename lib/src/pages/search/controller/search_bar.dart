@@ -8,6 +8,7 @@ import 'package:whoru/src/pages/search/widget/buid_suggestions.dart';
 import 'package:whoru/src/pages/search/widget/build_results.dart';
 
 class CustomSearch extends SearchDelegate {
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -32,7 +33,7 @@ class CustomSearch extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     return BuildSuggestionsWidget(query: query, parentContext: context);
   }
-
+  
   @override
   Widget buildResults(BuildContext context) {
     return BuildResultsWidget(query: query, parentContext: context);

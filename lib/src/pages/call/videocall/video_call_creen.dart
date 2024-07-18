@@ -9,8 +9,8 @@ class VideoCallScreen extends StatefulWidget {
   const VideoCallScreen(
       {super.key,
       bool? isJoinRoom,
-      required this.idUser, // idCaller
-      required this.currentId}) // idReceiver
+      required this.idUser,
+      required this.currentId})
       : isJoinRoom = isJoinRoom ?? false;
 
   final bool isJoinRoom;
@@ -75,7 +75,12 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
       if (type == 1) {
         String target = jsonData["target"];
         print("target---------------------------: $target");
+
         if (target == 'DisconnectCalling') {
+          webSocketService.endCall(widget.currentId, widget.idUser);
+          Navigator.pop(context);
+        }
+        if (target == 'isCalling') {
           webSocketService.endCall(widget.currentId, widget.idUser);
           Navigator.pop(context);
         }
@@ -215,7 +220,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     _localRenderer.dispose();
     _remoteRenderer.dispose();
     messageSubscription.cancel();
-    webSocketService.endCall(widget.idUser, widget.currentId);
+    webSocketService.endCall(widget.currentId, widget.idUser);
   }
 
   // Thêm các hàm để bật tắt mic, audio và video //**

@@ -10,6 +10,9 @@ class FeedModel {
   int shareCount;
   int idUser;
   bool isFollow;
+  bool isShare;
+  bool isSave;
+  int status;
 
   FeedModel({
     required this.avatar,
@@ -23,6 +26,9 @@ class FeedModel {
     required this.shareCount,
     required this.isLike,
     required this.isFollow,
+    required this.isShare,
+    required this.isSave,
+    required this.status,
   });
   factory FeedModel.fromJson(Map<String, dynamic> json) {
     return FeedModel(
@@ -40,6 +46,9 @@ class FeedModel {
       shareCount: json['sharesCount'] as int,
       idUser: json['idUser'] as int,
       isFollow: json['isFollow'] as bool,
+      isShare: json['isShare'] as bool,
+      isSave: json['isSave'] as bool,
+      status: json['status'] as int,
     );
   }
 }

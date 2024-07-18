@@ -58,12 +58,13 @@ Future<void> unSharePost(idPost) async {
   }
 }
 
-
-
-Future<List<Map<String, dynamic>>> getListShare(idPost) async {
+Future<List<Map<String, dynamic>>> getListShare(idPost, page) async {
   var url = Uri.https(baseUrl, '/api/v1/Shares/GetAllSharedUser');
   String? token = await getToken();
-
+  Map<String, dynamic> map = {
+    "idPost": idPost,
+    "page": page,
+  };
   try {
     var response = await http.post(
       url,
@@ -72,24 +73,25 @@ Future<List<Map<String, dynamic>>> getListShare(idPost) async {
         'Accept': 'application/json',
         'Authorization': 'bearer $token',
       },
-      body: idPost.toString(), // Sending the idPost as JSON
+      body: jsonEncode(map), // Sending the idPost as JSON
     );
+    print(response.statusCode);
+
     if (response.statusCode == 200) {
-      // Parse the response and extract the list of users as a list of maps
       List<dynamic> jsonList = jsonDecode(response.body);
       List<Map<String, dynamic>> listShare =
-      List<Map<String, dynamic>>.from(jsonList);
+          List<Map<String, dynamic>>.from(jsonList);
       return listShare;
     } else {
-      print('Failed to make Like request. Status code: ${response.statusCode}');
+      print(
+          'Failed to make Share request. Status code: ${response.statusCode}');
       return [];
     }
   } catch (e) {
-    print('Error during the Like request: $e');
+    print('Error during the Share request: $e');
   }
   return [];
 }
-
 
 Future<List<FeedModel>?> getAllSharedPost(int id, int page) async {
   try {

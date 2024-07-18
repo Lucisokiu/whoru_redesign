@@ -28,12 +28,14 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  WebSocketService webSocketService = WebSocketService();
+  late WebSocketService webSocketService;
 
   @override
   void initState() {
-    super.initState();
+    webSocketService = WebSocketService();
     initialize();
+
+    super.initState();
   }
 
   initialize() async {
@@ -46,16 +48,18 @@ class _AppState extends State<App> {
     saveUser(localUser);
   }
 
-
   void connected() {
     webSocketService.connect();
-    webSocketService.listenSocket(context);
+    if (mounted) {
+      webSocketService.listenSocket(context);
+    }
   }
 
   @override
   void dispose() {
-    super.dispose();
     webSocketService.close();
+    print("dispose App");
+    super.dispose();
   }
 
   @override

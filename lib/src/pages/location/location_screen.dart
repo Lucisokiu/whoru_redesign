@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whoru/src/pages/appbar/appbar.dart';
 import 'package:whoru/src/pages/location/widget/map_widget.dart';
 
+import '../../services/location_service.dart';
 
 class LocationPage extends StatefulWidget {
   const LocationPage({super.key});
@@ -12,11 +13,15 @@ class LocationPage extends StatefulWidget {
 
 class _LocationPageState extends State<LocationPage> {
   String? typeMap;
-
   @override
   void initState() {
     typeMap = 'Street Map';
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

@@ -102,8 +102,6 @@ dependencies:
   #flutter_nude_detector: ^0.0.4+1
 
 
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

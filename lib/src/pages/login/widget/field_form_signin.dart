@@ -5,7 +5,9 @@ import 'package:rive/rive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:whoru/src/api/log.dart';
 import 'package:whoru/src/models/login_model.dart';
+import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/pages/register/custom_create_info.dart';
+import 'package:whoru/src/pages/splash/splash.dart';
 
 import '../../../utils/shared_pref/iduser.dart';
 import '../../app.dart';
@@ -71,7 +73,7 @@ class _SignInFormState extends State<SignInForm> {
               confetti.fire();
               Future.delayed(const Duration(seconds: 2), () {
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const App()),
+                  MaterialPageRoute(builder: (context) => const SplashScreen()),
                   (Route<dynamic> route) => false,
                 );
               });

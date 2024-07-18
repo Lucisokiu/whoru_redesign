@@ -25,11 +25,11 @@ Future<List<NotificationModel>> getAllNotification() async {
           decodedData.map((data) => NotificationModel.fromJson(data)).toList();
       return listNotif;
     } else {
-      print("fail call api getAllPost with page ${response.statusCode}");
+      print("fail call api getAllNotification with page ${response.statusCode}");
       return [];
     }
   } catch (e) {
-    print("fail call api getAllPost $e");
+    print("fail call api getAllNotification $e");
 
     return [];
   }

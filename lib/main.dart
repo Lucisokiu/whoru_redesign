@@ -6,6 +6,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:whoru/src/pages/app.dart';
+import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/pages/splash/splash.dart';
 
 import 'src/pages/user/controller/language/app_localization.dart';
@@ -76,6 +78,11 @@ class MyApp extends StatelessWidget {
             Locale('en', 'US'),
             Locale('vi', 'VN'),
           ],
+          routes: {
+            '/splashScreen': (context) => const SplashScreen(),
+            '/app': (context) => const App(),
+            '/navigation': (context) => const Navigation(),
+          },
           home: const SplashScreen(),
         );
       },

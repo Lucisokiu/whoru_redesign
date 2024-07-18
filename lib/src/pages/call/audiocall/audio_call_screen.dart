@@ -28,7 +28,7 @@ class AudioCallScreen extends StatefulWidget {
 }
 
 class _AudioCallScreenState extends State<AudioCallScreen> {
-    RTCPeerConnection? _peerConnection;
+  RTCPeerConnection? _peerConnection;
   MediaStream? _localStream;
   MediaStream? _remoteStream;
 
@@ -39,7 +39,6 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
   // Thêm các biến trạng thái cho các nút //**
   bool _isMicOn = true;
   bool _isAudioOn = true;
-  bool _isVideoOn = true;
   bool isShowButton = true;
   late StreamSubscription<dynamic> messageSubscription;
   WebSocketService webSocketService = WebSocketService();
@@ -239,8 +238,6 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -257,43 +254,31 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
               children: [
                 const Spacer(),
                 // Centered CircleAvatar
-                Positioned(
-                  top: MediaQuery.of(context).size.height * 0.35,
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 84,
-                        backgroundColor: Colors.blueGrey[200],
-                        child: ClipOval(
-                          child: Image.network(
-                            widget.avatar,
-                            height:
-                                168, // Kích thước ảnh đã nhân đôi bán kính của CircleAvatar
-                            width:
-                                168, // Kích thước ảnh đã nhân đôi bán kính của CircleAvatar
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      Text(
-                        widget.fullName,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: 3.h, // Thay đổi kích thước font ở đây
-                            ),
-                      ),
-                    ],
+                CircleAvatar(
+                  radius: 13.h,
+                  backgroundColor: Colors.blueGrey[200],
+                  backgroundImage: NetworkImage(
+                    widget.avatar,
                   ),
                 ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                Text(widget.fullName,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 3.h,
+                        color: Theme.of(context).colorScheme.primary)),
+
                 const Spacer(),
                 // Row of RoundedButtons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     RoundedButton(
-                      press: () {},
+                      press: () {
+                        _toggleMic();
+                      },
+                      color: _isMicOn ? Colors.white : Colors.red,
                       iconSrc: "assets/icons/Icon Mic.svg",
                     ),
                     RoundedButton(
@@ -305,7 +290,10 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
                       iconSrc: "assets/icons/call_end.svg",
                     ),
                     RoundedButton(
-                      press: () {},
+                      press: () {
+                        _toggleAudio();
+                      },
+                      color: _isAudioOn ? Colors.white : Colors.red,
                       iconSrc: "assets/icons/Icon Volume.svg",
                     ),
                   ],

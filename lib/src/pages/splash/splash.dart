@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<bool> getUser() async {
     _id = await getIdUser();
-    print('Print: $_id');
+    print('_id: $_id');
     if(_id == null){
       return false;
     }
