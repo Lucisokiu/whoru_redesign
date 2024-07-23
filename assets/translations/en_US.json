@@ -3,5 +3,20 @@
     "logout": "Log out",
     "loading": "Loading...",
     "thememode": "Dark Mode",
-    "notification": "Notification"
+    "notification": "Notification",
+    "camera": "Camera",
+    "message": "Message",
+    "waitinglistmessage": "Waiting list message",
+    "message1": "Message",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "all": "All",
+    "users": "Users",
+    "feed": "Feed",
+    "save": "Save",
+    "delete": "Delete",
+    "update": "Update",
+    "addstory": "Add story"
+
 }
+

@@ -9,6 +9,7 @@ import '../../../models/location_models.dart';
 import '../../../models/user_chat.dart';
 import '../../../models/user_model.dart';
 import '../../chat/screens/individual_page.dart';
+import '../../user/controller/language/app_localization.dart';
 
 Future<Object?> cardUser(
   BuildContext contextScafford,
@@ -136,57 +137,62 @@ class _CardUserMapState extends State<CardUserMap> {
                   ],
                 ),
                 if (!isUserLocal)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        if (isFollow) {
-                          followUser(widget.user!.id);
-                          setState(() {
-                            isFollow = !isFollow;
-                          });
-                        } else {
-                          unFollowUser(widget.user!.id);
-                          setState(() {
-                            isFollow = !isFollow;
-                          });
-                        }
-                      },
-                      child: Row(
-                        children: [
-                          Icon(isFollow ? Icons.person_add: Icons.person_off),
-                          SizedBox(
-                            width: 1.w,
-                          ),
-                          Text(isFollow ? "Follow" : "UnFollow"),
-                        ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          if (!isFollow) {
+                            followUser(widget.user!.id);
+                            setState(() {
+                              isFollow = !isFollow;
+                            });
+                          } else {
+                            unFollowUser(widget.user!.id);
+                            setState(() {
+                              isFollow = !isFollow;
+                            });
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
+                                !isFollow ? Icons.person_add : Icons.person_off),
+                            SizedBox(
+                              width: 1.w,
+                            ),
+                            Text(!isFollow ? AppLocalization.of(context)
+                                .getTranslatedValues('follow') : AppLocalization.of(context)
+                                .getTranslatedValues('unfollow') ),
+                          ],
+                        ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (contex) => IndividualPage(
-                                  user: UserChat.fromUserModel(widget.user!),
-                                  currentId: localIdUser,
-                                )));
-                      },
-                      child: Row(
-                        children: [
-                          Icon(
-                            PhosphorIcons.chatCircleDots(),
-                          ),
-                          SizedBox(
-                            width: 1.w,
-                          ),
-                          const Text("Message"),
-                        ],
-                      ),
-                    )
-                  ],
-                )
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (contex) => IndividualPage(
+                                        user: UserChat.fromUserModel(
+                                            widget.user!),
+                                        currentId: localIdUser,
+                                      )));
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
+                              PhosphorIcons.chatCircleDots(),
+                            ),
+                            SizedBox(
+                              width: 1.w,
+                            ),
+                            Text(AppLocalization.of(context)
+                                .getTranslatedValues('message1')),
+                          ],
+                        ),
+                      )
+                    ],
+                  )
               ]),
         ),
       ),

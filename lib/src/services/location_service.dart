@@ -44,7 +44,6 @@ class LocationService {
             },
           );
           if (_timer == null || !_timer!.isActive) {
-            print("add Timer");
             _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
               webSocketService.sendMessageSocket("getNearestUsers", [idUser]);
             });

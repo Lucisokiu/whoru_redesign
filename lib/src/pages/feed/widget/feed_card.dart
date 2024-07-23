@@ -14,6 +14,7 @@ import 'package:whoru/src/pages/splash/splash.dart';
 import '../../../api/feed.dart';
 import '../../../api/follow.dart';
 import '../../app.dart';
+import '../../user/controller/language/app_localization.dart';
 import 'comment_dialog_new.dart';
 
 class CardFeed extends StatefulWidget {
@@ -154,17 +155,26 @@ class _CardFeedState extends State<CardFeed> {
                                   );
                                 } else if (value == 'delete') {
                                   delete(widget.feed.idFeed);
+                                } else if (value == 'save') {
+                                  savePost(widget.feed.idFeed);
                                 }
                               },
                               itemBuilder: (BuildContext context) =>
                                   <PopupMenuEntry<String>>[
-                                const PopupMenuItem<String>(
-                                  value: 'update',
-                                  child: Text('Update'),
+                                PopupMenuItem<String>(
+                                  value: 'save',
+                                  child: Text(AppLocalization.of(context)
+                                      .getTranslatedValues('save')),
                                 ),
-                                const PopupMenuItem<String>(
+                                PopupMenuItem<String>(
+                                  value: 'update',
+                                  child: Text(AppLocalization.of(context)
+                                      .getTranslatedValues('update')),
+                                ),
+                                PopupMenuItem<String>(
                                   value: 'delete',
-                                  child: Text('Delete'),
+                                  child: Text(AppLocalization.of(context)
+                                      .getTranslatedValues('delete')),
                                 ),
                               ],
                               icon: Icon(

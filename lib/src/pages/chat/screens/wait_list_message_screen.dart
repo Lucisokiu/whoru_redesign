@@ -5,6 +5,7 @@ import 'package:whoru/src/api/chat.dart';
 import 'package:whoru/src/models/chat_model.dart';
 import 'package:whoru/src/pages/feed/widget/skeleton_loading.dart';
 
+import '../../user/controller/language/app_localization.dart';
 import '../widget/custom_card.dart';
 
 class WaitListChatPage extends StatefulWidget {
@@ -38,7 +39,7 @@ class _WaitListChatPageState extends State<WaitListChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Wait List"),
+        title:  Text(AppLocalization.of(context).getTranslatedValues('waitinglistmessage')),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_sharp),
           onPressed: () {

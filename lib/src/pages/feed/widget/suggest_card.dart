@@ -5,6 +5,7 @@ import 'package:whoru/src/pages/navigation/navigation.dart';
 import 'package:whoru/src/pages/profile/profile_screen.dart';
 
 import '../../../api/follow.dart';
+import '../../user/controller/language/app_localization.dart';
 
 class SuggestionCard extends StatefulWidget {
   final int id;
@@ -113,7 +114,11 @@ class _SuggestionCardState extends State<SuggestionCard> {
                       width: 1.w,
                     ),
                     Text(
-                      isFollow ? "Unfollow" : "Follow",
+                      isFollow
+                          ? AppLocalization.of(context)
+                              .getTranslatedValues('unfollow')
+                          : AppLocalization.of(context)
+                              .getTranslatedValues('follow'),
                       style:
                           TextStyle(color: Theme.of(context).iconTheme.color),
                     ),

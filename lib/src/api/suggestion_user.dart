@@ -32,8 +32,9 @@ Future<List<Suggestion>> getListSuggestionsList() async {
 }
 
 Future<void> postListSuggestionsList(List<int> listIdUser) async {
-  var url = Uri.https(baseUrl, '/api/v1/UserInfos/GetListSuggestions');
+  var url = Uri.https(baseUrl, '/api/v1/UserInfos/PostListSuggestions');
   String? token = await getToken();
+  print(listIdUser.length);
 
   var response = await http.post(
     url,
@@ -42,12 +43,15 @@ Future<void> postListSuggestionsList(List<int> listIdUser) async {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     },
-    body: jsonEncode(<String, dynamic>{
+    body: jsonEncode(<String, List<int>>{
       'listIdUser': listIdUser,
     }),
   );
-
-  if (response.statusCode == 200) {
+  print(jsonEncode(<String, List<int>>{
+    'listIdUser': listIdUser,
+  }),);
+  print(listIdUser.length);
+  if (response.statusCode == 201) {
     print('postListSuggestionsList request successful');
   } else {
     print(

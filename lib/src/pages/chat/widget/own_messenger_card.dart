@@ -36,7 +36,7 @@ class OwnMessageCard extends StatelessWidget {
                   // Thực hiện hành động khi nhấn "Xóa"
                   Navigator.pop(context); // Ẩn pop-up menu
                 },
-                child: const Text("Xóa"),
+                child: const Text("Delete"),
               ),
             ),
           ],

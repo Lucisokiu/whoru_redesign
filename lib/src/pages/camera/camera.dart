@@ -9,6 +9,8 @@ import '../../matherial/filter.dart';
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import '../user/controller/language/app_localization.dart';
+
 // import '../../../main.dart';
 
 class CameraScreen extends StatefulWidget {
@@ -83,7 +85,8 @@ class _CameraScreenState extends State<CameraScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Camera"),
+          title:
+              Text(AppLocalization.of(context).getTranslatedValues('camera')),
         ),
         body: image == null ? cameraView() : imageView());
   }

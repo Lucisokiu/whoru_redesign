@@ -76,9 +76,7 @@ class _CreatePostState extends State<CreatePost> {
         );
       }
     } else {
-      for (File image in files) {
-        await recognizerFaceMatch.doFaceDetection(image);
-      }
+        await recognizerFaceMatch.doFaceDetection(files);
       postApiWithImages(
         imageFiles: files,
         content: _titleController.text,
@@ -90,7 +88,7 @@ class _CreatePostState extends State<CreatePost> {
         Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => const Navigation()),
-              ModalRoute.withName('/app'), // Giữ lại màn hình có tên là '/app'
+              ModalRoute.withName('/app'),
             );
       });
     }

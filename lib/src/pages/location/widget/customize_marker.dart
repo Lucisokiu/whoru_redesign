@@ -16,14 +16,14 @@ class CustomizeMarker extends StatefulWidget {
   final LatLng latLng;
   final int userId;
   final String avt;
-  final String? note;
+  final String note;
 
   const CustomizeMarker(
       {super.key,
       required this.latLng,
       required this.userId,
       required this.avt,
-      this.note});
+      required this.note});
 
   @override
   State<CustomizeMarker> createState() => _CustomizeMarkerState();
@@ -120,7 +120,8 @@ class _CustomizeMarkerState extends State<CustomizeMarker> {
 
   @override
   void initState() {
-    note = widget.note ?? '';
+    note = widget.note;
+
     super.initState();
   }
 
@@ -128,7 +129,6 @@ class _CustomizeMarkerState extends State<CustomizeMarker> {
     final result = await getNote();
     setState(() {
       note = result;
-      print("Note: $note");
     });
   }
 
@@ -196,10 +196,12 @@ class _CustomizeMarkerState extends State<CustomizeMarker> {
                               ),
                               child: GestureDetector(
                                 onTap: () {
-                                  showMenu(context);
+                                  if (widget.userId == localIdUser) {
+                                    showMenu(context);
+                                  }
                                 },
                                 child: Text(
-                                  note,
+                                  widget.note,
                                   style: const TextStyle(
                                     color: Colors.white,
                                   ),

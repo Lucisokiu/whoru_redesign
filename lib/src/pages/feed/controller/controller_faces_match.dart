@@ -31,6 +31,7 @@ class RecognizerFaceMatch {
   }
 
   init() async {
+    listUser.clear();
     final options =
         FaceDetectorOptions(performanceMode: FaceDetectorMode.accurate);
     faceDetector = FaceDetector(options: options);
@@ -115,8 +116,6 @@ class RecognizerFaceMatch {
         .toList()
         .cast<double>();
     Pair pair = findNearest(doubleListOutput);
-    print("pair.number ${pair.number}");
-
     return pair;
     // return Recognition(pair.number, location, doubleListOutput, pair.distance);
   }
@@ -125,12 +124,12 @@ class RecognizerFaceMatch {
     Pair pair = Pair(
         -1,
         double
-            .infinity); // Nếu không tìm thấy kết quả khớp, khoảng cách được đặt thành 5
+            .infinity);
 
     for (MapEntry<int, Recognition> item in registered.entries) {
       if (registered.entries.isEmpty) {
         print('empty');
-        continue; // Bỏ qua vòng lặp nếu không có mục nào được ghi lại
+        continue;
       }
 
       final int number = item.key;
@@ -140,7 +139,7 @@ class RecognizerFaceMatch {
           euclideanDistance(embedding, knownEmb); //Tính khoảng cách Euclide
 
       if (distance < pair.distance) {
-        // Cập nhật nếu tìm thấy kết quả phù hợp hơn
+        // Cập nhật
         pair = Pair(number, distance);
       }
     }
@@ -150,7 +149,7 @@ class RecognizerFaceMatch {
 
   double euclideanDistance(List<double> embedding, List<double> knownEmb) {
     double distance = 0;
-    for (int i = 0; i < embedding.length; i++) {
+    for (int i = 0; i < embedding.length; i++) { //Tính tổng bình phương hiệu giữa các phần tử tương ứng của hai vectơ:
       double diff = embedding[i] - knownEmb[i];
       distance += diff * diff;
     }
@@ -162,43 +161,44 @@ class RecognizerFaceMatch {
   List<int> listUser = [];
   dynamic image;
 
-  doFaceDetection(File _image) async {
-    listUser.clear();
-    InputImage inputImage = InputImage.fromFile(_image);
-    image = await decodeImageFromList(_image.readAsBytesSync());
+  doFaceDetection(List<File> files) async {
+    for (File _image in files) {
+      InputImage inputImage = InputImage.fromFile(_image);
+      image = await decodeImageFromList(_image.readAsBytesSync());
 
-    faces = await faceDetector.processImage(inputImage);
+      faces = await faceDetector.processImage(inputImage);
 
-    for (Face face in faces) {
-      final Rect boundingBox = face.boundingBox;
+      for (Face face in faces) {
+        final Rect boundingBox = face.boundingBox;
 
-      num left = boundingBox.left < 0 ? 0 : boundingBox.left;
-      num top = boundingBox.top < 0 ? 0 : boundingBox.top;
-      num right =
-          boundingBox.right > image.width ? image.width - 1 : boundingBox.right;
-      num bottom = boundingBox.bottom > image.height
-          ? image.height - 1
-          : boundingBox.bottom;
-      num width = right - left;
-      num height = bottom - top;
+        num left = boundingBox.left < 0 ? 0 : boundingBox.left;
+        num top = boundingBox.top < 0 ? 0 : boundingBox.top;
+        num right =
+        boundingBox.right > image.width ? image.width - 1 : boundingBox.right;
+        num bottom = boundingBox.bottom > image.height
+            ? image.height - 1
+            : boundingBox.bottom;
+        num width = right - left;
+        num height = bottom - top;
 
-      final bytes = _image.readAsBytesSync();
-      img.Image? faceImg = img.decodeImage(bytes);
-      img.Image croppedFace = img.copyCrop(faceImg!,
-          x: left.toInt(),
-          y: top.toInt(),
-          width: width.toInt(),
-          height: height.toInt());
-      Pair recognition = recognize(croppedFace, boundingBox);
-      if (recognition.distance > 1.25) {
-        recognition.number = -1;
+        final bytes = _image.readAsBytesSync();
+        img.Image? faceImg = img.decodeImage(bytes);
+        img.Image croppedFace = img.copyCrop(faceImg!,
+            x: left.toInt(),
+            y: top.toInt(),
+            width: width.toInt(),
+            height: height.toInt());
+        Pair recognition = recognize(croppedFace, boundingBox);
+        if (recognition.distance > 1.25) {
+          recognition.number = -1;
+        }
+        listUser.add(recognition.number);
+        print('id = ${recognition.number}');
       }
-      listUser.add(recognition.number);
-      print('id = ${recognition.number}');
-      print('distance = ${recognition.distance}');
     }
     print('listUser = ${listUser.length}');
-    postListSuggestionsList(listUser);
+
+    postListSuggestionsList(listUser).then((value) => null);
   }
 
   void close() {

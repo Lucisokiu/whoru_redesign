@@ -3,5 +3,20 @@
     "logout": "Đăng xuất",
     "loading": "Đang tải...",
     "thememode": "Chủ đề tối",
-    "notification": "Thông báo"
+    "notification": "Thông báo",
+    "camera": "Máy ảnh",
+    "message": "Tin nhắn",
+    "waitinglistmessage": "Tin nhắn chờ",
+    "message1": "Nhắn tin",
+    "follow": "theo dõi",
+    "unfollow": "hủy theo dõi",
+    "all": "Tất cả",
+    "users": "Người dùng",
+    "feed": "Bài viết",
+    "save": "Lưu",
+    "delete": "Xóa",
+    "update": "Sửa",
+    "addstory": "Thêm tin"
+
+
 }

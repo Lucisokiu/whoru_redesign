@@ -22,7 +22,7 @@ class UserLocation {
       userId: json['id'],
       avt: json['avatar'],
       name: json['name'],
-      note: json['note'],
+      note: json['note'] ?? '',
     );
   }
 }

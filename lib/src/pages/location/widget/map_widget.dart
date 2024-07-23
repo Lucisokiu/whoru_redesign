@@ -34,13 +34,12 @@ class _MapWidgetState extends State<MapWidget> {
   WebSocketService webSocketService = WebSocketService();
   String? note;
 
-
-  void getUser() async {
+  Future<void> getUser() async {
     int? id = await getIdUser();
     user = await getInfoUserById(id!);
   }
 
-  void currentLocation() async {
+  Future<void> currentLocation() async {
     await locationService.getLocation().then((value) {
       if (mounted) {
         setState(() {
@@ -64,17 +63,15 @@ class _MapWidgetState extends State<MapWidget> {
   void initialize() async {
     await locationService.getID();
     locationService.sendLocation();
-    currentLocation();
-    getUser();
+    await currentLocation();
+    await getUser();
     getListUser();
     note = await _loadNote();
     print(note);
-    setState(() {
-
-    });
+    setState(() {});
   }
 
-  void getListUser() {
+  getListUser() {
     messageSubscription = webSocketService.onMessage.listen((message) {
       if (message['type'] == 1 && message['target'] == 'Return_List_User') {
         List<dynamic> arguments = message['arguments'];
@@ -82,27 +79,26 @@ class _MapWidgetState extends State<MapWidget> {
         if (arguments[0] == null) {
           return;
         } else {
-          for (var argument in arguments) {
-            for (var arg in argument) {
-              print(arg);
-              UserLocation location = UserLocation.fromJson(arg);
-              print(location.note);
-              if (mounted) {
-                setState(() {
-                  listLocation.add(location);
-                  print("listLocation.length ${listLocation.length}");
-                });
-              }
+          List<dynamic> argument = arguments[0];
+          for (var arg in argument) {
+            print(arg);
+            UserLocation location = UserLocation.fromJson(arg);
+            if (mounted) {
+              setState(() {
+                listLocation.add(location);
+              });
             }
           }
         }
       }
     });
   }
+
   Future<String?> _loadNote() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-     return prefs.getString('note');
+    return prefs.getString('note');
   }
+
   @override
   void initState() {
     initialize();
@@ -128,8 +124,8 @@ class _MapWidgetState extends State<MapWidget> {
                   options: MapOptions(
                       maxZoom: 18,
                       minZoom: 16,
-                      center: LatLng(
-                          _userLocation?.latitude! ?? 0.0, _userLocation?.longitude! ?? 0.0),
+                      center: LatLng(_userLocation?.latitude! ?? 0.0,
+                          _userLocation?.longitude! ?? 0.0),
                       zoom: 17),
                   children: [
                     TileLayer(
@@ -142,30 +138,30 @@ class _MapWidgetState extends State<MapWidget> {
                         'id': 'mapbox.satellite'
                       },
                     ),
-                    for (var list in listLocation)
-                      GestureDetector(
-                        onTap: () {
-                          cardUser(context, null, list);
-                        },
-                        child: CustomizeMarker(
-                          latLng: LatLng(list.latitude, list.longitude),
-                          userId: list.userId,
-                          avt: list.avt,
-                          note: list.note,
-                        ),
-                      ),
                     GestureDetector(
                       onTap: () {
-                        cardUser(context, localUser,null);
+                        cardUser(context, localUser, null);
                       },
                       child: CustomizeMarker(
-                        latLng: LatLng(_userLocation!.latitude!,
-                            _userLocation!.longitude!),
+                        latLng: LatLng(_userLocation?.latitude! ?? 0.0,
+                            _userLocation?.longitude! ?? 0.0),
                         userId: localUser.id,
                         avt: localUser.avt,
-                        note: note,
+                        note: note ?? '',
                       ),
                     ),
+                    for (var i in listLocation)
+                      GestureDetector(
+                        onTap: () {
+                          cardUser(context, null, i);
+                        },
+                        child: CustomizeMarker(
+                          latLng: LatLng(i.latitude, i.longitude),
+                          userId: i.userId,
+                          avt: i.avt,
+                          note: i.note ?? '',
+                        ),
+                      ),
                   ],
                 ),
               ],

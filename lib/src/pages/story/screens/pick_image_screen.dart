@@ -71,17 +71,12 @@ class ImageUploadScreenState extends State<ImageUploadScreen> {
         setState(() {
           isPosting = true;
         });
-        Navigator.pushAndRemoveUntil(
+        postStory(imageFile: _image!).then((value) =>
+            Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => const Navigation()),
-              ModalRoute.withName('/app'), // Giữ lại màn hình có tên là '/app'
-            );
-        // postStory(imageFile: _image!).then((value) =>
-        //     Navigator.pushAndRemoveUntil(
-        //       context,
-        //       MaterialPageRoute(builder: (context) => const Navigation()),
-        //       ModalRoute.withName('/app'), // Giữ lại màn hình có tên là '/app'
-        //     ));
+              ModalRoute.withName('/app'),
+            ));
       } else {
         setState(() {
           isPosting = false;

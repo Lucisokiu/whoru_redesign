@@ -66,7 +66,6 @@ Future<http.Response> getInfoUserByName(String name, int page) async {
   var url = Uri.https(baseUrl, '/api/v1/UserInfos/SearchUser');
   String? token = await getToken();
   final body = jsonEncode({"keyword": name, "page": page});
-  print("AAAAAAAAAAAAAAAAAAAA");
   var response = await http.post(
     url,
     headers: {

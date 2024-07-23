@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../user/controller/language/app_localization.dart';
 import '../screens/pick_image_screen.dart';
 
 Widget addStory(BuildContext context) {
@@ -30,9 +31,9 @@ Widget addStory(BuildContext context) {
         const SizedBox(
           height: 6,
         ),
-        const Text(
-          "Add story",
-          style: TextStyle(
+        Text(
+          AppLocalization.of(context).getTranslatedValues('addstory'),
+          style: const TextStyle(
             fontSize: 11,
           ),
         ),

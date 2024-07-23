@@ -12,6 +12,7 @@ import 'package:whoru/src/pages/chat/widget/search_user.dart';
 import 'package:whoru/src/pages/feed/widget/skeleton_loading.dart';
 
 import '../../socket/web_socket_service.dart';
+import '../user/controller/language/app_localization.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key, required this.currentId});
@@ -68,7 +69,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Message"),
+        title: Text(AppLocalization.of(context).getTranslatedValues('message')),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_sharp),
           onPressed: () {
@@ -82,7 +83,7 @@ class _ChatPageState extends State<ChatPage> {
         ListTile(
           leading: Icon(PhosphorIcons.chatTeardropText(PhosphorIconsStyle.thin),
               color: Theme.of(context).iconTheme.color),
-          title: Text("Waiting list message",
+          title: Text(AppLocalization.of(context).getTranslatedValues('waitinglistmessage'),
               style: Theme.of(context).textTheme.bodyMedium),
           onTap: () {
             Navigator.push(
@@ -94,30 +95,14 @@ class _ChatPageState extends State<ChatPage> {
             );
           },
         ),
-        ListTile(
-          title: Text("Turn off notifications (Updating)",
-              style: Theme.of(context).textTheme.bodyMedium),
-          // leading: IconButton(
-          //   icon: Icon(
-          //     _notificationController.isEnabled
-          //         ? Icons.toggle_on
-          //         : Icons.toggle_off,
-          //     color: _notificationController.isEnabled
-          //         ? Colors.green
-          //         : Colors.red,
-          //   ),
-          //   onPressed: () {
-          //     _notificationController.toggleNotifications(context, getUser);
-          //   },
-          // ),
-        ),
+          
       ])),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showSearch(
-                    context: context,
-                    delegate: SearchUserChat(),
-                  );
+            context: context,
+            delegate: SearchUserChat(),
+          );
           // Navigator.push(context,
           //     MaterialPageRoute(builder: (builder) => const SelectContact()));
         },
