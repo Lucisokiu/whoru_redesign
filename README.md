@@ -20,10 +20,13 @@ Face Recognition
 Nude Detection
 
 # **DEMO**   
+Demo Model   
+<video width="320" height="240" controls>
+  <source src="video/demo_model.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>   
 Link YOUTUBE   
 [![Everything Is AWESOME](https://img.youtube.com/vi/9EYC9aRGr9I/0.jpg)](https://youtu.be/9EYC9aRGr9I)   
-Demo Model   
-<video src="video/demo_model.mp4"></video>   
 ### Setup  
 Dart SDK version: 3.0.5  
 Flutter version: 3.10.5
