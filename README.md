@@ -19,13 +19,10 @@ Video/Voice call
 Face Recognition
 Nude Detection
 
-# **DEMO**
+# **DEMO**   
+Model: [Watch the video demo model on YouTube](https://youtu.be/rHSB9MqdxtQ)   
 
-![Project Demo](video/demo_model.mp4)   
-
-[Watch the video demo on YouTube](https://www.youtube.com/watch?v=9EYC9aRGr9I)   
-
-
+App: [Watch the video demo all app on YouTube](https://youtu.be/9EYC9aRGr9I)   
 
 ### Setup  
 Dart SDK version: 3.0.5  
