@@ -19,14 +19,17 @@ Video/Voice call
 Face Recognition
 Nude Detection
 
-# **DEMO**   
-Demo Model   
+# **DEMO**
+
 <video width="320" height="240" controls>
-  <source src="video/demo_model.mp4" type="video/mp4">
+  <source src="./video/demo_model.mp4" type="video/mp4">
   Your browser does not support the video tag.
-</video>   
-Link YOUTUBE   
-[![Everything Is AWESOME](https://img.youtube.com/vi/9EYC9aRGr9I/0.jpg)](https://youtu.be/9EYC9aRGr9I)   
+</video>  
+
+[Video](./video/demo_model.mp4)
+
+[Watch the video demo on YouTube](https://www.youtube.com/watch?v=9EYC9aRGr9I)   
+
 ### Setup  
 Dart SDK version: 3.0.5  
 Flutter version: 3.10.5
