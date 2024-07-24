@@ -19,10 +19,11 @@ Video/Voice call
 Face Recognition
 Nude Detection
 
-# **DEMO**
-
-https://github.com/Lucisokiu/whoru_redesign/assets/95356357/c6fddf8e-626d-4e7f-b043-9683beb366a5
-
+# **DEMO**   
+Link YOUTUBE   
+[![Everything Is AWESOME](https://img.youtube.com/vi/9EYC9aRGr9I/0.jpg)](https://youtu.be/9EYC9aRGr9I)   
+Demo Model   
+<video src="video/demo_model.mp4"></video>   
 ### Setup  
 Dart SDK version: 3.0.5  
 Flutter version: 3.10.5
